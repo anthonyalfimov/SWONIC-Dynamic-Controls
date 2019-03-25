@@ -1,0 +1,304 @@
+/*
+    <metadata description="Create up to 25 Buttons or Switches.&#13;&#13;SWONIC.com | v.1.1"
+              details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
+              target="Lightpad"
+              tags="MIDI;Controller">
+    <groups>
+     <group name="control" displayName="Control *" count="25"  />
+    </groups>
+    <variables>
+       <variable name="amount"          displayName="Control Amount" type="int" min="1" max="25" value="1"           tooltip="Number of controls to display, 1-25." />
+       <variable name="midiChannel"     displayName="MIDI Channel"   type="int" min="1" max="16" value="1"           tooltip="MIDI channel that is used for all controls." />
+     <vector group="control" count="25" wantsGetFunctions="true" wantsSetFunctions="true">
+       <variable name="ControlType"    displayName="Type"            type="option"    options="Button;Switch" value="Button" tooltip="Button: Sends CC, 127.&#13;Switch: Sends CC, 127 or 0."/>    
+       <variable name="ControlColour"  displayName="Colour"          type="colour"                      value="random"   tooltip="Colour of the control."/>
+       <variable name="ControlPosX"    displayName="x Position"      type="int"       min="1" max="15"  value="1"        tooltip="Horizontal position of the control, 1-15."/>
+       <variable name="ControlPosY"    displayName="y Position"      type="int"       min="1" max="15"  value="1"        tooltip="Vertical position of the control, 1-15."/>
+       <variable name="ControlWidth"   displayName="x Width"         type="int"       min="1" max="15"  value="1"        tooltip="Horizontal size of the control, 1-15."/>
+       <variable name="ControlHeight"  displayName="y Height"        type="int"       min="1" max="15"  value="1"        tooltip="Vertical size of the control, 1-15."/>
+       <variable name="ControlCC"      displayName="MIDI CC"         type="int"       min="0" max="127" initStart="102"  tooltip="MIDI CC message sent by control, 0-127."/>    
+       <variable name="ControlValue"   visible="false"               type="int"       min="0" max="127" value="64"       />
+     </vector>
+
+     </variables>
+    </metadata>
+*/
+
+#heapsize: 1 // heap currently not used
+
+
+//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//
+//  DYNAMIC CONTROLS X
+//  
+//   ROLI Dashboard app for ROLI Lightpad BLOCK
+//
+//   developed by Andreas Swoboda alias SWONIC
+//
+//   contact: http://swonic.com | mail@swonic.com
+//
+//   copyright: Andreas Swoboda, 2018 
+//
+//   version: 1.1
+//
+//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+
+//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//  INITIALISATION
+
+//  Global Variables
+    int ControlBgColour;
+    
+    void initialise ()
+    {
+
+//  Set background colour for controls.
+    ControlBgColour = 0x070707;
+    
+//  Set global MIDI channel.
+    midiChannel = midiChannel - 1;
+
+//  Mirror y variables
+    for (int i = 0; i <= 24; ++i)
+     {setControlPosY(i, 15 - getControlPosY(i) - getControlHeight(i) + 2);}
+
+    }
+
+
+//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//  CONVERSION FUNCTIONS
+
+//  Touch position (0-2) to pixel/LED position (0-14)
+    int convertPositionToPixel (float pos) 
+     { return int(pos * 0.5 * 15.0); }
+
+//  Pixel/LED position (0-14) to touch position (0-2)
+    float convertPixelToPosition (int pixel) 
+     { return float(pixel * 2.0 / 15.0); }
+
+
+//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//  RETURN FUNCTIONS
+
+//  Controller index for X and Y coordinates. If an no control pushed, -1 is returned.
+    int ControlIndexForXandY (float x, float y)
+     {
+     int xTouch = convertPositionToPixel(x);
+     int yTouch = convertPositionToPixel(y);
+     int ControlIndex = -1; // Is set to -1 to return a negative value if no active control is found.   
+     for (int i = 0; i <= amount-1; ++i)
+      {
+      if (xTouch >= (getControlPosX(i) - 1) && xTouch < (getControlPosX(i) - 1 + getControlWidth(i)) && yTouch >= (getControlPosY(i) - 1) && yTouch < (getControlPosY(i) - 1 + getControlHeight(i))) 
+       ControlIndex = i;
+      }
+     return ControlIndex;
+     }
+
+
+//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//  TOUCH EVENTS
+
+//  Send Touch-Event to corresponding controller function.
+    void touchStart (int index, float x, float y, float z, float vz)
+     { 
+     int i = ControlIndexForXandY (x, y);
+     if (i >= 0)
+      {
+      if (getControlType(i) == 0) // Button
+       doTouchButton (index, x, y, z);
+      if (getControlType(i) == 1) // Switch
+       doTouchSwitch (index, x, y, z);
+      }
+     }
+    void touchMove (int index, float x, float y, float z, float vz)
+     { 
+     }
+    void touchEnd (int index, float x, float y, float z, float vz)
+     { 
+     for (int i = 0; i <= amount-1; ++i) 
+      {if (getControlType(i) == 0) setControlValue(i, 0);} // Reset active buttons.
+     }
+
+//  Handle Button-Touch
+    void doTouchButton (int index, float x, float y, float z)
+     {
+     int i = ControlIndexForXandY (x, y);
+     setControlValue(i, 127);
+     sendCC (midiChannel, getControlCC(i), getControlValue(i));
+     }
+     
+// Handle Switch-Touch
+   void doTouchSwitch (int index, float x, float y, float z)
+     {
+     int i = ControlIndexForXandY (x, y);
+     if (getControlValue(i) == 127)
+      {
+      setControlValue(i, 0);
+      sendCC (midiChannel, getControlCC(i), getControlValue(i)); 
+      }
+     else
+      {
+      setControlValue(i, 127);
+      sendCC (midiChannel, getControlCC(i), getControlValue(i)); 
+      }
+     }
+
+     
+//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//  INCOMING MIDI
+     
+    void handleMIDI (int Channel, int CC, int value)
+    {
+     int iChannel = 176;
+     for (int i = 0; i <= 15; ++i)
+      {
+      if ( Channel == iChannel && midiChannel == i )
+       for (int i = 0; i <= amount-1; ++i)
+        { 
+        if (getControlCC(i) == CC) setControlValue(i, value); 
+        }
+      iChannel++;
+      }    
+    }
+
+
+//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//  DRAW CONTROLS
+
+    void repaint()
+     {    
+     clearDisplay();
+
+     for (int i = 0; i <= amount-1; ++i)
+      {
+    
+//  Draw Buttons
+      if (getControlType(i) == 0)
+       {
+       if (getControlValue(i) == 127)
+        fillRect (ControlBgColour, getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+       else
+        fillRect (getControlColour(i), getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+       }
+     
+// Draw Switches
+      if (getControlType(i) == 1)
+       {
+       if (getControlValue(i) == 127)
+        fillRect (getControlColour(i), getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+       else
+        fillRect (ControlBgColour, getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+       }
+          
+      }
+     }
+
+
+    
+/*
+<display backgroundColour="0xFF7E7E7E" textColour ="0xFFFFFFFF">
+    <pixels>
+        <pixel index="1" colour="0xFFD37201" />
+        <pixel index="2" colour="0xFFD37201" />
+        <pixel index="4" colour="0xFFD37201" />
+        <pixel index="5" colour="0xFFD37201" />
+        <pixel index="7" colour="0xFFD37201" />
+        <pixel index="8" colour="0xFFD37201" />
+        <pixel index="10" colour="0xFFD37201" />
+        <pixel index="11" colour="0xFFD37201" />
+        <pixel index="13" colour="0xFFD37201" />
+        <pixel index="14" colour="0xFFD37201" />
+        <pixel index="16" colour="0xFFD37201" />
+        <pixel index="17" colour="0xFFD37201" />
+        <pixel index="19" colour="0xFFD37201" />
+        <pixel index="20" colour="0xFFD37201" />
+        <pixel index="22" colour="0xFFD37201" />
+        <pixel index="23" colour="0xFFD37201" />
+        <pixel index="25" colour="0xFFD37201" />
+        <pixel index="26" colour="0xFFD37201" />
+        <pixel index="28" colour="0xFFD37201" />
+        <pixel index="29" colour="0xFFD37201" />
+        <pixel index="46" colour="0xFFD37201" />
+        <pixel index="47" colour="0xFFD37201" />
+        <pixel index="49" colour="0xFFD37201" />
+        <pixel index="50" colour="0xFFD37201" />
+        <pixel index="52" colour="0xFFD37201" />
+        <pixel index="53" colour="0xFFD37201" />
+        <pixel index="55" colour="0xFFD37201" />
+        <pixel index="56" colour="0xFFD37201" />
+        <pixel index="58" colour="0xFFD37201" />
+        <pixel index="59" colour="0xFFD37201" />
+        <pixel index="61" colour="0xFFD37201" />
+        <pixel index="62" colour="0xFFD37201" />
+        <pixel index="64" colour="0xFFD37201" />
+        <pixel index="65" colour="0xFFD37201" />
+        <pixel index="67" colour="0xFFD37201" />
+        <pixel index="68" colour="0xFFD37201" />
+        <pixel index="70" colour="0xFFD37201" />
+        <pixel index="71" colour="0xFFD37201" />
+        <pixel index="73" colour="0xFFD37201" />
+        <pixel index="74" colour="0xFFD37201" />
+        <pixel index="91" colour="0xFFD37201" />
+        <pixel index="92" colour="0xFFD37201" />
+        <pixel index="94" colour="0xFFD37201" />
+        <pixel index="95" colour="0xFFD37201" />
+        <pixel index="97" colour="0xFFD37201" />
+        <pixel index="98" colour="0xFFD37201" />
+        <pixel index="100" colour="0xFFD37201" />
+        <pixel index="101" colour="0xFFD37201" />
+        <pixel index="103" colour="0xFFD37201" />
+        <pixel index="104" colour="0xFFD37201" />
+        <pixel index="106" colour="0xFFD37201" />
+        <pixel index="107" colour="0xFFD37201" />
+        <pixel index="109" colour="0xFFD37201" />
+        <pixel index="110" colour="0xFFD37201" />
+        <pixel index="112" colour="0xFFD37201" />
+        <pixel index="113" colour="0xFFD37201" />
+        <pixel index="115" colour="0xFFD37201" />
+        <pixel index="116" colour="0xFFD37201" />
+        <pixel index="118" colour="0xFFD37201" />
+        <pixel index="119" colour="0xFFD37201" />
+        <pixel index="136" colour="0xFFD37201" />
+        <pixel index="137" colour="0xFFD37201" />
+        <pixel index="139" colour="0xFFD37201" />
+        <pixel index="140" colour="0xFFD37201" />
+        <pixel index="142" colour="0xFFD37201" />
+        <pixel index="143" colour="0xFFD37201" />
+        <pixel index="145" colour="0xFFD37201" />
+        <pixel index="146" colour="0xFFD37201" />
+        <pixel index="148" colour="0xFFD37201" />
+        <pixel index="149" colour="0xFFD37201" />
+        <pixel index="151" colour="0xFFD37201" />
+        <pixel index="152" colour="0xFFD37201" />
+        <pixel index="154" colour="0xFFD37201" />
+        <pixel index="155" colour="0xFFD37201" />
+        <pixel index="157" colour="0xFFD37201" />
+        <pixel index="158" colour="0xFFD37201" />
+        <pixel index="160" colour="0xFFD37201" />
+        <pixel index="161" colour="0xFFD37201" />
+        <pixel index="163" colour="0xFFD37201" />
+        <pixel index="164" colour="0xFFD37201" />
+        <pixel index="181" colour="0xFFD37201" />
+        <pixel index="182" colour="0xFFD37201" />
+        <pixel index="184" colour="0xFFD37201" />
+        <pixel index="185" colour="0xFFD37201" />
+        <pixel index="187" colour="0xFFD37201" />
+        <pixel index="188" colour="0xFFD37201" />
+        <pixel index="190" colour="0xFFD37201" />
+        <pixel index="191" colour="0xFFD37201" />
+        <pixel index="193" colour="0xFFD37201" />
+        <pixel index="194" colour="0xFFD37201" />
+        <pixel index="196" colour="0xFFD37201" />
+        <pixel index="197" colour="0xFFD37201" />
+        <pixel index="199" colour="0xFFD37201" />
+        <pixel index="200" colour="0xFFD37201" />
+        <pixel index="202" colour="0xFFD37201" />
+        <pixel index="203" colour="0xFFD37201" />
+        <pixel index="205" colour="0xFFD37201" />
+        <pixel index="206" colour="0xFFD37201" />
+        <pixel index="208" colour="0xFFD37201" />
+        <pixel index="209" colour="0xFFD37201" />
+    </pixels>
+</display>
+*/
