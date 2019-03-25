@@ -1,5 +1,5 @@
 /*
-    <metadata description="Create up to 25 Buttons or Switches.&#13;&#13;SWONIC.com | v.1.1"
+    <metadata description="Create up to 25 Buttons or Switches.&#13;&#13;SWONIC.com | v.1.1M"
               details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
               target="Lightpad"
               tags="MIDI;Controller">
@@ -9,193 +9,223 @@
     <variables>
        <variable name="amount"          displayName="Control Amount" type="int" min="1" max="25" value="1"           tooltip="Number of controls to display, 1-25." />
        <variable name="midiChannel"     displayName="MIDI Channel"   type="int" min="1" max="16" value="1"           tooltip="MIDI channel that is used for all controls." />
-     <vector group="control" count="25" wantsGetFunctions="true" wantsSetFunctions="true">
-       <variable name="ControlType"    displayName="Type"            type="option"    options="Button;Switch" value="Button" tooltip="Button: Sends CC, 127.&#13;Switch: Sends CC, 127 or 0."/>    
+     <vector group="control" count="25" wantsGetFunctions="true" wantsSetFunctions="false">
+       <variable name="ControlType"    displayName="Type"            type="option"    options="Button;Switch" value="Button" tooltip="Button: Sends CC, 127.&#13;Switch: Sends CC, 127 or 0."/>
        <variable name="ControlColour"  displayName="Colour"          type="colour"                      value="random"   tooltip="Colour of the control."/>
        <variable name="ControlPosX"    displayName="x Position"      type="int"       min="1" max="15"  value="1"        tooltip="Horizontal position of the control, 1-15."/>
        <variable name="ControlPosY"    displayName="y Position"      type="int"       min="1" max="15"  value="1"        tooltip="Vertical position of the control, 1-15."/>
        <variable name="ControlWidth"   displayName="x Width"         type="int"       min="1" max="15"  value="1"        tooltip="Horizontal size of the control, 1-15."/>
        <variable name="ControlHeight"  displayName="y Height"        type="int"       min="1" max="15"  value="1"        tooltip="Vertical size of the control, 1-15."/>
-       <variable name="ControlCC"      displayName="MIDI CC"         type="int"       min="0" max="127" initStart="102"  tooltip="MIDI CC message sent by control, 0-127."/>    
-       <variable name="ControlValue"   visible="false"               type="int"       min="0" max="127" value="64"       />
+       <variable name="ControlCC"      displayName="MIDI CC"         type="int"       min="0" max="127" initStart="102"  tooltip="MIDI CC message sent by control, 0-127."/>
      </vector>
 
      </variables>
+
     </metadata>
 */
 
-#heapsize: 1 // heap currently not used
-
-
-//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//==============================================================================
 //
 //  DYNAMIC CONTROLS X
-//  
+//
 //   ROLI Dashboard app for ROLI Lightpad BLOCK
 //
 //   developed by Andreas Swoboda alias SWONIC
 //
 //   contact: http://swonic.com | mail@swonic.com
 //
-//   copyright: Andreas Swoboda, 2018 
+//   copyright: Andreas Swoboda, 2018
 //
-//   version: 1.1
+//   base version: 1.1
 //
-//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+//   modified by Anthony Alfimov:
+//      improved memory usage
+//
+//==============================================================================
 
+#heapsize: 25
+//
+//  Heap Layout:
+//  byte 0 - 24 - control values [0, 127]
+//
 
-//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-//  INITIALISATION
+//==============================================================================
+//  Global Constants
+//==============================================================================
 
-//  Global Variables
-    int ControlBgColour;
-    
-    void initialise ()
+const int ControlBgColour = 0x070707;
+
+//==============================================================================
+//  Control Value Setter and Getter
+//==============================================================================
+
+void setControlValue(int ind, int val)
+{
+    setHeapByte(ind, val);
+}
+
+int getControlValue(int ind)
+{
+    return getHeapByte(ind);
+}
+
+//==============================================================================
+//  Initialisation
+//==============================================================================
+
+void initialise()
+{
+//  NB! When saving Modes to the Block and using the side button to switch them,
+//      initialise() function is NOT called each time you switch the mode.
+//      Therefore, to use Mode switching initialise() function cannot be used to
+//      process Mode parameters, in this case - MIDI channel and Y coordinates!
+
+//  Update global MIDI channel to [0, 15]
+        midiChannel -= 1;               // NB! Will not be performed on Mode switch!
+
+//  Invert the Y axis
+    //for (int i = 0; i < amount; i++)    // NB! Will not be performed on Mode switch!
+    //{
+    //    setControlPosY(i, 15 - getControlPosY(i) - getControlHeight(i) + 2);
+    //}
+
+//  Initialise Control Values
+    for (int i = 0; i < 25; i++)
     {
-
-//  Set background colour for controls.
-    ControlBgColour = 0x070707;
-    
-//  Set global MIDI channel.
-    midiChannel = midiChannel - 1;
-
-//  Mirror y variables
-    for (int i = 0; i <= 24; ++i)
-     {setControlPosY(i, 15 - getControlPosY(i) - getControlHeight(i) + 2);}
-
+        setControlValue(i, 0);
     }
+}
 
-
-//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-//  CONVERSION FUNCTIONS
+//==============================================================================
+//  Coordinate Functions
+//==============================================================================
 
 //  Touch position (0-2) to pixel/LED position (0-14)
-    int convertPositionToPixel (float pos) 
-     { return int(pos * 0.5 * 15.0); }
+int convertPositionToPixel (float pos)
+{
+    return int(pos * 0.5 * 15.0);
+}
 
 //  Pixel/LED position (0-14) to touch position (0-2)
-    float convertPixelToPosition (int pixel) 
-     { return float(pixel * 2.0 / 15.0); }
-
-
-//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-//  RETURN FUNCTIONS
+float convertPixelToPosition (int pixel)
+{
+    return float(pixel * 2.0 / 15.0);
+}
 
 //  Controller index for X and Y coordinates. If an no control pushed, -1 is returned.
-    int ControlIndexForXandY (float x, float y)
-     {
-     int xTouch = convertPositionToPixel(x);
-     int yTouch = convertPositionToPixel(y);
-     int ControlIndex = -1; // Is set to -1 to return a negative value if no active control is found.   
-     for (int i = 0; i <= amount-1; ++i)
-      {
-      if (xTouch >= (getControlPosX(i) - 1) && xTouch < (getControlPosX(i) - 1 + getControlWidth(i)) && yTouch >= (getControlPosY(i) - 1) && yTouch < (getControlPosY(i) - 1 + getControlHeight(i))) 
-       ControlIndex = i;
-      }
-     return ControlIndex;
-     }
+int ControlIndexForXandY(float x, float y)
+{
+    int xTouch = convertPositionToPixel(x);
+    int yTouch = convertPositionToPixel(y);
+    int ControlIndex = -1; // Is set to -1 to return a negative value if no active control is found.
 
-
-//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-//  TOUCH EVENTS
-
-//  Send Touch-Event to corresponding controller function.
-    void touchStart (int index, float x, float y, float z, float vz)
-     { 
-     int i = ControlIndexForXandY (x, y);
-     if (i >= 0)
-      {
-      if (getControlType(i) == 0) // Button
-       doTouchButton (index, x, y, z);
-      if (getControlType(i) == 1) // Switch
-       doTouchSwitch (index, x, y, z);
-      }
-     }
-    void touchMove (int index, float x, float y, float z, float vz)
-     { 
-     }
-    void touchEnd (int index, float x, float y, float z, float vz)
-     { 
-     for (int i = 0; i <= amount-1; ++i) 
-      {if (getControlType(i) == 0) setControlValue(i, 0);} // Reset active buttons.
-     }
-
-//  Handle Button-Touch
-    void doTouchButton (int index, float x, float y, float z)
-     {
-     int i = ControlIndexForXandY (x, y);
-     setControlValue(i, 127);
-     sendCC (midiChannel, getControlCC(i), getControlValue(i));
-     }
-     
-// Handle Switch-Touch
-   void doTouchSwitch (int index, float x, float y, float z)
-     {
-     int i = ControlIndexForXandY (x, y);
-     if (getControlValue(i) == 127)
-      {
-      setControlValue(i, 0);
-      sendCC (midiChannel, getControlCC(i), getControlValue(i)); 
-      }
-     else
-      {
-      setControlValue(i, 127);
-      sendCC (midiChannel, getControlCC(i), getControlValue(i)); 
-      }
-     }
-
-     
-//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-//  INCOMING MIDI
-     
-    void handleMIDI (int Channel, int CC, int value)
+    for (int i = 0; i < amount; ++i)
     {
-     int iChannel = 176;
-     for (int i = 0; i <= 15; ++i)
-      {
-      if ( Channel == iChannel && midiChannel == i )
-       for (int i = 0; i <= amount-1; ++i)
-        { 
-        if (getControlCC(i) == CC) setControlValue(i, value); 
-        }
-      iChannel++;
-      }    
+        if (   xTouch >= (getControlPosX(i) - 1)
+            && xTouch <  (getControlPosX(i) - 1 + getControlWidth(i))
+            && yTouch >= (getControlPosY(i) - 1)
+            && yTouch <  (getControlPosY(i) - 1 + getControlHeight(i)))
+            ControlIndex = i;
     }
 
+    return ControlIndex;
+}
 
-//  ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-//  DRAW CONTROLS
+//==============================================================================
+//  Touch Handlers
+//==============================================================================
 
-    void repaint()
-     {    
-     clearDisplay();
+//  Send Touch-Event to corresponding controller function
+void touchStart (int index, float x, float y, float z, float vz)
+{
+    int i = ControlIndexForXandY (x, y);
 
-     for (int i = 0; i <= amount-1; ++i)
-      {
-    
-//  Draw Buttons
-      if (getControlType(i) == 0)
-       {
-       if (getControlValue(i) == 127)
-        fillRect (ControlBgColour, getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
-       else
-        fillRect (getControlColour(i), getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
-       }
-     
-// Draw Switches
-      if (getControlType(i) == 1)
-       {
-       if (getControlValue(i) == 127)
-        fillRect (getControlColour(i), getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
-       else
-        fillRect (ControlBgColour, getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
-       }
-          
-      }
-     }
+    if (i >= 0)
+    {
+        if (getControlType(i) == 0) // Button
+            doTouchButton (index, x, y, z);
 
+        if (getControlType(i) == 1) // Switch
+            doTouchSwitch (index, x, y, z);
+    }
+}
 
-    
+void touchEnd (int index, float x, float y, float z, float vz)
+{
+    for (int i = 0; i < amount; ++i)
+        if (getControlType(i) == 0)
+            setControlValue(i, 0);  // Reset active buttons
+}
+
+//  Handle Button-Touch
+void doTouchButton (int index, float x, float y, float z)
+{
+    int i = ControlIndexForXandY(x, y);
+    setControlValue(i, 127);
+    sendCC (midiChannel, getControlCC(i), getControlValue(i));
+}
+
+// Handle Switch-Touch
+void doTouchSwitch (int index, float x, float y, float z)
+{
+    int i = ControlIndexForXandY(x, y);
+
+    if (getControlValue(i) == 127)
+    {
+        setControlValue(i, 0);
+        sendCC (midiChannel, getControlCC(i), 0);
+    }
+    else
+    {
+        setControlValue(i, 127);
+        sendCC (midiChannel, getControlCC(i), 127);
+    }
+}
+
+//==============================================================================
+//  Handle Incoming MIDI
+//==============================================================================
+
+void handleMIDI(int Channel, int CC, int value)
+{
+    Channel -= 176;
+
+    if (Channel == midiChannel)
+        for (int i = 0; i < amount; i++)
+            if (getControlCC(i) == CC)
+                setControlValue(i, value);
+}
+
+//==============================================================================
+//  Repaint
+//==============================================================================
+
+void repaint()
+{
+    clearDisplay();
+
+    for (int i = 0; i < amount; ++i)
+    {
+//      Draw Buttons
+        if (getControlType(i) == 0)
+        {
+            if (getControlValue(i) == 127)
+                fillRect (ControlBgColour, getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+            else
+                fillRect (getControlColour(i), getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+        }
+
+//      Draw Switches
+        if (getControlType(i) == 1)
+        {
+            if (getControlValue(i) == 127)
+                fillRect (getControlColour(i), getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+            else
+                fillRect (ControlBgColour, getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+        }
+    }
+}
+
 /*
 <display backgroundColour="0xFF7E7E7E" textColour ="0xFFFFFFFF">
     <pixels>
