@@ -81,7 +81,7 @@ void initialise()
 //      process Mode parameters, in this case - MIDI channel and Y coordinates!
 
 //  Update global MIDI channel to [0, 15]
-        midiChannel -= 1;               // NB! Will not be performed on Mode switch!
+    midiChannel -= 1;               // NB! Will not be performed on Mode switch!
 
 //  Invert the Y axis
     //for (int i = 0; i < amount; i++)    // NB! Will not be performed on Mode switch!
@@ -206,17 +206,18 @@ void repaint()
 
     for (int i = 0; i < amount; ++i)
     {
-//      Draw Buttons
-        if (getControlType(i) == 0)
+        if (getControlType(i) == 0)         // Draw Buttons
         {
             if (getControlValue(i) == 127)
-                fillRect (ControlBgColour, getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+                fillRect (ControlBgColour,
+                          getControlPosX(i)-1, getControlPosY(i)-1,
+                          getControlWidth(i), getControlHeight(i));
             else
-                fillRect (getControlColour(i), getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
+                fillRect (getControlColour(i),
+                          getControlPosX(i)-1, getControlPosY(i)-1,
+                          getControlWidth(i), getControlHeight(i));
         }
-
-//      Draw Switches
-        if (getControlType(i) == 1)
+        else if (getControlType(i) == 1)    // Draw Switches
         {
             if (getControlValue(i) == 127)
                 fillRect (getControlColour(i), getControlPosX(i)-1, getControlPosY(i)-1, getControlWidth(i), getControlHeight(i));
