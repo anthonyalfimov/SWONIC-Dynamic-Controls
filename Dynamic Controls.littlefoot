@@ -347,24 +347,22 @@ void doTouchPressure(int i, float z)
 //  Handle Incoming MIDI
 //==============================================================================
 
-void handleMIDI(int Channel, int CC, int value)
+void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
-//  TODO: optimize MIDI handler
+//  TODO: is it better/safer to use bitmasks instead?
 
-    int iChannel = STATUS_OFFSET_CC;
+    byteStatus -= STATUS_OFFSET_CC;     // subtract offset for CC messages
 
-    for (int i = 0; i <= 15; ++i)
-    {
-        if (Channel == iChannel && midiChannel == i )
-            for (int i = 0; i <= amount-1; ++i)
-            {
-                if (getControlCC1(i) == CC) setControlValue(i, value);
-                if (getControlCC2(i) == CC) setControlValue(i, value);
-//              if (getControlCC3(i) == CC) setControlValue(i, value);
-            }
-
-        iChannel++;
-    }
+    if (byteStatus == midiChannel)
+        for (int i = 0; i < amount; ++i)
+        {
+            if (getControlCC1(i) == byteCC)
+                setControlValue(i, byteValue);
+            else if (getControlCC2(i) == byteCC)
+                setControlValue(i, byteValue);
+//          else if (getControlCC3(i) == byteCC)
+//              setControlValue(i, byteValue);
+        }
 }
 
 //==============================================================================
