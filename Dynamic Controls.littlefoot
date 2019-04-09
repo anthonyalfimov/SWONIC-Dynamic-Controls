@@ -1,22 +1,22 @@
 /*
-<metadata description="Create up to 16 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2-dev"
+<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
-        <group name="control" displayName="Control *" count="16"/>
+        <group name="control" displayName="Control *" count="25"/>
     </groups>
 
     <variables>
         <variable name="amount" displayName="Control Amount" type="int"
-                  min="1" max="16" value="1"
+                  min="1" max="25" value="1"
                   tooltip="Number of controls to display, 1-16"/>
         <variable name="midiChannel" displayName="MIDI Channel" type="int"
                   min="1" max="16" value="1"
                   tooltip="MIDI channel that is used for all controls"/>
 
-        <vector group="control" count="16"
-                wantsGetFunctions="true" wantsSetFunctions="true">
+        <vector group="control" count="25"
+                wantsGetFunctions="true" wantsSetFunctions="false">
 
             <variable name="ControlType" displayName="Type" type="option"
                       options="Button;Switch;Fader;XYZ Pad" value="Button"
@@ -26,7 +26,7 @@
             <variable name="ControlPosX" displayName="x Position" type="int"
                       min="1" max="15" value="1"
                       tooltip="Horizontal position of the control, 1-15"/>
-            <variable name="ControlPosY" displayName="y Position" type="int"
+            <variable name="ControlInvPosY" displayName="y Position" type="int"
                       min="1" max="15" value="1"
                       tooltip="Vertical position of the control, 1-15"/>
             <variable name="ControlWidth" displayName="x Width" type="int"
@@ -54,7 +54,7 @@
 
 //==============================================================================
 //
-//  DYNAMIC CONTROLS XYZ
+//  DYNAMIC CONTROLS
 //
 //   ROLI Dashboard app for ROLI Lightpad BLOCK
 //
@@ -108,18 +108,8 @@ void initialise()
 //  Update global MIDI channel value to [0, 15]
     midiChannel -= 1;
 
-//  TODO: wouldn't it be safer to use MAX_CONTROLS instead of amount here?
-//        We won't lose much on initialising a few extra values.
-
-//  Invert the Y axis
-//  TODO: perform inversion on draw
-    for (int i = 0; i < amount; ++i)
-    {
-        setControlPosY(i, 15 - getControlPosY(i) - getControlHeight(i) + 2);
-    }
-
 //  Initialise Control Values
-    for (int i = 0; i < amount; ++i)
+    for (int i = 0; i < MAX_CONTROLS; ++i)
     {
         setControlValue(i, 0);
     }
@@ -128,6 +118,15 @@ void initialise()
 //==============================================================================
 //  Conversion Functions
 //==============================================================================
+
+//  Invert the Y axis
+//  NOTE: temporary surface-level solution; metadata parameter for Y renamed
+//  TODO: deeper, more performant solution for Y axis inversion
+
+int getControlPosY(int index)
+{
+    return 15 - getControlInvPosY(index) - getControlHeight(index) + 2;
+}
 
 //  Touch position (0-2) to pixel/LED position (0-14)
 int convertPositionToPixel(float pos)
