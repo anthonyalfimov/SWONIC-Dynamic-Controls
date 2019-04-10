@@ -79,7 +79,7 @@
 //==============================================================================
 
 const int MAX_CONTROLS = 25;
-const int STATUS_OFFSET_CC = 176;           // status byte0 offset for CC messages
+const int STATUS_CC = 0xb0;                 // status byte template for CC messages
 
 // TODO: generate inactive colours from active ones
 const int ControlBgColour = 0xFF070707;     // inactive control colour
@@ -351,9 +351,9 @@ void doTouchPressure(int i, float z)
 
 void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
-//  TODO: is it better/safer to use bitmasks instead?
-
-    byteStatus -= STATUS_OFFSET_CC;     // subtract offset for CC messages
+    byteStatus ^= STATUS_CC;            // flip CC template bits in status byte
+                                        // - if status byte is a CC message,
+                                        // - the result is its MIDI channel 
 
     if (byteStatus == midiChannel)
         for (int i = 0; i < amount; ++i)
