@@ -58,11 +58,11 @@
 //
 //   ROLI Dashboard app for ROLI Lightpad BLOCK
 //
-//   developed by Andreas Swoboda alias SWONIC
+//   developed by Anthony Alfimov & Andreas Swoboda (SWONIC)
 //
 //   contact: http://swonic.com | mail@swonic.com
 //
-//   copyright: Andreas Swoboda, 2018
+//   copyright: Anthony Alfimov & Andreas Swoboda, 2018
 //
 //   version: 1.2-dev
 //
@@ -83,7 +83,8 @@ const int STATUS_OFFSET_CC = 176;           // status byte0 offset for CC messag
 
 // TODO: generate inactive colours from active ones
 const int ControlBgColour = 0xFF070707;     // inactive control colour
-                                            // X and XY didn't have alpha, what changed here?
+                                            // X and XY didn't have alpha, what changed here? 
+                                            // -> I think just a copy/paste error; all the ROLI apps use alpha so I thought maybe Lightpads respond better like that...
 
 //==============================================================================
 //  Control Value Setter and Getter
@@ -261,6 +262,8 @@ void touchEnd(int index, float x, float y, float z, float vz)
             doTouchXYZPad (index, x, y, z, 0.0);
 
 //  TODO: don't ROLI apps send pressure on touchEnd too?
+//  -> pressure on touchEnd and would be "lift" and not "press" in ROLI language I think; should we open a issue for discussion?
+
     }
 
     for (int i = 0; i < amount; ++i)            // Reset active buttons
