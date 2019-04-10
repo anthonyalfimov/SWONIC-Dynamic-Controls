@@ -71,7 +71,7 @@
 #heapsize: 25
 //
 //  Heap Layout:
-//  byte 0 - 24 - control values [0, 127]
+//  byte 0 - 24 - X control values [0, 127]
 //
 
 //==============================================================================
@@ -88,6 +88,8 @@ const int ControlBgColour = 0xFF070707;     // inactive control colour
 //==============================================================================
 //  Control Value Setter and Getter
 //==============================================================================
+
+//  TODO: implement storage for Y control value
 
 void setControlValue(int index, int value)
 {
@@ -322,6 +324,8 @@ void handleXYmove(bool dir, int i, float x, float y)
     {
         range = convertPixelToPosition(getControlWidth(i));
         value = 127 - convertPositionToMIDI(2 - x - convertPixelToPosition(16 - getControlPosX(i) - getControlWidth(i)), range);
+
+//      ISSUE: same storage used for X and Y control value
         setControlValue(i, int(value));
         sendCC(midiChannel, getControlCC1(i), int(value));
     }
@@ -329,6 +333,8 @@ void handleXYmove(bool dir, int i, float x, float y)
     {
         range = convertPixelToPosition(getControlHeight(i));
         value = convertPositionToMIDI(2 - y - convertPixelToPosition(16 - getControlPosY(i) - getControlHeight(i)), range);
+
+//      ISSUE: same storage used for X and Y control value
         setControlValue(i, int(value));
         sendCC(midiChannel, getControlCC2(i), int(value));
     }
@@ -357,10 +363,7 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
         {
             if (getControlCC1(i) == byteCC)
                 setControlValue(i, byteValue);
-            else if (getControlCC2(i) == byteCC)
-                setControlValue(i, byteValue);
-//          else if (getControlCC3(i) == byteCC)
-//              setControlValue(i, byteValue);
+//      TODO: handle saving Y control value once storage for it is implemented
         }
 }
 
