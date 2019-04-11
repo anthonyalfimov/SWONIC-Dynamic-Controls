@@ -351,10 +351,9 @@ void doTouchPressure(int i, float z)
 
 void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
-    byteStatus ^= STATUS_CC;            // flip CC template bits in status byte
-                                        // - if status byte is a CC message,
-                                        // - the result is its MIDI channel 
-
+    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+                                            // - if status byte is a CC message,
+                                            // - the result is its MIDI channel 
     if (byteStatus == midiChannel)
         for (int i = 0; i < amount; ++i)
         {
