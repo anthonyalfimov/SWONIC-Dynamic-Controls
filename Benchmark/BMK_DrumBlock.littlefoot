@@ -1,0 +1,755 @@
+
+
+/*
+<metadata description="Play drums with your Lightpad Block." details="This App loads a drum grid onto your Lightpad Block with multiple MIDI modes and layouts for use with clip launchers and drum instruments." target="Lightpad" tags="MPE;MIDI;Drum">
+
+    <groups>
+      <group name="colours" displayName="Colors" />
+    </groups>
+
+    <variables>
+      <variable name="baseNote" displayName="Base note" type="midiNote" min="C-2" max="E7" value="C1"/>
+      <variable name="gridSize" displayName="Grid size" type="int" min="1" max="4" value="4"/><variable name="fixedStrikeOn" displayName="Fixed strike" type="bool"/>
+      <variable name="fixedStrikeValue" displayName="Fixed strike value" type="int" min="1" max="127" value="127" displayMode="slider"/>      
+      <variable name="trackingMode" displayName="Tracking mode" type="option" displayMode="multiline" value="Last note played" options="Last note on channel;Highest note on channel;Lowest note on channel;" />
+      <variable name="pressType" displayName="Press type" type="option" displayMode="multiline" value="Channel Pressure" options="Channel Pressure;Poly Aftertouch" />
+      <variable name="slideCc" displayName="Slide CC no." type="int" value="74" min="0" max="127" displayMode="menu" />
+      <variable name="slideCoef" displayName="Slide curve" type="float" value="0.0" min="-1.0" max="1.0" displayMode="bipolar" />
+      <variable name="glideEnabled" displayName="Glide enabled" type="bool" value="true" />
+      <variable name="glideRate" displayName="Glide rate" type="float" value="0.5" min="0.0" max="1.0" displayMode="slider" />
+      <variable name="sendPressure" displayName="Send pressure" type="bool" value="true" />
+      <variable name="sendSlide" displayName="Send slide" type="bool" value="true" />
+
+      <variable name="padColour1"  displayName="Pad 1 Color" group="colours" type="colour" value="0xffe557da" />
+      <variable name="padColour2"  displayName="Pad 2 Color" group="colours" type="colour" value="0xfff9a366" />
+      <variable name="padColour3"  displayName="Pad 3 Color" group="colours" type="colour" value="0xff4dbdf8" />
+      <variable name="padColour4"  displayName="Pad 4 Color" group="colours" type="colour" value="0xff4dbdf8" />
+      <variable name="padColour5"  displayName="Pad 5 Color" group="colours" type="colour" value="0xffe557da" />
+      <variable name="padColour6"  displayName="Pad 6 Color" group="colours" type="colour" value="0xfff9a366" />
+      <variable name="padColour7"  displayName="Pad 7 Color" group="colours" type="colour" value="0xff4288f7" />
+      <variable name="padColour8"  displayName="Pad 8 Color" group="colours" type="colour" value="0xff4dbdf8" />
+      <variable name="padColour9"  displayName="Pad 9 Color" group="colours" type="colour" value="0xffe557da" />
+      <variable name="padColour10" displayName="Pad 10 Color" group="colours" type="colour" value="0xfff9a366" />
+      <variable name="padColour11" displayName="Pad 11 Color" group="colours" type="colour" value="0xffc38ff8" />
+      <variable name="padColour12" displayName="Pad 12 Color" group="colours" type="colour" value="0xffc38ff8" />
+      <variable name="padColour13" displayName="Pad 13 Color" group="colours" type="colour" value="0xff4288f7" />
+      <variable name="padColour14" displayName="Pad 14 Color" group="colours" type="colour" value="0xff4288f7" />
+      <variable name="padColour15" displayName="Pad 15 Color" group="colours" type="colour" value="0xffc38ff8" />
+      <variable name="padColour16" displayName="Pad 16 Color" group="colours" type="colour" value="0xff4dbdf8" />
+    </variables>
+    
+</metadata>
+*/
+
+#heapsize: 381
+
+//==============================================================================
+/*
+   Heap layout:
+
+   === 25 x Pad ===
+
+   0     4 byte x 25   colours
+   100   1 byte x 25   note numbers
+
+   === 24 x Touch ===
+
+   125   1 byte x 24   corresponding pad index (0xff if none)
+   149   4 byte x 24   initial x positions (for relative pitchbend)
+   245   4 byte x 24   initial y positions (for relative y axis)
+   341   1 byte x 24   MIDI channel assigned
+
+   === 16 x Channel ===
+
+   365   1 byte x 16   touch to track for this channel (depends on tracking mode)
+*/
+//==============================================================================
+
+
+const int _midiStartChannel = 0;
+const int _midiEndChannel = 1;
+const int _midiMPEMode = 2;
+const int _midiChannelRange = 9;
+const int _midiZone = 34;
+
+int padWidth, padSpacing;
+int dimFactor, dimDelay, dimDelta;
+int channelLastAssigned;
+int activePads;
+int clusterWidth;
+int clusterHeight;
+bool gammaCorrected;
+
+
+//==============================================================================
+void checkAndUpdateCluster()
+{
+    int w = getClusterWidth();
+    int h = getClusterHeight();
+
+    if (clusterWidth != w || clusterHeight != h)
+    {
+        updateCluster();
+    }
+}
+
+//==============================================================================
+void updateCluster()
+{
+    clusterWidth  = getClusterWidth();
+    clusterHeight = getClusterHeight();
+
+    if (clusterWidth == 1 && clusterHeight == 1)
+        return;
+
+    int x = getClusterXpos() % 4;
+    int y = getClusterYpos() % 4;
+    
+    int numPadsInGrid = (gridSize * gridSize);
+    
+    if (clusterWidth == 2 && clusterHeight == 1)
+        baseNote += (x * numPadsInGrid);
+    else if (clusterWidth == 1 && clusterHeight == 2)
+        baseNote += (y * numPadsInGrid);
+    else
+        baseNote += ((x * clusterWidth) + y) * numPadsInGrid;
+
+    baseNote = min (baseNote, 127 - numPadsInGrid);
+}
+
+//==============================================================================
+int Pad_getColour (int padIndex)
+{
+    if (padIndex == 0)  return padColour1;
+    if (padIndex == 1)  return padColour2;
+    if (padIndex == 2)  return padColour3;
+    if (padIndex == 3)  return padColour4;
+    if (padIndex == 4)  return padColour5;
+    if (padIndex == 5)  return padColour6;
+    if (padIndex == 6)  return padColour7;
+    if (padIndex == 7)  return padColour8;
+    if (padIndex == 8)  return padColour9;
+    if (padIndex == 9)  return padColour10;
+    if (padIndex == 10) return padColour11;
+    if (padIndex == 11) return padColour12;
+    if (padIndex == 12) return padColour13;
+    if (padIndex == 13) return padColour14;
+    if (padIndex == 14) return padColour15;
+    if (padIndex == 15) return padColour16;
+
+    return 0xffffffff;
+}
+
+void Pad_setNote (int padIndex, int note)
+{
+    setHeapByte (padIndex + 100, note);
+}
+
+int Pad_getNote (int padIndex)
+{
+    return baseNote + padIndex;
+}
+
+void Pad_setActive (int padIndex, bool shouldBeActive)
+{
+    activePads = shouldBeActive ? (activePads | (1 << padIndex))
+                                : (activePads & ~(1 << padIndex));
+}
+
+bool Pad_isActive (int padIndex)
+{
+    return activePads & (1 << padIndex);
+}
+
+bool isAnyPadActive()
+{
+    return activePads;
+}
+
+//==============================================================================
+void Touch_setPad (int touchIndex, int padIndex)
+{
+    setHeapByte (touchIndex + 125, padIndex);
+}
+
+int Touch_getPad (int touchIndex)
+{
+    return getHeapByte (touchIndex + 125);
+}
+
+// Note: littlefoot doesn't have set/getHeapFloat yet, so we store initial x/y
+// positions as ints, scaled up by a factor of 1e6.
+void Touch_setInitialX (int touchIndex, float initialX)
+{
+	setHeapInt ((touchIndex * 4) + 149, int (initialX * 1e6));
+}
+
+float Touch_getInitialX (int touchIndex)
+{
+    return float (getHeapInt ((touchIndex * 4) + 149)) / 1e6;
+}
+
+void Touch_setInitialY (int touchIndex, float initialY)
+{
+	setHeapInt ((touchIndex * 4) + 245, int (initialY * 1e6));
+}
+
+float Touch_getInitialY (int touchIndex)
+{
+    return float (getHeapInt ((touchIndex * 4) + 245)) / 1e6;
+}
+
+void Touch_setChannel (int touchIndex, int channel)
+{
+    setHeapByte (touchIndex + 341, channel);
+}
+
+int Touch_getChannel (int touchIndex)
+{
+    return getHeapByte (touchIndex + 341);
+}
+
+//==============================================================================
+void Channel_setTrackedTouch (int channel, int touchIndex)
+{
+    setHeapByte (channel + 365, touchIndex);
+}
+
+int Channel_getTrackedTouch (int channel)
+{
+    return getHeapByte (channel + 365);
+}
+
+//==============================================================================
+int getPadRow (float y)
+{
+    // Pad positions are inverted in y - i.e. 0 is bottom left, not top left.
+    return gridSize - (int (y * (0.95 / 2.0) * float (gridSize))) - 1;
+}
+
+int getPadColumn (float x)
+{
+    return int (x * (0.95 / 2.0) * float (gridSize));
+}
+
+int getTouchedPad (float x, float y)
+{
+	return (gridSize * getPadRow (y)) + getPadColumn (x);
+}
+
+//==============================================================================
+int getTrailColour (int padColour)
+{
+    if (gridSize == 1)
+    {
+        // Note - With a grid size of 1, we dont see the pad dim at note on (and hence its next to impossible to see the touch)
+        // With this, we draw a white heat trail over the top of the pad, giving a clear touch indication
+        // There is the potential that the heat trail being white might clash with the chosen colour,
+        // But given that its white, i figure we will normally still be able to see it, and it avoids having
+        return 0xFFFFFF;
+    }
+
+    if (padColour == 0xff000000)
+        return 0xffaaaaaa;
+
+    return blendARGB (0x88ffffff, padColour);
+}
+
+//==============================================================================
+void updateDimFactor()
+{
+	if (isAnyPadActive() || dimDelta)
+	{
+	    if (dimFactor < 180)
+	        dimDelta = 60;
+	    else
+	        dimDelta = 0;
+
+		dimFactor += dimDelta;
+		dimDelay = 8;
+	}
+	else
+	{
+		if (--dimDelay <= 0)
+		{
+			dimFactor -= 24;
+
+			if (dimFactor < 0)
+				dimFactor = 0;
+		}
+	}
+}
+
+//==============================================================================
+void drawPad (int x, int y, int colour, int bottomRightCornerDarkeningAmount)
+{
+    int dark = blendARGB (colour, bottomRightCornerDarkeningAmount << 24);
+    int mid  = blendARGB (colour, (bottomRightCornerDarkeningAmount / 2) << 24);
+
+    int w = padWidth - padSpacing;
+    blendGradientRect (colour, mid, dark, mid, x * padWidth, y * padWidth, w, w);
+}
+
+void drawPads()
+{
+    int padIndex = 0;
+
+	for (int padY = 0; padY < gridSize; ++padY)
+	{
+		for (int padX = 0; padX < gridSize; ++padX)
+		{
+		    int overlayColour = Pad_isActive (padIndex) ? 0x33ffffff : (dimFactor << 24);
+
+            drawPad (padX, gridSize - padY - 1, blendARGB (Pad_getColour (padIndex), overlayColour), 0xcc);
+
+            ++padIndex;
+		}
+	}
+}
+
+//==============================================================================
+void initialisePads()
+{
+    for (int padIndex = 0; padIndex < 25; ++padIndex)
+	{
+        // note numbers:
+        Pad_setNote (padIndex, baseNote + padIndex);
+	}
+
+	activePads = 0;
+}
+
+void initialiseTouches()
+{
+    for (int touchIndex = 0; touchIndex < 24; ++touchIndex)
+    {
+        Touch_setPad (touchIndex, 0xff);
+        Touch_setChannel (touchIndex, 0xff);
+    }
+}
+
+void initialiseChannels()
+{
+	for (int channel = 0; channel < 16; ++channel)
+    {
+        Channel_setTrackedTouch (channel, 0xff);
+
+        // Send note-offs for all channels & notes to avoid stuck notes
+        // when modifying dynamic variables from the sidepanel.
+        sendMIDI (0xb0 | channel, 120, 0); // All sound off msg
+        sendMIDI (0xb0 | channel, 123, 0); // All notes off msg
+    }
+}
+
+
+void initialiseConfig()
+{
+    setLocalConfigActiveState (_midiMPEMode, true, true);
+    setLocalConfigActiveState (_midiStartChannel, true, true);
+    setLocalConfigActiveState (_midiEndChannel, true, true);
+    setLocalConfigActiveState (_midiZone, true, true);
+    setLocalConfigActiveState (_midiChannelRange, true, true);
+}
+
+void initialise()
+{
+	
+    updateCluster();
+
+	padWidth = 15 / gridSize;
+	padSpacing = gridSize > 1 ? (15 - gridSize * padWidth) / (gridSize - 1) : 0;
+	padWidth += padSpacing;
+
+	dimFactor = 0;
+    dimDelta = 0;
+	dimDelay = 12;
+    setLocalConfig (33, 1);
+    gammaCorrected = getLocalConfig (33) > 0;
+
+	initialisePads();
+	initialiseTouches();
+	initialiseChannels();
+
+	useMPEDuplicateFilter (true);
+        
+    initialiseConfig();
+    
+}
+
+//==============================================================================
+void repaint()
+{
+	clearDisplay();
+	updateDimFactor();
+
+	if (isConnectedToHost())
+        drawPads();
+
+    // Overlay heatmap
+    drawPressureMap();
+    fadePressureMap();
+
+    checkAndUpdateCluster();
+}
+
+//==============================================================================
+int getPitchwheelValue (int touchIndex, float x)
+{
+    if (! glideEnabled)
+        return 8192;
+
+    // Offset to compenstate for border between pads
+    float offset = mod (gridSize, 2) == 0 ? (1.0 / 15.0) : 0.0;
+    
+    // Adjust width by 0.1 as edges are hard to reach 
+    float blockWidth = 2.1;
+    
+    float padWidth = (blockWidth + offset * 2.0) / float (gridSize);
+    float initialTouch = Touch_getInitialX (touchIndex);
+
+    int initialPadCol = getPadColumn (initialTouch);
+
+    float previousPadCentre = float (initialPadCol) * padWidth - offset - padWidth * 0.5;
+    float initialPadCentre = previousPadCentre + padWidth;
+    float nextPadCentre = initialPadCentre + padWidth;
+
+    float pitchBendInPads = 0.0;
+
+    if (x >= nextPadCentre || x <= previousPadCentre)
+    {
+        pitchBendInPads = (x - initialPadCentre) / padWidth;
+    }
+    else if (x > initialTouch)
+    {
+        float adjustedPadWidth = nextPadCentre - initialTouch;
+        pitchBendInPads = (x - initialTouch) / adjustedPadWidth;
+    }
+
+    else // x < initialTouch
+    {
+        float adjustedPadWidth = initialTouch - previousPadCentre;
+        pitchBendInPads = (x - initialTouch) / adjustedPadWidth;
+    }
+
+	return getPitchWheel (pitchBendInPads);
+}
+
+//==============================================================================
+int getPitchWheel (float pitchBendInPads)
+{
+    float wheelRange = 1.0 - clamp (0.0, 0.99, glideRate);
+    float maxPitchBendRange = 94.0;
+    float actualPitchBendRange = maxPitchBendRange * wheelRange + 2.0;
+    float pitchwheel = map (pitchBendInPads, -actualPitchBendRange, actualPitchBendRange, 0.0, 16383.0);
+    return int (pitchwheel);
+}
+
+//==============================================================================
+int getYAxisValue (int touchIndex, float y)
+{
+	float initialY = Touch_getInitialY (touchIndex);
+
+	if (y >= initialY)
+	        y = map (y, initialY, 2.0, 0.0, -1.0);
+	    else
+	        y = map (y, 0.0, initialY, 1.0, 0.0);
+
+    y = 0.5 + (0.5 * applyCurve (y));
+
+	return clamp (0, 127, int (y * 127));
+}
+
+float applyCurve (float y)
+{
+    float absY = slideCoef < 0 ? 1.0 - abs (y) : abs(y);
+	float absCoef = abs (slideCoef);
+
+    if (absCoef < 0.01)
+        return y;
+
+	float ky = (16.0 * absCoef / (1.0 + absCoef)) * absY;
+    float curved = (absY + ky) / (1 + ky);
+
+	if (slideCoef < 0)
+	    curved = 1 - curved;
+
+	if (y < 0)
+	    curved = -curved;
+
+    return curved;
+}
+
+//==============================================================================
+bool shouldTrackNewTouch (int channel, int touchIndex, int note)
+{
+    if (trackingMode == 0)
+        return true;  // track last note on channel: new note always overrides old one!
+
+    int previouslyTrackedTouch = Channel_getTrackedTouch (channel);
+
+    if (previouslyTrackedTouch == 0xff)
+        return true;  // channel is free and can track this touch
+
+    int previouslyTrackedNote = Pad_getNote (Touch_getPad (previouslyTrackedTouch));
+
+    if ((trackingMode == 1 && note > previouslyTrackedNote) || (trackingMode == 2 && note < previouslyTrackedNote))
+        return true;  // new note is higher/lower than previous note, and we should track highest/lowest note
+
+    return false;
+}
+
+//==============================================================================
+void touchStart (int touchIndex, float x, float y, float z, float vz)
+{
+    int padIndex = getTouchedPad (x, y);
+    int note = Pad_getNote (padIndex);
+    int colour = Pad_getColour (padIndex);
+    int channel = assignChannel (note);
+    int velocity = fixedStrikeOn ? fixedStrikeValue : clamp (1, 127, int (vz * 127.0));
+    int pressure = clamp (0, 127, int (z * 127.0));
+
+    if (sendPressure)
+    {
+        if (pressType == 0) // channel pressure
+            sendMIDI (0xd0 | channel, pressure);
+
+        else // poly aftertouch
+            sendMIDI (0xa0 | channel, note, pressure);
+    }
+
+
+    sendPitchBend (channel, 8192);
+    
+    if (sendSlide)
+    {
+        sendMIDI (0xb0 | channel, slideCc, 64);  // initial Y in relative mode
+        sendNoteOn (channel, note, velocity);
+    }
+
+    else
+        sendMIDI (0x90 + (channel), note, velocity);
+
+    addPressurePoint (getTrailColour (colour), x, y, z * 10.0);
+
+    Pad_setActive (padIndex, true);
+
+    Touch_setPad (touchIndex, padIndex);
+    Touch_setInitialX (touchIndex, x);
+    Touch_setInitialY (touchIndex, y);
+    Touch_setChannel (touchIndex, channel);
+
+    if (shouldTrackNewTouch (channel, touchIndex, note))
+        Channel_setTrackedTouch (channel, touchIndex);
+}
+
+void touchMove (int touchIndex, float x, float y, float z, float vz)
+{
+    int padIndex = Touch_getPad (touchIndex);
+    int channel = Touch_getChannel (touchIndex);
+
+    if (padIndex == 0xff)
+        return;  // touch was not started.
+
+    if (Channel_getTrackedTouch (channel) != touchIndex)
+        return;  // these are not the touch messages you're looking for...
+
+    int pressure = clamp (0, 127, int (z * 127.0));
+
+    if (sendPressure)
+    {
+        if (pressType == 0) // channel pressure
+            sendMIDI (0xd0 | channel, pressure);
+
+        else // poly aftertouch
+            sendMIDI (0xa0 | channel, Pad_getNote (padIndex), pressure);
+    }
+
+    if (sendSlide)
+        sendMIDI (0xb0 | channel, slideCc, getYAxisValue (touchIndex, y));
+
+    sendPitchBend (channel, getPitchwheelValue (touchIndex, x));
+
+    int colour = Pad_getColour (padIndex);
+    addPressurePoint (getTrailColour (colour), x, y, z * 10.0);
+    
+    log(getTimeInCurrentFunctionCall());
+}
+
+void touchEnd (int touchIndex, float x, float y, float z, float vz)
+{
+    int padIndex = Touch_getPad (touchIndex);
+    int channel = Touch_getChannel (touchIndex);
+
+    if (padIndex == 0xff)
+        return;  // touch was not started.
+
+    int note = Pad_getNote (padIndex);
+    int velocity = clamp (0, 127, int (vz * 127.0));
+
+    if (sendSlide)
+        sendNoteOff (channel, note, velocity);
+
+    else
+        sendMIDI (0x80 + (channel), note, velocity);
+
+    Pad_setActive (padIndex, false);
+
+    Touch_setPad (touchIndex, 0xff);
+    Touch_setChannel (touchIndex, 0xff);
+
+    Channel_setTrackedTouch (channel, 0xff);
+
+    deassignChannel (note, channel);
+}
+
+
+/*
+<display backgroundColour="0xFF8B58B8" textColour ="0xFFFFFFFF">
+    <pixels>
+        <pixel index="0" colour="0xA0671C1C" />
+        <pixel index="1" colour="0xA0671C1C" />
+        <pixel index="2" colour="0xA0671C1C" />
+        <pixel index="4" colour="0x802195A8" />
+        <pixel index="5" colour="0x802195A8" />
+        <pixel index="6" colour="0x802195A8" />
+        <pixel index="8" colour="0xA70DAE6F" />
+        <pixel index="9" colour="0xA70DAE6F" />
+        <pixel index="10" colour="0xA70DAE6F" />
+        <pixel index="12" colour="0x64CEE315" />
+        <pixel index="13" colour="0x64CEE315" />
+        <pixel index="14" colour="0x64CEE315" />
+        <pixel index="15" colour="0xA0671C1C" />
+        <pixel index="16" colour="0xA0671C1C" />
+        <pixel index="17" colour="0xA0671C1C" />
+        <pixel index="19" colour="0x802195A8" />
+        <pixel index="20" colour="0x802195A8" />
+        <pixel index="21" colour="0x802195A8" />
+        <pixel index="23" colour="0xA70DAE6F" />
+        <pixel index="24" colour="0xA70DAE6F" />
+        <pixel index="25" colour="0xA70DAE6F" />
+        <pixel index="27" colour="0x64CEE315" />
+        <pixel index="28" colour="0x64CEE315" />
+        <pixel index="29" colour="0x64CEE315" />
+        <pixel index="30" colour="0xA0671C1C" />
+        <pixel index="31" colour="0xA0671C1C" />
+        <pixel index="32" colour="0xA0671C1C" />
+        <pixel index="34" colour="0x802195A8" />
+        <pixel index="35" colour="0x802195A8" />
+        <pixel index="36" colour="0x802195A8" />
+        <pixel index="38" colour="0xA70DAE6F" />
+        <pixel index="39" colour="0xA70DAE6F" />
+        <pixel index="40" colour="0xA70DAE6F" />
+        <pixel index="42" colour="0x64CEE315" />
+        <pixel index="43" colour="0x64CEE315" />
+        <pixel index="44" colour="0x64CEE315" />
+        <pixel index="60" colour="0x936B196C" />
+        <pixel index="61" colour="0x936B196C" />
+        <pixel index="62" colour="0x936B196C" />
+        <pixel index="64" colour="0x93CC44A8" />
+        <pixel index="65" colour="0x93CC44A8" />
+        <pixel index="66" colour="0x93CC44A8" />
+        <pixel index="68" colour="0x626ED734" />
+        <pixel index="69" colour="0x626ED734" />
+        <pixel index="70" colour="0x626ED734" />
+        <pixel index="72" colour="0x912E8CB1" />
+        <pixel index="73" colour="0x912E8CB1" />
+        <pixel index="74" colour="0x912E8CB1" />
+        <pixel index="75" colour="0x936B196C" />
+        <pixel index="76" colour="0x936B196C" />
+        <pixel index="77" colour="0x936B196C" />
+        <pixel index="79" colour="0x93CC44A8" />
+        <pixel index="80" colour="0x93CC44A8" />
+        <pixel index="81" colour="0x93CC44A8" />
+        <pixel index="83" colour="0x626ED734" />
+        <pixel index="84" colour="0x626ED734" />
+        <pixel index="85" colour="0x626ED734" />
+        <pixel index="87" colour="0x912E8CB1" />
+        <pixel index="88" colour="0x912E8CB1" />
+        <pixel index="89" colour="0x912E8CB1" />
+        <pixel index="90" colour="0x936B196C" />
+        <pixel index="91" colour="0x936B196C" />
+        <pixel index="92" colour="0x936B196C" />
+        <pixel index="94" colour="0x93CC44A8" />
+        <pixel index="95" colour="0x93CC44A8" />
+        <pixel index="96" colour="0x93CC44A8" />
+        <pixel index="98" colour="0x626ED734" />
+        <pixel index="99" colour="0x626ED734" />
+        <pixel index="100" colour="0x626ED734" />
+        <pixel index="102" colour="0x912E8CB1" />
+        <pixel index="103" colour="0x912E8CB1" />
+        <pixel index="104" colour="0x912E8CB1" />
+        <pixel index="120" colour="0xA2B248BE" />
+        <pixel index="121" colour="0xA2B248BE" />
+        <pixel index="122" colour="0xA2B248BE" />
+        <pixel index="124" colour="0x9CC54A4A" />
+        <pixel index="125" colour="0x9CC54A4A" />
+        <pixel index="126" colour="0x9CC54A4A" />
+        <pixel index="128" colour="0x9521CACF" />
+        <pixel index="129" colour="0x9521CACF" />
+        <pixel index="130" colour="0x9521CACF" />
+        <pixel index="132" colour="0xAF31B34C" />
+        <pixel index="133" colour="0xAF31B34C" />
+        <pixel index="134" colour="0xAF31B34C" />
+        <pixel index="135" colour="0xA2B248BE" />
+        <pixel index="136" colour="0xA2B248BE" />
+        <pixel index="137" colour="0xA2B248BE" />
+        <pixel index="139" colour="0x9CC54A4A" />
+        <pixel index="140" colour="0x9CC54A4A" />
+        <pixel index="141" colour="0x9CC54A4A" />
+        <pixel index="143" colour="0x9521CACF" />
+        <pixel index="144" colour="0x9521CACF" />
+        <pixel index="145" colour="0x9521CACF" />
+        <pixel index="147" colour="0xAF31B34C" />
+        <pixel index="148" colour="0xAF31B34C" />
+        <pixel index="149" colour="0xAF31B34C" />
+        <pixel index="150" colour="0xA2B248BE" />
+        <pixel index="151" colour="0xA2B248BE" />
+        <pixel index="152" colour="0xA2B248BE" />
+        <pixel index="154" colour="0x9CC54A4A" />
+        <pixel index="155" colour="0x9CC54A4A" />
+        <pixel index="156" colour="0x9CC54A4A" />
+        <pixel index="158" colour="0x9521CACF" />
+        <pixel index="159" colour="0x9521CACF" />
+        <pixel index="160" colour="0x9521CACF" />
+        <pixel index="162" colour="0xAF31B34C" />
+        <pixel index="163" colour="0xAF31B34C" />
+        <pixel index="164" colour="0xAF31B34C" />
+        <pixel index="180" colour="0xBD4280BF" />
+        <pixel index="181" colour="0xBD4280BF" />
+        <pixel index="182" colour="0xBD4280BF" />
+        <pixel index="184" colour="0x852FBD3C" />
+        <pixel index="185" colour="0x852FBD3C" />
+        <pixel index="186" colour="0x852FBD3C" />
+        <pixel index="188" colour="0x9628C3A0" />
+        <pixel index="189" colour="0x9628C3A0" />
+        <pixel index="190" colour="0x9628C3A0" />
+        <pixel index="192" colour="0x9E4A7BCB" />
+        <pixel index="193" colour="0x9E4A7BCB" />
+        <pixel index="194" colour="0x9E4A7BCB" />
+        <pixel index="195" colour="0xBD4280BF" />
+        <pixel index="196" colour="0xBD4280BF" />
+        <pixel index="197" colour="0xBD4280BF" />
+        <pixel index="199" colour="0x852FBD3C" />
+        <pixel index="200" colour="0x852FBD3C" />
+        <pixel index="201" colour="0x852FBD3C" />
+        <pixel index="203" colour="0x9628C3A0" />
+        <pixel index="204" colour="0x9628C3A0" />
+        <pixel index="205" colour="0x9628C3A0" />
+        <pixel index="207" colour="0x9E4A7BCB" />
+        <pixel index="208" colour="0x9E4A7BCB" />
+        <pixel index="209" colour="0x9E4A7BCB" />
+        <pixel index="210" colour="0xBD4280BF" />
+        <pixel index="211" colour="0xBD4280BF" />
+        <pixel index="212" colour="0xBD4280BF" />
+        <pixel index="214" colour="0x852FBD3C" />
+        <pixel index="215" colour="0x852FBD3C" />
+        <pixel index="216" colour="0x852FBD3C" />
+        <pixel index="218" colour="0x9628C3A0" />
+        <pixel index="219" colour="0x9628C3A0" />
+        <pixel index="220" colour="0x9628C3A0" />
+        <pixel index="222" colour="0x9E4A7BCB" />
+        <pixel index="223" colour="0x9E4A7BCB" />
+        <pixel index="224" colour="0x9E4A7BCB" />
+    </pixels>
+</display>
+*/
