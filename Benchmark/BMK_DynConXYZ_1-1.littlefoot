@@ -19,7 +19,7 @@
        <variable name="ControlCC1"     displayName="x MIDI CC"       type="int"       min="1" max="127" initStart="102"  tooltip="MIDI CC message for Strike (touch) and Glide (horizontal movement)."/>    
        <variable name="ControlCC2"     displayName="y MIDI CC"       type="int"       min="1" max="127" initStart="102"  tooltip="MIDI CC message for Slide (vertical movement)."/>  
        <variable name="ControlCC3"     displayName="z MIDI CC"       type="int"       min="1" max="127" initStart="102"  tooltip="MIDI CC message for Press (pressure)."/>
-       <variable name="SendPress"      displayName="Send Pressure"   type="bool"                        value="false"    tooltip="Activate to send z CC."/>
+       <variable name="SendPress"      displayName="Send Pressure"   type="bool"                        value="true"    tooltip="Activate to send z CC."/>
        <variable name="ControlValue"   visible="false"               type="int"       min="0" max="127" value="64"       />
      </vector>
 
@@ -145,6 +145,7 @@
       if (getSendPress(i) == true) // Pressure
        doTouchPressure(i, z);
       }
+      //log(getTimeInCurrentFunctionCall());
      }
     void touchMove (int index, float x, float y, float z, float vz)
      { 
@@ -326,6 +327,7 @@
        }
      
       }
+      //log(getTimeInCurrentFunctionCall());
      }
 
 /*
