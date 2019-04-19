@@ -166,10 +166,10 @@ void touchStart(int index, float x, float y, float z, float vz)
 void touchMove(int index, float x, float y, float z, float vz)
 {
     doTouch(index, x, y, z);
-    
+
 }
 
-// WHAT HAPPENS WHEN TOUCH ENDS ON A CONTROL??? NOTHING?!! YOU DUMB DUMB
+// WHAT HAPPENS WHEN TOUCH ENDS ON A CONTROL??? NOTHING?!! 
 
 void doTouch(int touchIndex, float x, float y, float z)
 {
