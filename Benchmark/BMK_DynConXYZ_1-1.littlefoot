@@ -7,7 +7,7 @@
      <group name="control" displayName="Control *" count="16"  />
     </groups>
     <variables>
-       <variable name="amount"          displayName="Control Amount" type="int" min="1" max="16" value="1"           tooltip="Number of controls to display, 1-16." />
+       <variable name="amount"          displayName="Control Amount" type="int" min="1" max="16" value="16"           tooltip="Number of controls to display, 1-16." />
        <variable name="midiChannel"     displayName="MIDI Channel"   type="int" min="1" max="16" value="1"           tooltip="MIDI channel that is used for all controls." />
      <vector group="control" count="16" wantsGetFunctions="true" wantsSetFunctions="true">
        <variable name="ControlType"    displayName="Type"            type="option"    options="Button;Switch;Fader;XYZ Pad" value="Button" tooltip="Button: Sends x CC, 127.&#13;Switch: Sends x CC, 127 or 0.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127."/>    
