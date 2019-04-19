@@ -119,8 +119,6 @@ int getControlValueY(int controlIndex)
     return getHeapByte(controlIndex + 25);
 }
 
-//  TODO: Should we use some other functions for Control/Touch bitfields?
-
 void setControlTouchField(int controlIndex, int touchField)
 {
     setHeapInt(controlIndex * 4 + 50, touchField);
@@ -168,8 +166,10 @@ void touchStart(int index, float x, float y, float z, float vz)
 void touchMove(int index, float x, float y, float z, float vz)
 {
     doTouch(index, x, y, z);
-    log(getTimeInCurrentFunctionCall());
+    
 }
+
+// WHAT HAPPENS WHEN TOUCH ENDS ON A CONTROL??? NOTHING?!! YOU DUMB DUMB
 
 void doTouch(int touchIndex, float x, float y, float z)
 {
@@ -309,6 +309,8 @@ void doXYZPad(int controlIndex, float x, float y)
 //  Handle Incoming MIDI
 //==============================================================================
 
+// TODO: update and enbale MIDI handler!
+
 // void handleMIDI(int byteStatus, int byteCC, int byteValue)
 // {
 //     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
@@ -361,20 +363,22 @@ void repaint()
     {
         controlType = getControlType(i);
 
+        // ISSUE: the Y axis is not inverted at all!
+
         if (controlType == C_BUTTON)
         {
             if (getControlValueX(i) == 0)
             //  Inactive Button
             {
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
                          getControlWidth(i), getControlHeight(i));
             }
             else
             //  Active Button
             {
                 fillRect(InactiveColour,
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
                          getControlWidth(i), getControlHeight(i));
             }
             // Highlight
@@ -385,14 +389,14 @@ void repaint()
             //  Inactive Button
             {
                 fillRect(InactiveColour,
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
                          getControlWidth(i), getControlHeight(i));
             }
             else
             //  Active Button
             {
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
                          getControlWidth(i), getControlHeight(i));
             }
             // Highlight
@@ -404,21 +408,21 @@ void repaint()
             valueA = getControlValueX(i);           // fader CC value
 
             fillRect(InactiveColour,
-                     getControlPosX(i) - 1, getControlPosY(i) - 1,
+                     getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
                      getControlWidth(i), getControlHeight(i));
 
             if (isFaderVertical(i))
             {
                 valueB = int( map( float(valueA), 0.0, 127.0, float(getControlHeight(i)), 0.0) );
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, getControlPosY(i) - 1 + valueB,
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i) + valueB,
                          getControlWidth(i), getControlHeight(i) - valueB);
             }
             else
             {
                 valueB = int( map( float(valueA), 0.0, 127.0, 0.0, float(getControlWidth(i))) );
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
                          valueB, getControlHeight(i));
             }
         }
@@ -426,12 +430,13 @@ void repaint()
         {
             //  Draw Pad
             fillRect(getControlColour(i),
-                     getControlPosX(i) - 1, getControlPosY(i) - 1,
+                     getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
                      getControlWidth(i), getControlHeight(i));
 
             //  Draw Cross
         }
     }
+    log(getTimeInCurrentFunctionCall());
 }
 
 /*
