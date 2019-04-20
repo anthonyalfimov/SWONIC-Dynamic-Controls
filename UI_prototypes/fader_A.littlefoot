@@ -1,0 +1,33 @@
+float value;
+int show;
+
+const int activeCol       = 0xFF00FF00;
+const int inactiveHighCol = 0xFF001800;
+const int inactiveLowCol  = 0xFF000500;
+
+
+void initialise()
+{
+    value = 0;
+}
+
+
+void repaint()
+{
+    clearDisplay();
+    blendGradientRect(inactiveHighCol, inactiveHighCol, inactiveLowCol, inactiveLowCol, 6, 7, 3, 7);
+    
+    float tmp = clamp(7.0, 13.0, value * 0.5 * 14);
+    tmp = map(tmp, 7.0, 13.0, 0.0, 127.0);
+    show = 127 - int(tmp);
+
+    int pix = int( map(float(show), 0.0, 127.0, 7.0, 0.0) );
+    fillRect(activeCol, 6, 7 + pix, 3, 7 - pix);
+    
+    drawNumber(show, 0xFFFFFFFF, 1, 1);
+}
+
+void touchMove (int index, float x, float y, float z, float vz)
+{
+    value = y;
+}
