@@ -8,16 +8,16 @@
         <group name="colours" displayName="Pad Colors" />
     </groups>
     <variables>
-        <variable name="gridOption" displayName="Grid Size" type="option" value="4x4" options="1x1;2x2;3x3;4x4;5x5;" tooltip="Select the number of pads in the grid" />
+        <variable name="gridOption" displayName="Grid Size" type="option" value="5x5" options="1x1;2x2;3x3;4x4;5x5;" tooltip="Select the number of pads in the grid" />
         <variable name="channel" displayName="MIDI Channel" type="int" min="1" max="16" value="1" displayMode="stepper" tooltip="The MIDI channel that values are sent on" />
         <variable name="noteOffTime" displayName="Trigger Time (msec)" type="int" min="0" max="2000" value="500" displayMode="slider" tooltip="How long after a note on will note off events be sent for Trigger mode pads" />
-        <variable name="wantsPolyPressure" displayName="Use Poly Pressure" type="bool" value="false"  toolTip="Should polyphonic pressure be used, or ignored"/>
+        <variable name="wantsPolyPressure" displayName="Use Poly Pressure" type="bool" value="true"  toolTip="Should polyphonic pressure be used, or ignored"/>
         <vector count="25" group="pads" wantsGetFunctions="true" wantsSetFunctions="true">
             <variable name="behaviour" displayName="Behavior" type="option" value="Note on/off" options="Note on/off;Controller;" tooltip="Select the behavior of the pad.&#13;Note on/off sends note information when pads are interacted with.&#13;Controller will send MIDI CC data when pads are interacted with"/>
             <variable name="action" displayName="Action" type="option" value="Gate" options="Toggle;Gate;Trigger;" tooltip="Set the action for the pad&#13;&#13;Toggle sends high and then low values with successive taps of the pad&#13;&#13;Gate will send high values whilst you are pressing a pad, and low value once you release.&#13;&#13;Trigger sends a high value and then a low value after a pre-set time"/>
             <variable name="note" displayName="Note" type="midiNote" value="C3" initStart="60" tooltip="The note that will be sent when using the Note On/Off mode" />
             <variable name="CC" displayName="CC" type="int" min="0" max="127" value="102" initStart="102" tooltip="The CC that will be sent when using the Controller mode" />
-            <variable name="pressure" displayName="Send Pressure" type="bool" value="false" tooltip="Will pressure be sent for this pad?" />
+            <variable name="pressure" displayName="Send Pressure" type="bool" value="true" tooltip="Will pressure be sent for this pad?" />
         </vector>
         <vector count="25" wantsGetFunctions="true">
             <variable name="padColour" displayName="Pad * Color" group="colours" type="colour" value="random" tooltip="Set the color of the pad"/>
@@ -299,6 +299,11 @@ void touchStart (int touchIndex, float x, float y, float z, float vz)
 
     addPressurePoint (getTrailColour (getPadColour (padIndex)), x, y, z * 10.0);
     setPadForTouch (touchIndex, padIndex);
+    
+//==============================================================================
+//  Log touchStart()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void touchMove (int touchIndex, float x, float y, float z, float vz)
@@ -316,6 +321,9 @@ void touchMove (int touchIndex, float x, float y, float z, float vz)
 
     addPressurePoint (getTrailColour (getPadColour (padIndex)), x, y, z * 10.0);
     
+//==============================================================================
+//  Log touchMove()
+//==============================================================================
     log(getTimeInCurrentFunctionCall());
 }
 
@@ -351,6 +359,11 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
     }
 
     setPadForTouch (touchIndex, 0xff);
+    
+//==============================================================================
+//  Log touchEnd()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void setPadOffDeltaTime (int padIndex, int delta, int velocity)
@@ -397,6 +410,11 @@ void repaint()
     updateNoteOffTime();
     drawPressureMap();
     fadePressureMap();
+    
+//==============================================================================
+//  Log repaint()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 

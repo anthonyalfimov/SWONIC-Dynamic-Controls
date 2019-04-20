@@ -1,5 +1,5 @@
 /*
-<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2-dev"
+<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.0-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
@@ -228,7 +228,10 @@ void touchStart(int index, float x, float y, float z, float vz)
         if (getSendPress(i) == true)            // Pressure
             doTouchPressure(i, z);
     }
-    log(getTimeInCurrentFunctionCall());
+//==============================================================================
+//  Log touchStart()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void touchMove(int index, float x, float y, float z, float vz)
@@ -247,7 +250,10 @@ void touchMove(int index, float x, float y, float z, float vz)
         if (getSendPress(i) == true)            // Pressure
             doTouchPressure(i, z);
     }
-    log(getTimeInCurrentFunctionCall());
+//==============================================================================
+//  Log touchMove()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void touchEnd(int index, float x, float y, float z, float vz)
@@ -267,6 +273,10 @@ void touchEnd(int index, float x, float y, float z, float vz)
     for (int i = 0; i < amount; ++i)            // Reset active buttons
         if (getControlType(i) == 0)
             setControlValue(i, 0);
+
+//==============================================================================
+//  Log touchEnd()
+//==============================================================================
 }
 
 //  TODO: currently passing the index is pointless; i could pe passed into function
@@ -436,6 +446,9 @@ void repaint()
             fadePressureMap();
         }
     }
+//==============================================================================
+//  Log repaint()
+//==============================================================================
     //log(getTimeInCurrentFunctionCall());
 }
 

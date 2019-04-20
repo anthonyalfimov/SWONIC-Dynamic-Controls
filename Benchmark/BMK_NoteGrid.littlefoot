@@ -528,6 +528,11 @@ void repaint()
     // Overlay heatmap
     drawPressureMap();
     fadePressureMap();
+    
+//==============================================================================
+//  Log repaint()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
@@ -784,6 +789,11 @@ void touchStart (int touchIndex, float x, float y, float z, float vz)
     Touch_setVelocity (touchIndex, velocity);
 
     Channel_setTrackedTouch (channel, touchIndex);
+    
+//==============================================================================
+//  Log touchStart()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void touchMove (int touchIndex, float x, float y, float z, float vz)
@@ -856,6 +866,9 @@ void touchMove (int touchIndex, float x, float y, float z, float vz)
 
     addPressurePoint (getTrailColour (Pad_getColour (padIndex)), x, y, z * 32.0);
     
+//==============================================================================
+//  Log touchMove()
+//==============================================================================
     log(getTimeInCurrentFunctionCall());
 }
 
@@ -913,6 +926,11 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
     Touch_setChannel (touchIndex, 0xff);
 
     removeTouchFromList (touchIndex);
+    
+//==============================================================================
+//  Log touchEnd()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void handleButtonDown (int index)

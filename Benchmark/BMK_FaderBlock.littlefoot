@@ -128,7 +128,10 @@ void touchMove (int index, float x, float y, float z, float vz)
 {
 	doTouch (index, x, y, z, vz);
 	
-	log(getTimeInCurrentFunctionCall());
+//==============================================================================
+//  Log touchMove()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void handleButtonDown (int index)
@@ -165,6 +168,11 @@ void repaint()
     paintBankIndicator();
     paintSliders();
     updateClustering();
+    
+//==============================================================================
+//  Log repaint()
+//==============================================================================
+    log(getTimeInCurrentFunctionCall());
 }
 
 

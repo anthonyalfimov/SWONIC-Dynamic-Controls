@@ -145,7 +145,10 @@
       if (getSendPress(i) == true) // Pressure
        doTouchPressure(i, z);
       }
-      //log(getTimeInCurrentFunctionCall());
+//==============================================================================
+//  Log touchStart()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
      }
     void touchMove (int index, float x, float y, float z, float vz)
      { 
@@ -160,7 +163,10 @@
        doTouchPressure(i, z);
       }
       
-      log(getTimeInCurrentFunctionCall());
+//==============================================================================
+//  Log touchMove()
+//==============================================================================
+    log(getTimeInCurrentFunctionCall());
      }
     void touchEnd (int index, float x, float y, float z, float vz)
      { 
@@ -174,6 +180,10 @@
       }
      for (int i = 0; i <= amount-1; ++i) 
       {if (getControlType(i) == 0) setControlValue(i, 0);} // Reset active buttons.
+//==============================================================================
+//  Log touchEnd()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
      }
 
      
@@ -327,7 +337,10 @@
        }
      
       }
-      //log(getTimeInCurrentFunctionCall());
+//==============================================================================
+//  Log repaint()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
      }
 
 /*

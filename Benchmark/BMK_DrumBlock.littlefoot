@@ -390,6 +390,11 @@ void repaint()
     fadePressureMap();
 
     checkAndUpdateCluster();
+    
+//==============================================================================
+//  Log repaint()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
@@ -540,6 +545,11 @@ void touchStart (int touchIndex, float x, float y, float z, float vz)
 
     if (shouldTrackNewTouch (channel, touchIndex, note))
         Channel_setTrackedTouch (channel, touchIndex);
+
+//==============================================================================
+//  Log touchStart()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void touchMove (int touchIndex, float x, float y, float z, float vz)
@@ -572,6 +582,9 @@ void touchMove (int touchIndex, float x, float y, float z, float vz)
     int colour = Pad_getColour (padIndex);
     addPressurePoint (getTrailColour (colour), x, y, z * 10.0);
     
+//==============================================================================
+//  Log touchMove()
+//==============================================================================
     log(getTimeInCurrentFunctionCall());
 }
 
@@ -600,6 +613,11 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
     Channel_setTrackedTouch (channel, 0xff);
 
     deassignChannel (note, channel);
+
+//==============================================================================
+//  Log touchEnd()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 
