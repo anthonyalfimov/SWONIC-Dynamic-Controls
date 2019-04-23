@@ -1,5 +1,6 @@
 float value;
 int show;
+bool isTouch;
 
 const int activeCol       = 0xFF00FF00;
 const int inactiveHighCol = 0xFF001800;
@@ -22,9 +23,21 @@ void repaint()
     show = 127 - int(tmp);
 
     int pix = int( map(float(show), 0.0, 127.0, 7.0, 0.0) );
-    fillRect(activeCol, 6, 7 + pix, 3, 7 - pix);
+    int highlightCol = isTouch ? 0xFFFFFFFF : activeCol;
+    blendGradientRect(highlightCol, highlightCol, activeCol, activeCol, 6, 7 + pix, 3, 7 - pix);
     
     drawNumber(show, 0xFFFFFFFF, 1, 1);
+}
+
+void touchStart (int index, float x, float y, float z, float vz)
+{
+    isTouch = true;
+}
+
+
+void touchEnd (int index, float x, float y, float z, float vz)
+{
+    isTouch = false;
 }
 
 void touchMove (int index, float x, float y, float z, float vz)
