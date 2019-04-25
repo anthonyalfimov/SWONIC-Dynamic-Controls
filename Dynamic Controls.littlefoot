@@ -62,9 +62,9 @@
 //
 //   contact: http://swonic.com | mail@swonic.com
 //
-//   copyright: Anthony Alfimov & Andreas Swoboda, 2018
+//   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
 //
-//   version: 1.2-dev
+//   version: 1.2.2-dev
 //
 //==============================================================================
 
@@ -169,7 +169,27 @@ void touchMove(int index, float x, float y, float z, float vz)
 
 }
 
-// WHAT HAPPENS WHEN TOUCH ENDS ON A CONTROL??? NOTHING?!! 
+void touchEnd (int touchIndex, float x, float y, float z, float vz)
+{
+    int touchFlag = 1 << touchIndex;    // bitflag for the touch
+    int touchField;                     // temp storage for Control touchFields
+
+    for (int i = 0; i < amount; ++i)
+    {
+        // ISSUE: WET! Make DRY
+
+        touchField = getControlTouchField(i);
+
+        if (touchField & touchFlag)                     // if touch was registered with i-th ctrl
+        {
+            touchField = touchField & ~touchFlag;       // unregister touch from control
+            setControlTouchField(i, touchField);
+
+            if (!touchField && getControlType(i) == C_BUTTON)   // if no touches left registered AND is a button
+                doButton(i, false);
+        }
+    }
+}
 
 void doTouch(int touchIndex, float x, float y, float z)
 {
@@ -213,13 +233,15 @@ void doTouch(int touchIndex, float x, float y, float z)
         {
             touchField = getControlTouchField(i);
 
+            // OPTIMISATION: if not button, just unregister? but isn't it more instructions?
+
             if (touchField & touchFlag)                     // if touch was registered with i-th ctrl
             {
                 touchField = touchField & ~touchFlag;       // unregister touch from control
                 setControlTouchField(i, touchField);
 
-                if (!touchField && getControlType(i) == C_BUTTON)   // no touches left registered AND is a button
-                    doButton(controlIndex, false);
+                if (!touchField && getControlType(i) == C_BUTTON)   // if no touches left registered AND is a button
+                    doButton(i, false);
             }
         }
     }
@@ -234,12 +256,12 @@ void doTouch(int touchIndex, float x, float y, float z)
             doButton(controlIndex, true);
         else if (controlType == C_SWITCH && !touchField)    // switch and first touch
             doSwitch(controlIndex);
-        else if (controlType == C_FADER && isHighestTouch)
+        else if (controlType == C_FADER && isHighestTouch)  // fader and highest touch
             doFader(controlIndex, x, y);
-        else if (controlType == C_XYZPAD && isHighestTouch)
+        else if (controlType == C_XYZPAD && isHighestTouch) // pad and highest touch
             doXYZPad(controlIndex, x, y);
 
-        if (getSendPress(controlIndex) && isHighestTouch)
+        if (getSendPress(controlIndex) && isHighestTouch)       // send pressure and highest touch
         {
             int pressure = clamp(0, 127, int(z * 127.0));
             sendCC(midiChannel, getControlCCZ(controlIndex), pressure);
@@ -319,7 +341,6 @@ void doXYZPad(int controlIndex, float x, float y)
 //     if (byteStatus == midiChannel)
 //         for (int i = 0; i < amount; ++i)
 //         {
-// //      ISSUE: same storage used for X and Y control value
 //             if (getControlCC1(i) == byteCC)
 //                 setControlValue(i, byteValue);
 //             else if (getControlCC2(i) == byteCC)
@@ -363,8 +384,6 @@ void repaint()
     {
         controlType = getControlType(i);
 
-        // ISSUE: the Y axis is not inverted at all!
-
         if (controlType == C_BUTTON)
         {
             if (getControlValueX(i) == 0)
@@ -403,7 +422,7 @@ void repaint()
         }
         else if (controlType == C_FADER)
         {
-        //  ISSUE: ugly inefficient temporary fader drawing
+        //  TEMP: ugly inefficient temporary fader drawing
 
             valueA = getControlValueX(i);           // fader CC value
 
