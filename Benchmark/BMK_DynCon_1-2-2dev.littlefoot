@@ -1,5 +1,5 @@
 /*
-<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.0-dev"
+<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.2-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
@@ -26,7 +26,7 @@
             <variable name="ControlPosX" displayName="x Position" type="int"
                       min="1" max="15" value="1"
                       tooltip="Horizontal position of the control, 1-15"/>
-            <variable name="ControlInvPosY" displayName="y Position" type="int"
+            <variable name="ControlPosY" displayName="y Position" type="int"
                       min="1" max="15" value="1"
                       tooltip="Vertical position of the control, 1-15"/>
             <variable name="ControlWidth" displayName="x Width" type="int"
@@ -35,13 +35,13 @@
             <variable name="ControlHeight" displayName="y Height" type="int"
                       min="1" max="15" value="1"
                       tooltip="Vertical size of the control, 1-15"/>
-            <variable name="ControlCC1" displayName="x MIDI CC" type="int"
+            <variable name="ControlCCX" displayName="x MIDI CC" type="int"
                       min="1" max="127" initStart="102"
                       tooltip="MIDI CC message for Strike (touch) and Glide (horizontal movement)"/>
-            <variable name="ControlCC2" displayName="y MIDI CC" type="int"
+            <variable name="ControlCCY" displayName="y MIDI CC" type="int"
                       min="1" max="127" initStart="102"
                       tooltip="MIDI CC message for Slide (vertical movement)"/>
-            <variable name="ControlCC3" displayName="z MIDI CC" type="int"
+            <variable name="ControlCCZ" displayName="Pressure CC" type="int"
                       min="1" max="127" initStart="102"
                       tooltip="MIDI CC message for Press (pressure)"/>
             <variable name="SendPress" displayName="Send Pressure" type="bool"
@@ -62,16 +62,21 @@
 //
 //   contact: http://swonic.com | mail@swonic.com
 //
-//   copyright: Anthony Alfimov & Andreas Swoboda, 2018
+//   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
 //
-//   version: 1.2-dev
+//   version: 1.2.2-dev
 //
 //==============================================================================
 
-#heapsize: 25
+#heapsize: 150
 //
-//  Heap Layout:
-//  byte 0 - 24 - X control values [0, 127]
+//  Heap Layout
+//  |-----------|-------------------------------------------------------------|
+//  | bytes:    | data:
+//  | 000 - 024 | 25 1-byte control X values [0, 127]
+//  | 025 - 049 | 25 1-byte control Y values [0, 127]
+//  | 050 - 149 | 25 4-byte bitfields for touches registered on a control
+//  |-----------|-------------------------------------------------------------|
 //
 
 //==============================================================================
@@ -82,22 +87,289 @@ const int MAX_CONTROLS = 25;
 const int STATUS_CC = 0xb0;                 // status byte template for CC messages
 
 // TODO: generate inactive colours from active ones
-const int ControlBgColour = 0xFF070707;     // inactive control colour
+const int InactiveColour = 0xFF070707;      // inactive control colour
+
+// Control types
+const int C_BUTTON = 0;
+const int C_SWITCH = 1;
+const int C_FADER  = 2;
+const int C_XYZPAD = 3;
 
 //==============================================================================
-//  Control Value Setter and Getter
+//  Control Value Setters and Getters
 //==============================================================================
 
-//  TODO: implement storage for Y control value
-
-void setControlValue(int index, int value)
+void setControlValueX(int controlIndex, int value)
 {
-    setHeapByte(index, value);
+    setHeapByte(controlIndex, value);
 }
 
-int getControlValue(int index)
+int getControlValueX(int controlIndex)
 {
-    return getHeapByte(index);
+    return getHeapByte(controlIndex);
+}
+
+void setControlValueY(int controlIndex, int value)
+{
+    setHeapByte(controlIndex + 25, value);
+}
+
+int getControlValueY(int controlIndex)
+{
+    return getHeapByte(controlIndex + 25);
+}
+
+void setControlTouchField(int controlIndex, int touchField)
+{
+    setHeapInt(controlIndex * 4 + 50, touchField);
+}
+
+int getControlTouchField(int controlIndex)
+{
+    return getHeapInt(controlIndex * 4 + 50);
+}
+
+//==============================================================================
+//  Conversion Functions
+//==============================================================================
+
+//  Simple coordinate conversion from (0, 2) to [0, 14]
+int convertPositionToPixel(float pos)
+{
+    // TODO: account for the actual coordinate range of [0.07, 1.93]
+    return int(pos * 0.5 * 15.0);
+}
+
+//------------------------------------------------------------------------------
+//  helper
+//------------------------------------------------------------------------------
+
+bool isFaderVertical(int controlIndex)
+{
+    // use integer division: 0 if horizontal, >=1 if vertical or square
+    return getControlHeight(controlIndex) / getControlWidth(controlIndex);
+}
+
+//------------------------------------------------------------------------------
+
+
+//==============================================================================
+//  Handle Touch
+//==============================================================================
+
+//  Send Touch-Event to corresponding controller function
+void touchStart(int index, float x, float y, float z, float vz)
+{
+    doTouch(index, x, y, z);
+}
+
+void touchMove(int index, float x, float y, float z, float vz)
+{
+    doTouch(index, x, y, z);
+
+//==============================================================================
+//  Log doTouch()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
+}
+
+void touchEnd (int touchIndex, float x, float y, float z, float vz)
+{
+    int touchFlag = 1 << touchIndex;    // bitflag for the touch
+    int touchField;                     // temp storage for Control touchFields
+
+    for (int i = 0; i < amount; ++i)
+    {
+        // ISSUE: WET! Make DRY
+
+        touchField = getControlTouchField(i);
+
+        if (touchField & touchFlag)                     // if touch was registered with i-th ctrl
+        {
+            touchField = touchField & ~touchFlag;       // unregister touch from control
+            setControlTouchField(i, touchField);
+
+            if (!touchField && getControlType(i) == C_BUTTON)   // if no touches left registered AND is a button
+                doButton(i, false);
+        }
+    }
+
+//==============================================================================
+//  Log touchEnd()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
+}
+
+void doTouch(int touchIndex, float x, float y, float z)
+{
+    // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
+    // But how and why would this ever happen?
+
+    // Simple coordinate conversion from (0, 2) to [0, 14]
+    // TODO: account for the actual coordinate range of [0.07, 1.93]
+    int intX = int(x * 0.5 * 15.0);
+    int intY = int(y * 0.5 * 15.0);
+
+    // temporaries
+    // OPTIMISATION: avoid using conditionals to filter "empty" touches?
+    int controlIndex = -1;
+    int touchFlag = 1 << touchIndex;    // bitflag for the touch
+    int touchField;                     // temp storage for Control touchFields
+
+    for (int i = 0; i < amount; ++i)
+    {
+        // OPTIMISATION: use only strict comparisons?
+        // OPTIMISATION: if no overlap, count ctrls down and break on a match
+
+        // IDEA: count ctrls down and break on a match, then continue
+        // in a separate loop, only checking for unregistering the touch
+
+        // OPTIMISATION: save control boundaries into variables or heap - this doesn't need to be calculated here, every touch!
+
+        if (   intX >= (getControlPosX(i) - 1)
+            && intX  < (getControlPosX(i) - 1 + getControlWidth(i))
+            && intY <= (15 - getControlPosY(i))
+            && intY  > (15 - getControlPosY(i) - getControlHeight(i))
+        )
+        {
+            controlIndex = i;
+
+            // put everything here!
+
+            // break conditionally on "useOverlap"
+        }
+        else
+        {
+            touchField = getControlTouchField(i);
+
+            // OPTIMISATION: if not button, just unregister? but isn't it more instructions?
+
+            if (touchField & touchFlag)                     // if touch was registered with i-th ctrl
+            {
+                touchField = touchField & ~touchFlag;       // unregister touch from control
+                setControlTouchField(i, touchField);
+
+                if (!touchField && getControlType(i) == C_BUTTON)   // if no touches left registered AND is a button
+                    doButton(i, false);
+            }
+        }
+    }
+
+    if (controlIndex >= 0)                                  // if a control was touched
+    {
+        touchField = getControlTouchField(controlIndex);
+        int controlType = getControlType(controlIndex);
+        bool isHighestTouch = !(touchField >> (touchIndex + 1));    // are there any touches with higher index registered to the control?
+
+        if (controlType == C_BUTTON && !touchField)         // button and first touch
+            doButton(controlIndex, true);
+        else if (controlType == C_SWITCH && !touchField)    // switch and first touch
+            doSwitch(controlIndex);
+        else if (controlType == C_FADER && isHighestTouch)  // fader and highest touch
+            doFader(controlIndex, x, y);
+        else if (controlType == C_XYZPAD && isHighestTouch) // pad and highest touch
+            doXYZPad(controlIndex, x, y);
+
+        if (getSendPress(controlIndex) && isHighestTouch)       // send pressure and highest touch
+        {
+            int pressure = clamp(0, 127, int(z * 127.0));
+            sendCC(midiChannel, getControlCCZ(controlIndex), pressure);
+        }
+
+        touchField = touchField | touchFlag;                // register touch with the control
+        setControlTouchField(controlIndex, touchField);
+    }
+}
+
+// OPTIMISATION: would having two functions for ON and OFF be faster?
+void doButton(int controlIndex, bool isActive)
+{
+    int value = isActive ? 127 : 0;
+    sendCC(midiChannel, getControlCCX(controlIndex), value);
+    setControlValueX(controlIndex, value);
+}
+
+// OPTIMISATION: would it be better to do a simple conditional?
+void doSwitch(int controlIndex)
+{
+    int value = (getControlValueX(controlIndex) == 0) ? 127 : 0;
+    sendCC(midiChannel, getControlCCX(controlIndex), value);
+    setControlValueX(controlIndex, value);
+}
+
+//------------------------------------------------------------------------------
+//  helper
+//------------------------------------------------------------------------------
+
+// OPTIMISATION: make all arguments float?
+// position in (0, 2); pixelMin and pixelMax in [0, 14]
+int convertPositionToCC(float position, int pixelMin, int pixelMax)
+{
+    float min = float(pixelMin);        // lower limit of control area
+    float max = float(pixelMax);        // higher limit of control area
+    position = clamp(min, max, position * 0.5 * 14.0);  // convert to pixel coordinates within control area
+
+    return int(map(position, min, max, 0.0, 127.0));
+}
+
+//------------------------------------------------------------------------------
+
+void doFader(int controlIndex, float x, float y)
+{
+    // ISSUE: This is ugly! Clean up the mess!
+    int value = isFaderVertical(controlIndex) ?
+        ( 127 - convertPositionToCC(y, 16 - getControlPosY(controlIndex) - getControlHeight(controlIndex), 15 - getControlPosY(controlIndex)) )
+        : ( convertPositionToCC(x, getControlPosX(controlIndex) - 1, getControlPosX(controlIndex) - 2 + getControlWidth(controlIndex)) );
+
+    sendCC(midiChannel, getControlCCX(controlIndex), value);
+    setControlValueX(controlIndex, value);
+}
+
+void doXYZPad(int controlIndex, float x, float y)
+{
+    int valueX = convertPositionToCC(x, getControlPosX(controlIndex) - 1, getControlPosX(controlIndex) - 2 + getControlWidth(controlIndex));
+    int valueY = 127 - convertPositionToCC(y, 16 - getControlPosY(controlIndex) - getControlHeight(controlIndex), 15 - getControlPosY(controlIndex));
+
+    sendCC(midiChannel, getControlCCX(controlIndex), valueX);
+    sendCC(midiChannel, getControlCCY(controlIndex), valueY);
+    setControlValueX(controlIndex, valueX);
+    setControlValueY(controlIndex, valueY);
+}
+
+//==============================================================================
+//  Handle Incoming MIDI
+//==============================================================================
+
+// OPTIMISATION: how long does MIDI handling take? does it slow down the app?
+//               is it important to have it?
+
+void handleMIDI(int byteStatus, int byteCC, int byteValue)
+{
+    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+                                            // - if status byte is a CC message,
+                                            // - the result is its MIDI channel
+
+    // NOTE: we have to poll all the ctrls because the same CC can be assigned
+    //       to multiple ctrls
+
+    // OPTIMISATION: here we don't account for the edge case of XYZ pad having
+    //               the same CC assigned to both axis. Is the performance
+    //               boost enough to justify this?
+
+    if (byteStatus == midiChannel)
+        for (int i = 0; i < amount; ++i)
+        {
+            if (getControlCCX(i) == byteCC)
+                setControlValueX(i, byteValue);
+            else if (getControlType(i) == C_XYZPAD      // check Y only for pads
+                     && getControlCCY(i) == byteCC)
+                setControlValueY(i, byteValue);
+        }
+
+//==============================================================================
+//  Log handleMIDI()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
@@ -109,273 +381,13 @@ void initialise()
 //  Update global MIDI channel value to [0, 15]
     midiChannel -= 1;
 
-//  Initialise Control Values
+//  Initialise Control Values and Control/Touch table
     for (int i = 0; i < MAX_CONTROLS; ++i)
     {
-        setControlValue(i, 0);
+        setControlValueX(i, 0);
+        setControlValueY(i, 0);
+        setControlTouchField(i, 0);
     }
-}
-
-//==============================================================================
-//  Conversion Functions
-//==============================================================================
-
-//  Invert the Y axis
-//  NOTE: temporary surface-level solution; metadata parameter for Y renamed
-//  TODO: deeper, more performant solution for Y axis inversion
-
-int getControlPosY(int index)
-{
-    return 15 - getControlInvPosY(index) - getControlHeight(index) + 2;
-}
-
-//  Touch position (0-2) to pixel/LED position (0-14)
-int convertPositionToPixel(float pos)
-{
-    return int(pos * 0.5 * 15.0);
-}
-
-//  Pixel/LED position (0-14) to touch position (0-2)
-float convertPixelToPosition(int pixel)
-{
-    return float(pixel * 2.0 / 15.0);
-}
-
-//  Control position (0-2) to MIDI (0-127)
-int convertPositionToMIDI(float pos, float range)
-{
-    float value = map(pos+0.1, 0.2, range, 0.0, 127.0);
-
-    if (value > 126)
-        return 127;
-    else if (value < 1)
-        return 0;
-    else
-        return int(value);
-}
-
-//  MIDI (0-127) to controller pixel value
-int convertMIDItoPixel(float midi, float range)
-{
-    float value = map(midi, 0.0, 127.0, 0.0, range);
-
-    if (value > 0 && value < 1)
-        return 1;
-    else
-        return int(value);
-}
-
-//==============================================================================
-//  Return Functions
-//==============================================================================
-
-//  Returns controller index for X and Y coordinates (0, 2).
-//      If no controls touched, -1 returned
-int ControlIndexForXandY(float x, float y)
-{
-    int xTouch = convertPositionToPixel(x);
-    int yTouch = convertPositionToPixel(y);
-    int ControlIndex = -1; // Is set to -1 to return a negative value if no active control is found
-
-    for (int i = 0; i < amount; ++i)
-    {
-        if (   xTouch >= (getControlPosX(i) - 1)
-            && xTouch <  (getControlPosX(i) - 1 + getControlWidth(i))
-            && yTouch >= (getControlPosY(i) - 1)
-            && yTouch <  (getControlPosY(i) - 1 + getControlHeight(i)))
-            ControlIndex = i;
-    }
-
-    return ControlIndex;
-}
-
-//  Direction of a fader control, with controller index of i
-int getFaderDirection(int i)
-{
-//  TODO: use ENUM-style constants for clarity instead of bool!
-
-    if (getControlWidth(i) > getControlHeight(i))
-        return false;       // horizontal
-    else
-        return true;        // vertical
-}
-
-//==============================================================================
-//  Touch Handlers
-//==============================================================================
-
-//  TODO: Control index can be passed into handler functions.
-//        Make distinction b/w i and index clearer.
-
-//  Send Touch-Event to corresponding controller function
-void touchStart(int index, float x, float y, float z, float vz)
-{
-    int i = ControlIndexForXandY(x, y);
-
-//  TODO: Use ENUM-style constants for clarity instead of numbers
-
-    if (i >= 0)
-    {
-        if (getControlType(i) == 0)             // Button
-            doTouchButton (index, x, y, z);
-        else if (getControlType(i) == 1)        // Switch
-            doTouchSwitch (index, x, y, z);
-        else if (getControlType(i) == 2)        // Fader
-            doTouchFader (index, x, y, z);
-        else if (getControlType(i) == 3)        // XYZ-Pad
-            doTouchXYZPad (index, x, y, z, 75.0);
-
-        if (getSendPress(i) == true)            // Pressure
-            doTouchPressure(i, z);
-    }
-//==============================================================================
-//  Log touchStart()
-//==============================================================================
-    //log(getTimeInCurrentFunctionCall());
-}
-
-void touchMove(int index, float x, float y, float z, float vz)
-{
-    int i = ControlIndexForXandY(x, y);
-
-//  TODO: Use ENUM-style constants for clarity instead of numbers
-
-    if (i >= 0)
-    {
-        if (getControlType(i) == 2)             // Fader
-            doTouchFader (index, x, y, z);
-        else if (getControlType(i) == 3)        // XYZ-Pad
-            doTouchXYZPad (index, x, y, z, 20.0);
-
-        if (getSendPress(i) == true)            // Pressure
-            doTouchPressure(i, z);
-    }
-//==============================================================================
-//  Log touchMove()
-//==============================================================================
-    //log(getTimeInCurrentFunctionCall());
-}
-
-void touchEnd(int index, float x, float y, float z, float vz)
-{
-    int i = ControlIndexForXandY(x, y);
-
-//  TODO: Use ENUM-style constants for clarity instead of numbers
-
-    if (i >= 0)
-    {
-        if (getControlType(i) == 2)             // Fader
-            doTouchFader (index, x, y, z);
-        else if (getControlType(i) == 3)        // XYZ-Pad
-            doTouchXYZPad (index, x, y, z, 0.0);
-    }
-
-    for (int i = 0; i < amount; ++i)            // Reset active buttons
-        if (getControlType(i) == 0)
-            setControlValue(i, 0);
-
-//==============================================================================
-//  Log touchEnd()
-//==============================================================================
-    //log(getTimeInCurrentFunctionCall());
-}
-
-//  TODO: currently passing the index is pointless; i could pe passed into function
-
-//  Handle Button-Touch
-void doTouchButton(int index, float x, float y, float z)
-{
-    int i = ControlIndexForXandY(x, y);
-    setControlValue(i, 127);
-    sendCC (midiChannel, getControlCC1(i), getControlValue(i));
-}
-
-// Handle Switch-Touch
-void doTouchSwitch(int index, float x, float y, float z)
-{
-    int i = ControlIndexForXandY (x, y);
-
-    if (getControlValue(i) == 127)
-    {
-        setControlValue(i, 0);
-        sendCC (midiChannel, getControlCC1(i), getControlValue(i));
-    }
-    else
-    {
-        setControlValue(i, 127);
-        sendCC (midiChannel, getControlCC1(i), getControlValue(i));
-    }
-}
-
-//  Handle Fader-Touch
-void doTouchFader(int index, float x, float y, float z)
-{
-    int i = ControlIndexForXandY(x, y);
-    bool dir = getFaderDirection(i);
-    handleXYmove (dir, i, x, y);
-}
-
-//  Handle XYZ-Pad
-void doTouchXYZPad(int index, float x, float y, float z, float scale)
-{
-    int i = ControlIndexForXandY (x, y);
-    addPressurePoint (ControlBgColour , x, y, z * scale);
-    handleXYmove (false, i, x, y);
-    handleXYmove (true, i, x, y);
-}
-
-//  Handle XY Movement
-void handleXYmove(bool dir, int i, float x, float y)
-{
-    float value;
-    float range;
-
-    if (dir == false)   // horizontal
-    {
-        range = convertPixelToPosition(getControlWidth(i));
-        value = 127 - convertPositionToMIDI(2 - x - convertPixelToPosition(16 - getControlPosX(i) - getControlWidth(i)), range);
-
-//      ISSUE: same storage used for X and Y control value
-        setControlValue(i, int(value));
-        sendCC(midiChannel, getControlCC1(i), int(value));
-    }
-    else                // vertical
-    {
-        range = convertPixelToPosition(getControlHeight(i));
-        value = convertPositionToMIDI(2 - y - convertPixelToPosition(16 - getControlPosY(i) - getControlHeight(i)), range);
-
-//      ISSUE: same storage used for X and Y control value
-        setControlValue(i, int(value));
-        sendCC(midiChannel, getControlCC2(i), int(value));
-    }
-}
-
-// Handle Pressure
-void doTouchPressure(int i, float z)
-{
-    float valueZ;
-    valueZ = map(z, 0.0, 1.0, 0.0, 127.0);
-    sendCC(midiChannel, getControlCC3(i), int(valueZ));
-}
-
-//==============================================================================
-//  Handle Incoming MIDI
-//==============================================================================
-
-void handleMIDI(int byteStatus, int byteCC, int byteValue)
-{
-    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-                                            // - if status byte is a CC message,
-                                            // - the result is its MIDI channel 
-    if (byteStatus == midiChannel)
-        for (int i = 0; i < amount; ++i)
-        {
-//      ISSUE: same storage used for X and Y control value
-            if (getControlCC1(i) == byteCC)
-                setControlValue(i, byteValue);
-            else if (getControlCC2(i) == byteCC)
-                setControlValue(i, byteValue);
-        }
 }
 
 //==============================================================================
@@ -386,67 +398,88 @@ void repaint()
 {
     clearDisplay();
 
+    //--------------------------------------------------------------------------
+    //  Draw Controls
+    //--------------------------------------------------------------------------
+    int controlType;
+    int valueA, valueB;                         // temporary value storage
+
     for (int i = 0; i < amount; ++i)
     {
-        if (getControlType(i) == 0)             // Draw Buttons
-        {
-            if (getControlValue(i) == 127)
-                fillRect(ControlBgColour,
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
-                         getControlWidth(i), getControlHeight(i));
-            else
-                fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
-                         getControlWidth(i), getControlHeight(i));
-        }
-        else if (getControlType(i) == 1)        // Draw Switches
-        {
-            if (getControlValue(i) == 127)
-                fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
-                         getControlWidth(i), getControlHeight(i));
-            else
-                fillRect(ControlBgColour,
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
-                         getControlWidth(i), getControlHeight(i));
-        }
-        else if (getControlType(i) == 2)        //  Draw Faders
-        {
-            int value = getControlValue(i);
-            int pxValue;
+        controlType = getControlType(i);
 
-            if (getFaderDirection(i) == false)  // horizontal
+        if (controlType == C_BUTTON)
+        {
+            if (getControlValueX(i) == 0)
+            //  Inactive Button
             {
-                fillRect(ControlBgColour,
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
-                         getControlWidth(i), getControlHeight(i));  // draw range
-                pxValue = convertMIDItoPixel(float(value),          // convert MIDI (0-127) to controller pixel range
-                                             float(getControlWidth(i)));
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
-                         pxValue, getControlHeight(i));             // draw value
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
+                         getControlWidth(i), getControlHeight(i));
             }
-            else // vertical
+            else
+            //  Active Button
             {
-                fillRect(ControlBgColour,
-                         getControlPosX(i) - 1, getControlPosY(i) - 1,
-                         getControlWidth(i), getControlHeight(i));  // draw range
-                pxValue = convertMIDItoPixel(float(value),          // convert MIDI (0-127) to controller pixel range
-                                             float(getControlHeight(i)));
+                fillRect(InactiveColour,
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
+                         getControlWidth(i), getControlHeight(i));
+            }
+            // Highlight
+        }
+        else if (controlType == C_SWITCH)
+        {
+            if (getControlValueX(i) == 0)
+            //  Inactive Button
+            {
+                fillRect(InactiveColour,
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
+                         getControlWidth(i), getControlHeight(i));
+            }
+            else
+            //  Active Button
+            {
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, getControlPosY(i) - 1 + getControlHeight(i) - pxValue,
-                         getControlWidth(i), pxValue); // draw value
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
+                         getControlWidth(i), getControlHeight(i));
+            }
+            // Highlight
+        }
+        else if (controlType == C_FADER)
+        {
+        //  TEMP: ugly inefficient temporary fader drawing
+
+            valueA = getControlValueX(i);           // fader CC value
+
+            fillRect(InactiveColour,
+                     getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
+                     getControlWidth(i), getControlHeight(i));
+
+            if (isFaderVertical(i))
+            {
+                valueB = int( map( float(valueA), 0.0, 127.0, float(getControlHeight(i)), 0.0) );
+                fillRect(getControlColour(i),
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i) + valueB,
+                         getControlWidth(i), getControlHeight(i) - valueB);
+            }
+            else
+            {
+                valueB = int( map( float(valueA), 0.0, 127.0, 0.0, float(getControlWidth(i))) );
+                fillRect(getControlColour(i),
+                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
+                         valueB, getControlHeight(i));
             }
         }
-        else if (getControlType(i) == 3)        //  Draw XYZ-Pads
+        else if (controlType == C_XYZPAD)
         {
-            fillRect (getControlColour(i),
-                      getControlPosX(i) - 1, getControlPosY(i) - 1,
-                      getControlWidth(i), getControlHeight(i));
-            drawPressureMap();
-            fadePressureMap();
+            //  Draw Pad
+            fillRect(getControlColour(i),
+                     getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
+                     getControlWidth(i), getControlHeight(i));
+
+            //  Draw Cross
         }
     }
+
 //==============================================================================
 //  Log repaint()
 //==============================================================================
