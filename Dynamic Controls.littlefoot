@@ -331,22 +331,32 @@ void doXYZPad(int controlIndex, float x, float y)
 //  Handle Incoming MIDI
 //==============================================================================
 
-// TODO: update and enbale MIDI handler!
+// OPTIMISATION: how long does MIDI handling take? does it slow down the app?
+//               is it important to have it?
 
-// void handleMIDI(int byteStatus, int byteCC, int byteValue)
-// {
-//     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-//                                             // - if status byte is a CC message,
-//                                             // - the result is its MIDI channel
-//     if (byteStatus == midiChannel)
-//         for (int i = 0; i < amount; ++i)
-//         {
-//             if (getControlCC1(i) == byteCC)
-//                 setControlValue(i, byteValue);
-//             else if (getControlCC2(i) == byteCC)
-//                 setControlValue(i, byteValue);
-//         }
-// }
+void handleMIDI(int byteStatus, int byteCC, int byteValue)
+{
+    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+                                            // - if status byte is a CC message,
+                                            // - the result is its MIDI channel
+                                            
+    // NOTE: we have to poll all the ctrls because the same CC can be assigned
+    //       to multiple ctrls
+       
+    // OPTIMISATION: here we don't account for the edge case of XYZ pad having
+    //               the same CC assigned to both axis. Is the performance
+    //               boost enough to justify this?
+    
+    if (byteStatus == midiChannel)
+        for (int i = 0; i < amount; ++i)
+        {
+            if (getControlCCX(i) == byteCC)
+                setControlValueX(i, byteValue);
+            else if (getControlType(i) == C_XYZPAD      // check Y only for pads
+                     && getControlCCY(i) == byteCC)
+                setControlValueY(i, byteValue);
+        }
+}
 
 //==============================================================================
 //  Initialisation
