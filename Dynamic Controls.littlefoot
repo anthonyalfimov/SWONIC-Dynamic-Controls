@@ -68,7 +68,7 @@
 //
 //==============================================================================
 
-#heapsize: 250
+#heapsize: 300
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
@@ -80,8 +80,10 @@
 //  | 075 - 099 | 25 1-byte control max X coordinates [0, 14]
 //  | 100 - 124 | 25 1-byte control min Y coordinates [0, 14]
 //  | 125 - 149 | 25 1-byte control max Y coordinates [0, 14]
+//  | 150 - 174 | 25 1-byte control X sizes [1, 15]
+//  | 175 - 199 | 25 1-byte control Y sizes [1, 15]
 //  |-----------|-------------------------------------------------------------|
-//  | 150 - 249 | 25 4-byte bitfields for touches registered on a control
+//  | 200 - 299 | 25 4-byte bitfields for touches registered on a control
 //  |-----------|-------------------------------------------------------------|
 //
 
@@ -128,11 +130,17 @@ int  getControlMinY(int controlIndex)               { return getHeapByte(control
 void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex + 125, maxY); }
 int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 125); }
 
+void setControlSizeX(int controlIndex, int sizeX)   { setHeapByte(controlIndex + 150, sizeX); }
+int  getControlSizeX(int controlIndex)              { return getHeapByte(controlIndex + 150); }
+
+void setControlSizeY(int controlIndex, int sizeY)   { setHeapByte(controlIndex + 175, sizeY); }
+int  getControlSizeY(int controlIndex)              { return getHeapByte(controlIndex + 175); }
+
 //------------------------------------------------------------------------------
 //  Touch Bit Fields
 //------------------------------------------------------------------------------
-void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 150, touchField); }
-int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 150); }
+void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 200, touchField); }
+int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 200); }
 
 //==============================================================================
 //  Conversion Functions and Helpers
@@ -370,30 +378,31 @@ void initialise()
 
 //  Precalculate control coordinates
 
-    // NB: heap coordinates are clamped to [0, 14], so metadata height and
-    //     width might not be the same as ones calculated from heap coordnates
-    //     In case of Y coordinate, this may lead to a problem.
-    //     Therefore, metadata height and width SHOULD NOT BE USED.
-    //     Either calculate them from heap coordinates on the spot, or
-    //     precalculate them and store in an extra 50 bytes of heap memory.
-
     for (int i = 0; i < amount; ++i)
     {
-    //  Mix X
-        int minX = getControlPosX(i) - 1;
-        setControlMinX(i,  clamp(0, 14, minX));
+    //  Mix X [0, 14]
+        int minX = clamp(0, 14, getControlPosX(i) - 1);
+        setControlMinX(i, minX);
 
-    //  Max X
-        int maxX = getControlPosX(i) + getControlWidth(i) - 2;
-        setControlMaxX(i, clamp(0, 14, maxX));
+    //  Max X [0, 14]
+        int maxX = clamp(0, 14, getControlPosX(i) + getControlWidth(i) - 2);
+        setControlMaxX(i, maxX);
 
-    //  Min Y
-        int minY = 16 - getControlPosY(i) - getControlHeight(i);
-        setControlMinY(i, clamp(0, 14, minY));
+    // Size X [1, 15]
+        int sizeX = maxX - minX + 1;
+        setControlSizeX(i, sizeX);
 
-    //  Max Y
-        int maxY = 15 - getControlPosY(i);
-        setControlMaxY(i, clamp(0, 14, maxY));
+    //  Min Y [0, 14]
+        int minY = clamp(0, 14, 16 - getControlPosY(i) - getControlHeight(i));
+        setControlMinY(i, minY);
+
+    //  Max Y [0, 14]
+        int maxY = clamp(0, 14, 15 - getControlPosY(i));
+        setControlMaxY(i, maxY);
+
+    // Size Y [1, 15]
+        int sizeY = maxY - minY + 1;
+        setControlSizeY(i, sizeY);
     }
 
     // IDEA: should we initialise the unused controls to 0 just in case?
@@ -426,16 +435,14 @@ void repaint()
             {
                 fillRect(getControlColour(i),
                          getControlMinX(i),  getControlMinY(i),
-                         getControlMaxX(i) - getControlMinX(i) + 1,
-                         getControlMaxY(i) - getControlMinY(i) + 1);
+                         getControlSizeX(i), getControlSizeY(i));
             }
             else
             //  Active Button
             {
                 fillRect(InactiveColour,
                          getControlMinX(i),  getControlMinY(i),
-                         getControlMaxX(i) - getControlMinX(i) + 1,
-                         getControlMaxY(i) - getControlMinY(i) + 1);
+                         getControlSizeX(i), getControlSizeY(i));
             }
         }
         else if (controlType == C_SWITCH)
@@ -445,16 +452,14 @@ void repaint()
             {
                 fillRect(InactiveColour,
                          getControlMinX(i),  getControlMinY(i),
-                         getControlMaxX(i) - getControlMinX(i) + 1,
-                         getControlMaxY(i) - getControlMinY(i) + 1);
+                         getControlSizeX(i), getControlSizeY(i));
             }
             else
             //  Active Button
             {
                 fillRect(getControlColour(i),
                          getControlMinX(i),  getControlMinY(i),
-                         getControlMaxX(i) - getControlMinX(i) + 1,
-                         getControlMaxY(i) - getControlMinY(i) + 1);
+                         getControlSizeX(i), getControlSizeY(i));
             }
         }
         else if (controlType == C_FADER)
@@ -462,32 +467,26 @@ void repaint()
         //  TEMP: ugly inefficient temporary fader drawing
 
             valueA = getControlValueA(i);           // fader CC value
-            int controlRange;
 
             fillRect(InactiveColour,
                      getControlMinX(i),  getControlMinY(i),
-                     getControlMaxX(i) - getControlMinX(i) + 1,
-                     getControlMaxY(i) - getControlMinY(i) + 1);
+                     getControlSizeX(i), getControlSizeY(i));
 
             // IDEA: map fader value directly to the pixel range of the control?
 
             if (isFaderVertical(i))
             {
-                controlRange = getControlMaxY(i) - getControlMinY(i) + 1;
-                valueB = int( map( float(valueA), 0.0, 127.0, float(controlRange), 0.0) );
+                valueB = int( map( float(valueA), 0.0, 127.0, float(getControlSizeY(i)), 0.0) );
                 fillRect(getControlColour(i),
                          getControlMinX(i),  getControlMinY(i) + valueB,
-                         getControlMaxX(i) - getControlMinX(i) + 1,
-                         controlRange - valueB);
+                         getControlSizeX(i), getControlSizeY(i) - valueB);
             }
             else
             {
-                controlRange = getControlMaxX(i) - getControlMinX(i) + 1;
-                valueB = int( map( float(valueA), 0.0, 127.0, 0.0, float(controlRange)) );
+                valueB = int( map( float(valueA), 0.0, 127.0, 0.0, float(getControlSizeX(i))) );
                 fillRect(getControlColour(i),
                          getControlMinX(i),  getControlMinY(i),
-                         valueB,
-                         getControlMaxY(i) - getControlMinY(i) + 1);
+                         valueB,             getControlSizeY(i));
             }
         }
         else if (controlType == C_XYZPAD)
@@ -495,13 +494,12 @@ void repaint()
             //  Draw Pad
             fillRect(getControlColour(i),
                      getControlMinX(i),  getControlMinY(i),
-                     getControlMaxX(i) - getControlMinX(i) + 1,
-                     getControlMaxY(i) - getControlMinY(i) + 1);
+                     getControlSizeX(i), getControlSizeY(i));
 
             //  Draw Cross
         }
     }
-    
+
     log(getTimeInCurrentFunctionCall());
 }
 
