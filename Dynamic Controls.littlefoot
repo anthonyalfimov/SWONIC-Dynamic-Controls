@@ -435,7 +435,6 @@ void repaint()
     //--------------------------------------------------------------------------
     int controlType;
     int activeColour;
-    int valueA, valueB;                         // temporary value storage
 
     // OPTIMISATION: is it faster to pre-save control coordinates into local vars?
 
@@ -489,19 +488,19 @@ void repaint()
 
             if (isFaderVertical(i))
             {
-                int value = convertCCToPixels(getControlValueA(i),
-                                              getControlSizeY(i), 0);
+                int pixelSize = convertCCToPixels(getControlValueA(i),
+                                                  getControlSizeY(i), 0);
                 fillRect(activeColour,
-                         getControlMinX(i),  getControlMinY(i) + value,
-                         getControlSizeX(i), getControlSizeY(i) - value);
+                         getControlMinX(i),  getControlMinY(i) + pixelSize,
+                         getControlSizeX(i), getControlSizeY(i) - pixelSize);
             }
             else
             {
-                int value = convertCCToPixels(getControlValueA(i),
-                                              0, getControlSizeX(i));
+                int pixelSize = convertCCToPixels(getControlValueA(i),
+                                                  0, getControlSizeX(i));
                 fillRect(activeColour,
                          getControlMinX(i),  getControlMinY(i),
-                         value,              getControlSizeY(i));
+                         pixelSize,          getControlSizeY(i));
             }
         }
         else if (controlType == C_XYZPAD)
@@ -512,24 +511,24 @@ void repaint()
                      getControlSizeX(i), getControlSizeY(i));
 
             //  Draw Cross
-            int valueX = convertCCToPixels(getControlValueA(i),
+            int pixelX = convertCCToPixels(getControlValueA(i),
                                            getControlMinX(i), getControlMaxX(i));
-            int valueY = convertCCToPixels(getControlValueB(i),
+            int pixelY = convertCCToPixels(getControlValueB(i),
                                            getControlMaxY(i), getControlMinY(i));
 
             // Vertical line
             fillRect(InactiveColour,
-                     getControlMinX(i),  valueY,
+                     getControlMinX(i),  pixelY,
                      getControlSizeX(i), 1);
 
             // Horizontal line
             fillRect(InactiveColour,
-                     valueX, getControlMinY(i),
+                     pixelX, getControlMinY(i),
                      1,      getControlSizeY(i));
         }
     }
 
-    //log(getTimeInCurrentFunctionCall());
+    log(getTimeInCurrentFunctionCall());
 }
 
 /*
