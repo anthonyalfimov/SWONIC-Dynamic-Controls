@@ -157,11 +157,25 @@ int convertPositionToPixel(float pos)
 //     position in (0, 2); pixelMin and pixelMax in [0, 14]
 int convertPositionToCC(float position, int pixelMin, int pixelMax)
 {
-    float min = float(pixelMin);            // lower limit of control area
-    float max = float(pixelMax);            // higher limit of control area
+    float min = float(pixelMin);        // lower limit of control area
+    float max = float(pixelMax);        // upper limit of control area
+
+    // BUG:  x = 14 and y = 14 rows of pixels don't work properly with
+    //       faders and XYZ pads!
+    // TODO: Explore alternatives for converting position to float (0, 14)
+
+    // ISSUE: max positin for horizontal fader and min position for
+    //        vertical fader only achievable at exactly 127 and 0 correspondingly
     position = clamp(min, max, position * 0.5 * 14.0);  // convert to pixel coordinates within control area
 
     return int(map(position, min, max, 0.0, 127.0));
+}
+
+// Convert CC value to a pixel value
+//     pixelMin and pixelMax can be swapped to invert the value
+int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
+{
+    return int(map(float(valueCC), 0.0, 127.0, float(pixelMin), float(pixelMax)));
 }
 
 bool isFaderVertical(int controlIndex)
@@ -466,29 +480,28 @@ void repaint()
         }
         else if (controlType == C_FADER)
         {
-        //  TEMP: ugly inefficient temporary fader drawing
-
-            valueA = getControlValueA(i);           // fader CC value
-
             fillRect(InactiveColour,
                      getControlMinX(i),  getControlMinY(i),
                      getControlSizeX(i), getControlSizeY(i));
 
             // IDEA: map fader value directly to the pixel range of the control?
+            // TODO: make sure Horizontal and Vertical faders are drawn consistently
 
             if (isFaderVertical(i))
             {
-                valueB = int( map( float(valueA), 0.0, 127.0, float(getControlSizeY(i)), 0.0) );
+                int value = convertCCToPixels(getControlValueA(i),
+                                              getControlSizeY(i), 0);
                 fillRect(activeColour,
-                         getControlMinX(i),  getControlMinY(i) + valueB,
-                         getControlSizeX(i), getControlSizeY(i) - valueB);
+                         getControlMinX(i),  getControlMinY(i) + value,
+                         getControlSizeX(i), getControlSizeY(i) - value);
             }
             else
             {
-                valueB = int( map( float(valueA), 0.0, 127.0, 0.0, float(getControlSizeX(i))) );
+                int value = convertCCToPixels(getControlValueA(i),
+                                              0, getControlSizeX(i));
                 fillRect(activeColour,
                          getControlMinX(i),  getControlMinY(i),
-                         valueB,             getControlSizeY(i));
+                         value,              getControlSizeY(i));
             }
         }
         else if (controlType == C_XYZPAD)
@@ -499,10 +512,24 @@ void repaint()
                      getControlSizeX(i), getControlSizeY(i));
 
             //  Draw Cross
+            int valueX = convertCCToPixels(getControlValueA(i),
+                                           getControlMinX(i), getControlMaxX(i));
+            int valueY = convertCCToPixels(getControlValueB(i),
+                                           getControlMaxY(i), getControlMinY(i));
+
+            // Vertical line
+            fillRect(InactiveColour,
+                     getControlMinX(i),  valueY,
+                     getControlSizeX(i), 1);
+
+            // Horizontal line
+            fillRect(InactiveColour,
+                     valueX, getControlMinY(i),
+                     1,      getControlSizeY(i));
         }
     }
 
-    log(getTimeInCurrentFunctionCall());
+    //log(getTimeInCurrentFunctionCall());
 }
 
 /*
