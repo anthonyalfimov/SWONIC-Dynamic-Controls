@@ -1,5 +1,5 @@
 /*
-<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.2-dev"
+<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.3-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
@@ -35,13 +35,13 @@
             <variable name="ControlHeight" displayName="y Height" type="int"
                       min="1" max="15" value="1"
                       tooltip="Vertical size of the control, 1-15"/>
-            <variable name="ControlCCX" displayName="x MIDI CC" type="int"
+            <variable name="ControlCCA" displayName="x MIDI CC" type="int"
                       min="1" max="127" initStart="102"
                       tooltip="MIDI CC message for Strike (touch) and Glide (horizontal movement)"/>
-            <variable name="ControlCCY" displayName="y MIDI CC" type="int"
+            <variable name="ControlCCB" displayName="y MIDI CC" type="int"
                       min="1" max="127" initStart="102"
                       tooltip="MIDI CC message for Slide (vertical movement)"/>
-            <variable name="ControlCCZ" displayName="Pressure CC" type="int"
+            <variable name="ControlCCP" displayName="Pressure CC" type="int"
                       min="1" max="127" initStart="102"
                       tooltip="MIDI CC message for Press (pressure)"/>
             <variable name="SendPress" displayName="Send Pressure" type="bool"
@@ -64,18 +64,24 @@
 //
 //   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
 //
-//   version: 1.2.2-dev
+//   version: 1.2.3-dev
 //
 //==============================================================================
 
-#heapsize: 150
+#heapsize: 250
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
 //  | bytes:    | data:
-//  | 000 - 024 | 25 1-byte control X values [0, 127]
-//  | 025 - 049 | 25 1-byte control Y values [0, 127]
-//  | 050 - 149 | 25 4-byte bitfields for touches registered on a control
+//  | 000 - 024 | 25 1-byte control CC1 values [0, 127]
+//  | 025 - 049 | 25 1-byte control CC2 values [0, 127]
+//  |-----------|-------------------------------------------------------------|
+//  | 050 - 074 | 25 1-byte control min X coordinates [0, 14]
+//  | 075 - 099 | 25 1-byte control max X coordinates [0, 14]
+//  | 100 - 124 | 25 1-byte control min Y coordinates [0, 14]
+//  | 125 - 149 | 25 1-byte control max Y coordinates [0, 14]
+//  |-----------|-------------------------------------------------------------|
+//  | 150 - 249 | 25 4-byte bitfields for touches registered on a control
 //  |-----------|-------------------------------------------------------------|
 //
 
@@ -96,41 +102,40 @@ const int C_FADER  = 2;
 const int C_XYZPAD = 3;
 
 //==============================================================================
-//  Control Value Setters and Getters
+//  Heap Setters and Getters
 //==============================================================================
+//------------------------------------------------------------------------------
+//  Control Values
+//------------------------------------------------------------------------------
+void setControlValueA(int controlIndex, int value)  { setHeapByte(controlIndex, value); }
+int  getControlValueA(int controlIndex)             { return getHeapByte(controlIndex); }
 
-void setControlValueX(int controlIndex, int value)
-{
-    setHeapByte(controlIndex, value);
-}
+void setControlValueB(int controlIndex, int value)  { setHeapByte(controlIndex + 25, value); }
+int  getControlValueB(int controlIndex)             { return getHeapByte(controlIndex + 25); }
 
-int getControlValueX(int controlIndex)
-{
-    return getHeapByte(controlIndex);
-}
+//------------------------------------------------------------------------------
+//  Coordinates
+//------------------------------------------------------------------------------
+void setControlMinX(int controlIndex, int minX)     { setHeapByte(controlIndex + 50, minX); }
+int  getControlMinX(int controlIndex)               { return getHeapByte(controlIndex + 50); }
 
-void setControlValueY(int controlIndex, int value)
-{
-    setHeapByte(controlIndex + 25, value);
-}
+void setControlMaxX(int controlIndex, int maxX)     { setHeapByte(controlIndex + 75, maxX); }
+int  getControlMaxX(int controlIndex)               { return getHeapByte(controlIndex + 75); }
 
-int getControlValueY(int controlIndex)
-{
-    return getHeapByte(controlIndex + 25);
-}
+void setControlMinY(int controlIndex, int minY)     { setHeapByte(controlIndex + 100, minY); }
+int  getControlMinY(int controlIndex)               { return getHeapByte(controlIndex + 100); }
 
-void setControlTouchField(int controlIndex, int touchField)
-{
-    setHeapInt(controlIndex * 4 + 50, touchField);
-}
+void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex + 125, maxY); }
+int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 125); }
 
-int getControlTouchField(int controlIndex)
-{
-    return getHeapInt(controlIndex * 4 + 50);
-}
+//------------------------------------------------------------------------------
+//  Touch Bit Fields
+//------------------------------------------------------------------------------
+void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 150, touchField); }
+int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 150); }
 
 //==============================================================================
-//  Conversion Functions
+//  Conversion Functions and Helpers
 //==============================================================================
 
 //  Simple coordinate conversion from (0, 2) to [0, 14]
@@ -140,18 +145,22 @@ int convertPositionToPixel(float pos)
     return int(pos * 0.5 * 15.0);
 }
 
-//------------------------------------------------------------------------------
-//  helper
-//------------------------------------------------------------------------------
+// Convert touch positin on a control to CC value [0, 127]
+//     position in (0, 2); pixelMin and pixelMax in [0, 14]
+int convertPositionToCC(float position, int pixelMin, int pixelMax)
+{
+    float min = float(pixelMin);            // lower limit of control area
+    float max = float(pixelMax);            // higher limit of control area
+    position = clamp(min, max, position * 0.5 * 14.0);  // convert to pixel coordinates within control area
+
+    return int(map(position, min, max, 0.0, 127.0));
+}
 
 bool isFaderVertical(int controlIndex)
 {
     // use integer division: 0 if horizontal, >=1 if vertical or square
     return getControlHeight(controlIndex) / getControlWidth(controlIndex);
 }
-
-//------------------------------------------------------------------------------
-
 
 //==============================================================================
 //  Handle Touch
@@ -166,7 +175,6 @@ void touchStart(int index, float x, float y, float z, float vz)
 void touchMove(int index, float x, float y, float z, float vz)
 {
     doTouch(index, x, y, z);
-
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -191,10 +199,12 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
     }
 }
 
+// TODO: doTouchEnd(...) or similiar
+
 void doTouch(int touchIndex, float x, float y, float z)
 {
     // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
-    // But how and why would this ever happen?
+    //       But how and why would this ever happen?
 
     // Simple coordinate conversion from (0, 2) to [0, 14]
     // TODO: account for the actual coordinate range of [0.07, 1.93]
@@ -209,19 +219,13 @@ void doTouch(int touchIndex, float x, float y, float z)
 
     for (int i = 0; i < amount; ++i)
     {
-        // OPTIMISATION: use only strict comparisons?
         // OPTIMISATION: if no overlap, count ctrls down and break on a match
 
         // IDEA: count ctrls down and break on a match, then continue
         // in a separate loop, only checking for unregistering the touch
 
-        // OPTIMISATION: save control boundaries into variables or heap - this doesn't need to be calculated here, every touch!
-
-        if (   intX >= (getControlPosX(i) - 1)
-            && intX  < (getControlPosX(i) - 1 + getControlWidth(i))
-            && intY <= (15 - getControlPosY(i))
-            && intY  > (15 - getControlPosY(i) - getControlHeight(i))
-        )
+        if (   intX >= getControlMinX(i) && intX <= getControlMaxX(i)
+            && intY >= getControlMinY(i) && intY <= getControlMaxY(i))
         {
             controlIndex = i;
 
@@ -264,7 +268,7 @@ void doTouch(int touchIndex, float x, float y, float z)
         if (getSendPress(controlIndex) && isHighestTouch)       // send pressure and highest touch
         {
             int pressure = clamp(0, 127, int(z * 127.0));
-            sendCC(midiChannel, getControlCCZ(controlIndex), pressure);
+            sendCC(midiChannel, getControlCCP(controlIndex), pressure);
         }
 
         touchField = touchField | touchFlag;                // register touch with the control
@@ -276,55 +280,44 @@ void doTouch(int touchIndex, float x, float y, float z)
 void doButton(int controlIndex, bool isActive)
 {
     int value = isActive ? 127 : 0;
-    sendCC(midiChannel, getControlCCX(controlIndex), value);
-    setControlValueX(controlIndex, value);
+    sendCC(midiChannel, getControlCCA(controlIndex), value);
+    setControlValueA(controlIndex, value);
 }
 
 // OPTIMISATION: would it be better to do a simple conditional?
 void doSwitch(int controlIndex)
 {
-    int value = (getControlValueX(controlIndex) == 0) ? 127 : 0;
-    sendCC(midiChannel, getControlCCX(controlIndex), value);
-    setControlValueX(controlIndex, value);
+    int value = (getControlValueA(controlIndex) == 0) ? 127 : 0;
+    sendCC(midiChannel, getControlCCA(controlIndex), value);
+    setControlValueA(controlIndex, value);
 }
-
-//------------------------------------------------------------------------------
-//  helper
-//------------------------------------------------------------------------------
-
-// OPTIMISATION: make all arguments float?
-// position in (0, 2); pixelMin and pixelMax in [0, 14]
-int convertPositionToCC(float position, int pixelMin, int pixelMax)
-{
-    float min = float(pixelMin);        // lower limit of control area
-    float max = float(pixelMax);        // higher limit of control area
-    position = clamp(min, max, position * 0.5 * 14.0);  // convert to pixel coordinates within control area
-
-    return int(map(position, min, max, 0.0, 127.0));
-}
-
-//------------------------------------------------------------------------------
 
 void doFader(int controlIndex, float x, float y)
 {
-    // ISSUE: This is ugly! Clean up the mess!
-    int value = isFaderVertical(controlIndex) ?
-        ( 127 - convertPositionToCC(y, 16 - getControlPosY(controlIndex) - getControlHeight(controlIndex), 15 - getControlPosY(controlIndex)) )
-        : ( convertPositionToCC(x, getControlPosX(controlIndex) - 1, getControlPosX(controlIndex) - 2 + getControlWidth(controlIndex)) );
+    int value;
 
-    sendCC(midiChannel, getControlCCX(controlIndex), value);
-    setControlValueX(controlIndex, value);
+    if (isFaderVertical(controlIndex))
+        value = 127 - convertPositionToCC(y, getControlMinY(controlIndex),
+                                             getControlMaxY(controlIndex));
+    else
+        value = convertPositionToCC(x, getControlMinX(controlIndex),
+                                       getControlMaxX(controlIndex));
+
+    sendCC(midiChannel, getControlCCA(controlIndex), value);
+    setControlValueA(controlIndex, value);
 }
 
 void doXYZPad(int controlIndex, float x, float y)
 {
-    int valueX = convertPositionToCC(x, getControlPosX(controlIndex) - 1, getControlPosX(controlIndex) - 2 + getControlWidth(controlIndex));
-    int valueY = 127 - convertPositionToCC(y, 16 - getControlPosY(controlIndex) - getControlHeight(controlIndex), 15 - getControlPosY(controlIndex));
+    int valueX = convertPositionToCC(x, getControlMinX(controlIndex),
+                                        getControlMaxX(controlIndex));
+    int valueY = 127 - convertPositionToCC(y, getControlMinY(controlIndex),
+                                              getControlMaxY(controlIndex));
 
-    sendCC(midiChannel, getControlCCX(controlIndex), valueX);
-    sendCC(midiChannel, getControlCCY(controlIndex), valueY);
-    setControlValueX(controlIndex, valueX);
-    setControlValueY(controlIndex, valueY);
+    sendCC(midiChannel, getControlCCA(controlIndex), valueX);
+    sendCC(midiChannel, getControlCCB(controlIndex), valueY);
+    setControlValueA(controlIndex, valueX);
+    setControlValueB(controlIndex, valueY);
 }
 
 //==============================================================================
@@ -350,11 +343,11 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
     if (byteStatus == midiChannel)
         for (int i = 0; i < amount; ++i)
         {
-            if (getControlCCX(i) == byteCC)
-                setControlValueX(i, byteValue);
-            else if (getControlType(i) == C_XYZPAD      // check Y only for pads
-                     && getControlCCY(i) == byteCC)
-                setControlValueY(i, byteValue);
+            if (getControlCCA(i) == byteCC)
+                setControlValueA(i, byteValue);
+            else if (getControlType(i) == C_XYZPAD      // check B only for pads
+                     && getControlCCB(i) == byteCC)
+                setControlValueB(i, byteValue);
         }
 }
 
@@ -370,10 +363,40 @@ void initialise()
 //  Initialise Control Values and Control/Touch table
     for (int i = 0; i < MAX_CONTROLS; ++i)
     {
-        setControlValueX(i, 0);
-        setControlValueY(i, 0);
+        setControlValueA(i, 0);
+        setControlValueB(i, 0);
         setControlTouchField(i, 0);
     }
+
+//  Precalculate control coordinates
+
+    // NB: heap coordinates are clamped to [0, 14], so metadata height and
+    //     width might not be the same as ones calculated from heap coordnates
+    //     In case of Y coordinate, this may lead to a problem.
+    //     Therefore, metadata height and width SHOULD NOT BE USED.
+    //     Either calculate them from heap coordinates on the spot, or
+    //     precalculate them and store in an extra 50 bytes of heap memory.
+
+    for (int i = 0; i < amount; ++i)
+    {
+    //  Mix X
+        int minX = getControlPosX(i) - 1;
+        setControlMinX(i,  clamp(0, 14, minX));
+
+    //  Max X
+        int maxX = getControlPosX(i) + getControlWidth(i) - 2;
+        setControlMaxX(i, clamp(0, 14, maxX));
+
+    //  Min Y
+        int minY = 16 - getControlPosY(i) - getControlHeight(i);
+        setControlMinY(i, clamp(0, 14, minY));
+
+    //  Max Y
+        int maxY = 15 - getControlPosY(i);
+        setControlMaxY(i, clamp(0, 14, maxY));
+    }
+
+    // IDEA: should we initialise the unused controls to 0 just in case?
 }
 
 //==============================================================================
@@ -390,81 +413,95 @@ void repaint()
     int controlType;
     int valueA, valueB;                         // temporary value storage
 
+    // OPTIMISATION: is it faster to pre-save control coordinates into local vars?
+
     for (int i = 0; i < amount; ++i)
     {
         controlType = getControlType(i);
 
         if (controlType == C_BUTTON)
         {
-            if (getControlValueX(i) == 0)
+            if (getControlValueA(i) == 0)
             //  Inactive Button
             {
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
-                         getControlWidth(i), getControlHeight(i));
+                         getControlMinX(i),  getControlMinY(i),
+                         getControlMaxX(i) - getControlMinX(i) + 1,
+                         getControlMaxY(i) - getControlMinY(i) + 1);
             }
             else
             //  Active Button
             {
                 fillRect(InactiveColour,
-                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
-                         getControlWidth(i), getControlHeight(i));
+                         getControlMinX(i),  getControlMinY(i),
+                         getControlMaxX(i) - getControlMinX(i) + 1,
+                         getControlMaxY(i) - getControlMinY(i) + 1);
             }
-            // Highlight
         }
         else if (controlType == C_SWITCH)
         {
-            if (getControlValueX(i) == 0)
+            if (getControlValueA(i) == 0)
             //  Inactive Button
             {
                 fillRect(InactiveColour,
-                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
-                         getControlWidth(i), getControlHeight(i));
+                         getControlMinX(i),  getControlMinY(i),
+                         getControlMaxX(i) - getControlMinX(i) + 1,
+                         getControlMaxY(i) - getControlMinY(i) + 1);
             }
             else
             //  Active Button
             {
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
-                         getControlWidth(i), getControlHeight(i));
+                         getControlMinX(i),  getControlMinY(i),
+                         getControlMaxX(i) - getControlMinX(i) + 1,
+                         getControlMaxY(i) - getControlMinY(i) + 1);
             }
-            // Highlight
         }
         else if (controlType == C_FADER)
         {
         //  TEMP: ugly inefficient temporary fader drawing
 
-            valueA = getControlValueX(i);           // fader CC value
+            valueA = getControlValueA(i);           // fader CC value
+            int controlRange;
 
             fillRect(InactiveColour,
-                     getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
-                     getControlWidth(i), getControlHeight(i));
+                     getControlMinX(i),  getControlMinY(i),
+                     getControlMaxX(i) - getControlMinX(i) + 1,
+                     getControlMaxY(i) - getControlMinY(i) + 1);
+
+            // IDEA: map fader value directly to the pixel range of the control?
 
             if (isFaderVertical(i))
             {
-                valueB = int( map( float(valueA), 0.0, 127.0, float(getControlHeight(i)), 0.0) );
+                controlRange = getControlMaxY(i) - getControlMinY(i) + 1;
+                valueB = int( map( float(valueA), 0.0, 127.0, float(controlRange), 0.0) );
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i) + valueB,
-                         getControlWidth(i), getControlHeight(i) - valueB);
+                         getControlMinX(i),  getControlMinY(i) + valueB,
+                         getControlMaxX(i) - getControlMinX(i) + 1,
+                         controlRange - valueB);
             }
             else
             {
-                valueB = int( map( float(valueA), 0.0, 127.0, 0.0, float(getControlWidth(i))) );
+                controlRange = getControlMaxX(i) - getControlMinX(i) + 1;
+                valueB = int( map( float(valueA), 0.0, 127.0, 0.0, float(controlRange)) );
                 fillRect(getControlColour(i),
-                         getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
-                         valueB, getControlHeight(i));
+                         getControlMinX(i),  getControlMinY(i),
+                         valueB,
+                         getControlMaxY(i) - getControlMinY(i) + 1);
             }
         }
         else if (controlType == C_XYZPAD)
         {
             //  Draw Pad
             fillRect(getControlColour(i),
-                     getControlPosX(i) - 1, 16 - getControlPosY(i) - getControlHeight(i),
-                     getControlWidth(i), getControlHeight(i));
+                     getControlMinX(i),  getControlMinY(i),
+                     getControlMaxX(i) - getControlMinX(i) + 1,
+                     getControlMaxY(i) - getControlMinY(i) + 1);
 
             //  Draw Cross
         }
     }
+    
     log(getTimeInCurrentFunctionCall());
 }
 
