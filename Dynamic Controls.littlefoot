@@ -159,7 +159,8 @@ int convertPositionToCC(float position, int pixelMin, int pixelMax)
 bool isFaderVertical(int controlIndex)
 {
     // use integer division: 0 if horizontal, >=1 if vertical or square
-    return getControlHeight(controlIndex) / getControlWidth(controlIndex);
+    return (getControlMaxY(controlIndex) - getControlMinY(controlIndex) + 1)
+           / (getControlMaxX(controlIndex) - getControlMinX(controlIndex) + 1);
 }
 
 //==============================================================================
@@ -380,20 +381,20 @@ void initialise()
     for (int i = 0; i < amount; ++i)
     {
     //  Mix X
-        int minX = getControlPosX(i) - 1;
-        setControlMinX(i,  clamp(0, 14, minX));
+        int minX = clamp(0, 14, getControlPosX(i) - 1);
+        setControlMinX(i,  minX);
 
     //  Max X
-        int maxX = getControlPosX(i) + getControlWidth(i) - 2;
-        setControlMaxX(i, clamp(0, 14, maxX));
+        int maxX = clamp(0, 14, getControlPosX(i) + getControlWidth(i) - 2);
+        setControlMaxX(i, maxX);
 
     //  Min Y
-        int minY = 16 - getControlPosY(i) - getControlHeight(i);
-        setControlMinY(i, clamp(0, 14, minY));
+        int minY = clamp(0, 14, 16 - getControlPosY(i) - getControlHeight(i));
+        setControlMinY(i, minY);
 
     //  Max Y
-        int maxY = 15 - getControlPosY(i);
-        setControlMaxY(i, clamp(0, 14, maxY));
+        int maxY = clamp(0, 14, 15 - getControlPosY(i));
+        setControlMaxY(i, maxY);
     }
 
     // IDEA: should we initialise the unused controls to 0 just in case?
@@ -411,6 +412,7 @@ void repaint()
     //  Draw Controls
     //--------------------------------------------------------------------------
     int controlType;
+    int activeColour;
     int valueA, valueB;                         // temporary value storage
 
     // OPTIMISATION: is it faster to pre-save control coordinates into local vars?
@@ -418,13 +420,14 @@ void repaint()
     for (int i = 0; i < amount; ++i)
     {
         controlType = getControlType(i);
+        activeColour = getControlColour(i);
 
         if (controlType == C_BUTTON)
         {
             if (getControlValueA(i) == 0)
             //  Inactive Button
             {
-                fillRect(getControlColour(i),
+                fillRect(activeColour,
                          getControlMinX(i),  getControlMinY(i),
                          getControlMaxX(i) - getControlMinX(i) + 1,
                          getControlMaxY(i) - getControlMinY(i) + 1);
@@ -451,7 +454,7 @@ void repaint()
             else
             //  Active Button
             {
-                fillRect(getControlColour(i),
+                fillRect(activeColour,
                          getControlMinX(i),  getControlMinY(i),
                          getControlMaxX(i) - getControlMinX(i) + 1,
                          getControlMaxY(i) - getControlMinY(i) + 1);
@@ -475,7 +478,7 @@ void repaint()
             {
                 controlRange = getControlMaxY(i) - getControlMinY(i) + 1;
                 valueB = int( map( float(valueA), 0.0, 127.0, float(controlRange), 0.0) );
-                fillRect(getControlColour(i),
+                fillRect(activeColour,
                          getControlMinX(i),  getControlMinY(i) + valueB,
                          getControlMaxX(i) - getControlMinX(i) + 1,
                          controlRange - valueB);
@@ -484,7 +487,7 @@ void repaint()
             {
                 controlRange = getControlMaxX(i) - getControlMinX(i) + 1;
                 valueB = int( map( float(valueA), 0.0, 127.0, 0.0, float(controlRange)) );
-                fillRect(getControlColour(i),
+                fillRect(activeColour,
                          getControlMinX(i),  getControlMinY(i),
                          valueB,
                          getControlMaxY(i) - getControlMinY(i) + 1);
@@ -493,7 +496,7 @@ void repaint()
         else if (controlType == C_XYZPAD)
         {
             //  Draw Pad
-            fillRect(getControlColour(i),
+            fillRect(activeColour,
                      getControlMinX(i),  getControlMinY(i),
                      getControlMaxX(i) - getControlMinX(i) + 1,
                      getControlMaxY(i) - getControlMinY(i) + 1);
@@ -501,7 +504,7 @@ void repaint()
             //  Draw Cross
         }
     }
-    
+
     log(getTimeInCurrentFunctionCall());
 }
 
