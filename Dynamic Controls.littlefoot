@@ -147,18 +147,18 @@ int  getControlTouchField(int controlIndex)                 { return getHeapInt(
 //==============================================================================
 
 //  Simple coordinate conversion from (0, 2) to [0, 14]
-int convertPositionToPixel(float pos)
-{
-    // TODO: account for the actual coordinate range of [0.07, 1.93]
-    return int(pos * 0.5 * 15.0);
-}
+//  Use separate function if it makes sence and the stack size allows it
+// int convertPositionToPixel(float pos)
+// {
+//     return int(pos * 0.5 * 15.0);
+// }
 
 // Convert touch positin on a control to CC value [0, 127]
 //     position in (0, 2); pixelMin and pixelMax in [0, 14]
 int convertPositionToCC(float position, int pixelMin, int pixelMax)
 {
-    float min = float(pixelMin);        // lower limit of control area
-    float max = float(pixelMax);        // upper limit of control area
+    float min = float(pixelMin);            // lower limit of control area
+    float max = float(pixelMax);            // upper limit of control area
 
     // BUG:  x = 14 and y = 14 rows of pixels don't work properly with
     //       faders and XYZ pads!
@@ -166,7 +166,8 @@ int convertPositionToCC(float position, int pixelMin, int pixelMax)
 
     // ISSUE: max positin for horizontal fader and min position for
     //        vertical fader only achievable at exactly 127 and 0 correspondingly
-    position = clamp(min, max, position * 0.5 * 14.0);  // convert to pixel coordinates within control area
+
+    position = clamp(min, max, position * 0.5 * 14.0);                  // convert to pixel coordinates within control area
 
     return int(map(position, min, max, 0.0, 127.0));
 }
@@ -188,41 +189,6 @@ bool isFaderVertical(int controlIndex)
 //  Handle Touch
 //==============================================================================
 
-//  Send Touch-Event to corresponding controller function
-void touchStart(int index, float x, float y, float z, float vz)
-{
-    doTouch(index, x, y, z);
-}
-
-void touchMove(int index, float x, float y, float z, float vz)
-{
-    doTouch(index, x, y, z);
-}
-
-void touchEnd (int touchIndex, float x, float y, float z, float vz)
-{
-    int touchFlag = 1 << touchIndex;    // bitflag for the touch
-    int touchField;                     // temp storage for Control touchFields
-
-    for (int i = 0; i < amount; ++i)
-    {
-        // ISSUE: WET! Make DRY
-
-        touchField = getControlTouchField(i);
-
-        if (touchField & touchFlag)                     // if touch was registered with i-th ctrl
-        {
-            touchField = touchField & ~touchFlag;       // unregister touch from control
-            setControlTouchField(i, touchField);
-
-            if (!touchField && getControlType(i) == C_BUTTON)   // if no touches left registered AND is a button
-                doButton(i, false);
-        }
-    }
-}
-
-// TODO: doTouchEnd(...) or similiar
-
 void doTouch(int touchIndex, float x, float y, float z)
 {
     // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
@@ -233,72 +199,65 @@ void doTouch(int touchIndex, float x, float y, float z)
     int intX = int(x * 0.5 * 15.0);
     int intY = int(y * 0.5 * 15.0);
 
-    // temporaries
-    // OPTIMISATION: avoid using conditionals to filter "empty" touches?
-    int controlIndex = -1;
-    int touchFlag = 1 << touchIndex;    // bitflag for the touch
-    int touchField;                     // temp storage for Control touchFields
+    int touchedControl = -1;
+    int touchFlag = 1 << touchIndex;        // bitflag for current touch
 
-    for (int i = 0; i < amount; ++i)
+    for (int i = amount - 1; i >= 0; --i)                               // start counting ctrls from the top
     {
-        // OPTIMISATION: if no overlap, count ctrls down and break on a match
-
-        // IDEA: count ctrls down and break on a match, then continue
-        // in a separate loop, only checking for unregistering the touch
-
         if (   intX >= getControlMinX(i) && intX <= getControlMaxX(i)
             && intY >= getControlMinY(i) && intY <= getControlMaxY(i))
         {
-            controlIndex = i;
+            int touchField = getControlTouchField(i);                   // fetch bitfield with registered touches for ctrl
+            int controlType = getControlType(i);
+            bool isHighestTouch = !(touchField >> (touchIndex + 1));    // are there any touches with higher index registered to the control?
 
-            // put everything here!
+            if (controlType == C_BUTTON && !touchField)                 // is a button and no other touches present
+                doButton(i, true);
+            else if (controlType == C_SWITCH && !touchField)            // is a switch and no other touches present
+                doSwitch(i);
+            else if (controlType == C_FADER && isHighestTouch)          // is a fader and highest touch index
+                doFader(i, x, y);
+            else if (controlType == C_XYZPAD && isHighestTouch)         // is a pad and highest touch index
+                doXYZPad(i, x, y);
 
-            // break conditionally on "useOverlap"
+            if (getSendPress(i) && isHighestTouch)                      // send pressure and highest touch
+            {
+                int pressure = clamp(0, 127, int(z * 127.0));
+                sendCC(midiChannel, getControlCCP(i), pressure);
+            }
+
+            touchField = touchField | touchFlag;                        // register current touch with ctrl
+            setControlTouchField(i, touchField);                        // write updated bitfield for ctrl
+
+            touchedControl = i;             // save index of touched ctrl
+            break;                          // if overlap is not used, stop checking lower ctrls
         }
         else
         {
-            touchField = getControlTouchField(i);
-
-            // OPTIMISATION: if not button, just unregister? but isn't it more instructions?
-
-            if (touchField & touchFlag)                     // if touch was registered with i-th ctrl
-            {
-                touchField = touchField & ~touchFlag;       // unregister touch from control
-                setControlTouchField(i, touchField);
-
-                if (!touchField && getControlType(i) == C_BUTTON)   // if no touches left registered AND is a button
-                    doButton(i, false);
-            }
+            doTouchEnd(i, touchFlag);       // unregister touch from ctrl
         }
     }
 
-    if (controlIndex >= 0)                                  // if a control was touched
+    for (int i = touchedControl - 1; i >= 0; --i)                       // go through remaining controls and unregister touch
     {
-        touchField = getControlTouchField(controlIndex);
-        int controlType = getControlType(controlIndex);
-        bool isHighestTouch = !(touchField >> (touchIndex + 1));    // are there any touches with higher index registered to the control?
-
-        if (controlType == C_BUTTON && !touchField)         // button and first touch
-            doButton(controlIndex, true);
-        else if (controlType == C_SWITCH && !touchField)    // switch and first touch
-            doSwitch(controlIndex);
-        else if (controlType == C_FADER && isHighestTouch)  // fader and highest touch
-            doFader(controlIndex, x, y);
-        else if (controlType == C_XYZPAD && isHighestTouch) // pad and highest touch
-            doXYZPad(controlIndex, x, y);
-
-        if (getSendPress(controlIndex) && isHighestTouch)       // send pressure and highest touch
-        {
-            int pressure = clamp(0, 127, int(z * 127.0));
-            sendCC(midiChannel, getControlCCP(controlIndex), pressure);
-        }
-
-        touchField = touchField | touchFlag;                // register touch with the control
-        setControlTouchField(controlIndex, touchField);
+        doTouchEnd(i, touchFlag);
     }
 }
 
-// OPTIMISATION: would having two functions for ON and OFF be faster?
+void doTouchEnd(int controlIndex, int touchFlag)
+{
+    int touchField = getControlTouchField(controlIndex);                // fetch bitfield with registered touches for ctrl
+
+    if (touchField & touchFlag)                                         // if touch was registered with current ctrl
+    {
+        touchField = touchField & ~touchFlag;                           // unregister touch from ctrl
+        setControlTouchField(controlIndex, touchField);
+
+        if (!touchField && getControlType(controlIndex) == C_BUTTON)    // if no touches left registered AND is a button
+            doButton(controlIndex, false);
+    }
+}
+
 void doButton(int controlIndex, bool isActive)
 {
     int value = isActive ? 127 : 0;
@@ -306,7 +265,6 @@ void doButton(int controlIndex, bool isActive)
     setControlValueA(controlIndex, value);
 }
 
-// OPTIMISATION: would it be better to do a simple conditional?
 void doSwitch(int controlIndex)
 {
     int value = (getControlValueA(controlIndex) == 0) ? 127 : 0;
@@ -342,6 +300,27 @@ void doXYZPad(int controlIndex, float x, float y)
     setControlValueB(controlIndex, valueY);
 }
 
+void touchStart(int index, float x, float y, float z, float vz)
+{
+    doTouch(index, x, y, z);
+}
+
+void touchMove(int index, float x, float y, float z, float vz)
+{
+    doTouch(index, x, y, z);
+    //log(getTimeInCurrentFunctionCall());
+}
+
+void touchEnd (int touchIndex, float x, float y, float z, float vz)
+{
+    int touchFlag = 1 << touchIndex;        // bitflag for current touch
+
+    for (int i = 0; i < amount; ++i)        // unregister touch from all ctrls
+    {
+        doTouchEnd(i, touchFlag);
+    }
+}
+
 //==============================================================================
 //  Handle Incoming MIDI
 //==============================================================================
@@ -352,8 +331,8 @@ void doXYZPad(int controlIndex, float x, float y)
 void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-                                            // - if status byte is a CC message,
-                                            // - the result is its MIDI channel
+                                            //   if status byte is a CC message,
+                                            //   the result is its MIDI channel
 
     // NOTE: we have to poll all the ctrls because the same CC can be assigned
     //       to multiple ctrls
@@ -391,7 +370,6 @@ void initialise()
     }
 
 //  Precalculate control coordinates
-
     for (int i = 0; i < amount; ++i)
     {
     //  Mix X [0, 14]
@@ -528,7 +506,7 @@ void repaint()
         }
     }
 
-    log(getTimeInCurrentFunctionCall());
+    //log(getTimeInCurrentFunctionCall());
 }
 
 /*
