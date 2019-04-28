@@ -147,7 +147,7 @@ int  getControlTouchField(int controlIndex)                 { return getHeapInt(
 //==============================================================================
 
 //  Simple coordinate conversion from (0, 2) to [0, 14]
-//  Use separate function if it makes sence and the stack size allows it
+//  Use separate function if it makes sense and the stack size allows it
 // int convertPositionToPixel(float pos)
 // {
 //     return int(pos * 0.5 * 15.0);
@@ -333,19 +333,18 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
                                             //   if status byte is a CC message,
                                             //   the result is its MIDI channel
 
-    // NOTE: we have to poll all the ctrls because the same CC can be assigned
-    //       to multiple ctrls
-
-    // OPTIMISATION: here we don't account for the edge case of XYZ pad having
-    //               the same CC assigned to both axis. Is the performance
-    //               boost enough to justify this?
+    // OPTIMISATION: we can assume that one CC should be assigned to only one
+    //               ctrl and break the loop once we get a match, plus make
+    //               the check for CC B an `else if`.
+    //               If multiple ctrls are assigned the same CC, only the
+    //               first match will react to external MIDI.                                       
 
     if (byteStatus == midiChannel)
         for (int i = 0; i < amount; ++i)
         {
             if (getControlCCA(i) == byteCC)
                 setControlValueA(i, byteValue);
-            else if (getControlType(i) == C_XYZPAD      // check B only for pads
+            if (getControlType(i) == C_XYZPAD   // check CC B only for XYZ pads
                      && getControlCCB(i) == byteCC)
                 setControlValueB(i, byteValue);
         }
