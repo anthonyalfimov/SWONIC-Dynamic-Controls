@@ -17,7 +17,7 @@ void repaint()
 {
     clearDisplay();
     blendGradientRect(inactiveHighCol, inactiveHighCol, inactiveLowCol, inactiveLowCol, 6, 7, 3, 7);
-    
+
     float tmp = clamp(7.0, 13.0, value * 0.5 * 14);
     tmp = map(tmp, 7.0, 13.0, 0.0, 127.0);
     show = 127 - int(tmp);
@@ -25,7 +25,7 @@ void repaint()
     int pix = int( map(float(show), 0.0, 127.0, 7.0, 0.0) );
     int highlightCol = isTouch ? 0xFFFFFFFF : activeCol;
     blendGradientRect(highlightCol, highlightCol, activeCol, activeCol, 6, 7 + pix, 3, 7 - pix);
-    
+
     drawNumber(show, 0xFFFFFFFF, 1, 1);
 }
 
