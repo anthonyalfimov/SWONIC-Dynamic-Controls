@@ -1,5 +1,7 @@
-Version 1.2.3
+Version 1.x.x
+    Optimised memory usage
+    - Combined three editions of the app (X, XY, XYZ) into a single one
     Touch system overhaul
     - Improved multitouch support
-    - Reduce memory usage
-    - Something else
+
+    .. to be continued ..
