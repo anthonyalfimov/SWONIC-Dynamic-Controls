@@ -157,18 +157,16 @@ int  getControlTouchField(int controlIndex)                 { return getHeapInt(
 //     position in (0, 2); pixelMin and pixelMax in [0, 14]
 int convertPositionToCC(float position, int pixelMin, int pixelMax)
 {
-    float min = float(pixelMin);            // lower limit of control area
-    float max = float(pixelMax);            // upper limit of control area
+    // Simple coordinate conversion from (0.0, 2.0) to (0.0, 15.0)
+    // TODO: account for the actual coordinate range of [0.07, 1.93] ?
+    position = position * 0.5 * 15;
+    
+    // TODO: if stack size allows after UI update, save offset as a const
+    // map [min + d, max + 1 - d] to [0, 127]; d = 0.6 - edge offset
+    position = map(position, float(pixelMin) + 0.6, float(pixelMax) + 0.4,
+                   0.0, 127.0);
 
-    // BUG:  x = 14 and y = 14 rows of pixels don't work properly with
-    //       faders and XYZ pads!
-
-    // ISSUE: max positin for horizontal fader and min position for
-    //        vertical fader only achievable at exactly 127 and 0 correspondingly
-
-    position = clamp(min, max, position * 0.5 * 14.0);                  // convert to pixel coordinates within control area
-
-    return int(map(position, min, max, 0.0, 127.0));
+    return clamp(0, 127, int(position));
 }
 
 // Convert CC value to a pixel value
@@ -193,8 +191,8 @@ void doTouch(int touchIndex, float x, float y, float z)
     // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
     //       But how and why would this ever happen?
 
-    // Simple coordinate conversion from (0, 2) to [0, 14]
-    // TODO: account for the actual coordinate range of [0.07, 1.93]
+    // Simple coordinate conversion from (0.0, 2.0) to [0, 14]
+    // TODO: account for the actual coordinate range of [0.07, 1.93] ?
     int intX = int(x * 0.5 * 15.0);
     int intY = int(y * 0.5 * 15.0);
 
@@ -337,7 +335,7 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
     //               ctrl and break the loop once we get a match, plus make
     //               the check for CC B an `else if`.
     //               If multiple ctrls are assigned the same CC, only the
-    //               first match will react to external MIDI.                                       
+    //               first match will react to external MIDI.
 
     if (byteStatus == midiChannel)
         for (int i = 0; i < amount; ++i)
