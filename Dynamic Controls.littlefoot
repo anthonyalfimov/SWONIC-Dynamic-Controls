@@ -94,9 +94,6 @@
 const int MAX_CONTROLS = 25;
 const int STATUS_CC = 0xb0;                 // status byte template for CC messages
 
-// TODO: generate inactive colours from active ones
-const int InactiveColour = 0xFF070707;      // inactive control colour
-
 // Control types
 const int C_BUTTON = 0;
 const int C_SWITCH = 1;
@@ -397,6 +394,37 @@ void initialise()
 }
 
 //==============================================================================
+//  Graphics Functions
+//==============================================================================
+//const int InactiveColour = 0xFF070707;        // inactive control colour
+
+// TODO: consider generating highlight colour from active colour,
+//       possibly based on pressure applied
+
+// IDEA: pass whether should be active?
+
+void drawButton(int colour, int controlIndex)
+{
+    int halfShade, fullShade;
+
+    if (getControlTouchField(controlIndex))     // if control is active
+    {
+        // TODO: consider improving readability of colour constants (make actual constants?)
+        fullShade = blendARGB(colour, 0xCCFFFFFF);
+        halfShade = blendARGB(colour, 0x66FFFFFF);
+    }
+    else
+    {
+        fullShade = blendARGB(colour, 0xCC000000);
+        halfShade = blendARGB(colour, 0x66000000);
+    }
+
+    blendGradientRect(colour, halfShade, fullShade, halfShade,
+					  getControlMinX(controlIndex),  getControlMinY(controlIndex),
+					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
+}
+
+//==============================================================================
 //  Repaint
 //==============================================================================
 
@@ -405,50 +433,32 @@ void repaint()
     clearDisplay();
 
     int controlType;
-    int activeColour;
+    int activeColour, inactiveColour;       // FIXME: inactive colout is not always used!
 
     for (int i = 0; i < amount; ++i)
     {
         controlType = getControlType(i);
         activeColour = getControlColour(i);
+        // TODO: consider improving readability of colour constants (make actual constants?)
+        inactiveColour = blendARGB(activeColour, 0xEE000000);
 
         if (controlType == C_BUTTON)
         {
             if (getControlValueA(i) == 0)
-            //  Inactive Button
-            {
-                fillRect(activeColour,
-                         getControlMinX(i),  getControlMinY(i),
-                         getControlSizeX(i), getControlSizeY(i));
-            }
+                drawButton(activeColour, i);    //  Inactive Button
             else
-            //  Active Button
-            {
-                fillRect(InactiveColour,
-                         getControlMinX(i),  getControlMinY(i),
-                         getControlSizeX(i), getControlSizeY(i));
-            }
+                drawButton(inactiveColour, i);  //  Active Button
         }
         else if (controlType == C_SWITCH)
         {
             if (getControlValueA(i) == 0)
-            //  Inactive Button
-            {
-                fillRect(InactiveColour,
-                         getControlMinX(i),  getControlMinY(i),
-                         getControlSizeX(i), getControlSizeY(i));
-            }
+                drawButton(inactiveColour, i);  //  Inactive Button
             else
-            //  Active Button
-            {
-                fillRect(activeColour,
-                         getControlMinX(i),  getControlMinY(i),
-                         getControlSizeX(i), getControlSizeY(i));
-            }
+                drawButton(activeColour, i);    //  Active Button
         }
         else if (controlType == C_FADER)
         {
-            fillRect(InactiveColour,
+            fillRect(inactiveColour,
                      getControlMinX(i),  getControlMinY(i),
                      getControlSizeX(i), getControlSizeY(i));
 
@@ -486,18 +496,18 @@ void repaint()
                                            getControlMaxY(i), getControlMinY(i));
 
             // Vertical line
-            fillRect(InactiveColour,
+            fillRect(inactiveColour,
                      getControlMinX(i),  pixelY,
                      getControlSizeX(i), 1);
 
             // Horizontal line
-            fillRect(InactiveColour,
+            fillRect(inactiveColour,
                      pixelX, getControlMinY(i),
                      1,      getControlSizeY(i));
         }
     }
 
-    //log(getTimeInCurrentFunctionCall());
+    log(getTimeInCurrentFunctionCall());
 }
 
 /*
