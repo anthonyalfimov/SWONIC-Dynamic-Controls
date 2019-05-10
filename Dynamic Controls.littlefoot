@@ -143,19 +143,11 @@ int  getControlTouchField(int controlIndex)                 { return getHeapInt(
 //  Conversion Functions and Helpers
 //==============================================================================
 
-//  Simple coordinate conversion from (0, 2) to [0, 14]
-//  Use separate function if it makes sense and the stack size allows it
-// int convertPositionToPixel(float pos)
-// {
-//     return int(pos * 0.5 * 15.0);
-// }
-
 // Convert touch positin on a control to CC value [0, 127]
 //     position in (0, 2); pixelMin and pixelMax in [0, 14]
 int convertPositionToCC(float position, int pixelMin, int pixelMax)
 {
-    // Simple coordinate conversion from (0.0, 2.0) to (0.0, 15.0)
-    // TODO: account for the actual coordinate range of [0.07, 1.93] ?
+    // Coordinate conversion from (0.0, 2.0) to (0.0, 15.0)
     position = position * 0.5 * 15;
 
     // TODO: if stack size allows after UI update, save offset as a const
@@ -188,8 +180,7 @@ void doTouch(int touchIndex, float x, float y, float z)
     // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
     //       But how and why would this ever happen?
 
-    // Simple coordinate conversion from (0.0, 2.0) to [0, 14]
-    // TODO: account for the actual coordinate range of [0.07, 1.93] ?
+    // Coordinate conversion from (0.0, 2.0) to [0, 14]
     int intX = int(x * 0.5 * 15.0);
     int intY = int(y * 0.5 * 15.0);
 
