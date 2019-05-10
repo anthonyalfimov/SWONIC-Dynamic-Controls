@@ -68,22 +68,21 @@
 //
 //==============================================================================
 
-#heapsize: 300
+#heapsize: 275
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
 //  | bytes:    | data:
 //  | 000 - 024 | 25 1-byte control CC1 values [0, 127]
 //  | 025 - 049 | 25 1-byte control CC2 values [0, 127]
+//  | 050 - 074 | 25 1-byte pressure values [0, 127]
 //  |-----------|-------------------------------------------------------------|
-//  | 050 - 074 | 25 1-byte control min X coordinates [0, 14]
-//  | 075 - 099 | 25 1-byte control max X coordinates [0, 14]
-//  | 100 - 124 | 25 1-byte control min Y coordinates [0, 14]
-//  | 125 - 149 | 25 1-byte control max Y coordinates [0, 14]
-//  | 150 - 174 | 25 1-byte control X sizes [1, 15]
-//  | 175 - 199 | 25 1-byte control Y sizes [1, 15]
+//  | 075 - 099 | 25 1-byte control min X coordinates [0, 14]
+//  | 100 - 124 | 25 1-byte control max X coordinates [0, 14]
+//  | 125 - 149 | 25 1-byte control min Y coordinates [0, 14]
+//  | 150 - 174 | 25 1-byte control max Y coordinates [0, 14]
 //  |-----------|-------------------------------------------------------------|
-//  | 200 - 299 | 25 4-byte bitfields for touches registered on a control
+//  | 175 - 274 | 25 4-byte bitfields for touches registered on a control
 //  |-----------|-------------------------------------------------------------|
 //
 
@@ -112,32 +111,46 @@ int  getControlValueA(int controlIndex)             { return getHeapByte(control
 void setControlValueB(int controlIndex, int value)  { setHeapByte(controlIndex + 25, value); }
 int  getControlValueB(int controlIndex)             { return getHeapByte(controlIndex + 25); }
 
+void setPressureValue(int controlIndex, int value)  { setHeapByte(controlIndex + 50, value); }
+
+int getHighlight(int controlIndex)
+{
+    //int highlight = getHeapByte(controlIndex + 50) + 128;
+    //highlight = int( map(float(highlight), 0.0, 127.0, 127.0, 255.0) );
+    //int highlight = 0xFFFFFF | (getHeapByte(controlIndex + 50) << 25);
+    return getHeapByte(controlIndex + 50) + 128;
+}
+
 //------------------------------------------------------------------------------
 //  Coordinates
 //------------------------------------------------------------------------------
-void setControlMinX(int controlIndex, int minX)     { setHeapByte(controlIndex + 50, minX); }
-int  getControlMinX(int controlIndex)               { return getHeapByte(controlIndex + 50); }
+void setControlMinX(int controlIndex, int minX)     { setHeapByte(controlIndex + 75, minX); }
+int  getControlMinX(int controlIndex)               { return getHeapByte(controlIndex + 75); }
 
-void setControlMaxX(int controlIndex, int maxX)     { setHeapByte(controlIndex + 75, maxX); }
-int  getControlMaxX(int controlIndex)               { return getHeapByte(controlIndex + 75); }
+void setControlMaxX(int controlIndex, int maxX)     { setHeapByte(controlIndex + 100, maxX); }
+int  getControlMaxX(int controlIndex)               { return getHeapByte(controlIndex + 100); }
 
-void setControlMinY(int controlIndex, int minY)     { setHeapByte(controlIndex + 100, minY); }
-int  getControlMinY(int controlIndex)               { return getHeapByte(controlIndex + 100); }
+void setControlMinY(int controlIndex, int minY)     { setHeapByte(controlIndex + 125, minY); }
+int  getControlMinY(int controlIndex)               { return getHeapByte(controlIndex + 125); }
 
-void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex + 125, maxY); }
-int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 125); }
+void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex + 150, maxY); }
+int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 150); }
 
-void setControlSizeX(int controlIndex, int sizeX)   { setHeapByte(controlIndex + 150, sizeX); }
-int  getControlSizeX(int controlIndex)              { return getHeapByte(controlIndex + 150); }
+int  getControlSizeX(int controlIndex)
+{
+    return getControlMaxX(controlIndex) - getControlMinX(controlIndex) + 1;
+}
 
-void setControlSizeY(int controlIndex, int sizeY)   { setHeapByte(controlIndex + 175, sizeY); }
-int  getControlSizeY(int controlIndex)              { return getHeapByte(controlIndex + 175); }
+int  getControlSizeY(int controlIndex)
+{
+    return getControlMaxY(controlIndex) - getControlMinY(controlIndex) + 1;
+}
 
 //------------------------------------------------------------------------------
 //  Touch Bit Fields
 //------------------------------------------------------------------------------
-void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 200, touchField); }
-int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 200); }
+void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 175, touchField); }
+int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 175); }
 
 //==============================================================================
 //  Conversion Functions and Helpers
@@ -153,7 +166,7 @@ int convertPositionToCC(float position, int pixelMin, int pixelMax)
     // TODO: if stack size allows after UI update, save offset as a const
     // map [min + d, max + 1 - d] to [0, 127]; d = 0.6 - edge offset
     position = map(position, float(pixelMin) + 0.6, float(pixelMax) + 0.4,
-                   0.0, 127.0);
+                   0.0, 128.0);
 
     return clamp(0, 127, int(position));
 }
@@ -205,6 +218,7 @@ void doTouch(int touchIndex, float x, float y, float z)
             {
                 int pressure = clamp(0, 127, int(z * 127.0));
                 sendCC(midiChannel, getControlCCP(i), pressure);
+                setPressureValue(i, pressure);
             }
 
             touchField = touchField | touchFlag;                        // register current touch with ctrl
@@ -309,28 +323,28 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 // OPTIMISATION: how long does MIDI handling take? does it slow down the app?
 //               is it important to have it?
 
-void handleMIDI(int byteStatus, int byteCC, int byteValue)
-{
-    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-                                            //   if status byte is a CC message,
-                                            //   the result is its MIDI channel
-
-    // OPTIMISATION: we can assume that one CC should be assigned to only one
-    //               ctrl and break the loop once we get a match, plus make
-    //               the check for CC B an `else if`.
-    //               If multiple ctrls are assigned the same CC, only the
-    //               first match will react to external MIDI.
-
-    if (byteStatus == midiChannel)
-        for (int i = 0; i < amount; ++i)
-        {
-            if (getControlCCA(i) == byteCC)
-                setControlValueA(i, byteValue);
-            if (getControlType(i) == C_XYZPAD   // check CC B only for XYZ pads
-                     && getControlCCB(i) == byteCC)
-                setControlValueB(i, byteValue);
-        }
-}
+// void handleMIDI(int byteStatus, int byteCC, int byteValue)
+// {
+//     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+//                                             //   if status byte is a CC message,
+//                                             //   the result is its MIDI channel
+// 
+//     // OPTIMISATION: we can assume that one CC should be assigned to only one
+//     //               ctrl and break the loop once we get a match, plus make
+//     //               the check for CC B an `else if`.
+//     //               If multiple ctrls are assigned the same CC, only the
+//     //               first match will react to external MIDI.
+// 
+//     if (byteStatus == midiChannel)
+//         for (int i = 0; i < amount; ++i)
+//         {
+//             if (getControlCCA(i) == byteCC)
+//                 setControlValueA(i, byteValue);
+//             if (getControlType(i) == C_XYZPAD   // check CC B only for XYZ pads
+//                      && getControlCCB(i) == byteCC)
+//                 setControlValueB(i, byteValue);
+//         }
+// }
 
 //==============================================================================
 //  Initialisation
@@ -346,6 +360,7 @@ void initialise()
     {
         setControlValueA(i, 0);
         setControlValueB(i, 0);
+        setPressureValue(i, 64);
         setControlTouchField(i, 0);
     }
 
@@ -360,10 +375,6 @@ void initialise()
         int maxX = clamp(0, 14, getControlPosX(i) + getControlWidth(i) - 2);
         setControlMaxX(i, maxX);
 
-    // Size X [1, 15]
-        int sizeX = maxX - minX + 1;
-        setControlSizeX(i, sizeX);
-
     //  Min Y [0, 14]
         int minY = clamp(0, 14, 16 - getControlPosY(i) - getControlHeight(i));
         setControlMinY(i, minY);
@@ -371,10 +382,6 @@ void initialise()
     //  Max Y [0, 14]
         int maxY = clamp(0, 14, 15 - getControlPosY(i));
         setControlMaxY(i, maxY);
-
-    // Size Y [1, 15]
-        int sizeY = maxY - minY + 1;
-        setControlSizeY(i, sizeY);
     }
 
     // IDEA: should we initialise the unused controls to 0 just in case?
@@ -397,8 +404,8 @@ void drawButton(int colour, int controlIndex)
     if (getControlTouchField(controlIndex))     // if control is active
     {
         // TODO: consider improving readability of colour constants (make actual constants?)
-        fullShade = blendARGB(colour, 0xCCFFFFFF);
-        halfShade = blendARGB(colour, 0x66FFFFFF);
+        fullShade = blendARGB(colour, 0xFFFFFF | (getHighlight(controlIndex) << 24));
+        halfShade = blendARGB(colour, 0xFFFFFF | ((getHighlight(controlIndex) / 10) << 24));
     }
     else
     {
@@ -433,10 +440,10 @@ void repaint()
 
     //     int controlType;
 //     int activeColour, inactiveColour, hColour;       // FIXME: inactive colout is not always used!
-// 
+//
 //     bool isActive;
 
-    
+
     for (int i = 0; i < amount; ++i)
     {
         int controlType = getControlType(i);
@@ -444,12 +451,12 @@ void repaint()
         // TODO: consider improving readability of colour constants (make actual constants?)
         int inactiveColour = blendARGB(activeColour, 0xEE000000);
 
-        
+
         int minX = getControlMinX(i);
         int minY = getControlMinY(i);
         int sizeX = getControlSizeX(i);
         int sizeY = getControlSizeY(i);
-        
+
         if (controlType == C_BUTTON)
         {
             if (getControlValueA(i) == 0)
@@ -466,7 +473,7 @@ void repaint()
         }
         else if (controlType == C_FADER)
         {
-            int highlight = getControlTouchField(i) ? blendARGB(activeColour, 0xCCFFFFFF) : activeColour;
+            int highlight = getControlTouchField(i) ? blendARGB(activeColour, 0xFFFFFF | (getHighlight(i) << 24)) : activeColour;
 
             int bgMinColour = blendARGB(activeColour, 0xFB000000);
 
@@ -522,7 +529,7 @@ void repaint()
             pixelY = clamp(minY, getControlMaxY(i), pixelY);
 
             if (getControlTouchField(i))
-                inactiveColour = blendARGB(activeColour, 0xCCFFFFFF);
+                inactiveColour = blendARGB(activeColour, 0xFFFFFF | (getHighlight(i) << 24));
 
             // Vertical line
             fillRect(inactiveColour,
