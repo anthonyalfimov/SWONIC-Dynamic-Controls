@@ -159,11 +159,7 @@ int convertPositionToCC(float position, int pixelMin, int pixelMax)
 }
 
 // Convert CC value to a pixel value
-//     pixelMin and pixelMax can be swapped to invert the value
-int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
-{
-    return int(map(float(valueCC), 0.0, 127.0, float(pixelMin), float(pixelMax)));
-}
+//..
 
 bool isFaderVertical(int controlIndex)
 {
@@ -415,6 +411,18 @@ void drawButton(int colour, int controlIndex)
 					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
 }
 
+// pixelMin and pixelMax can be swapped to invert the value
+int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
+{
+    return int(map(float(valueCC), 0.0, 127.0, float(pixelMin), float(pixelMax)));
+}
+
+// int convertCCtoPixels(int value, int pixelMin, int pixelMax, float valMin, float valMax)
+// {
+//     value = int(map(float(value), valMin, valMax, float(pixelMin), float(pixelMax + 1)));
+//     return clamp(pixelMin, pixelMax, value);
+// }
+
 //==============================================================================
 //  Repaint
 //==============================================================================
@@ -449,28 +457,49 @@ void repaint()
         }
         else if (controlType == C_FADER)
         {
-            fillRect(inactiveColour,
-                     getControlMinX(i),  getControlMinY(i),
-                     getControlSizeX(i), getControlSizeY(i));
+            int highlight;
 
-            // IDEA: map fader value directly to the pixel range of the control?
-            // TODO: make sure Horizontal and Vertical faders are drawn consistently
+            if (getControlTouchField(i))
+                highlight = blendARGB(activeColour, 0xCCFFFFFF);
+            else
+                highlight = activeColour;
+
+
+            int bgMinColour = blendARGB(activeColour, 0xFB000000);
 
             if (isFaderVertical(i))
             {
-                int pixelSize = convertCCToPixels(getControlValueA(i),
-                                                  getControlSizeY(i), 0);
-                fillRect(activeColour,
-                         getControlMinX(i),  getControlMinY(i) + pixelSize,
-                         getControlSizeX(i), getControlSizeY(i) - pixelSize);
+            //  Draw fader background
+                blendGradientRect(inactiveColour, inactiveColour, bgMinColour, bgMinColour,
+			        getControlMinX(i),  getControlMinY(i),
+                    getControlSizeX(i), getControlSizeY(i));
+
+            // Draw fader
+                int pixelInvSize = convertCCToPixels(getControlValueA(i),
+                    getControlSizeY(i), 0);
+
+                blendGradientRect(highlight, highlight, activeColour, activeColour,
+                    getControlMinX(i),
+                    getControlMinY(i) + pixelInvSize,
+                    getControlSizeX(i),
+                    getControlSizeY(i) - pixelInvSize);
             }
             else
             {
-                int pixelSize = convertCCToPixels(getControlValueA(i),
-                                                  0, getControlSizeX(i));
-                fillRect(activeColour,
-                         getControlMinX(i),  getControlMinY(i),
-                         pixelSize,          getControlSizeY(i));
+            //  Draw fader background
+                blendGradientRect(bgMinColour, inactiveColour, inactiveColour, bgMinColour,
+			        getControlMinX(i),  getControlMinY(i),
+                    getControlSizeX(i), getControlSizeY(i));
+
+            // Draw fader
+                int pixelInvSize = convertCCToPixels(getControlValueA(i),
+                    getControlSizeX(i), 0);
+
+                blendGradientRect(activeColour, highlight, highlight, activeColour,
+                    getControlMinX(i),
+                    getControlMinY(i),
+                    getControlSizeX(i) - pixelInvSize,
+                    getControlSizeY(i));
             }
         }
         else if (controlType == C_XYZPAD)
@@ -482,9 +511,15 @@ void repaint()
 
             //  Draw Cross
             int pixelX = convertCCToPixels(getControlValueA(i),
-                                           getControlMinX(i), getControlMaxX(i));
+                                           getControlMinX(i), getControlMaxX(i) + 1);
+            pixelX = clamp(getControlMinX(i), getControlMaxX(i), pixelX);
+
             int pixelY = convertCCToPixels(getControlValueB(i),
-                                           getControlMaxY(i), getControlMinY(i));
+                                           getControlMaxY(i) + 1, getControlMinY(i));
+            pixelY = clamp(getControlMinY(i), getControlMaxY(i), pixelY);
+
+            if (getControlTouchField(i))
+                inactiveColour = blendARGB(activeColour, 0xCCFFFFFF);
 
             // Vertical line
             fillRect(inactiveColour,
