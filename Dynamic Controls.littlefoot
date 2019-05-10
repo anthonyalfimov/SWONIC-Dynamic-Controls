@@ -118,7 +118,7 @@ int getHighlight(int controlIndex)
     //int highlight = getHeapByte(controlIndex + 50) + 128;
     //highlight = int( map(float(highlight), 0.0, 127.0, 127.0, 255.0) );
     //int highlight = 0xFFFFFF | (getHeapByte(controlIndex + 50) << 25);
-    return getHeapByte(controlIndex + 50) + 128;
+    return 56 + int(getHeapByte(controlIndex + 50) * 1.57);
 }
 
 //------------------------------------------------------------------------------
@@ -328,13 +328,13 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 //     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
 //                                             //   if status byte is a CC message,
 //                                             //   the result is its MIDI channel
-// 
+//
 //     // OPTIMISATION: we can assume that one CC should be assigned to only one
 //     //               ctrl and break the loop once we get a match, plus make
 //     //               the check for CC B an `else if`.
 //     //               If multiple ctrls are assigned the same CC, only the
 //     //               first match will react to external MIDI.
-// 
+//
 //     if (byteStatus == midiChannel)
 //         for (int i = 0; i < amount; ++i)
 //         {
