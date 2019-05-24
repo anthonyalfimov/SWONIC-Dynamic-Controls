@@ -317,27 +317,27 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 // OPTIMISATION: how long does MIDI handling take? does it slow down the app?
 //               is it important to have it?
 
-void handleMIDI(int byteStatus, int byteCC, int byteValue)
-{
-    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-                                            //   if status byte is a CC message,
-                                            //   the result is its MIDI channel
-
-    // OPTIMISATION: we can assume that one CC should be assigned to only one
-    //               ctrl and break the loop once we get a match, plus make
-    //               the check for CC B an `else if`.
-    //               If multiple ctrls are assigned the same CC, only the
-    //               first match will react to external MIDI.
-
-    if (byteStatus == midiChannel)
-        for (int i = 0; i < amount; ++i)
-        {
-            if (getControlCCA(i) == byteCC)
-                setControlValueA(i, byteValue);
-            if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
-                setControlValueB(i, byteValue);                         // check CC B only for XYZ pads
-        }
-}
+// void handleMIDI(int byteStatus, int byteCC, int byteValue)
+// {
+//     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+//                                             //   if status byte is a CC message,
+//                                             //   the result is its MIDI channel
+// 
+//     // OPTIMISATION: we can assume that one CC should be assigned to only one
+//     //               ctrl and break the loop once we get a match, plus make
+//     //               the check for CC B an `else if`.
+//     //               If multiple ctrls are assigned the same CC, only the
+//     //               first match will react to external MIDI.
+// 
+//     if (byteStatus == midiChannel)
+//         for (int i = 0; i < amount; ++i)
+//         {
+//             if (getControlCCA(i) == byteCC)
+//                 setControlValueA(i, byteValue);
+//             if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
+//                 setControlValueB(i, byteValue);                         // check CC B only for XYZ pads
+//         }
+// }
 
 //==============================================================================
 //  Initialisation

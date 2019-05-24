@@ -115,7 +115,7 @@ void setPressureValue(int controlIndex, int value)  { setHeapByte(controlIndex +
 
 int getHighlight(int controlIndex)
 {
-    return getHeapByte(controlIndex + 50) * 2 + 1;
+    return 0xFFFFFF | ((getHeapByte(controlIndex + 50) * 2 + 1) << 24);
 }
 
 //------------------------------------------------------------------------------
@@ -393,23 +393,17 @@ void initialise()
 
 void drawButton(int colour, int controlIndex)
 {
-    int halfShade, fullShade;
-
-    if (getControlTouchField(controlIndex))     // if control is active
-    {
-        // TODO: consider improving readability of colour constants (make actual constants?)
-        fullShade = blendARGB(colour, 0xFFFFFF | (getHighlight(controlIndex) << 24));
-        halfShade = blendARGB(colour, 0xFFFFFF | ((getHighlight(controlIndex) / 10) << 24));
-    }
-    else
-    {
-        fullShade = blendARGB(colour, 0xCC000000);
-        halfShade = blendARGB(colour, 0x66000000);
-    }
+    int halfShade = blendARGB(colour, 0x66000000);
+    int fullShade = blendARGB(colour, 0xCC000000);
 
     blendGradientRect(colour, halfShade, fullShade, halfShade,
 					  getControlMinX(controlIndex),  getControlMinY(controlIndex),
 					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
+
+    if (getControlTouchField(controlIndex))     // if control is active
+        blendRect(getHighlight(controlIndex),
+                  getControlMinX(controlIndex),  getControlMinY(controlIndex),
+                  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
 }
 
 // pixelMin and pixelMax can be swapped to invert the value
@@ -457,7 +451,7 @@ void repaint()
         }
         else if (controlType == C_FADER)
         {
-            int highlight = getControlTouchField(i) ? blendARGB(activeColour, 0xFFFFFF | (getHighlight(i) << 24)) : activeColour;
+            int highlight = getControlTouchField(i) ? blendARGB(activeColour, getHighlight(i)) : activeColour;
 
             int bgMinColour = blendARGB(activeColour, 0xFB000000);
 
@@ -499,7 +493,7 @@ void repaint()
             pixelY = clamp(minY, getControlMaxY(i), pixelY);
 
             if (getControlTouchField(i))
-                activeColour = blendARGB(activeColour, 0xFFFFFF | (getHighlight(i) << 24));
+                activeColour = blendARGB(activeColour, getHighlight(i));
 
             // Vertical line
             fillRect(activeColour, minX, pixelY, sizeX, 1);
