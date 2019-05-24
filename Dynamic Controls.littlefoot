@@ -395,15 +395,20 @@ void drawButton(int colour, int controlIndex)
 {
     int halfShade = blendARGB(colour, 0x66000000);
     int fullShade = blendARGB(colour, 0xCC000000);
-
+    
+    if (getControlTouchField(controlIndex))     // if control is active
+    {
+        int highlight = getHighlight(controlIndex);
+        colour    = blendARGB(colour,    highlight);
+        halfShade = blendARGB(halfShade, highlight);
+        fullShade = blendARGB(fullShade, highlight);
+    }
+    
     blendGradientRect(colour, halfShade, fullShade, halfShade,
 					  getControlMinX(controlIndex),  getControlMinY(controlIndex),
 					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
 
-    if (getControlTouchField(controlIndex))     // if control is active
-        blendRect(getHighlight(controlIndex),
-                  getControlMinX(controlIndex),  getControlMinY(controlIndex),
-                  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
+    
 }
 
 // pixelMin and pixelMax can be swapped to invert the value
@@ -503,7 +508,7 @@ void repaint()
         }
     }
 
-    //log(getTimeInCurrentFunctionCall());
+    log(getTimeInCurrentFunctionCall());
 }
 
 /*
