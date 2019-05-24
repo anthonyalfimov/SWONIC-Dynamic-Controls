@@ -119,7 +119,7 @@ int getHighlight(int controlIndex)
 }
 
 //------------------------------------------------------------------------------
-//  Coordinates
+//  Control Coordinates
 //------------------------------------------------------------------------------
 void setControlMinX(int controlIndex, int minX)     { setHeapByte(controlIndex + 75, minX); }
 int  getControlMinX(int controlIndex)               { return getHeapByte(controlIndex + 75); }
@@ -133,6 +133,9 @@ int  getControlMinY(int controlIndex)               { return getHeapByte(control
 void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex + 150, maxY); }
 int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 150); }
 
+//------------------------------------------------------------------------------
+//  Control Sizes
+//------------------------------------------------------------------------------
 int  getControlSizeX(int controlIndex)
 {
     return getControlMaxX(controlIndex) - getControlMinX(controlIndex) + 1;
@@ -320,28 +323,28 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 // OPTIMISATION: how long does MIDI handling take? does it slow down the app?
 //               is it important to have it?
 
-void handleMIDI(int byteStatus, int byteCC, int byteValue)
-{
-    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-                                            //   if status byte is a CC message,
-                                            //   the result is its MIDI channel
-
-    // OPTIMISATION: we can assume that one CC should be assigned to only one
-    //               ctrl and break the loop once we get a match, plus make
-    //               the check for CC B an `else if`.
-    //               If multiple ctrls are assigned the same CC, only the
-    //               first match will react to external MIDI.
-
-    if (byteStatus == midiChannel)
-        for (int i = 0; i < amount; ++i)
-        {
-            if (getControlCCA(i) == byteCC)
-                setControlValueA(i, byteValue);
-            if (getControlType(i) == C_XYZPAD   // check CC B only for XYZ pads
-                     && getControlCCB(i) == byteCC)
-                setControlValueB(i, byteValue);
-        }
-}
+// void handleMIDI(int byteStatus, int byteCC, int byteValue)
+// {
+//     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+//                                             //   if status byte is a CC message,
+//                                             //   the result is its MIDI channel
+//
+//     // OPTIMISATION: we can assume that one CC should be assigned to only one
+//     //               ctrl and break the loop once we get a match, plus make
+//     //               the check for CC B an `else if`.
+//     //               If multiple ctrls are assigned the same CC, only the
+//     //               first match will react to external MIDI.
+//
+//     if (byteStatus == midiChannel)
+//         for (int i = 0; i < amount; ++i)
+//         {
+//             if (getControlCCA(i) == byteCC)
+//                 setControlValueA(i, byteValue);
+//             if (getControlType(i) == C_XYZPAD   // check CC B only for XYZ pads
+//                      && getControlCCB(i) == byteCC)
+//                 setControlValueB(i, byteValue);
+//         }
+// }
 
 //==============================================================================
 //  Initialisation
@@ -429,19 +432,12 @@ void repaint()
 {
     clearDisplay();
 
-    //     int controlType;
-//     int activeColour, inactiveColour, hColour;       // FIXME: inactive colout is not always used!
-//
-//     bool isActive;
-
-
     for (int i = 0; i < amount; ++i)
     {
         int controlType = getControlType(i);
         int activeColour = getControlColour(i);
         // TODO: consider improving readability of colour constants (make actual constants?)
         int inactiveColour = blendARGB(activeColour, 0xEE000000);
-
 
         int minX = getControlMinX(i);
         int minY = getControlMinY(i);
@@ -450,10 +446,7 @@ void repaint()
 
         if (controlType == C_BUTTON)
         {
-            if (getControlValueA(i) == 0)
-                drawButton(activeColour, i);    //  Inactive Button
-            else
-                drawButton(inactiveColour, i);  //  Active Button
+            drawButton(activeColour, i);
         }
         else if (controlType == C_SWITCH)
         {
@@ -472,69 +465,51 @@ void repaint()
             {
             //  Draw fader background
                 blendGradientRect(inactiveColour, inactiveColour, bgMinColour, bgMinColour,
-			        minX,  minY,
-                    sizeX, sizeY);
+			        minX,  minY, sizeX, sizeY);
 
             // Draw fader
-                int pixelInvSize = convertCCToPixels(getControlValueA(i),
-                    sizeY, 0);
+                int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeY, 0);
 
                 blendGradientRect(highlight, highlight, activeColour, activeColour,
-                    minX,
-                    minY + pixelInvSize,
-                    sizeX,
-                    sizeY - pixelInvSize);
+                    minX, minY + pixelInvSize, sizeX, sizeY - pixelInvSize);
             }
             else
             {
             //  Draw fader background
                 blendGradientRect(bgMinColour, inactiveColour, inactiveColour, bgMinColour,
-			        minX,  minY,
-                    sizeX, sizeY);
+			        minX,  minY, sizeX, sizeY);
 
             // Draw fader
-                int pixelInvSize = convertCCToPixels(getControlValueA(i),
-                    sizeX, 0);
+                int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeX, 0);
 
                 blendGradientRect(activeColour, highlight, highlight, activeColour,
-                    minX,
-                    minY,
-                    sizeX - pixelInvSize,
-                    sizeY);
+                    minX, minY, sizeX - pixelInvSize, sizeY);
             }
         }
         else if (controlType == C_XYZPAD)
         {
             //  Draw Pad
-            fillRect(inactiveColour,
-                     minX,  minY,
-                     sizeX, sizeY);
+            fillRect(inactiveColour, minX,  minY, sizeX, sizeY);
 
             //  Draw Cross
-            int pixelX = convertCCToPixels(getControlValueA(i),
-                                           minX, getControlMaxX(i) + 1);
+            int pixelX = convertCCToPixels(getControlValueA(i), minX, getControlMaxX(i) + 1);
             pixelX = clamp(minX, getControlMaxX(i), pixelX);
 
-            int pixelY = convertCCToPixels(getControlValueB(i),
-                                           getControlMaxY(i) + 1, minY);
+            int pixelY = convertCCToPixels(getControlValueB(i), getControlMaxY(i) + 1, minY);
             pixelY = clamp(minY, getControlMaxY(i), pixelY);
 
             if (getControlTouchField(i))
                 activeColour = blendARGB(activeColour, 0xFFFFFF | (getHighlight(i) << 24));
 
             // Vertical line
-            fillRect(activeColour,
-                     minX,  pixelY,
-                     sizeX, 1);
+            fillRect(activeColour, minX, pixelY, sizeX, 1);
 
             // Horizontal line
-            fillRect(activeColour,
-                     pixelX, minY,
-                     1,      sizeY);
+            fillRect(activeColour, pixelX, minY, 1, sizeY);
         }
     }
 
-    log(getTimeInCurrentFunctionCall());
+    //log(getTimeInCurrentFunctionCall());
 }
 
 /*
