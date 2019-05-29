@@ -1,5 +1,5 @@
 /*
-<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.3-dev"
+<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.4-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
@@ -64,7 +64,7 @@
 //
 //   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
 //
-//   version: 1.2.3-dev
+//   version: 1.2.4-dev
 //
 //==============================================================================
 
@@ -113,7 +113,7 @@ int  getControlValueB(int controlIndex)             { return getHeapByte(control
 
 void setPressureValue(int controlIndex, int value)  { setHeapByte(controlIndex + 50, value); }
 
-int getHighlight(int controlIndex)
+int getHighlight(int controlIndex)          // generates highlight ARGB colour from pressure
 {
     return 0xFFFFFF | ((getHeapByte(controlIndex + 50) * 2 + 1) << 24);
 }
@@ -134,8 +134,15 @@ void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex +
 int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 150); }
 
 //------------------------------------------------------------------------------
-//  Control Sizes
+//  Touch Bit Fields
 //------------------------------------------------------------------------------
+void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 175, touchField); }
+int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 175); }
+
+//==============================================================================
+//  Control Sizes and Aspect Ratio
+//==============================================================================
+
 int  getControlSizeX(int controlIndex)
 {
     return getControlMaxX(controlIndex) - getControlMinX(controlIndex) + 1;
@@ -146,14 +153,14 @@ int  getControlSizeY(int controlIndex)
     return getControlMaxY(controlIndex) - getControlMinY(controlIndex) + 1;
 }
 
-//------------------------------------------------------------------------------
-//  Touch Bit Fields
-//------------------------------------------------------------------------------
-void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 175, touchField); }
-int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 175); }
+bool isFaderVertical(int controlIndex)
+{
+    // use integer division: 0 if horizontal, >=1 if vertical or square
+    return getControlSizeY(controlIndex) / getControlSizeX(controlIndex);
+}
 
 //==============================================================================
-//  Conversion Functions and Helpers
+//  Conversion Functions
 //==============================================================================
 
 // Convert touch positin on a control to CC value [0, 127]
@@ -163,27 +170,46 @@ int convertPositionToCC(float position, int pixelMin, int pixelMax)
     // Coordinate conversion from (0.0, 2.0) to (0.0, 15.0)
     position = position * 0.5 * 15;
 
-    // TODO: if stack size allows after UI update, save offset as a const
     // map [min + d, max + 1 - d] to [0, 127]; d = 0.6 - edge offset
-    position = map(position, float(pixelMin) + 0.6, float(pixelMax) + 0.4,
-                   0.0, 128.0);
+    position = map(position, float(pixelMin) + 0.6, float(pixelMax) + 0.4, 0.0, 128.0);
 
     return clamp(0, 127, int(position));
 }
 
 // Convert CC value to a pixel value
-//..
-
-bool isFaderVertical(int controlIndex)
+//     pixelMin and pixelMax can be swapped to invert the value
+int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
 {
-    // use integer division: 0 if horizontal, >=1 if vertical or square
-    return getControlSizeY(controlIndex) / getControlSizeX(controlIndex);
+    return int(map(float(valueCC), 0.0, 127.0, float(pixelMin), float(pixelMax)));
 }
 
 //==============================================================================
-//  Handle Touch
+//  Touch Functions
 //==============================================================================
+//------------------------------------------------------------------------------
+//  Touch Event Handlers
+//------------------------------------------------------------------------------
+void touchStart(int index, float x, float y, float z, float vz)
+{
+    doTouch(index, x, y, z);
+}
 
+void touchMove(int index, float x, float y, float z, float vz)
+{
+    doTouch(index, x, y, z);
+}
+
+void touchEnd (int touchIndex, float x, float y, float z, float vz)
+{
+    int touchFlag = 1 << touchIndex;        // bitflag for current touch
+
+    for (int i = 0; i < amount; ++i)        // unregister touch from all ctrls
+        doTouchEnd(i, touchFlag);
+}
+
+//------------------------------------------------------------------------------
+//  Touch Processing Functions
+//------------------------------------------------------------------------------
 void doTouch(int touchIndex, float x, float y, float z)
 {
     // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
@@ -253,6 +279,9 @@ void doTouchEnd(int controlIndex, int touchFlag)
     }
 }
 
+//------------------------------------------------------------------------------
+//  Control MIDI Functions
+//------------------------------------------------------------------------------
 void doButton(int controlIndex, bool isActive)
 {
     int value = isActive ? 127 : 0;
@@ -295,33 +324,11 @@ void doXYZPad(int controlIndex, float x, float y)
     setControlValueB(controlIndex, valueY);
 }
 
-void touchStart(int index, float x, float y, float z, float vz)
-{
-    doTouch(index, x, y, z);
-}
-
-void touchMove(int index, float x, float y, float z, float vz)
-{
-    doTouch(index, x, y, z);
-    //log(getTimeInCurrentFunctionCall());
-}
-
-void touchEnd (int touchIndex, float x, float y, float z, float vz)
-{
-    int touchFlag = 1 << touchIndex;        // bitflag for current touch
-
-    for (int i = 0; i < amount; ++i)        // unregister touch from all ctrls
-    {
-        doTouchEnd(i, touchFlag);
-    }
-}
-
 //==============================================================================
-//  Handle Incoming MIDI
+//  Incoming MIDI Handler
 //==============================================================================
 
-// OPTIMISATION: how long does MIDI handling take? does it slow down the app?
-//               is it important to have it?
+// BUG: optimise MIDI handler performance by moving data onto the heap
 
 // void handleMIDI(int byteStatus, int byteCC, int byteValue)
 // {
@@ -329,19 +336,14 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 //                                             //   if status byte is a CC message,
 //                                             //   the result is its MIDI channel
 //
-//     // OPTIMISATION: we can assume that one CC should be assigned to only one
-//     //               ctrl and break the loop once we get a match, plus make
-//     //               the check for CC B an `else if`.
-//     //               If multiple ctrls are assigned the same CC, only the
-//     //               first match will react to external MIDI.
-//
 //     if (byteStatus == midiChannel)
 //         for (int i = 0; i < amount; ++i)
 //         {
 //             if (getControlCCA(i) == byteCC)
 //                 setControlValueA(i, byteValue);
-//             if (getControlType(i) == C_XYZPAD   // check CC B only for XYZ pads
-//                      && getControlCCB(i) == byteCC)
+//
+//             // Check CC B only for XYZ pads
+//             if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
 //                 setControlValueB(i, byteValue);
 //         }
 // }
@@ -354,6 +356,8 @@ void initialise()
 {
 //  Update global MIDI channel value to [0, 15]
     midiChannel -= 1;
+
+//  IDEA: should we initialise the unused controls just in case?
 
 //  Initialise Control Values and Control/Touch table
     for (int i = 0; i < MAX_CONTROLS; ++i)
@@ -383,45 +387,7 @@ void initialise()
         int maxY = clamp(0, 14, 15 - getControlPosY(i));
         setControlMaxY(i, maxY);
     }
-
-    // IDEA: should we initialise the unused controls to 0 just in case?
 }
-
-//==============================================================================
-//  Graphics Functions
-//==============================================================================
-
-void drawButton(int colour, int controlIndex)
-{
-    int halfShade = blendARGB(colour, 0x66000000);
-    int fullShade = blendARGB(colour, 0xCC000000);
-    
-    if (getControlTouchField(controlIndex))     // if control is active
-    {
-        int highlight = getHighlight(controlIndex);
-        colour    = blendARGB(colour,    highlight);
-        halfShade = blendARGB(halfShade, highlight);
-        fullShade = blendARGB(fullShade, highlight);
-    }
-    
-    blendGradientRect(colour, halfShade, fullShade, halfShade,
-					  getControlMinX(controlIndex),  getControlMinY(controlIndex),
-					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
-
-    
-}
-
-// pixelMin and pixelMax can be swapped to invert the value
-int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
-{
-    return int(map(float(valueCC), 0.0, 127.0, float(pixelMin), float(pixelMax)));
-}
-
-// int convertCCtoPixels(int value, int pixelMin, int pixelMax, float valMin, float valMax)
-// {
-//     value = int(map(float(value), valMin, valMax, float(pixelMin), float(pixelMax + 1)));
-//     return clamp(pixelMin, pixelMax, value);
-// }
 
 //==============================================================================
 //  Repaint
@@ -510,6 +476,30 @@ void repaint()
 
     log(getTimeInCurrentFunctionCall());
 }
+
+//==============================================================================
+//  Graphics Functions
+//==============================================================================
+
+void drawButton(int colour, int controlIndex)
+{
+    int halfShade = blendARGB(colour, 0x66000000);
+    int fullShade = blendARGB(colour, 0xCC000000);
+
+    if (getControlTouchField(controlIndex))     // if control is active
+    {
+        int highlight = getHighlight(controlIndex);
+        colour    = blendARGB(colour,    highlight);
+        halfShade = blendARGB(halfShade, highlight);
+        fullShade = blendARGB(fullShade, highlight);
+    }
+
+    blendGradientRect(colour, halfShade, fullShade, halfShade,
+					  getControlMinX(controlIndex),  getControlMinY(controlIndex),
+					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
+}
+
+//==============================================================================
 
 /*
 <display backgroundColour="0xFF7E7E7E" textColour ="0xFFFFFFFF">
