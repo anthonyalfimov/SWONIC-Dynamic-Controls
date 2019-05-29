@@ -93,6 +93,10 @@
 const int MAX_CONTROLS = 25;
 const int STATUS_CC = 0xb0;                 // status byte template for CC messages
 
+// Graphics
+const int inactiveShade = 0xEE << 24;
+const int faderMinShade = 0xFB << 24;
+
 // Control types
 const int C_BUTTON = 0;
 const int C_SWITCH = 1;
@@ -400,9 +404,9 @@ void repaint()
     for (int i = 0; i < amount; ++i)
     {
         int controlType = getControlType(i);
+
         int activeColour = getControlColour(i);
-        // TODO: consider improving readability of colour constants (make actual constants?)
-        int inactiveColour = blendARGB(activeColour, 0xEE000000);
+        int inactiveColour = blendARGB(activeColour, inactiveShade);
 
         int minX = getControlMinX(i);
         int minY = getControlMinY(i);
@@ -411,57 +415,70 @@ void repaint()
 
         if (controlType == C_BUTTON)
         {
+        //----------------------------------------------------------------------
+        //  Draw Button
+        //----------------------------------------------------------------------
             drawButton(activeColour, i);
         }
         else if (controlType == C_SWITCH)
         {
+        //----------------------------------------------------------------------
+        //  Draw Switch
+        //----------------------------------------------------------------------
             if (getControlValueA(i) == 0)
-                drawButton(inactiveColour, i);  //  Inactive Button
+                drawButton(inactiveColour, i);  //  inactive Switch
             else
-                drawButton(activeColour, i);    //  Active Button
+                drawButton(activeColour, i);    //  active Switch
         }
         else if (controlType == C_FADER)
         {
+        //----------------------------------------------------------------------
+        //  Draw Fader
+        //----------------------------------------------------------------------
             int highlight = getControlTouchField(i) ? blendARGB(activeColour, getHighlight(i)) : activeColour;
-
-            int bgMinColour = blendARGB(activeColour, 0xFB000000);
+            int faderMinColour = blendARGB(activeColour, faderMinShade);
 
             if (isFaderVertical(i))
             {
             //  Draw fader background
-                blendGradientRect(inactiveColour, inactiveColour, bgMinColour, bgMinColour,
-			        minX,  minY, sizeX, sizeY);
+                blendGradientRect(inactiveColour, inactiveColour, faderMinColour, faderMinColour,
+			                      minX,  minY, sizeX, sizeY);
 
-            // Draw fader
+            //  Draw fader
                 int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeY, 0);
 
                 blendGradientRect(highlight, highlight, activeColour, activeColour,
-                    minX, minY + pixelInvSize, sizeX, sizeY - pixelInvSize);
+                                  minX, minY + pixelInvSize, sizeX, sizeY - pixelInvSize);
             }
             else
             {
             //  Draw fader background
-                blendGradientRect(bgMinColour, inactiveColour, inactiveColour, bgMinColour,
-			        minX,  minY, sizeX, sizeY);
+                blendGradientRect(faderMinColour, inactiveColour, inactiveColour, faderMinColour,
+			                      minX,  minY, sizeX, sizeY);
 
-            // Draw fader
+            //  Draw fader
                 int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeX, 0);
 
                 blendGradientRect(activeColour, highlight, highlight, activeColour,
-                    minX, minY, sizeX - pixelInvSize, sizeY);
+                                  minX, minY, sizeX - pixelInvSize, sizeY);
             }
         }
         else if (controlType == C_XYZPAD)
         {
+        //----------------------------------------------------------------------
+        //  Draw XYZ Pad
+        //----------------------------------------------------------------------
             //  Draw Pad
             fillRect(inactiveColour, minX,  minY, sizeX, sizeY);
 
             //  Draw Cross
-            int pixelX = convertCCToPixels(getControlValueA(i), minX, getControlMaxX(i) + 1);
-            pixelX = clamp(minX, getControlMaxX(i), pixelX);
+            int maxX = getControlMaxX(i);
+            int pixelX = convertCCToPixels(getControlValueA(i), minX, maxX + 1);
+            pixelX = clamp(minX, maxX, pixelX);
 
-            int pixelY = convertCCToPixels(getControlValueB(i), getControlMaxY(i) + 1, minY);
-            pixelY = clamp(minY, getControlMaxY(i), pixelY);
+            int maxY = getControlMaxY(i);
+            int pixelY = convertCCToPixels(getControlValueB(i), maxY + 1, minY);
+            pixelY = clamp(minY, maxY, pixelY);
 
             if (getControlTouchField(i))
                 activeColour = blendARGB(activeColour, getHighlight(i));
