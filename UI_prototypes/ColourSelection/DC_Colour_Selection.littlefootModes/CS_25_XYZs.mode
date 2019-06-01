@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <mode name="25 XYZs">
-  <variable name="inShade" value="238"/>
-  <variable name="fmShade" value="251"/>
+  <variable name="inShade" value="220"/>
+  <variable name="fmShade" value="243"/>
   <variable name="amount" value="25"/>
   <variable name="midiChannel" value="1"/>
   <variable name="ControlType0" value="XYZ Pad"/>

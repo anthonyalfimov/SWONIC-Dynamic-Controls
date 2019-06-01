@@ -2,7 +2,7 @@
 
 <mode name="1 Control">
   <variable name="inShade" value="220"/>
-  <variable name="fmShade" value="240"/>
+  <variable name="fmShade" value="243"/>
   <variable name="amount" value="1"/>
   <variable name="midiChannel" value="1"/>
   <variable name="ControlType0" value="Fader"/>

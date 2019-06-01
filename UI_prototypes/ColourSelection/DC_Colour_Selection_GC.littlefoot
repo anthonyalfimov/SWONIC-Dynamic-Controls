@@ -6,20 +6,21 @@
     <groups>
         <group name="dev" />
         <group name="control" displayName="Control *" count="25"/>
-        
+
     </groups>
 
     <variables>
-        <variable name="inShade" displayName="inactiveShade [238]" group="dev"
-                  type="int" min="0" max="255" value="238" displayMode="slider" />
-        <variable name="fmShade" displayName="faderMinShade [251]" group="dev"
-                  type="int" min="0" max="255" value="251" displayMode="slider" />
+        <variable name="iShade" displayName="inactiveShade" group="dev"
+                  type="int" min="0" max="255" value="175" displayMode="slider" />
+        <variable name="fShade" displayName="faderShade" group="dev"
+                  type="int" min="0" max="255" value="234" displayMode="slider" />
+        <variable name="bShade" displayName="buttonShade [184/204]" group="dev"
+                  type="int" min="0" max="255" value="184" displayMode="slider" />
+        <variable name="gamma" displayName="Gamma Correction" group="dev"
+                  type="bool" value="true" />
         <variable name="amount" displayName="Control Amount" type="int"
                   min="1" max="25" value="1"
                   tooltip="Number of controls to display, 1-16"/>
-        <variable name="midiChannel" displayName="MIDI Channel" type="int"
-                  min="1" max="16" value="1"
-                  tooltip="MIDI channel that is used for all controls"/>
 
         <vector group="control" count="25"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -96,12 +97,16 @@
 //  Global Constants
 //==============================================================================
 
+const int midiChannel = 0;
+
 const int MAX_CONTROLS = 25;
 const int STATUS_CC = 0xb0;                 // status byte template for CC messages
 
 // Graphics
 int inactiveShade;
 int faderMinShade;
+int buttonFullShade;
+int buttonHalfShade;
 
 // Control types
 const int C_BUTTON = 0;
@@ -364,11 +369,12 @@ void doXYZPad(int controlIndex, float x, float y)
 
 void initialise()
 {
-    inactiveShade = inShade << 24;
-    faderMinShade = fmShade << 24;
+    setLocalConfig (33, int(gamma));             // set gamma correction
 
-//  Update global MIDI channel value to [0, 15]
-    midiChannel -= 1;
+    inactiveShade = iShade << 24;
+    faderMinShade = fShade << 24;
+    buttonFullShade = bShade << 24;
+    buttonHalfShade = (bShade / 2) << 24;
 
 //  IDEA: should we initialise the unused controls just in case?
 
@@ -400,8 +406,6 @@ void initialise()
         int maxY = clamp(0, 14, 15 - getControlPosY(i));
         setControlMaxY(i, maxY);
     }
-    
-    setLocalConfigActiveState(33, true, true);
 }
 
 //==============================================================================
@@ -501,8 +505,6 @@ void repaint()
             fillRect(activeColour, pixelX, minY, 1, sizeY);
         }
     }
-
-    log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
@@ -511,8 +513,8 @@ void repaint()
 
 void drawButton(int colour, int controlIndex)
 {
-    int halfShade = blendARGB(colour, 0x66000000);
-    int fullShade = blendARGB(colour, 0xCC000000);
+    int halfShade = blendARGB(colour, buttonHalfShade);
+    int fullShade = blendARGB(colour, buttonFullShade);
 
     if (getControlTouchField(controlIndex))     // if control is active
     {

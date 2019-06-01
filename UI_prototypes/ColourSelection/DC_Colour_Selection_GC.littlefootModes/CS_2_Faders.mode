@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <mode name="2 Faders">
-  <variable name="inShade" value="220"/>
-  <variable name="fmShade" value="240"/>
+  <variable name="iShade" value="175"/>
+  <variable name="fShade" value="234"/>
+  <variable name="bShade" value="184"/>
+  <variable name="gamma" value="true"/>
   <variable name="amount" value="2"/>
-  <variable name="midiChannel" value="1"/>
   <variable name="ControlType0" value="Fader"/>
   <variable name="ControlColour0" value="0xFFB04877"/>
   <variable name="ControlPosX0" value="1"/>
