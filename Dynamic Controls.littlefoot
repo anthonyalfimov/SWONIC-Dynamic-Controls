@@ -91,11 +91,11 @@
 //==============================================================================
 
 const int MAX_CONTROLS = 25;
-const int STATUS_CC = 0xb0;                 // status byte template for CC messages
+const int STATUS_CC = 0xB0;                 // status byte template for CC messages
 
 // Graphics
-const int inactiveShade = 0xEE << 24;
-const int faderMinShade = 0xFB << 24;
+const int inactiveShade = 0xDC << 24;
+const int faderMinShade = 0xF3 << 24;
 
 // Control types
 const int C_BUTTON = 0;
@@ -117,7 +117,7 @@ int  getControlValueB(int controlIndex)             { return getHeapByte(control
 
 void setPressureValue(int controlIndex, int value)  { setHeapByte(controlIndex + 50, value); }
 
-int getHighlight(int controlIndex)          // generates highlight ARGB colour from pressure
+int getHighlight(int controlIndex)          // generates highlight colour from pressure value
 {
     return 0xFFFFFF | ((getHeapByte(controlIndex + 50) * 2 + 1) << 24);
 }
@@ -144,7 +144,7 @@ void setControlTouchField(int controlIndex, int touchField) { setHeapInt(control
 int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 175); }
 
 //==============================================================================
-//  Control Sizes and Aspect Ratio
+//  Control Sizes and Aspect Ratios
 //==============================================================================
 
 int  getControlSizeX(int controlIndex)
@@ -360,6 +360,9 @@ void initialise()
 {
 //  Update global MIDI channel value to [0, 15]
     midiChannel -= 1;
+
+//  Turn gamma correction off
+    setLocalConfig(33, 0);
 
 //  IDEA: should we initialise the unused controls just in case?
 
