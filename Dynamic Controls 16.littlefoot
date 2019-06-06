@@ -112,36 +112,36 @@ const int C_XYZPAD = 3;
 void setControlValueA(int controlIndex, int value)  { setHeapByte(controlIndex, value); }
 int  getControlValueA(int controlIndex)             { return getHeapByte(controlIndex); }
 
-void setControlValueB(int controlIndex, int value)  { setHeapByte(controlIndex + 25, value); }
-int  getControlValueB(int controlIndex)             { return getHeapByte(controlIndex + 25); }
+void setControlValueB(int controlIndex, int value)  { setHeapByte(controlIndex + 16, value); }
+int  getControlValueB(int controlIndex)             { return getHeapByte(controlIndex + 16); }
 
-void setPressureValue(int controlIndex, int value)  { setHeapByte(controlIndex + 50, value); }
+void setPressureValue(int controlIndex, int value)  { setHeapByte(controlIndex + 32, value); }
 
 int getHighlight(int controlIndex)          // generates highlight colour from pressure value
 {
-    return 0xFFFFFF | ((getHeapByte(controlIndex + 50) * 2 + 1) << 24);
+    return 0xFFFFFF | ((getHeapByte(controlIndex + 32) * 2 + 1) << 24);
 }
 
 //------------------------------------------------------------------------------
 //  Control Coordinates
 //------------------------------------------------------------------------------
-void setControlMinX(int controlIndex, int minX)     { setHeapByte(controlIndex + 75, minX); }
-int  getControlMinX(int controlIndex)               { return getHeapByte(controlIndex + 75); }
+void setControlMinX(int controlIndex, int minX)     { setHeapByte(controlIndex + 48, minX); }
+int  getControlMinX(int controlIndex)               { return getHeapByte(controlIndex + 48); }
 
-void setControlMaxX(int controlIndex, int maxX)     { setHeapByte(controlIndex + 100, maxX); }
-int  getControlMaxX(int controlIndex)               { return getHeapByte(controlIndex + 100); }
+void setControlMaxX(int controlIndex, int maxX)     { setHeapByte(controlIndex + 64, maxX); }
+int  getControlMaxX(int controlIndex)               { return getHeapByte(controlIndex + 64); }
 
-void setControlMinY(int controlIndex, int minY)     { setHeapByte(controlIndex + 125, minY); }
-int  getControlMinY(int controlIndex)               { return getHeapByte(controlIndex + 125); }
+void setControlMinY(int controlIndex, int minY)     { setHeapByte(controlIndex + 80, minY); }
+int  getControlMinY(int controlIndex)               { return getHeapByte(controlIndex + 80); }
 
-void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex + 150, maxY); }
-int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 150); }
+void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex + 96, maxY); }
+int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 96); }
 
 //------------------------------------------------------------------------------
 //  Touch Bit Fields
 //------------------------------------------------------------------------------
-void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 175, touchField); }
-int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 175); }
+void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 112, touchField); }
+int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 112); }
 
 //==============================================================================
 //  Control Sizes and Aspect Ratios
