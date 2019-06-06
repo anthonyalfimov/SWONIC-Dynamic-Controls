@@ -1,21 +1,21 @@
 /*
-<metadata description="Create up to 25 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.4-dev"
+<metadata description="Create up to 16 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.5-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
-        <group name="control" displayName="Control *" count="25"/>
+        <group name="control" displayName="Control *" count="16"/>
     </groups>
 
     <variables>
         <variable name="amount" displayName="Control Amount" type="int"
-                  min="1" max="25" value="1"
+                  min="1" max="16" value="1"
                   tooltip="Number of controls to display, 1-16"/>
         <variable name="midiChannel" displayName="MIDI Channel" type="int"
                   min="1" max="16" value="1"
                   tooltip="MIDI channel that is used for all controls"/>
 
-        <vector group="control" count="25"
+        <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
             <variable name="ControlType" displayName="Type" type="option"
@@ -68,21 +68,21 @@
 //
 //==============================================================================
 
-#heapsize: 275
+#heapsize: 176
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
 //  | bytes:    | data:
-//  | 000 - 024 | 25 1-byte control CC1 values [0, 127]
-//  | 025 - 049 | 25 1-byte control CC2 values [0, 127]
-//  | 050 - 074 | 25 1-byte pressure values [0, 127]
+//  | 000 - 015 | 16 1-byte control CC1 values [0, 127]
+//  | 016 - 031 | 16 1-byte control CC2 values [0, 127]
+//  | 032 - 047 | 16 1-byte pressure values [0, 127]
 //  |-----------|-------------------------------------------------------------|
-//  | 075 - 099 | 25 1-byte control min X coordinates [0, 14]
-//  | 100 - 124 | 25 1-byte control max X coordinates [0, 14]
-//  | 125 - 149 | 25 1-byte control min Y coordinates [0, 14]
-//  | 150 - 174 | 25 1-byte control max Y coordinates [0, 14]
+//  | 048 - 063 | 16 1-byte control min X coordinates [0, 14]
+//  | 064 - 079 | 16 1-byte control max X coordinates [0, 14]
+//  | 080 - 095 | 16 1-byte control min Y coordinates [0, 14]
+//  | 096 - 111 | 16 1-byte control max Y coordinates [0, 14]
 //  |-----------|-------------------------------------------------------------|
-//  | 175 - 274 | 25 4-byte bitfields for touches registered on a control
+//  | 112 - 175 | 16 4-byte bitfields for touches registered on a control
 //  |-----------|-------------------------------------------------------------|
 //
 
@@ -90,7 +90,7 @@
 //  Global Constants
 //==============================================================================
 
-const int MAX_CONTROLS = 25;
+const int MAX_CONTROLS = 16;
 const int STATUS_CC = 0xB0;                 // status byte template for CC messages
 
 // Graphics
@@ -334,23 +334,23 @@ void doXYZPad(int controlIndex, float x, float y)
 
 // BUG: optimise MIDI handler performance by moving data onto the heap
 
-// void handleMIDI(int byteStatus, int byteCC, int byteValue)
-// {
-//     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-//                                             //   if status byte is a CC message,
-//                                             //   the result is its MIDI channel
-//
-//     if (byteStatus == midiChannel)
-//         for (int i = 0; i < amount; ++i)
-//         {
-//             if (getControlCCA(i) == byteCC)
-//                 setControlValueA(i, byteValue);
-//
-//             // Check CC B only for XYZ pads
-//             if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
-//                 setControlValueB(i, byteValue);
-//         }
-// }
+void handleMIDI(int byteStatus, int byteCC, int byteValue)
+{
+    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+                                            //   if status byte is a CC message,
+                                            //   the result is its MIDI channel
+
+    if (byteStatus == midiChannel)
+        for (int i = 0; i < amount; ++i)
+        {
+            if (getControlCCA(i) == byteCC)
+                setControlValueA(i, byteValue);
+
+            // Check CC B only for XYZ pads
+            if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
+                setControlValueB(i, byteValue);
+        }
+}
 
 //==============================================================================
 //  Initialisation
