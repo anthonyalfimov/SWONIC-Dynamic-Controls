@@ -11,9 +11,9 @@
         <variable name="amount" displayName="Control Amount" type="int"
                   min="1" max="16" value="1"
                   tooltip="Number of controls to display, 1-16"/>
-        <variable name="midiChannel" displayName="MIDI Channel" type="int"
-                  min="1" max="16" value="1"
-                  tooltip="MIDI channel that is used for all controls"/>
+        <variable name="globalMidiChannel" displayName="Global MIDI Channel" type="option"
+                  value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
+                  tooltip="Default MIDI channel for controls"/>
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -35,17 +35,20 @@
             <variable name="ControlHeight" displayName="y Height" type="int"
                       min="1" max="15" value="1"
                       tooltip="Vertical size of the control, 1-15"/>
-            <variable name="ControlCCA" displayName="x MIDI CC" type="int"
-                      min="1" max="127" initStart="102"
+            <variable name="ParamMidiChannel" displayName="MIDI Channel" type="option"
+                      value="Global" options="Global;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
+                      tooltip="MIDI channel for Control *"/>
+            <variable name="ParamControlCCA" displayName="x MIDI CC" type="int"
+                      min="0" max="127" initStart="102"
                       tooltip="MIDI CC message for Strike (touch) and Glide (horizontal movement)"/>
-            <variable name="ControlCCB" displayName="y MIDI CC" type="int"
-                      min="1" max="127" initStart="102"
+            <variable name="ParamControlCCB" displayName="y MIDI CC" type="int"
+                      min="0" max="127" initStart="102"
                       tooltip="MIDI CC message for Slide (vertical movement)"/>
-            <variable name="ControlCCP" displayName="Pressure CC" type="int"
-                      min="1" max="127" initStart="102"
-                      tooltip="MIDI CC message for Press (pressure)"/>
             <variable name="SendPress" displayName="Send Pressure" type="bool"
                       value="false" tooltip="Activate to send z CC"/>
+            <variable name="ControlCCP" displayName="Pressure MIDI CC" type="int"
+                      min="0" max="127" initStart="102"
+                      tooltip="MIDI CC message for Press (pressure)"/>
         </vector>
 
     </variables>
@@ -64,17 +67,17 @@
 //
 //   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
 //
-//   version: 1.2.4-dev
+//   version: 1.2.5-dev
 //
 //==============================================================================
 
-#heapsize: 176
+#heapsize: 224
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
 //  | bytes:    | data:
-//  | 000 - 015 | 16 1-byte control CC1 values [0, 127]
-//  | 016 - 031 | 16 1-byte control CC2 values [0, 127]
+//  | 000 - 015 | 16 1-byte control CC A values [0, 127]
+//  | 016 - 031 | 16 1-byte control CC B values [0, 127]
 //  | 032 - 047 | 16 1-byte pressure values [0, 127]
 //  |-----------|-------------------------------------------------------------|
 //  | 048 - 063 | 16 1-byte control min X coordinates [0, 14]
@@ -84,13 +87,18 @@
 //  |-----------|-------------------------------------------------------------|
 //  | 112 - 175 | 16 4-byte bitfields for touches registered on a control
 //  |-----------|-------------------------------------------------------------|
+//  | 176 - 191 | 16 1-byte control MIDI channels [0, 15]
+//  | 192 - 207 | 16 1-byte control MIDI CC A numbers [0, 127]
+//  | 208 - 223 | 16 1-byte control MIDI CC B numbers [0, 127]
+//  |-----------|-------------------------------------------------------------|
 //
+
+// TODO: rearrange heap data
 
 //==============================================================================
 //  Global Constants
 //==============================================================================
 
-const int MAX_CONTROLS = 16;
 const int STATUS_CC = 0xB0;                 // status byte template for CC messages
 
 // Graphics
@@ -106,6 +114,18 @@ const int C_XYZPAD = 3;
 //==============================================================================
 //  Heap Setters and Getters
 //==============================================================================
+//------------------------------------------------------------------------------
+//  Control Settings
+//------------------------------------------------------------------------------
+void setMidiChannel(int controlIndex, int value)    { setHeapByte(controlIndex + 176, value); }
+int  getMidiChannel(int controlIndex)               { return getHeapByte(controlIndex + 176); }
+
+void setControlCCA(int controlIndex, int value)    { setHeapByte(controlIndex + 192, value); }
+int  getControlCCA(int controlIndex)               { return getHeapByte(controlIndex + 192); }
+
+void setControlCCB(int controlIndex, int value)    { setHeapByte(controlIndex + 208, value); }
+int  getControlCCB(int controlIndex)               { return getHeapByte(controlIndex + 208); }
+
 //------------------------------------------------------------------------------
 //  Control Values
 //------------------------------------------------------------------------------
@@ -247,7 +267,7 @@ void doTouch(int touchIndex, float x, float y, float z)
             if (getSendPress(i) && isHighestTouch)                      // send pressure and highest touch
             {
                 int pressure = clamp(0, 127, int(z * 127.0));
-                sendCC(midiChannel, getControlCCP(i), pressure);
+                sendCC(getMidiChannel(i), getControlCCP(i), pressure);
                 setPressureValue(i, pressure);
             }
 
@@ -289,14 +309,14 @@ void doTouchEnd(int controlIndex, int touchFlag)
 void doButton(int controlIndex, bool isActive)
 {
     int value = isActive ? 127 : 0;
-    sendCC(midiChannel, getControlCCA(controlIndex), value);
+    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
     setControlValueA(controlIndex, value);
 }
 
 void doSwitch(int controlIndex)
 {
     int value = (getControlValueA(controlIndex) == 0) ? 127 : 0;
-    sendCC(midiChannel, getControlCCA(controlIndex), value);
+    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
     setControlValueA(controlIndex, value);
 }
 
@@ -311,7 +331,7 @@ void doFader(int controlIndex, float x, float y)
         value = convertPositionToCC(x, getControlMinX(controlIndex),
                                        getControlMaxX(controlIndex));
 
-    sendCC(midiChannel, getControlCCA(controlIndex), value);
+    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
     setControlValueA(controlIndex, value);
 }
 
@@ -322,8 +342,8 @@ void doXYZPad(int controlIndex, float x, float y)
     int valueY = 127 - convertPositionToCC(y, getControlMinY(controlIndex),
                                               getControlMaxY(controlIndex));
 
-    sendCC(midiChannel, getControlCCA(controlIndex), valueX);
-    sendCC(midiChannel, getControlCCB(controlIndex), valueY);
+    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), valueX);
+    sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), valueY);
     setControlValueA(controlIndex, valueX);
     setControlValueB(controlIndex, valueY);
 }
@@ -332,16 +352,15 @@ void doXYZPad(int controlIndex, float x, float y)
 //  Incoming MIDI Handler
 //==============================================================================
 
-// BUG: optimise MIDI handler performance by moving data onto the heap
-
 void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
     byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
                                             //   if status byte is a CC message,
                                             //   the result is its MIDI channel
 
-    if (byteStatus == midiChannel)
-        for (int i = 0; i < amount; ++i)
+    for (int i = 0; i < amount; ++i)
+    {
+        if (getMidiChannel(i) == byteStatus)
         {
             if (getControlCCA(i) == byteCC)
                 setControlValueA(i, byteValue);
@@ -350,6 +369,7 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
             if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
                 setControlValueB(i, byteValue);
         }
+    }
 }
 
 //==============================================================================
@@ -358,39 +378,47 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 
 void initialise()
 {
-//  Update global MIDI channel value to [0, 15]
-    midiChannel -= 1;
-
 //  Turn gamma correction off
     setLocalConfig(33, 0);
 
 //  IDEA: should we initialise the unused controls just in case?
 
-//  Initialise Control Values and Control/Touch table
-    for (int i = 0; i < MAX_CONTROLS; ++i)
+    for (int i = 0; i < amount; ++i)
     {
+    //  Initialise MIDI channel and CC numbers
+
+        int channel = getParamMidiChannel(i);
+
+        if (channel == 0)                   // if global channel selected
+            channel = globalMidiChannel;
+        else
+            --channel;                      // update channel value to [0, 15]
+
+        setMidiChannel(i, channel);
+
+        setControlCCA(i, getParamControlCCA(i));
+        setControlCCB(i, getParamControlCCB(i));
+
+    //  Initialise Control Values and Control/Touch table
         setControlValueA(i, 0);
         setControlValueB(i, 0);
         setPressureValue(i, 64);
         setControlTouchField(i, 0);
-    }
 
-//  Precalculate control coordinates
-    for (int i = 0; i < amount; ++i)
-    {
-    //  Mix X [0, 14]
+    //  Precalculate control coordinates
+        // Mix X [0, 14]
         int minX = clamp(0, 14, getControlPosX(i) - 1);
         setControlMinX(i, minX);
 
-    //  Max X [0, 14]
+        // Max X [0, 14]
         int maxX = clamp(0, 14, getControlPosX(i) + getControlWidth(i) - 2);
         setControlMaxX(i, maxX);
 
-    //  Min Y [0, 14]
+        // Min Y [0, 14]
         int minY = clamp(0, 14, 16 - getControlPosY(i) - getControlHeight(i));
         setControlMinY(i, minY);
 
-    //  Max Y [0, 14]
+        // Max Y [0, 14]
         int maxY = clamp(0, 14, 15 - getControlPosY(i));
         setControlMaxY(i, maxY);
     }
@@ -493,8 +521,6 @@ void repaint()
             fillRect(activeColour, pixelX, minY, 1, sizeY);
         }
     }
-
-    log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
