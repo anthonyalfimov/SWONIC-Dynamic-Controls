@@ -14,6 +14,8 @@
         <variable name="globalMidiChannel" displayName="Global MIDI Channel" type="option"
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
                   tooltip="Default MIDI channel for controls"/>
+        <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
+                  value="false" tooltip="Activate for controls to reflect external MIDI CCs" />
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -45,7 +47,7 @@
                       min="0" max="127" initStart="102"
                       tooltip="MIDI CC message for Slide (vertical movement)"/>
             <variable name="SendPress" displayName="Send Pressure" type="bool"
-                      value="false" tooltip="Activate to send z CC"/>
+                      value="false" tooltip="Activate to send pressure CC"/>
             <variable name="ControlCCP" displayName="Pressure MIDI CC" type="int"
                       min="0" max="127" initStart="102"
                       tooltip="MIDI CC message for Press (pressure)"/>
@@ -354,20 +356,23 @@ void doXYZPad(int controlIndex, float x, float y)
 
 void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
-    byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-                                            //   if status byte is a CC message,
-                                            //   the result is its MIDI channel
-
-    for (int i = 0; i < amount; ++i)
+    if (receiveMIDI)
     {
-        if (getMidiChannel(i) == byteStatus)
-        {
-            if (getControlCCA(i) == byteCC)
-                setControlValueA(i, byteValue);
+        byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+                                                //   if status byte is a CC message,
+                                                //   the result is its MIDI channel
 
-            // Check CC B only for XYZ pads
-            if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
-                setControlValueB(i, byteValue);
+        for (int i = 0; i < amount; ++i)
+        {
+            if (getMidiChannel(i) == byteStatus)
+            {
+                if (getControlCCA(i) == byteCC)
+                    setControlValueA(i, byteValue);
+
+                // Check CC B only for XYZ pads
+                if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
+                    setControlValueB(i, byteValue);
+            }
         }
     }
 }

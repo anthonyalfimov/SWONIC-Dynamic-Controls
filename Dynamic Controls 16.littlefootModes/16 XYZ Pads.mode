@@ -3,6 +3,7 @@
 <mode name="16 XYZ Pads">
   <variable name="amount" value="16"/>
   <variable name="globalMidiChannel" value="1"/>
+  <variable name="receiveMIDI" value="true"/>
   <variable name="ControlType0" value="XYZ Pad"/>
   <variable name="ControlColour0" value="0xFF80FF00"/>
   <variable name="ControlPosX0" value="1"/>
