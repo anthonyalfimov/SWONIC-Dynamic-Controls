@@ -18,10 +18,11 @@ int getBoundColour(int col)
     float b = col & 0xff;
     
     float maxc = max(r, max(g, b));
+    maxc = val / maxc;
     
-    r *= val / maxc;
-    g *= val / maxc;
-    b *= val / maxc;
+    r *= maxc;
+    g *= maxc;
+    b *= maxc;
     
     return makeARGB(0xFF, int(r), int(g), int(b));
 }
