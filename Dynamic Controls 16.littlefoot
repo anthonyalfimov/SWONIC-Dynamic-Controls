@@ -20,7 +20,7 @@
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
-            <variable name="ControlType" displayName="Type" type="option"
+            <variable name="ParamControlType" displayName="Type" type="option"
                       options="Button;Switch;Fader;XYZ Pad" value="Button"
                       tooltip="Button: Sends x CC, 127.&#13;Switch: Sends x CC, 127 or 0.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127"/>
             <variable name="ControlColour" displayName="Colour" type="colour"
@@ -73,7 +73,7 @@
 //
 //==============================================================================
 
-#heapsize: 224
+#heapsize: 240
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
@@ -92,6 +92,7 @@
 //  | 176 - 191 | 16 1-byte control MIDI channels [0, 15]
 //  | 192 - 207 | 16 1-byte control MIDI CC A numbers [0, 127]
 //  | 208 - 223 | 16 1-byte control MIDI CC B numbers [0, 127]
+//  | 224 - 239 | 16 1-byte control type values [0, 3]
 //  |-----------|-------------------------------------------------------------|
 //
 
@@ -127,6 +128,9 @@ int  getControlCCA(int controlIndex)               { return getHeapByte(controlI
 
 void setControlCCB(int controlIndex, int value)    { setHeapByte(controlIndex + 208, value); }
 int  getControlCCB(int controlIndex)               { return getHeapByte(controlIndex + 208); }
+
+void setControlType(int controlIndex, int value)    { setHeapByte(controlIndex + 224, value); }
+int  getControlType(int controlIndex)               { return getHeapByte(controlIndex + 224); }
 
 //------------------------------------------------------------------------------
 //  Control Values
@@ -401,6 +405,8 @@ void initialise()
 
         setMidiChannel(i, channel);
 
+        // Move parameters to the heap for improved performance
+        setControlType(i, getParamControlType(i));
         setControlCCA(i, getParamControlCCA(i));
         setControlCCB(i, getParamControlCCB(i));
 

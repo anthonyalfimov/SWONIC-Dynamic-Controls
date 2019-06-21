@@ -4,7 +4,7 @@
   <variable name="amount" value="16"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="receiveMIDI" value="true"/>
-  <variable name="ControlType0" value="Button"/>
+  <variable name="ParamControlType0" value="Button"/>
   <variable name="ControlColour0" value="0xFF80FF00"/>
   <variable name="ControlPosX0" value="1"/>
   <variable name="ControlPosY0" value="1"/>
@@ -15,7 +15,7 @@
   <variable name="ParamControlCCB0" value="102"/>
   <variable name="SendPress0" value="true"/>
   <variable name="ControlCCP0" value="102"/>
-  <variable name="ControlType1" value="Button"/>
+  <variable name="ParamControlType1" value="Button"/>
   <variable name="ControlColour1" value="0xFF00F676"/>
   <variable name="ControlPosX1" value="5"/>
   <variable name="ControlPosY1" value="1"/>
@@ -26,7 +26,7 @@
   <variable name="ParamControlCCB1" value="103"/>
   <variable name="SendPress1" value="true"/>
   <variable name="ControlCCP1" value="103"/>
-  <variable name="ControlType2" value="Button"/>
+  <variable name="ParamControlType2" value="Button"/>
   <variable name="ControlColour2" value="0xFFFF001D"/>
   <variable name="ControlPosX2" value="9"/>
   <variable name="ControlPosY2" value="1"/>
@@ -37,7 +37,7 @@
   <variable name="ParamControlCCB2" value="104"/>
   <variable name="SendPress2" value="true"/>
   <variable name="ControlCCP2" value="104"/>
-  <variable name="ControlType3" value="Button"/>
+  <variable name="ParamControlType3" value="Button"/>
   <variable name="ControlColour3" value="0xFF17FF00"/>
   <variable name="ControlPosX3" value="12"/>
   <variable name="ControlPosY3" value="1"/>
@@ -48,7 +48,7 @@
   <variable name="ParamControlCCB3" value="105"/>
   <variable name="SendPress3" value="true"/>
   <variable name="ControlCCP3" value="105"/>
-  <variable name="ControlType4" value="Button"/>
+  <variable name="ParamControlType4" value="Button"/>
   <variable name="ControlColour4" value="0xFFFF4A00"/>
   <variable name="ControlPosX4" value="1"/>
   <variable name="ControlPosY4" value="5"/>
@@ -59,7 +59,7 @@
   <variable name="ParamControlCCB4" value="106"/>
   <variable name="SendPress4" value="true"/>
   <variable name="ControlCCP4" value="106"/>
-  <variable name="ControlType5" value="Button"/>
+  <variable name="ParamControlType5" value="Button"/>
   <variable name="ControlColour5" value="0xFFFF0030"/>
   <variable name="ControlPosX5" value="5"/>
   <variable name="ControlPosY5" value="5"/>
@@ -70,7 +70,7 @@
   <variable name="ParamControlCCB5" value="107"/>
   <variable name="SendPress5" value="true"/>
   <variable name="ControlCCP5" value="107"/>
-  <variable name="ControlType6" value="Button"/>
+  <variable name="ParamControlType6" value="Button"/>
   <variable name="ControlColour6" value="0xFF0000FF"/>
   <variable name="ControlPosX6" value="9"/>
   <variable name="ControlPosY6" value="5"/>
@@ -81,7 +81,7 @@
   <variable name="ParamControlCCB6" value="108"/>
   <variable name="SendPress6" value="true"/>
   <variable name="ControlCCP6" value="108"/>
-  <variable name="ControlType7" value="Button"/>
+  <variable name="ParamControlType7" value="Button"/>
   <variable name="ControlColour7" value="0xFFFCFF00"/>
   <variable name="ControlPosX7" value="12"/>
   <variable name="ControlPosY7" value="5"/>
@@ -92,7 +92,7 @@
   <variable name="ParamControlCCB7" value="109"/>
   <variable name="SendPress7" value="true"/>
   <variable name="ControlCCP7" value="109"/>
-  <variable name="ControlType8" value="Button"/>
+  <variable name="ParamControlType8" value="Button"/>
   <variable name="ControlColour8" value="0xFF00FF0E"/>
   <variable name="ControlPosX8" value="1"/>
   <variable name="ControlPosY8" value="9"/>
@@ -103,7 +103,7 @@
   <variable name="ParamControlCCB8" value="110"/>
   <variable name="SendPress8" value="true"/>
   <variable name="ControlCCP8" value="110"/>
-  <variable name="ControlType9" value="Button"/>
+  <variable name="ParamControlType9" value="Button"/>
   <variable name="ControlColour9" value="0xFFFF3900"/>
   <variable name="ControlPosX9" value="5"/>
   <variable name="ControlPosY9" value="9"/>
@@ -114,7 +114,7 @@
   <variable name="ParamControlCCB9" value="111"/>
   <variable name="SendPress9" value="true"/>
   <variable name="ControlCCP9" value="111"/>
-  <variable name="ControlType10" value="Button"/>
+  <variable name="ParamControlType10" value="Button"/>
   <variable name="ControlColour10" value="0xFF00DCFF"/>
   <variable name="ControlPosX10" value="9"/>
   <variable name="ControlPosY10" value="9"/>
@@ -125,7 +125,7 @@
   <variable name="ParamControlCCB10" value="112"/>
   <variable name="SendPress10" value="true"/>
   <variable name="ControlCCP10" value="112"/>
-  <variable name="ControlType11" value="Button"/>
+  <variable name="ParamControlType11" value="Button"/>
   <variable name="ControlColour11" value="0xFFB300FF"/>
   <variable name="ControlPosX11" value="12"/>
   <variable name="ControlPosY11" value="9"/>
@@ -136,7 +136,7 @@
   <variable name="ParamControlCCB11" value="113"/>
   <variable name="SendPress11" value="true"/>
   <variable name="ControlCCP11" value="113"/>
-  <variable name="ControlType12" value="Button"/>
+  <variable name="ParamControlType12" value="Button"/>
   <variable name="ControlColour12" value="0xFFFF0700"/>
   <variable name="ControlPosX12" value="1"/>
   <variable name="ControlPosY12" value="12"/>
@@ -147,7 +147,7 @@
   <variable name="ParamControlCCB12" value="114"/>
   <variable name="SendPress12" value="true"/>
   <variable name="ControlCCP12" value="114"/>
-  <variable name="ControlType13" value="Button"/>
+  <variable name="ParamControlType13" value="Button"/>
   <variable name="ControlColour13" value="0xFF00C4FF"/>
   <variable name="ControlPosX13" value="5"/>
   <variable name="ControlPosY13" value="12"/>
@@ -158,7 +158,7 @@
   <variable name="ParamControlCCB13" value="115"/>
   <variable name="SendPress13" value="true"/>
   <variable name="ControlCCP13" value="115"/>
-  <variable name="ControlType14" value="Button"/>
+  <variable name="ParamControlType14" value="Button"/>
   <variable name="ControlColour14" value="0xFF65FF00"/>
   <variable name="ControlPosX14" value="9"/>
   <variable name="ControlPosY14" value="12"/>
@@ -169,7 +169,7 @@
   <variable name="ParamControlCCB14" value="116"/>
   <variable name="SendPress14" value="true"/>
   <variable name="ControlCCP14" value="116"/>
-  <variable name="ControlType15" value="Button"/>
+  <variable name="ParamControlType15" value="Button"/>
   <variable name="ControlColour15" value="0xFFFF0050"/>
   <variable name="ControlPosX15" value="12"/>
   <variable name="ControlPosY15" value="12"/>
