@@ -92,7 +92,7 @@
 //  | 176 - 191 | 16 1-byte control MIDI channels [0, 15]
 //  | 192 - 207 | 16 1-byte control MIDI CC A numbers [0, 127]
 //  | 208 - 223 | 16 1-byte control MIDI CC B numbers [0, 127]
-//  | 224 - 239 | 16 1-byte control type indices [0, 3]
+//  | 224 - 239 | 16 1-byte control type values [0, 3]
 //  |-----------|-------------------------------------------------------------|
 //
 
@@ -379,7 +379,6 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
             }
         }
     }
-    //log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
