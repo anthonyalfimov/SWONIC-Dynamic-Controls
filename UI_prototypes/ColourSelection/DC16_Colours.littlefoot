@@ -26,7 +26,7 @@
                   group="graphics" tooltip="Darkening amount for inactive colour" />
         <variable name="shade" displayName="Shading" type="float"
                   min="0" max="255" value="184"
-                  group="graphics" tooltip="Darkening amount control shading (buttons, inactive faders)" />
+                  group="graphics" tooltip="Darkening amount for control shading (buttons, inactive faders)" />
         <variable name="faderMin" displayName="Fader Min Shading" type="option"
                   value="75%" options="50%;75%;100%;"
                   group="graphics" tooltip="Percentage of global shading darkening to use on inactive faders" />

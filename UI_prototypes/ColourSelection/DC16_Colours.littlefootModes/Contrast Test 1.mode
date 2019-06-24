@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <mode name="">
-  <variable name="amount" value="16"/>
+  <variable name="amount" value="15"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="receiveMIDI" value="false"/>
   <variable name="brightness" value="255.0"/>
