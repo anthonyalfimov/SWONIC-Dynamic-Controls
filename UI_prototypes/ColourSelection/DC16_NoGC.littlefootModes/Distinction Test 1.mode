@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mode name="Control Test 01">
+<mode name="Distinction Test 1">
   <variable name="amount" value="7"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="receiveMIDI" value="false"/>
