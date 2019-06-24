@@ -404,22 +404,6 @@ int inactiveShade;
 int faderMinShade;
 int buttonHalfShade, buttonFullShade;
 
-int overrideBrightness(int colour)
-{
-    float r = (colour & 0xff0000) >> 16;
-    float g = (colour & 0xff00) >> 8;
-    float b = colour & 0xff;
-
-    float maxc = max(r, max(g, b));
-    maxc = brightness / maxc;
-
-    r *= maxc;
-    g *= maxc;
-    b *= maxc;
-
-    return makeARGB(0xFF, int(r), int(g), int(b));
-}
-
 void initialise()
 {
 //  Turn gamma correction on
@@ -464,7 +448,20 @@ void initialise()
         setControlTouchField(i, 0);
 
     //  Initialise control colours
-        setControlColour(i, overrideBrightness(getParamControlColour(i)));
+        int colour = getParamControlColour(i);
+    
+        float r = (colour & 0xff0000) >> 16;
+        float g = (colour & 0xff00) >> 8;
+        float b = colour & 0xff;
+
+        float maxc = max(r, max(g, b));
+        maxc = brightness / maxc;
+
+        r *= maxc;
+        g *= maxc;
+        b *= maxc;
+        
+        setControlColour(i, makeARGB(0xFF, int(r), int(g), int(b)));
 
     //  Precalculate control coordinates
         // Mix X [0, 14]
