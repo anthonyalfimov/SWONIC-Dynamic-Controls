@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # File: install-OSX.command
 
-# Is this path different on localised systems?
 path=~/Documents/ROLI/LittleFoot/
 
 cd -- "$(dirname "$0")"  # switch to directory containing the script
