@@ -4,7 +4,7 @@
   <variable name="amount" value="9"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="receiveMIDI" value="true"/>
-  <variable name="contrast" value="25.0"/>
+  <variable name="contrast" value="50.0"/>
   <variable name="useShading" value="true"/>
   <variable name="ParamControlType0" value="XYZ Pad"/>
   <variable name="ParamControlColour0" value="0xFFFF0000"/>
