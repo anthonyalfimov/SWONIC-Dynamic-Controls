@@ -15,31 +15,36 @@
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
                   tooltip="Default MIDI channel for controls"/>
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
-                  value="false" tooltip="Activate for controls to reflect external MIDI CCs" />
+                  value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
             <variable name="ParamControlType" displayName="Type" type="option"
-                      options="Button;Switch;Fader;XYZ Pad" value="Button"
-                      tooltip="Button: Sends x CC, 127.&#13;Switch: Sends x CC, 127 or 0.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127"/>
+                      options="Button;Fader;XYZ Pad" value="Button"
+                      tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127."/>
             <variable name="ControlColour" displayName="Colour" type="colour"
                       value="random" tooltip="Colour of the control"/>
-            <variable name="ControlPosX" displayName="x Position" type="int"
-                      min="1" max="15" value="1"
-                      tooltip="Horizontal position of the control, 1-15"/>
-            <variable name="ControlPosY" displayName="y Position" type="int"
-                      min="1" max="15" value="1"
-                      tooltip="Vertical position of the control, 1-15"/>
-            <variable name="ControlWidth" displayName="x Width" type="int"
-                      min="1" max="15" value="1"
-                      tooltip="Horizontal size of the control, 1-15"/>
-            <variable name="ControlHeight" displayName="y Height" type="int"
-                      min="1" max="15" value="1"
-                      tooltip="Vertical size of the control, 1-15"/>
+            <variable name="ControlMode" displayName="Behaviour" type="option"
+                      options="Momentary;Latch" value="Latch"
+                      tooltip="Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released."/>
             <variable name="ParamMidiChannel" displayName="MIDI Channel" type="option"
                       value="Global" options="Global;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
                       tooltip="MIDI channel for Control *"/>
+                      
+            <variable name="ControlPosX" displayName="x Position" type="int"
+                      min="1" max="15" value="1"
+                      tooltip="Horizontal position of Control * [1 - 15]"/>
+            <variable name="ControlPosY" displayName="y Position" type="int"
+                      min="1" max="15" value="1"
+                      tooltip="Vertical position of Control * [1 - 15]"/>
+            <variable name="ControlWidth" displayName="x Width" type="int"
+                      min="1" max="15" value="1"
+                      tooltip="Horizontal size of Control * [1 - 15]"/>
+            <variable name="ControlHeight" displayName="y Height" type="int"
+                      min="1" max="15" value="1"
+                      tooltip="Vertical size of Control * [1 - 15]"/>
+
             <variable name="ParamControlCCA" displayName="x MIDI CC" type="int"
                       min="0" max="127" initStart="102"
                       tooltip="MIDI CC message for Strike (touch) and Glide (horizontal movement)"/>
@@ -69,7 +74,7 @@
 //
 //   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
 //
-//   version: 1.2.5-dev
+//   version: 1.2.6-dev
 //
 //==============================================================================
 
@@ -110,9 +115,12 @@ const int faderMinShade = 0xF3 << 24;
 
 // Control types
 const int C_BUTTON = 0;
-const int C_SWITCH = 1;
-const int C_FADER  = 2;
-const int C_XYZPAD = 3;
+const int C_FADER  = 1;
+const int C_XYZPAD = 2;
+
+// Behaviour types
+const int B_MOMENTARY = 0;
+const int B_LATCH = 1;
 
 //==============================================================================
 //  Heap Setters and Getters
@@ -227,6 +235,7 @@ void touchStart(int index, float x, float y, float z, float vz)
 void touchMove(int index, float x, float y, float z, float vz)
 {
     doTouch(index, x, y, z);
+    log(getTimeInCurrentFunctionCall());
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -262,9 +271,7 @@ void doTouch(int touchIndex, float x, float y, float z)
             bool isHighestTouch = !(touchField >> (touchIndex + 1));    // are there any touches with higher index registered to the control?
 
             if (controlType == C_BUTTON && !touchField)                 // is a button and no other touches present
-                doButton(i, true);
-            else if (controlType == C_SWITCH && !touchField)            // is a switch and no other touches present
-                doSwitch(i);
+                doButton(i);
             else if (controlType == C_FADER && isHighestTouch)          // is a fader and highest touch index
                 doFader(i, x, y);
             else if (controlType == C_XYZPAD && isHighestTouch)         // is a pad and highest touch index
@@ -304,22 +311,27 @@ void doTouchEnd(int controlIndex, int touchFlag)
         touchField = touchField & ~touchFlag;                           // unregister touch from ctrl
         setControlTouchField(controlIndex, touchField);
 
-        if (!touchField && getControlType(controlIndex) == C_BUTTON)    // if no touches left registered AND is a button
-            doButton(controlIndex, false);
+        if (!touchField && getControlMode(controlIndex) == B_MOMENTARY) // if no touches left registered AND in momentary mode
+        {
+            sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
+            setControlValueA(controlIndex, 0);
+            
+            if (getControlType(controlIndex) == C_XYZPAD)               // reset CC B only for XYZ pads
+            {
+                sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
+                setControlValueB(controlIndex, 0);
+            }
+        }
     }
 }
 
 //------------------------------------------------------------------------------
 //  Control MIDI Functions
 //------------------------------------------------------------------------------
-void doButton(int controlIndex, bool isActive)
-{
-    int value = isActive ? 127 : 0;
-    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
-    setControlValueA(controlIndex, value);
-}
 
-void doSwitch(int controlIndex)
+// TODO: recosinder inlining these functions: they're only used once!
+
+void doButton(int controlIndex)
 {
     int value = (getControlValueA(controlIndex) == 0) ? 127 : 0;
     sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
@@ -368,7 +380,7 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 
         for (int i = 0; i < amount; ++i)
         {
-            if (getMidiChannel(i) == byteStatus)
+            if (getMidiChannel(i) == byteStatus && getControlMode(i) == B_LATCH)
             {
                 if (getControlCCA(i) == byteCC)
                     setControlValueA(i, byteValue);
@@ -460,17 +472,10 @@ void repaint()
         //----------------------------------------------------------------------
         //  Draw Button
         //----------------------------------------------------------------------
-            drawButton(activeColour, i);
-        }
-        else if (controlType == C_SWITCH)
-        {
-        //----------------------------------------------------------------------
-        //  Draw Switch
-        //----------------------------------------------------------------------
-            if (getControlValueA(i) == 0)
-                drawButton(inactiveColour, i);  //  inactive Switch
+            if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
+                drawButton(inactiveColour, i);  // inactive Switch
             else
-                drawButton(activeColour, i);    //  active Switch
+                drawButton(activeColour, i);    // Button or active Switch
         }
         else if (controlType == C_FADER)
         {
@@ -532,6 +537,7 @@ void repaint()
             fillRect(activeColour, pixelX, minY, 1, sizeY);
         }
     }
+    //log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
