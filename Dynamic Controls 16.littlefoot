@@ -235,7 +235,7 @@ void touchStart(int index, float x, float y, float z, float vz)
 void touchMove(int index, float x, float y, float z, float vz)
 {
     doTouch(index, x, y, z);
-    log(getTimeInCurrentFunctionCall());
+    //log(getTimeInCurrentFunctionCall());
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -244,6 +244,8 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 
     for (int i = 0; i < amount; ++i)        // unregister touch from all ctrls
         doTouchEnd(i, touchFlag);
+
+    //log(getTimeInCurrentFunctionCall());
 }
 
 //------------------------------------------------------------------------------
@@ -391,6 +393,8 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
             }
         }
     }
+    
+    //log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
