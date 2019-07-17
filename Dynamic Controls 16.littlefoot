@@ -308,21 +308,27 @@ void doTouchEnd(int controlIndex, int touchFlag)
 {
     int touchField = getControlTouchField(controlIndex);                // fetch bitfield with registered touches for ctrl
 
-    if (touchField & touchFlag)                                         // if touch was registered with current ctrl
+    if (touchField & touchFlag)                                         // if touch was registered with current ctrl, ...
     {
         touchField = touchField & ~touchFlag;                           // unregister touch from ctrl
         setControlTouchField(controlIndex, touchField);
 
-        if (!touchField && getControlMode(controlIndex) == B_MOMENTARY) // if no touches left registered AND in momentary mode
+        if (!touchField)                                                // if no touches left registered, ...
         {
-            sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
-            setControlValueA(controlIndex, 0);
-            
-            if (getControlType(controlIndex) == C_XYZPAD)               // reset CC B only for XYZ pads
+            if (getControlMode(controlIndex) == B_MOMENTARY)            //     reset CCs for momentary controls
             {
-                sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
-                setControlValueB(controlIndex, 0);
+                sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
+                setControlValueA(controlIndex, 0);
+            
+                if (getControlType(controlIndex) == C_XYZPAD)           //     reset CC B only for XYZ pads
+                {
+                    sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
+                    setControlValueB(controlIndex, 0);
+                }
             }
+            
+            if (getSendPress(controlIndex))                             //     reset pressure if it's enabled
+                sendCC(getMidiChannel(controlIndex), getControlCCP(controlIndex), 0);
         }
     }
 }
