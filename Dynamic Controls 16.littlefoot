@@ -10,10 +10,10 @@
     <variables>
         <variable name="amount" displayName="Control Amount" type="int"
                   min="1" max="16" value="1"
-                  tooltip="Number of controls to display, 1-16"/>
+                  tooltip="Number of controls to display, 1-16" />
         <variable name="globalMidiChannel" displayName="Global MIDI Channel" type="option"
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-                  tooltip="Default MIDI channel for controls"/>
+                  tooltip="Default MIDI channel for controls" />
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
@@ -21,16 +21,16 @@
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
             <variable name="ParamControlType" displayName="Type" type="option"
-                      options="Button;Fader;XYZ Pad" value="Button"
-                      tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127."/>
+                      options="Button;Note;Fader;XYZ Pad" value="Button"
+                      tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
             <variable name="ControlColour" displayName="Colour" type="colour"
-                      value="random" tooltip="Colour of the control"/>
+                      value="random" tooltip="Colour of the control" />
             <variable name="ControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
-                      tooltip="Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released."/>
+                      tooltip="Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
             <variable name="ParamMidiChannel" displayName="MIDI Channel" type="option"
                       value="Global" options="Global;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-                      tooltip="MIDI channel for Control *"/>
+                      tooltip="MIDI channel for Control *" />
                       
             <variable name="ControlPosX" displayName="x Position" type="int"
                       min="1" max="15" value="1"
@@ -45,17 +45,19 @@
                       min="1" max="15" value="1"
                       tooltip="Vertical size of Control * [1 - 15]"/>
 
+            <variable name="MidiNote" displayName="MIDI Note" type="midiNote"
+                      initStart="60" tooltip="MIDI Note number" />
             <variable name="ParamControlCCA" displayName="x MIDI CC" type="int"
                       min="0" max="127" initStart="102"
-                      tooltip="MIDI CC message for Strike (touch) and Glide (horizontal movement)"/>
+                      tooltip="" />
             <variable name="ParamControlCCB" displayName="y MIDI CC" type="int"
                       min="0" max="127" initStart="102"
-                      tooltip="MIDI CC message for Slide (vertical movement)"/>
+                      tooltip="" />
             <variable name="SendPress" displayName="Send Pressure" type="bool"
-                      value="false" tooltip="Activate to send pressure CC"/>
+                      value="false" tooltip="Activate to send pressure CC" />
             <variable name="ControlCCP" displayName="Pressure MIDI CC" type="int"
                       min="0" max="127" initStart="102"
-                      tooltip="MIDI CC message for Press (pressure)"/>
+                      tooltip="MIDI CC message for pressure" />
         </vector>
 
     </variables>
@@ -115,8 +117,9 @@ const int faderMinShade = 0xF3 << 24;
 
 // Control types
 const int C_BUTTON = 0;
-const int C_FADER  = 1;
-const int C_XYZPAD = 2;
+const int C_NOTE   = 1;
+const int C_FADER  = 2;
+const int C_XYZPAD = 3;
 
 // Behaviour types
 const int B_MOMENTARY = 0;
@@ -274,6 +277,8 @@ void doTouch(int touchIndex, float x, float y, float z)
 
             if (controlType == C_BUTTON && !touchField)                 // is a button and no other touches present
                 doButton(i);
+            else if (controlType == C_NOTE && !touchField)              // is a note and no other touches present
+                doNote(i);
             else if (controlType == C_FADER && isHighestTouch)          // is a fader and highest touch index
                 doFader(i, x, y);
             else if (controlType == C_XYZPAD && isHighestTouch)         // is a pad and highest touch index
@@ -317,13 +322,21 @@ void doTouchEnd(int controlIndex, int touchFlag)
         {
             if (getControlMode(controlIndex) == B_MOMENTARY)            //     reset CCs for momentary controls
             {
-                sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
-                setControlValueA(controlIndex, 0);
-            
-                if (getControlType(controlIndex) == C_XYZPAD)           //     reset CC B only for XYZ pads
+                if (getControlType(controlIndex) == C_NOTE)
                 {
-                    sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
-                    setControlValueB(controlIndex, 0);
+                    sendNoteOff(getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
+                    setControlValueA(controlIndex, 0);
+                }
+                else
+                {
+                    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
+                    setControlValueA(controlIndex, 0);
+            
+                    if (getControlType(controlIndex) == C_XYZPAD)       //     reset CC B only for XYZ pads
+                    {
+                        sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
+                        setControlValueB(controlIndex, 0);
+                    }
                 }
             }
             
@@ -341,9 +354,28 @@ void doTouchEnd(int controlIndex, int touchFlag)
 
 void doButton(int controlIndex)
 {
+    // TODO: use CC B for active button value
     int value = (getControlValueA(controlIndex) == 0) ? 127 : 0;
     sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
     setControlValueA(controlIndex, value);
+}
+
+void doNote(int controlIndex)
+{
+    // Use CC A value to track whether note is held
+    //  0   - not held
+    //  127 - held
+    if (getControlValueA(controlIndex) == 0)
+    {
+        // TODO: use CC B for NoteOn velocity
+        sendNoteOn(getMidiChannel(controlIndex), getMidiNote(controlIndex), 127);
+        setControlValueA(controlIndex, 127);
+    }
+    else
+    {
+        sendNoteOff(getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
+        setControlValueA(controlIndex, 0);
+    }
 }
 
 void doFader(int controlIndex, float x, float y)
@@ -477,7 +509,7 @@ void repaint()
         int sizeX = getControlSizeX(i);
         int sizeY = getControlSizeY(i);
 
-        if (controlType == C_BUTTON)
+        if (controlType == C_BUTTON || controlType == C_NOTE)
         {
         //----------------------------------------------------------------------
         //  Draw Button
