@@ -208,8 +208,8 @@
   <variable name="ControlWidth15" value="15"/>
   <variable name="ControlHeight15" value="10"/>
   <variable name="MidiNote15" value="D5"/>
-  <variable name="ParamControlCCA15" value="115"/>
-  <variable name="ParamControlCCB15" value="116"/>
+  <variable name="ParamControlCCA15" value="117"/>
+  <variable name="ParamControlCCB15" value="118"/>
   <variable name="SendPress15" value="true"/>
-  <variable name="ControlCCP15" value="117"/>
+  <variable name="ControlCCP15" value="119"/>
 </mode>
