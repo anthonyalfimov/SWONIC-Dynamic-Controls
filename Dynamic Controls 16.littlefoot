@@ -242,7 +242,7 @@ void touchStart(int index, float x, float y, float z, float vz)
 void touchMove(int index, float x, float y, float z, float vz)
 {
     doTouch(index, x, y, z);
-    log(getTimeInCurrentFunctionCall());
+    // log(getTimeInCurrentFunctionCall());
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -328,7 +328,6 @@ void doTouchEnd(int controlIndex, int touchFlag)
             {
                 if (getControlType(controlIndex) == C_NOTE)
                 {
-                    // sendNoteOff(getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
                     sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
                     setControlValueA(controlIndex, 0);
                 }
@@ -373,13 +372,11 @@ void doNote(int controlIndex)
     if (getControlValueA(controlIndex) == 0)
     {
         // TODO: use CC B for NoteOn velocity
-        // sendNoteOn(getMidiChannel(controlIndex), getMidiNote(controlIndex), 127);
         sendMIDI(0x90 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 127);
         setControlValueA(controlIndex, 127);
     }
     else
     {
-        // sendNoteOff(getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
         sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
         setControlValueA(controlIndex, 0);
     }
@@ -590,7 +587,7 @@ void repaint()
             fillRect(activeColour, pixelX, minY, 1, sizeY);
         }
     }
-    //log(getTimeInCurrentFunctionCall());
+    // log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
