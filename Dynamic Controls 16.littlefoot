@@ -1,5 +1,5 @@
 /*
-<metadata description="Create up to 16 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.7-dev"
+<metadata description="Create up to 16 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.8-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
@@ -25,13 +25,13 @@
                       tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
             <variable name="ControlColour" displayName="Colour" type="colour"
                       value="random" tooltip="Colour of the control" />
-            <variable name="ControlMode" displayName="Behaviour" type="option"
+            <variable name="ParamControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
                       tooltip="Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
             <variable name="ParamMidiChannel" displayName="MIDI Channel" type="option"
                       value="Global" options="Global;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
                       tooltip="MIDI channel for Control *" />
-                      
+
             <variable name="ControlPosX" displayName="x Position" type="int"
                       min="1" max="15" value="1"
                       tooltip="Horizontal position of Control * [1 - 15]"/>
@@ -76,11 +76,11 @@
 //
 //   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
 //
-//   version: 1.2.7-dev
+//   version: 1.2.8-dev
 //
 //==============================================================================
 
-#heapsize: 240
+#heapsize: 256
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
@@ -100,6 +100,7 @@
 //  | 192 - 207 | 16 1-byte control MIDI CC A numbers [0, 127]
 //  | 208 - 223 | 16 1-byte control MIDI CC B numbers [0, 127]
 //  | 224 - 239 | 16 1-byte control type values [0, 3]
+//  | 240 - 255 | 16 1-byte control mode values [0, 1]
 //  |-----------|-------------------------------------------------------------|
 //
 
@@ -142,6 +143,9 @@ int  getControlCCB(int controlIndex)               { return getHeapByte(controlI
 
 void setControlType(int controlIndex, int value)    { setHeapByte(controlIndex + 224, value); }
 int  getControlType(int controlIndex)               { return getHeapByte(controlIndex + 224); }
+
+void setControlMode(int controlIndex, int value)    { setHeapByte(controlIndex + 240, value); }
+int  getControlMode(int controlIndex)               { return getHeapByte(controlIndex + 240); }
 
 //------------------------------------------------------------------------------
 //  Control Values
@@ -196,7 +200,7 @@ int  getControlSizeY(int controlIndex)
 
 bool isFaderVertical(int controlIndex)
 {
-    // use integer division: 0 if horizontal, >=1 if vertical or square
+    // Use integer division: 0 if horizontal, >=1 if vertical or square
     return getControlSizeY(controlIndex) / getControlSizeX(controlIndex);
 }
 
@@ -331,7 +335,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
                 {
                     sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
                     setControlValueA(controlIndex, 0);
-            
+
                     if (getControlType(controlIndex) == C_XYZPAD)       //     reset CC B only for XYZ pads
                     {
                         sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
@@ -339,7 +343,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
                     }
                 }
             }
-            
+
             if (getSendPress(controlIndex))                             //     reset pressure if it's enabled
                 sendCC(getMidiChannel(controlIndex), getControlCCP(controlIndex), 0);
         }
@@ -431,8 +435,8 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
             }
         }
     }
-    
-    //log(getTimeInCurrentFunctionCall());
+
+    log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
@@ -459,8 +463,9 @@ void initialise()
 
         setMidiChannel(i, channel);
 
-        // Move parameters to the heap for improved performance
+    // Move parameters to the heap for improved performance
         setControlType(i, getParamControlType(i));
+        setControlMode(i, getParamControlMode(i));
         setControlCCA(i, getParamControlCCA(i));
         setControlCCB(i, getParamControlCCB(i));
 
