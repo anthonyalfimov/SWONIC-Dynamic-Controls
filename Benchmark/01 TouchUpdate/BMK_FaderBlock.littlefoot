@@ -1,0 +1,386 @@
+/*
+<metadata description="Turn your Lightpad Block into a bank of MIDI faders." details="This app turns your Lightpad into 4 banks of 4 assignable MIDI CC touch faders. The Mode button moves between banks and loading this to multiple connected Blocks will map the banks across the Blocks. You can also configure the MIDI CC, max and min value and the colour of each fader." 
+          target="Lightpad" 
+          tags="MIDI;Controller;Mixing;" canEmbedModes="false">
+    <groups>
+        <group name="sliders" displayName="Fader *" count="16" />
+    </groups>
+	<variables>
+	    <variable name="midiChannel" displayName="MIDI Channel" type="int" min="1" max="16" value="1" displayMode="stepper" tooltip="The MIDI channel that values are sent on" />
+		<vector count="16" group="sliders" wantsGetFunctions="true" wantsSetFunctions="true">
+			<variable name="cc" displayName="CC" type="int" min="0" max="127" value="0" initStart="102" tooltip="The MIDI CC sent by the fader" />
+			<variable name="colour" displayName="Color" type="colour" value="random" tooltip="Color of the fader" />
+			<variable name="sliderMin" displayName="Minimum" type="int" min="0" max="127" value="0" visible="true" tooltip="The minimum MIDI CC value sent by the fader"/>
+			<variable name="sliderMax" displayName="Maximum" type="int" min="0" max="127" value="127" visible="true" tooltip="The maximum MIDI CC value sent by the fader"/>
+		</vector>
+        <vector count="16" wantsGetFunctions="true" wantsSetFunctions="true">
+            <variable name="slider" type="int" min="0" max="127" value="0" visible="false" internal="true" />
+        </vector>
+	</variables>
+</metadata>
+*/
+
+int bank;
+int clusterSize;
+bool bankButtonEnabled;
+int clusterUpdateStage;
+int sliderChangeMessage;
+bool gammaCorrected;
+
+int getFirstSliderIndexForBank ()
+{
+    return bank * 4;
+}
+
+int sliderIndexForX (float x)
+{
+    float x01 = x * 0.5;
+
+    // Each slider has an area of 3px + 1px gap. We want the gaps to be dead zones..
+	int ledZone = int (x01 * 15);
+
+	if (ledZone <= 3) return 0;
+	if (ledZone >= 4 && ledZone <= 7) return 1;
+	if (ledZone >= 8 && ledZone <= 11) return 2;
+	if (ledZone >= 12 && ledZone <= 15) return 3;
+
+	return -1;
+}
+
+bool sliderIsInBank (int sliderIndex)
+{
+    int bankStart = getFirstSliderIndexForBank();
+    int bankEnd   = bankStart + 4;
+    return (sliderIndex >= bankStart && sliderIndex < bankEnd);
+}
+
+int getSliderMaxValueForClusterSize (int theClusterSize)
+{
+    if (theClusterSize == 1)
+        return 13;
+
+    return 15;
+}
+
+int getSliderMaxValue()
+{
+    return getSliderMaxValueForClusterSize (clusterSize);
+}
+
+float getSliderMinValue()
+{
+    if (clusterSize == 1)
+    {
+        return 2.0;
+    }
+
+    return 0.0;
+}
+
+float getSliderValue01ForTouchAtY (float y)
+{
+    float sliderMax   = 14.0;
+    float sliderMin   = getSliderMinValue();
+    float sliderRange = sliderMax - sliderMin;
+
+    float closestLED  = clamp (sliderMin, sliderMax, float (y * 14));
+    float value01     = ((closestLED - sliderMin) / sliderRange);
+    return 1.0 - value01;
+}
+
+int convertSliderValue01ToRange (float slider01, int sliderMin, int sliderMax, int hardMax)
+{
+    return clamp (0x00, hardMax, sliderMin + int (slider01 * float (sliderMax - sliderMin)));
+}
+
+int convertSliderValue01ToOutputRange (int sliderIndex, float slider01)
+{
+    return convertSliderValue01ToRange (slider01, getSliderMin (sliderIndex), getSliderMax (sliderIndex), 0x7F);
+}
+
+void doTouch (int index, float x, float y, float z, float vz)
+{
+	int sliderIndex = sliderIndexForX(x) + getFirstSliderIndexForBank();
+	if (sliderIndex >= 0)
+    {
+        int currentValue = getSlider (sliderIndex);
+        float slider01   = getSliderValue01ForTouchAtY (y * 0.5);
+        int midiValue    = convertSliderValue01ToOutputRange (sliderIndex, slider01);
+        int newValue     = convertSliderValue01ToRange (slider01, 1, getSliderMaxValue(), getSliderMaxValue());
+
+        setSlider (sliderIndex, newValue);
+
+        if (clusterSize != 1 && currentValue != newValue)
+        {
+            sendSliderValueMessage (sliderIndex, newValue);
+        }
+        
+        sendMIDI (0xB0 | (midiChannel - 1), getCc (sliderIndex), midiValue);
+    }
+}
+
+void touchStart (int index, float x, float y, float z, float vz)
+{
+	doTouch (index, x, y, z, vz);
+}
+
+void touchMove (int index, float x, float y, float z, float vz)
+{
+	doTouch (index, x, y, z, vz);
+	
+//==============================================================================
+//  Log touchMove()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
+}
+
+void handleButtonDown (int index)
+{
+    if (bankButtonEnabled)
+    {
+        bank = (bank + 1) % 4;
+    }
+}
+
+void paintBankIndicator()
+{
+    if (clusterSize == 1)
+    {
+        fillRect (makeARGB (255, 255, 0, 0), getFirstSliderIndexForBank(), 0, 3, 1);
+    }
+}
+
+void paintSliders()
+{
+    int bankStart = getFirstSliderIndexForBank();
+    for (int slider = 0; slider < 4; ++slider)
+	{
+		int sliderIndex  = slider + bankStart;
+		int sliderValue  = getSlider (sliderIndex);
+		int sliderColour = getColour (sliderIndex);
+		fillRect (sliderColour, slider * 4,  15 - sliderValue, 3, sliderValue);
+	}
+}
+
+void repaint()
+{
+    clearDisplay();
+    paintBankIndicator();
+    paintSliders();
+    updateClustering();
+    
+//==============================================================================
+//  Log repaint()
+//==============================================================================
+    log(getTimeInCurrentFunctionCall());
+}
+
+
+void zeroSliders()
+{
+    for (int i = 0; i < 16; ++i)
+        setSlider (i, 1);
+}
+
+void initialise()
+{
+    sliderChangeMessage = 0x7F2E;
+    
+    clusterUpdateStage = -1;
+    zeroSliders();
+    updateClusterPosition();
+    notifyOtherBlocksInClusterOfSliderValues();
+
+    for (int i = 0; i < 32; ++i)
+        setLocalConfigActiveState (i, false, false);
+
+    setLocalConfig (33, 1);
+    gammaCorrected = getLocalConfig (33) > 0;
+}
+
+void updateClusterPosition()
+{
+    clusterSize = getClusterWidth();
+
+    if (clusterSize == 1)
+    {
+	    bank              = 0;
+	    bankButtonEnabled = true;
+    }
+    else
+    {
+        bank              = getClusterXpos();
+        bankButtonEnabled = false;
+    }
+}
+
+void updateClustering()
+{
+    int newClusterSize = getClusterWidth();
+    if (clusterSize != newClusterSize)
+    {
+        if (newClusterSize == 1)
+            rescaleSliders (false);
+        else if (newClusterSize > 1 && clusterSize == 1)
+            rescaleSliders (true);
+
+        updateClusterPosition();
+        notifyOtherBlocksInClusterOfSliderValues();
+    }
+}
+
+void notifyOtherBlocksInClusterOfSliderValues()
+{
+    if (isMasterInCurrentCluster() && clusterSize != 1)
+    {
+        int ourID = getBlockIDForIndex (0);
+        for (int clusterIndex = 0; clusterIndex < getNumBlocksInCurrentCluster(); ++clusterIndex)
+        {
+            int id = getBlockIdForBlockInCluster (clusterIndex);
+        
+            if (id == ourID)
+                continue;
+            
+            for (int slider = 0; slider < 16; ++slider)
+                sendMessageToBlock (id, sliderChangeMessage, slider, getSlider (slider));
+        }
+    }
+}
+
+void handleMessage (int data0, int data1, int data2)
+{
+    if (data0 == sliderChangeMessage)
+        setSlider (data1, data2);
+}
+
+void sendSliderValueMessage (int slider, int value)
+{
+    int ourID = getBlockIDForIndex (0);
+    for (int clusterIndex = 0; clusterIndex < getNumBlocksInCurrentCluster(); ++clusterIndex)
+    {
+        int id = getBlockIdForBlockInCluster (clusterIndex);
+        
+        if (id == ourID)
+            continue;
+            
+        sendMessageToBlock (id, sliderChangeMessage, slider, value);
+    }
+}
+
+void rescaleSliders (bool isNowClustering)
+{
+    float nonClusterMax = float (getSliderMaxValueForClusterSize (1));
+    float clusterMax    = float (getSliderMaxValueForClusterSize (4));
+
+    if (isNowClustering)
+    {
+        for (int slider = 0; slider < 16; ++slider)
+            setSlider (slider, int ((float (getSlider (slider)) / nonClusterMax) * clusterMax));  
+    }
+    else
+    {
+        for (int slider = 0; slider < 16; ++slider)
+            setSlider (slider, int ((float (getSlider (slider)) / clusterMax) * nonClusterMax));   
+    }
+}
+
+
+/*
+<display backgroundColour="0xFF11B6ED" textColour="0xFFFFFFFF">
+    <pixels>
+        <pixel index="0" colour="0xFF340AE8" />
+        <pixel index="1" colour="0xFF340AE8" />
+        <pixel index="2" colour="0xFF340AE8" />
+        <pixel index="4" colour="0xFF8CEC92" />
+        <pixel index="5" colour="0xFF8CEC92" />
+        <pixel index="6" colour="0xFF8CEC92" />
+        <pixel index="8" colour="0xFFF07AFA" />
+        <pixel index="9" colour="0xFFF07AFA" />
+        <pixel index="10" colour="0xFFF07AFA" />
+        <pixel index="12" colour="0xFFFF80A7" />
+        <pixel index="13" colour="0xFFFF80A7" />
+        <pixel index="14" colour="0xFFFF80A7" />
+        <pixel index="15" colour="0xFF340AE8" />
+        <pixel index="16" colour="0xFF340AE8" />
+        <pixel index="17" colour="0xFF340AE8" />
+        <pixel index="19" colour="0xFF8CEC92" />
+        <pixel index="20" colour="0xFF8CEC92" />
+        <pixel index="21" colour="0xFF8CEC92" />
+        <pixel index="23" colour="0xFFF07AFA" />
+        <pixel index="24" colour="0xFFF07AFA" />
+        <pixel index="25" colour="0xFFF07AFA" />
+        <pixel index="27" colour="0xFFFF80A7" />
+        <pixel index="28" colour="0xFFFF80A7" />
+        <pixel index="29" colour="0xFFFF80A7" />
+        <pixel index="30" colour="0xFF340AE8" />
+        <pixel index="31" colour="0xFF340AE8" />
+        <pixel index="32" colour="0xFF340AE8" />
+        <pixel index="34" colour="0xFF8CEC92" />
+        <pixel index="35" colour="0xFF8CEC92" />
+        <pixel index="36" colour="0xFF8CEC92" />
+        <pixel index="38" colour="0xFFF07AFA" />
+        <pixel index="39" colour="0xFFF07AFA" />
+        <pixel index="40" colour="0xFFF07AFA" />
+        <pixel index="42" colour="0xFFFF80A7" />
+        <pixel index="43" colour="0xFFFF80A7" />
+        <pixel index="44" colour="0xFFFF80A7" />
+        <pixel index="45" colour="0xFF340AE8" />
+        <pixel index="46" colour="0xFF340AE8" />
+        <pixel index="47" colour="0xFF340AE8" />
+        <pixel index="49" colour="0xFF8CEC92" />
+        <pixel index="50" colour="0xFF8CEC92" />
+        <pixel index="51" colour="0xFF8CEC92" />
+        <pixel index="53" colour="0xFFF07AFA" />
+        <pixel index="54" colour="0xFFF07AFA" />
+        <pixel index="55" colour="0xFFF07AFA" />
+        <pixel index="57" colour="0xFFFF80A7" />
+        <pixel index="58" colour="0xFFFF80A7" />
+        <pixel index="59" colour="0xFFFF80A7" />
+        <pixel index="60" colour="0xFF340AE8" />
+        <pixel index="61" colour="0xFF340AE8" />
+        <pixel index="62" colour="0xFF340AE8" />
+        <pixel index="64" colour="0xFF8CEC92" />
+        <pixel index="65" colour="0xFF8CEC92" />
+        <pixel index="66" colour="0xFF8CEC92" />
+        <pixel index="68" colour="0xFFF07AFA" />
+        <pixel index="69" colour="0xFFF07AFA" />
+        <pixel index="70" colour="0xFFF07AFA" />
+        <pixel index="79" colour="0xFF8CEC92" />
+        <pixel index="80" colour="0xFF8CEC92" />
+        <pixel index="81" colour="0xFF8CEC92" />
+        <pixel index="83" colour="0xFFF07AFA" />
+        <pixel index="84" colour="0xFFF07AFA" />
+        <pixel index="85" colour="0xFFF07AFA" />
+        <pixel index="94" colour="0xFF8CEC92" />
+        <pixel index="95" colour="0xFF8CEC92" />
+        <pixel index="96" colour="0xFF8CEC92" />
+        <pixel index="98" colour="0xFFF07AFA" />
+        <pixel index="99" colour="0xFFF07AFA" />
+        <pixel index="100" colour="0xFFF07AFA" />
+        <pixel index="109" colour="0xFF8CEC92" />
+        <pixel index="110" colour="0xFF8CEC92" />
+        <pixel index="111" colour="0xFF8CEC92" />
+        <pixel index="113" colour="0xFFF07AFA" />
+        <pixel index="114" colour="0xFFF07AFA" />
+        <pixel index="115" colour="0xFFF07AFA" />
+        <pixel index="124" colour="0xFF8CEC92" />
+        <pixel index="125" colour="0xFF8CEC92" />
+        <pixel index="126" colour="0xFF8CEC92" />
+        <pixel index="139" colour="0xFF8CEC92" />
+        <pixel index="140" colour="0xFF8CEC92" />
+        <pixel index="141" colour="0xFF8CEC92" />
+        <pixel index="154" colour="0xFF8CEC92" />
+        <pixel index="155" colour="0xFF8CEC92" />
+        <pixel index="156" colour="0xFF8CEC92" />
+        <pixel index="169" colour="0xFF8CEC92" />
+        <pixel index="170" colour="0xFF8CEC92" />
+        <pixel index="171" colour="0xFF8CEC92" />
+        <pixel index="184" colour="0xFF8CEC92" />
+        <pixel index="185" colour="0xFF8CEC92" />
+        <pixel index="186" colour="0xFF8CEC92" />
+        <pixel index="199" colour="0xFF8CEC92" />
+        <pixel index="200" colour="0xFF8CEC92" />
+        <pixel index="201" colour="0xFF8CEC92" />
+    </pixels>
+</display>
+*/

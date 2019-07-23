@@ -1,0 +1,1477 @@
+/*
+<metadata description="Default App for your Lightpad Block, setting it as a MIDI note controller." details="Set the grid size of your Lightpad Block to work with drum and melodic instruments. Set MIDI modes, the scale and many other options to fit around your workflow and the DAWs and plug-ins you use. The size of the grid can be changed by pressing the Mode button on the Lightpad Block" target="Lightpad" tags="MPE;MIDI;Melodic" canEmbedModes="false">
+</metadata>
+*/
+
+#heapsize: 436
+
+//==============================================================================
+/*
+   Heap layout:
+
+   === 25 x Pad ===
+
+   0     4 byte x 25   colours
+   100   1 byte x 25   note numbers
+
+   === 24 x Touch ===
+
+   125   1 byte x 24   corresponding pad index (0xff if none)
+   149   4 byte x 24   initial x positions (for relative pitchbend)
+   245   4 byte x 24   initial y positions (for relative y axis)
+   341   1 byte x 24   MIDI channel assigned
+
+   === 16 x Channel ===
+
+   365   1 byte x 16   touch to track for this channel (depends on tracking mode)
+
+   === 24 x Touch ===
+
+   381   1 byte x 24   Touch note number
+   405   1 byte x 24   Touch velocity
+   429   1 byte x 24   list of active touch indicies in order of first played to last played
+
+*/
+//==============================================================================
+
+const int gradientColour1 = 0x7199ff;
+const int gradientColour2 = 0x6fe6ff;
+
+//==============================================================================
+
+int gridSize, padWidth, padSpacing;
+int dimFactor, dimDelay, dimDelta;
+int scaleBitmask;
+int numNotesInScale;
+int channelLastAssigned;
+int activePads;
+int pitchbendRange;
+int octave;
+int xShift, yShift;
+int transpose;
+int scale;  // Major;Minor;Harmonic Minor;Pentatonic Neutral;Pentatonic Major;Pentatonic Minor;Blues;Dorian;Phrygian;Lydian;Mixolydian;Locrian;Whole Tone;Arabic (A);Arabic (B);Japanese;Ryukyu;8-Tone Spanish;Chromatic;
+bool hideMode;
+int position;   // Split into X and Y offsets
+int clusterWidth;
+int clusterHeight;
+int xPos;
+int yPos;
+
+bool glideLockEnabled;
+int glideLockInitialNote;
+float glideLockTarget;
+int glideLockChannel;
+
+bool gammaCorrected;
+bool isSongMakerKit;
+int smkMode; //0 = Macro, 1 = Sensitivity, 2 = XY Pad
+int sbbAddress;
+
+//==============================================================================
+void Pad_setColour (int padIndex, int colour)           { setHeapInt (padIndex * 4, colour); }
+int  Pad_getColour (int padIndex)                       { return getHeapInt (padIndex * 4); }
+void Pad_setNote (int padIndex, int note)               { setHeapByte (padIndex + 100, note); }
+int  Pad_getNote (int padIndex)                         { return getHeapByte (padIndex + 100); }
+void Pad_setActive (int padIndex, bool setActive)       { activePads = setActive ? (activePads | (1 << padIndex)) : (activePads & ~(1 << padIndex)); }
+bool Pad_isActive (int padIndex)                        { return activePads & (1 << padIndex); }
+bool isAnyPadActive()                                   { return activePads; }
+
+//==============================================================================
+void Touch_setPad (int touchIndex, int padIndex)        { setHeapByte (touchIndex + 125, padIndex); }
+int  Touch_getPad (int touchIndex)                      { return getHeapByte (touchIndex + 125); }
+void Touch_setInitialX (int touchIndex, float initialX) { setHeapInt ((touchIndex * 4) + 149, int (initialX * 1e6)); }
+float Touch_getInitialX (int touchIndex)                { return float (getHeapInt ((touchIndex * 4) + 149)) / 1e6; }
+void Touch_setInitialY (int touchIndex, float initialY) { setHeapInt ((touchIndex * 4) + 245, int (initialY * 1e6)); }
+float Touch_getInitialY (int touchIndex)                { return float (getHeapInt ((touchIndex * 4) + 245)) / 1e6; }
+void Touch_setChannel (int touchIndex, int channel)     { setHeapByte (touchIndex + 341, channel); }
+int  Touch_getChannel (int touchIndex)                  { return getHeapByte (touchIndex + 341); }
+void Touch_setNote (int touchIndex, int noteNumber)     { setHeapByte (touchIndex + 381, noteNumber); }
+int  Touch_getNote (int touchIndex)                     { return getHeapByte (touchIndex + 381); }
+void Touch_setVelocity (int touchIndex, int velocity)   { setHeapByte (touchIndex + 405, velocity); }
+int  Touch_getVelocity (int touchIndex)                 { return getHeapByte (touchIndex + 405); }
+void Touch_setTouchByHistory (int touchIndex, int order){ setHeapByte (order + 429, touchIndex); }
+int  Touch_getTouchByHistory (int order)                { return getHeapByte (order + 429); }
+
+//==============================================================================
+
+void Channel_setTrackedTouch (int channel, int touchIndex)
+{
+    setHeapByte (channel + 365, touchIndex);
+}
+
+int Channel_getTrackedTouch (int channel)
+{
+    return getHeapByte (channel + 365);
+}
+
+//==============================================================================
+bool isPartOfScale (int noteRelativeToTonic)
+{
+	int noteAsBitSet = 0x01 << (mod (noteRelativeToTonic, 12));
+	return (noteAsBitSet & scaleBitmask) != 0;
+}
+
+int findNthNoteInScale (int n)
+{
+    int count = 0;
+
+    for (int pos = 0; pos < 12; ++pos)
+    {
+        if (scaleBitmask & (0x01 << pos))
+        {
+            if (count == n)
+                return pos;
+
+            count++;
+        }
+    }
+
+    return -1;
+}
+    
+//==============================================================================
+int getTouchedPad (float x, float y)
+{
+	int col = int (x * 0.5 * float (gridSize));
+    int row = int (y * 0.5 * float (gridSize));
+
+	return (gridSize * row) + col;
+}
+
+//==============================================================================
+int getNoteForPad (int padIndex)
+{
+    // convert pad index (starting top left) to index in note sequence (starting bottom left):
+    int padRow = padIndex / gridSize;
+    int padCol = padIndex % gridSize;
+    int noteIndex = ((gridSize - 1) - padRow) * gridSize + padCol;
+    int topologyShift, scaleShift;
+
+    //drums have a lower default octave to melodic
+    int lowestDefaultNote = gridSize == 5 ? 48 : 36;
+    int lowestNoteIndex = (octave * 12) + lowestDefaultNote  + transpose;
+
+    if (gridSize == 5 )
+    {
+        topologyShift = (xShift * 5) + (yShift * 25);
+ 
+        if (! hideMode)
+        {
+            lowestNoteIndex += topologyShift;
+        }
+        else
+        {
+            lowestNoteIndex += roundDownDivide (topologyShift, numNotesInScale) * 12;
+            scaleShift = topologyShift % numNotesInScale;
+                  
+            if (scaleShift < 0)
+                scaleShift += numNotesInScale;
+                
+        }
+    }
+    else
+    {
+        // Drum grid            
+        int notesPerRow = getClusterWidth() * gridSize;
+
+        return lowestNoteIndex + (xShift * gridSize) + padCol + (((gridSize - 1) - padRow) * notesPerRow) + (yShift * notesPerRow * gridSize);
+    }
+
+    if (! hideMode)
+        return noteIndex + lowestNoteIndex;
+
+    return findNthNoteInScale ((noteIndex + scaleShift)  % numNotesInScale) + ((noteIndex + scaleShift) / numNotesInScale * 12) + lowestNoteIndex;
+}
+
+int roundDownDivide (int a, int b)
+{
+    if (a >= 0)
+        return a / b; 
+    else
+        return (a - b + 1) / b;
+}
+
+//==============================================================================
+int getTrailColour (int padColour)
+{
+    if (padColour == 0xff000000)
+        return 0xffaaaaaa;
+
+    return blendARGB (0xFFFFFFFF, padColour);
+}
+
+//==============================================================================
+void updateDimFactor()
+{
+    int dimLim = gammaCorrected ? 100 : 180;
+    
+	if (isAnyPadActive() || dimDelta)
+	{
+	    if (dimFactor < dimLim)
+	        dimDelta = 60;
+	    else
+	        dimDelta = 0;
+
+		dimFactor += dimDelta;
+		dimDelay = 3;
+	}
+	else
+	{
+		if (--dimDelay <= 0)
+		{
+			dimFactor -= 24;
+
+			if (dimFactor < 0)
+				dimFactor = 0;
+		}
+	}
+}
+
+//==============================================================================
+bool drawAbsolutePad ()
+{
+    if (gridSize != 1)
+        return false;
+
+    int high = 0xff366CC5;
+    int low = 0xffAA429A;
+    int mid = blendARGB (high, low);
+    
+    int dimColour = (dimFactor << 24);
+
+    high = blendARGB (high, dimColour);
+    mid = blendARGB (mid, dimColour);
+    low = blendARGB (low, dimColour);
+
+    blendGradientRect (high, mid, low, mid, 0, 0, 15, 15);
+
+    return true;
+}
+
+void drawPad (int x, int y, int colour, int bottomRightCornerDarkeningAmount)
+{
+    int dark = blendARGB (colour, bottomRightCornerDarkeningAmount << 24);
+    int mid  = blendARGB (colour, (bottomRightCornerDarkeningAmount / 2) << 24);
+
+    int w = padWidth - padSpacing;
+    blendGradientRect (colour, mid, dark, mid, x * padWidth, y * padWidth, w, w);
+}
+
+void drawPads()
+{
+    int padIndex = 0;
+
+    if (drawAbsolutePad())
+        return;
+
+	for (int padY = 0; padY < gridSize; ++padY)
+	{
+		for (int padX = 0; padX < gridSize; ++padX)
+		{
+		    int overlayColour = Pad_isActive (padIndex) && gridSize > 1 ? 0x66ffffff : (dimFactor << 24);
+
+            drawPad (padX, padY, blendARGB (Pad_getColour (padIndex), overlayColour), 0xb8);
+
+            ++padIndex;
+		}
+	}
+}
+
+
+//==============================================================================
+void initialiseScale()
+{
+	if (scale == 0)        scaleBitmask = 0xab5;  // major
+	else if (scale == 1)   scaleBitmask = 0x5ad;  // minor
+	else if (scale == 2)   scaleBitmask = 0x9ad;  // harmonic minor
+	else if (scale == 3)   scaleBitmask = 0x4a5;  // pentatonic neutral
+	else if (scale == 4)   scaleBitmask = 0x295;  // pentatonic major
+	else if (scale == 5)   scaleBitmask = 0x4a9;  // pentatomic minor
+	else if (scale == 6)   scaleBitmask = 0x4e9;  // blues
+	else if (scale == 7)   scaleBitmask = 0x6ad;  // dorian
+	else if (scale == 8)   scaleBitmask = 0x5ab;  // phrygian
+	else if (scale == 9)   scaleBitmask = 0xad5;  // lydian
+	else if (scale == 10)  scaleBitmask = 0x6b5;  // mixolydian
+	else if (scale == 11)  scaleBitmask = 0x56b;  // locrian
+	else if (scale == 12)  scaleBitmask = 0x555;  // whole tone
+	else if (scale == 13)  scaleBitmask = 0xb6d;  // arabic (A)
+	else if (scale == 14)  scaleBitmask = 0x575;  // arabic (B)
+	else if (scale == 15)  scaleBitmask = 0x8d1;  // japanese
+	else if (scale == 16)  scaleBitmask = 0x8b1;  // ryukyu
+	else if (scale == 17)  scaleBitmask = 0x57b;  // 8-tone spanish
+	else                   scaleBitmask = 0xfff;  // chromatic
+
+    int n = scaleBitmask;
+    n -= ((n >> 1) & 0x5555);
+    n =  (((n >> 2) & 0x3333) + (n & 0x3333));
+    n =  (((n >> 4) + n) & 0x0f0f);
+    n += (n >> 8);
+    numNotesInScale = n & 0x3f;
+}
+
+//==============================================================================
+bool setDrumModePadColours()
+{
+    if (gridSize == 5)
+        return false;
+
+    int numPads = gridSize * gridSize;
+
+    for (int i = 0; i < numPads; ++i)
+    {
+        int note = getNoteForPad (i);
+        Pad_setNote (i, note);
+    }
+
+    if (gridSize == 1)
+    {
+        Pad_setColour (0, 0xff366CC5);
+    }
+    else if (gridSize == 2)
+    {
+        Pad_setColour (0, 0xffad64fb);
+        Pad_setColour (1, 0xff54e8fd);
+        Pad_setColour (2, 0xff3f89fb);
+        Pad_setColour (3, 0xff3c57fb);
+    }
+    else if (gridSize == 3 || gridSize == 4)
+    {
+        Pad_setColour (0, 0xff4dfcf0);
+        Pad_setColour (1, 0xff4b5eed);
+        Pad_setColour (2, 0xff9850e6);
+        Pad_setColour (3, 0xfff8676e);
+        Pad_setColour (4, 0xff4de7fc);
+        Pad_setColour (5, 0xff645fed);
+        Pad_setColour (6, 0xffc35ce6);
+        Pad_setColour (7, 0xfff87966);
+        Pad_setColour (8, 0xff4fbbf7);
+        Pad_setColour (9, 0xff8152f8);
+        Pad_setColour (10, 0xffe673d2);
+        Pad_setColour (11, 0xfffca76a);
+        Pad_setColour (12, 0xff4288f7);
+        Pad_setColour (13, 0xff8543f8);
+        Pad_setColour (14, 0xffe36d94);
+        Pad_setColour (15, 0xfffac769);
+    }
+
+    return true;
+}
+
+//==============================================================================
+void initialisePads()
+{    
+    setPitchCorrectionEnabled (gridSize == 5);
+    
+    padWidth = 15 / gridSize;
+	padSpacing = gridSize > 1 ? (15 - gridSize * padWidth) / (gridSize - 1) : 0;
+	padWidth += padSpacing;
+	dimFactor = 0;
+	dimDelay = 12;
+	activePads = 0;
+    int numPads = gridSize * gridSize;
+
+	if (setDrumModePadColours())
+	    return;
+
+    for (int padIndex = 0; padIndex < numPads; ++padIndex)
+	{
+        // note numbers:
+        int note = getNoteForPad (padIndex);
+        if (note < 0) note = 0;
+
+        Pad_setNote (padIndex, note);
+
+        // pad colours:
+		int padColour = 0xffffffff;   // tonic = white
+
+		int noteInScale = mod (note - transpose, 12);
+
+        if (noteInScale != 0)
+		{
+		    // not the tonic!
+
+	        if (! hideMode && ! isPartOfScale (noteInScale))
+			{
+		        padColour = 0xff000000;
+			}
+		    else
+			{
+				int blend = 0xff * (noteInScale - 1) / 10;
+
+				padColour = blendARGB (gradientColour1 | 0xff000000,
+				                       (gradientColour2 & 0x00ffffff) | (blend << 24));
+			}
+		}
+
+        Pad_setColour (padIndex, padColour);
+        
+        float padSize = (2.0 / float (gridSize));
+        float xStart = padSize * (padIndex % gridSize);
+        float yStart = padSize * (padIndex / gridSize);
+        
+        addPitchCorrectionPad (padIndex, note, xStart, yStart, padSize, padSize);
+	}
+}
+
+//==============================================================================
+void initialiseTouches()
+{
+    for (int touchIndex = 0; touchIndex < 24; ++touchIndex)
+    {
+        Touch_setPad (touchIndex, 0xff);
+        Touch_setChannel (touchIndex, 0xff);
+        Touch_setTouchByHistory (0xff, touchIndex);
+    }
+}
+
+void initialiseChannels()
+{
+	for (int channel = 0; channel < 16; ++channel)
+    {
+	    Channel_setTrackedTouch (channel, 0xff);
+    }
+}
+
+void initialiseConfig()
+{
+    clusterWidth = 1;
+    clusterHeight = 1;
+
+    setLocalConfigItemRange (4, -4, 6);
+	setLocalConfigItemRange (7, 0, 2);
+	setLocalConfigItemRange (20, 1, 5);
+	setLocalConfigItemRange (22, 0, 18);
+	setLocalConfigItemRange (24, 0, 14);
+	
+	setLocalConfigItemRange (30, 1, 4);
+	setLocalConfigItemRange (31, 1, 4);
+
+	gridSize = getLocalConfig(20);
+	updateTopologyShift();
+
+    pitchbendRange = getLocalConfig(3);
+	octave = getLocalConfig(4);
+	scale = 0;
+	hideMode = false;
+}
+
+void initialiseGlideLock()
+{
+    glideLockEnabled = false;
+    glideLockInitialNote = 0;
+    glideLockTarget = 0.0;
+    glideLockChannel = 0;
+}
+
+void initialise()
+{
+    setLocalConfigActiveState (0, true, true);
+	setLocalConfigActiveState (1, true, true);
+	setLocalConfigActiveState (2, true, true);
+	setLocalConfigActiveState (3, true, true);
+	setLocalConfigActiveState (4, true, true);
+	setLocalConfigActiveState (5, true, true);
+	setLocalConfigActiveState (6, true, true);
+	setLocalConfigActiveState (7, true, true);
+	setLocalConfigActiveState (10, true, true);
+	setLocalConfigActiveState (11, true, true);
+	setLocalConfigActiveState (12, true, true);
+	setLocalConfigActiveState (13, true, true);
+	setLocalConfigActiveState (14, true, true);
+	setLocalConfigActiveState (15, true, true);
+	setLocalConfigActiveState (16, true, true);
+	setLocalConfigActiveState (17, true, true);
+	setLocalConfigActiveState (18, true, true);
+    setLocalConfigActiveState (19, true, true);
+	setLocalConfigActiveState (20, true, true);
+	setLocalConfigActiveState (22, true, true);
+	setLocalConfigActiveState (23, true, true);
+	setLocalConfigActiveState (24, true, true);
+	setLocalConfigActiveState (30, true, true);
+	setLocalConfigActiveState (31, true, true);
+	setLocalConfigActiveState (32, true, true);
+	
+	// Enable gamma correction if supported on hardware
+    setLocalConfig (33, 1);
+    gammaCorrected = getLocalConfig (33) > 0;
+	
+	initialiseConfig();
+	initialiseScale();
+	initialisePads();
+	initialiseTouches();
+	initialiseChannels();
+    initialiseGlideLock();
+
+	useMPEDuplicateFilter (true);
+	
+	smkMode = 0;
+}
+
+
+
+//==============================================================================
+void repaint()
+{ 
+	clearDisplay();
+	updateDimFactor();
+
+	if (isConnectedToHost())
+    {
+        if (isSongMakerKit && gridSize == 6)
+            drawFaders();
+        else
+        drawPads();
+    }
+
+    checkConfigUpdates();
+
+    // Overlay heatmap
+    drawPressureMap();
+    fadePressureMap();
+    
+//==============================================================================
+//  Log repaint()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
+}
+
+//==============================================================================
+int getAbsPitch (int touchIndex, float x)
+{
+    float deltaX = (x - 1.0) * 12.0;
+    return getPitchWheelFromDeltaX (deltaX);
+}
+
+int getPitchwheelValue (int touchIndex, float x)
+{
+    float initialX = Touch_getInitialX (touchIndex);
+    float scaler = (1.0 / (2.1 / float (gridSize)));
+    float deltaX = transformPitchForHideMode (touchIndex, scaler * (x - initialX));
+    int correction = 0;
+
+    if (gridSize == 5)
+	   correction = getPitchCorrectionPitchBend (touchIndex, getPitchWheelFromDeltaX (deltaX) - 8192);
+
+	return getPitchWheelFromDeltaX (deltaX) + correction;
+}
+
+int getPitchWheelFromDeltaX (float deltaX)
+{
+    deltaX = clamp (float (-getLocalConfig (3)), float (getLocalConfig (3)), deltaX);
+    
+    // now convert pitchbend in semitones to 14-bit pitchwheel position:
+	float pitchwheel = deltaX > 0.0
+	        ? map (deltaX, 0.0, float (getLocalConfig(3)), 8192.0, 16383.0)
+	        : map (deltaX, float (-getLocalConfig(3)), 0.0, 0.0, 8192.0);
+
+	return clamp (0, 16383, int (pitchwheel));
+}
+
+float transformPitchForHideMode (int touchIndex, float deltaX)
+{
+    if (! hideMode)
+        return deltaX;
+
+    // interpolate between actual pitches of pads left and right to x
+
+    int deltaXLeft = deltaX < 0 ? int (deltaX) - 1 : int (deltaX);
+    int initialPadIndex = Touch_getPad (touchIndex);
+
+    int padIndexLeft = deltaXLeft + initialPadIndex;
+    int padIndexRight = padIndexLeft + 1;
+
+    // rows are incrementing when going down, not up!
+    // if padIndexLeft/Right is outside of the edges of the block, you need
+    // to explicitly add/subtract two rows to compensate.
+    if (mod (padIndexLeft, gridSize) == gridSize - 1)
+    {
+        if (deltaX < 0)
+            padIndexLeft += 2 * gridSize;
+
+        else if (deltaX > 0)
+            padIndexRight -= 2 * gridSize;
+    }
+
+    float pitchLeft = getNoteForPad (padIndexLeft);
+    float pitchRight = getNoteForPad (padIndexRight);
+
+    float deltaPitch = deltaX - float (deltaXLeft);
+    float pitch = (pitchLeft * (1 - deltaPitch)) + (pitchRight * deltaPitch);
+
+    return pitch - float (Pad_getNote (initialPadIndex));
+}
+
+//==============================================================================
+int getYAxisValue (int touchIndex, float y)
+{
+    if (getLocalConfig (7) == 0)
+        return clamp (0, 127, int (127 - int (y * 63.5)));
+
+    if (getLocalConfig (7) == 1)
+        return getYAxisBipolar (touchIndex, y);
+
+	float yDelta = Touch_getInitialY (touchIndex) - y;
+
+    y = 0.5 + (applyCurve (yDelta * 0.5));
+
+	return clamp (0, 127, int (y * 127));
+}
+
+int getYAxisBipolar (int touchIndex, float y)
+{
+    float yDelta = abs (y - Touch_getInitialY (touchIndex));
+
+    y = applyCurve (yDelta * 0.5);
+
+	return clamp (0, 127, int (y * 127));
+}
+
+// Faster with lower value
+float applyCurve (float yDelta)
+{
+    float scaler = float (getLocalConfig (12)) / 127.0;
+
+    if (scaler > 0.0)
+        return yDelta / scaler;
+    else
+        return yDelta;
+}
+
+//==============================================================================
+void addTouchToList (int touchIndex)
+{
+    int endOfList = 0;
+
+    while ((endOfList < 24) && (Touch_getTouchByHistory (endOfList) != 0xff))
+        ++endOfList;
+
+    if (endOfList < 24)
+        Touch_setTouchByHistory (touchIndex, endOfList);
+}
+
+void deleteFromTouchList (int indexToDelete)
+{
+    for (int i = indexToDelete; i < 23; ++i)
+    {
+        if (Touch_getTouchByHistory (i) == 0xff)
+            return;
+            
+        Touch_setTouchByHistory (Touch_getTouchByHistory (i + 1), i);
+    }
+    
+    Touch_setTouchByHistory (0xff, 23);
+}
+
+void removeTouchFromList (int touchIndex)
+{
+    for (int i = 0; i < 24; ++i)
+    {
+        int touch = Touch_getTouchByHistory (i);
+        
+        if (touch == 0xff)
+            return;
+            
+        if (touch == touchIndex)
+        {
+            deleteFromTouchList (i);
+            return;
+        }
+    }
+}
+
+int getNumTouchesInList()
+{
+    int indexInList = 0;
+
+    while (Touch_getTouchByHistory (indexInList) != 0xff && indexInList < 24)
+        ++indexInList;
+
+    return indexInList;
+}
+
+//==============================================================================
+void resetGlideLockToNote (int note, int channel)
+{
+    glideLockInitialNote = note;
+    glideLockChannel = channel;
+    glideLockTarget = 8192.0;
+}
+
+int getGlideLockRate()
+{
+    return int (map (float (getLocalConfig (18)), 0.0, 127.0, 16.0, 3000.0));
+}
+
+void setGlideLockTarget (int note)
+{
+    float delta = float (note - glideLockInitialNote);
+    glideLockTarget = getPitchWheelFromDeltaX (delta);
+    sendPitchBend (glideLockChannel, int (glideLockTarget), getGlideLockRate());
+}
+
+int getGlideLockDelta()
+{
+   return glideLockEnabled
+          ? int (map (glideLockTarget, 0.0, 16383.0, -8191.0, 8192.0))
+          : 0;
+}
+
+//==============================================================================
+void touchStart (int touchIndex, float x, float y, float z, float vz)
+{
+    if (isSongMakerKit && smkMode < 3 && gridSize == 6)
+    {
+        handleFaderTouch (touchIndex, x, y, z, true);
+        return;
+    }
+    
+    if (Touch_getPad (touchIndex) != 0xff)
+        return;
+    
+    int padIndex = getTouchedPad (x, y);
+    int note = clamp (0, 127, Pad_getNote (padIndex));
+    int colour = Pad_getColour (padIndex);
+    int channel = 0xff;
+    int velocity = clamp (1, 127, int (vz * 127.0));
+    int pressure = clamp (0, 127, int (z * 127.0));
+    bool glideLockConfigEnabled = getLocalConfig (19);
+    bool enableMidiNoteOn = true;
+
+    addTouchToList (touchIndex);
+
+    if (glideLockEnabled || (glideLockConfigEnabled && (gridSize > 1)))
+    {
+        if (! glideLockEnabled)
+        {
+            glideLockEnabled = true;
+            channel = assignChannel (note);
+            resetGlideLockToNote (note, channel);
+        }
+        else
+        {
+            channel = glideLockChannel;
+            setGlideLockTarget (note);
+            enableMidiNoteOn = false;
+        }
+    }
+
+    if (channel == 0xff)
+        channel = assignChannel (note);
+
+    Touch_setInitialY (touchIndex, y);
+
+    if (enableMidiNoteOn)
+    {
+        if (pitchbendRange > 0)
+        {
+            if (gridSize == 1)
+                sendPitchBend (channel, getAbsPitch (touchIndex, x));
+            else
+                sendPitchBend (channel, 8192);
+        }
+
+        if (getLocalConfig (12))
+            sendMIDI (0xb0 | channel, getLocalConfig (6), getYAxisValue (touchIndex, y));
+
+        sendMIDI (0xd0 | channel, pressure);
+
+        sendNoteOn (channel, note, velocity);
+    }
+
+    addPressurePoint (getTrailColour (colour), x, y, z * 32.0);
+
+    Pad_setActive (padIndex, true);
+
+    Touch_setPad (touchIndex, padIndex);
+    Touch_setNote (touchIndex, note);
+    Touch_setInitialX (touchIndex, x);
+    Touch_setChannel (touchIndex, channel);
+    Touch_setVelocity (touchIndex, velocity);
+
+    Channel_setTrackedTouch (channel, touchIndex);
+    
+//==============================================================================
+//  Log touchStart()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
+}
+
+void touchMove (int touchIndex, float x, float y, float z, float vz)
+{
+    if (isSongMakerKit && smkMode < 3 && gridSize == 6)
+    {
+        handleFaderTouch (touchIndex, x, y, z, false);
+        return;
+    }
+    
+    int padIndex = Touch_getPad (touchIndex);
+
+    if (padIndex == 0xff)
+        return;  // touch was not started.
+
+    int channel = Touch_getChannel (touchIndex);
+
+    if (Channel_getTrackedTouch (channel) != touchIndex)
+        return;  // these are not the touch messages you're looking for...
+
+    int note = Touch_getNote (touchIndex);
+    int pressure = clamp (0, 127, int (z * 127.0));
+
+    sendMIDI (0xd0 | channel, pressure);
+
+    // Piano Mode acts as a fret
+    if (getLocalConfig (17))
+    {
+        int newPadIndex = getTouchedPad (x, y);
+        int newNote = clamp (0, 127, Pad_getNote (newPadIndex));
+
+        if (note != newNote)
+        {
+            if (! glideLockEnabled)
+            {
+                sendNoteOff (channel, note, 0);
+                sendNoteOn (channel, newNote, Touch_getVelocity (touchIndex));
+            }
+            else
+            {
+                setGlideLockTarget (newNote);
+            }
+            
+            Touch_setNote (touchIndex, newNote);
+            Touch_setPad (touchIndex, newPadIndex);
+            Pad_setActive (padIndex, false);
+            Pad_setActive (newPadIndex, true);
+        }
+    }
+    else
+    {
+        if (getLocalConfig (12))
+            sendMIDI (0xb0 | channel, getLocalConfig (6), getYAxisValue (touchIndex, y));
+
+        if (pitchbendRange > 0)
+        {
+            int pitchwheelValue = 0;
+
+            if (gridSize == 1)
+                pitchwheelValue = getAbsPitch (touchIndex, x);
+            else if (glideLockEnabled)
+                pitchwheelValue = getPitchwheelValue (touchIndex, x) + getGlideLockDelta();
+            else
+                pitchwheelValue = getPitchwheelValue (touchIndex, x);
+
+
+            sendPitchBend (channel, clamp (0, 16383, pitchwheelValue));
+        }
+    }
+
+    addPressurePoint (getTrailColour (Pad_getColour (padIndex)), x, y, z * 32.0);
+    
+//==============================================================================
+//  Log touchMove()
+//==============================================================================
+    log(getTimeInCurrentFunctionCall());
+}
+
+void touchEnd (int touchIndex, float x, float y, float z, float vz)
+{
+    if (isSongMakerKit && smkMode < 3 && gridSize == 6)
+        return;
+    
+    int padIndex = Touch_getPad (touchIndex);
+
+    if (padIndex == 0xff)
+        return;  // touch was not started.
+
+    int channel = Touch_getChannel (touchIndex);
+
+    int note = Touch_getNote (touchIndex);
+    int velocity = clamp (0, 127, int (vz * 127.0));
+
+    if (glideLockEnabled)
+    {
+        int numEvents = getNumTouchesInList();
+        int eventNum = numEvents - 1;
+
+        while (Touch_getTouchByHistory (eventNum) != touchIndex)
+            eventNum--;
+
+        if (numEvents == 1)
+        {
+            glideLockEnabled = false;
+            sendPitchBend (glideLockChannel, 8192, 0);
+            sendNoteOff (glideLockChannel, glideLockInitialNote, velocity);
+            Channel_setTrackedTouch (glideLockChannel, 0xff);
+            deassignChannel (glideLockInitialNote, glideLockChannel);
+        }
+        else if (eventNum == (numEvents - 1))
+        {
+            int previousTouch = Touch_getTouchByHistory (eventNum - 1);
+            int previousNote  = Touch_getNote (previousTouch);
+
+            setGlideLockTarget (previousNote);
+            Channel_setTrackedTouch (glideLockChannel, previousTouch);
+            Pad_setActive (Touch_getPad (previousTouch), true);
+        }
+    }
+    else
+    {
+        sendNoteOff (channel, note, velocity);
+        Channel_setTrackedTouch (channel, 0xff);
+        deassignChannel (note, channel);
+    }
+
+    Pad_setActive (padIndex, false);
+
+    Touch_setPad (touchIndex, 0xff);
+    Touch_setChannel (touchIndex, 0xff);
+
+    removeTouchFromList (touchIndex);
+    
+//==============================================================================
+//  Log touchEnd()
+//==============================================================================
+    //log(getTimeInCurrentFunctionCall());
+}
+
+void handleButtonDown (int index)
+{
+    if (index == 0)
+    {
+        ++gridSize;
+        
+        if ((isSongMakerKit && gridSize > 6) || (! isSongMakerKit && gridSize > 5))
+            gridSize = 1;
+        
+        if (gridSize == 3)
+            gridSize = 4;
+
+        setLocalConfig (20, gridSize);
+
+        initialiseScale();
+        initialisePads ();
+        sendConfigItemToCluster (20);
+    }
+}
+
+bool isSBKArrangement()
+{
+    bool loopAbove = getBlockTypeForID (getBlockIDOnPort (0)) == 3 || getBlockTypeForID (getBlockIDOnPort (1)) == 3;
+    bool loopBelow = getBlockTypeForID (getBlockIDOnPort (4)) == 3 || getBlockTypeForID (getBlockIDOnPort (5)) == 3;
+    
+    if (getBlockTypeForID (sbbAddress = getBlockIDOnPort (2)) == 6 && loopAbove)    return true;
+    if (getBlockTypeForID (sbbAddress = getBlockIDOnPort (3)) == 6 && loopBelow)    return true;
+    if (getBlockTypeForID (sbbAddress = getBlockIDOnPort (6)) == 6 && loopBelow)    return true;
+    if (getBlockTypeForID (sbbAddress = getBlockIDOnPort (7)) == 6 && loopAbove)    return true;        
+    
+    sbbAddress = 0;
+    
+    return false;
+}
+
+void updateTopologyShift ()
+{
+    int xShiftLast = xShift;
+    int yShiftLast = yShift;
+    xShift = 0;
+    yShift = 0;
+    
+    // Check for songmaker kit mode
+    if (isSBKArrangement())
+    {
+        if (! isSongMakerKit)
+        {
+            setLocalConfigItemRange (20, 1, 6);
+            setLocalConfig (20, 6);
+        }
+            
+        requestSensFromBlock (sbbAddress);
+        isSongMakerKit = true;
+    }
+    else
+    {
+        if (isSongMakerKit)
+        {
+            if (gridSize == 6)
+                setLocalConfig (20, 5);
+        
+            setLocalConfigItemRange (20, 1, 5);
+        }
+        
+        isSongMakerKit = false;
+    }
+    
+    if (getClusterWidth() > 1)
+    {
+        if (gridSize < 5)
+        {
+            xShift = getClusterXpos();
+        }
+        else if (isMasterInCurrentCluster())
+        {
+            xShift = getHorizontalDistFromMaster() / 2;
+        }
+        else
+        {
+            int octStart = ((getClusterWidth() - 1) / 2);
+            xShift = (getClusterXpos() - octStart);
+        }
+    }
+    
+    if (getClusterHeight() > 1)
+    {
+        if (gridSize < 5)
+        {
+            yShift = getClusterYpos();
+        }
+        if (isMasterInCurrentCluster())
+        {
+            yShift = getVerticalDistFromMaster() / 2;
+        }
+        else
+        {            
+            int octStart = ((getClusterHeight() - 1) / 2);            
+            yShift = (getClusterYpos() - octStart);
+        }
+    }
+
+    if (clusterWidth != getClusterWidth() || xPos != getClusterXpos() || xShiftLast != xShift)
+    {
+        if (isMasterInCurrentCluster())
+        {
+            if (isMasterBlock())
+                syncCluster();
+        }
+        else if (! getClusterXpos())
+            syncCluster();
+
+		initialiseScale();
+        initialisePads();
+
+        clusterWidth = getClusterWidth();
+		xPos = getClusterXpos();
+    }
+    else if (clusterHeight != getClusterHeight() || yPos != getClusterYpos() || yShiftLast != yShift)
+    {
+        if (isMasterInCurrentCluster())
+        {
+            if (isMasterBlock())
+                syncCluster();
+        }
+        else if (! getClusterYpos())
+            syncCluster();
+
+		initialiseScale();
+        initialisePads();
+
+        clusterHeight = getClusterHeight();
+		yPos = getClusterYpos();
+    }
+}
+
+void syncCluster()
+{
+    if (getNumBlocksInCurrentCluster() < 2)
+        return;
+    
+    for (int i = 4; i <= 7; ++i)
+        sendConfigItemToCluster (i);
+
+    for (int i = 10; i <= 23; ++i)
+        sendConfigItemToCluster (i);
+}
+
+void sendConfigItemToCluster (int itemId)
+{
+    if (getNumBlocksInCurrentCluster() < 2)
+        return;
+
+    int numBlocksInCluster = getNumBlocksInCurrentCluster();
+
+    for (int i = 0; i < numBlocksInCluster; ++i)
+        if (getBlockIdForBlockInCluster(i) != getBlockIDForIndex(0))
+            setRemoteConfig (getBlockIdForBlockInCluster(i), itemId, getLocalConfig (itemId));
+}
+
+void checkConfigUpdates ()
+{
+    if (scale != getLocalConfig (22))   
+    {
+        scale = getLocalConfig (22);
+        initialiseScale();
+        initialisePads();
+    }
+    if (gridSize != getLocalConfig (20))
+    {
+        gridSize = getLocalConfig (20);
+        initialiseScale();
+        initialisePads();
+    }
+    if (octave != getLocalConfig (4))
+    {
+        octave = getLocalConfig (4);
+        initialisePads();
+    }
+    if (hideMode != getLocalConfig (23))
+    {
+        hideMode = getLocalConfig (23);
+        initialiseScale();
+        initialisePads();
+    }
+    if (transpose != getLocalConfig (5))
+    {
+        transpose = getLocalConfig (5);
+        initialisePads();
+    }
+
+    updateTopologyShift();
+}
+
+// Macros are 0-127
+int macro0Level;
+int macro1Level;
+int macro2Level;
+int padXpos;
+int padYpos;
+int vSens;
+int xSens;
+int ySens;
+int zSens;
+int lSens;
+int lastReqTime;
+
+void requestSensFromBlock (int address)
+{
+    if (getMillisecondCounter() > lastReqTime + 120)
+    {
+        sendMessageToBlock (address, 0x783C53D5, getBlockIDForIndex (0), 0);
+        lastReqTime = getMillisecondCounter();
+    }
+}
+
+
+void handleMessage (int data0, int data1, int data2)
+{
+    // Sensitivities Response
+    if (data0 == 0x783E53D5)
+    {
+        vSens = (data1 >> 24) & 0x7F;
+        xSens = (data1 >> 16) & 0x7F;
+        ySens = (data1 >> 8)  & 0x7F;
+        zSens = (data1 >> 0)  & 0x7F;
+        lSens = (data2 >> 24) & 0x7F;
+    }
+}
+
+void drawFaders()
+{
+    if (smkMode == 0)
+    {
+        fillRect (0xFFFFFFFF, 0, 13, 4, 2);
+        fillRect (0xFF808080, 5, 13, 5, 2);
+        fillRect (0xFF808080, 11, 13, 4, 2);
+        
+         // Macro fader
+        drawFader (macro0Level, 0xFFFFFF00, 0xFFFF8000, 1, 0, 3, 12);
+        drawFader (macro1Level, 0xFFFFFF00, 0xFFFF8000, 6, 0, 3, 12);
+        drawFader (macro2Level, 0xFFFFFF00, 0xFFFF8000, 11, 0, 3, 12);    
+
+    }
+    else if (smkMode == 1)
+    {
+        fillRect (0xFF808080, 0, 13, 4, 2);
+        fillRect (0xFFFFFFFF, 5, 13, 5, 2);
+        fillRect (0xFF808080, 11, 13, 4, 2);
+        
+        // Sensitivity fader
+        drawFader (vSens, 0xFF80FFFF, 0xFF0000FF, 1, 0, 1, 12);
+        drawFader (xSens, 0xFF80FFFF, 0xFF0000FF, 4, 0, 1, 12);
+        drawFader (ySens, 0xFF80FFFF, 0xFF0000FF, 7, 0, 1, 12);
+        drawFader (zSens, 0xFF80FFFF, 0xFF0000FF, 10, 0, 1, 12);
+        drawFader (lSens, 0xFF80FFFF, 0xFF0000FF, 13, 0, 1, 12);
+    }
+    else if (smkMode == 2)
+    {
+        drawXYPad();
+        fillRect (0xFF000000, 0, 12, 15, 3);
+        fillRect (0xFF808080, 0, 13, 4, 2);
+        fillRect (0xFF808080, 5, 13, 5, 2);
+        fillRect (0xFFFFFFFF, 11, 13, 4, 2);
+
+    }
+}
+
+void handleFaderTouch (int touchIndex, float x, float y, float z, bool newTouch)
+{    
+    // Check buttons
+    if (y > 1.7 && newTouch)
+    {
+        if (x < 0.6)
+            smkMode = 0;
+        else if (x < 1.4)
+            smkMode = 1;
+        else
+            smkMode = 2;
+            
+        return;
+    }
+    
+    // Check faders
+    if (z > 0.001 && y <= 1.7)
+    {
+        if (smkMode == 2)
+        {
+            handleXYTouch (touchIndex, x, y, z, newTouch);
+            return;
+        }
+        
+        int faderValue = 127 - int (map (clamp (0.12, 1.6, y), 0.12, 1.6, 0.0, 127.0));
+        
+        if (smkMode == 0)
+        {
+            if (x > 0.13 && x < 0.6 && faderValue != macro0Level)
+            {
+                macro0Level = faderValue;
+                sendCC (getControlChannel(), 107, macro0Level);
+            }
+            if (x > 0.78 && x < 1.25 && faderValue != macro1Level)
+            {
+                macro1Level = faderValue;
+                sendCC (getControlChannel(), 109, macro1Level);
+            }
+            if (x > 1.51 && x < 1.9 && faderValue != macro2Level)
+            {
+                macro2Level = faderValue;
+                sendCC (getControlChannel(), 111, macro2Level);
+            }           
+            
+        }        
+        else if (smkMode == 1 && sbbAddress)
+        {
+            if (x < 0.4)
+            {
+                vSens = faderValue;
+                setRemoteConfig (sbbAddress, 10, faderValue);
+            }
+            else if (x < 0.8)
+            {
+                xSens = faderValue;
+                setRemoteConfig (sbbAddress, 11, faderValue);
+            }
+            else if (x < 1.2)
+            {
+                ySens = faderValue;
+                setRemoteConfig (sbbAddress, 12, faderValue);
+            }
+            else if (x < 1.6)
+            {
+                zSens = faderValue;
+                setRemoteConfig (sbbAddress, 13, faderValue);
+            }
+            else
+            {
+                lSens = faderValue;
+                setRemoteConfig (sbbAddress, 14, faderValue);
+            }
+            
+        }
+    }
+}
+
+const float padLowX = 0.12;
+const float padHighX = 1.88;
+const float padLowY = 0.12;
+const float padHighY = 1.5;
+
+void handleXYTouch (int touchIndex, float x, float y, float z, bool newTouch)
+{
+    if (touchIndex > 1)
+        return;
+        
+    int newPadXpos = int (map (clamp (padLowX, padHighX, x), padLowX, padHighX, 0.0, 127.0));
+    int newPadYpos = 127 - int (map (clamp (padLowY, padHighY, y), padLowY, padHighY, 0.0, 127.0));
+    
+    if (padXpos != newPadXpos)
+    {
+        padXpos = newPadXpos;
+        sendCC (getControlChannel(), 113, padXpos);
+    }
+    if (padYpos != newPadYpos)
+    {
+        padYpos = newPadYpos;
+        sendCC (getControlChannel(), 114, padYpos);
+    }
+}
+
+// Assumes 0-127 range
+void drawFader (int level, int topColour, int lowColour, int x, int y, int w, int h)
+{  
+    blendGradientRect (topColour, topColour, lowColour, lowColour, x, y, w, h);
+    
+    float fLevel = float (h) - (float (h * level) / 127.0);
+    float frac = min (1.0, fLevel - float (int (fLevel)));
+    
+    // Draw over absent parts of bar in black
+    blendRect (0xFF404040, x, y, w, int (fLevel));
+    blendRect ((int (frac * 255.0) << 24) |  0x404040, x, y + int (fLevel), w, 1);
+}
+
+void drawXYPad()
+{
+    blendGradientRect (0xFF40C0B0, 0xff88f843, 0xFF40C0B0, 0xFF003060, 0, 0, 15, 12);
+    blendCircle (0xFFFFFFFF, map (float (padXpos), 0.0, 127.0, 0.0, 14.0), map (float (127 - padYpos), 0.0, 127.0, 0.0, 12.0), 1.4, true);
+}
+
+void handleMIDI (int byte0, int byte1, int byte2)
+{
+    if ((byte0 & 0xF0) == 0xB0)
+    {
+        if (byte1 == 107)   macro0Level = byte2;
+        if (byte1 == 109)   macro1Level = byte2;
+        if (byte1 == 111)   macro2Level = byte2;
+        if (byte1 == 113)   padXpos = byte2;
+        if (byte1 == 114)   padYpos = byte2;
+    }
+}
+
+
+/*
+<display backgroundColour="0xFF176694" textColour ="0xFF000000">
+    <pixels>
+        <pixel index="0" colour="0xE936318E" />
+        <pixel index="1" colour="0xE936318E" />
+        <pixel index="2" colour="0xE936318E" />
+        <pixel index="6" colour="0x9CB875D5" />
+        <pixel index="7" colour="0x9CB875D5" />
+        <pixel index="8" colour="0x9CB875D5" />
+        <pixel index="12" colour="0x978B62DD" />
+        <pixel index="13" colour="0x978B62DD" />
+        <pixel index="14" colour="0x978B62DD" />
+        <pixel index="15" colour="0xE936318E" />
+        <pixel index="16" colour="0xE936318E" />
+        <pixel index="17" colour="0xE936318E" />
+        <pixel index="21" colour="0x9CB875D5" />
+        <pixel index="22" colour="0x9CB875D5" />
+        <pixel index="23" colour="0x9CB875D5" />
+        <pixel index="27" colour="0x978B62DD" />
+        <pixel index="28" colour="0x978B62DD" />
+        <pixel index="29" colour="0x978B62DD" />
+        <pixel index="30" colour="0xE936318E" />
+        <pixel index="31" colour="0xE936318E" />
+        <pixel index="32" colour="0xE936318E" />
+        <pixel index="36" colour="0x9CB875D5" />
+        <pixel index="37" colour="0x9CB875D5" />
+        <pixel index="38" colour="0x9CB875D5" />
+        <pixel index="42" colour="0x978B62DD" />
+        <pixel index="43" colour="0x978B62DD" />
+        <pixel index="44" colour="0x978B62DD" />
+        <pixel index="45" colour="0xA0379EEB" />
+        <pixel index="46" colour="0xA0379EEB" />
+        <pixel index="47" colour="0xA0379EEB" />
+        <pixel index="51" colour="0x8A6FB8DD" />
+        <pixel index="52" colour="0x8A6FB8DD" />
+        <pixel index="53" colour="0x8A6FB8DD" />
+        <pixel index="57" colour="0xA42C379A" />
+        <pixel index="58" colour="0xA42C379A" />
+        <pixel index="59" colour="0xA42C379A" />
+        <pixel index="60" colour="0xA0379EEB" />
+        <pixel index="61" colour="0xA0379EEB" />
+        <pixel index="62" colour="0xA0379EEB" />
+        <pixel index="66" colour="0x8A6FB8DD" />
+        <pixel index="67" colour="0x8A6FB8DD" />
+        <pixel index="68" colour="0x8A6FB8DD" />
+        <pixel index="72" colour="0xA42C379A" />
+        <pixel index="73" colour="0xA42C379A" />
+        <pixel index="74" colour="0xA42C379A" />
+        <pixel index="75" colour="0xA0379EEB" />
+        <pixel index="76" colour="0xA0379EEB" />
+        <pixel index="77" colour="0xA0379EEB" />
+        <pixel index="81" colour="0x8A6FB8DD" />
+        <pixel index="82" colour="0x8A6FB8DD" />
+        <pixel index="83" colour="0x8A6FB8DD" />
+        <pixel index="87" colour="0xA42C379A" />
+        <pixel index="88" colour="0xA42C379A" />
+        <pixel index="89" colour="0xA42C379A" />
+        <pixel index="93" colour="0x90386FA1" />
+        <pixel index="94" colour="0x90386FA1" />
+        <pixel index="95" colour="0x90386FA1" />
+        <pixel index="96" colour="0x8C8A41CB" />
+        <pixel index="97" colour="0x8C8A41CB" />
+        <pixel index="98" colour="0x8C8A41CB" />
+        <pixel index="102" colour="0xAD831FD2" />
+        <pixel index="103" colour="0xAD831FD2" />
+        <pixel index="104" colour="0xAD831FD2" />
+        <pixel index="108" colour="0x90386FA1" />
+        <pixel index="109" colour="0x90386FA1" />
+        <pixel index="110" colour="0x90386FA1" />
+        <pixel index="111" colour="0x8C8A41CB" />
+        <pixel index="112" colour="0x8C8A41CB" />
+        <pixel index="113" colour="0x8C8A41CB" />
+        <pixel index="117" colour="0xAD831FD2" />
+        <pixel index="118" colour="0xAD831FD2" />
+        <pixel index="119" colour="0xAD831FD2" />
+        <pixel index="123" colour="0x90386FA1" />
+        <pixel index="124" colour="0x90386FA1" />
+        <pixel index="125" colour="0x90386FA1" />
+        <pixel index="126" colour="0x8C8A41CB" />
+        <pixel index="127" colour="0x8C8A41CB" />
+        <pixel index="128" colour="0x8C8A41CB" />
+        <pixel index="132" colour="0xAD831FD2" />
+        <pixel index="133" colour="0xAD831FD2" />
+        <pixel index="134" colour="0xAD831FD2" />
+        <pixel index="138" colour="0x84C37CE6" />
+        <pixel index="139" colour="0x84C37CE6" />
+        <pixel index="140" colour="0x84C37CE6" />
+        <pixel index="141" colour="0x9A3C75B8" />
+        <pixel index="142" colour="0x9A3C75B8" />
+        <pixel index="143" colour="0x9A3C75B8" />
+        <pixel index="147" colour="0xCC122C6B" />
+        <pixel index="148" colour="0xCC122C6B" />
+        <pixel index="149" colour="0xCC122C6B" />
+        <pixel index="153" colour="0x84C37CE6" />
+        <pixel index="154" colour="0x84C37CE6" />
+        <pixel index="155" colour="0x84C37CE6" />
+        <pixel index="156" colour="0x9A3C75B8" />
+        <pixel index="157" colour="0x9A3C75B8" />
+        <pixel index="158" colour="0x9A3C75B8" />
+        <pixel index="162" colour="0xCC122C6B" />
+        <pixel index="163" colour="0xCC122C6B" />
+        <pixel index="164" colour="0xCC122C6B" />
+        <pixel index="168" colour="0x84C37CE6" />
+        <pixel index="169" colour="0x84C37CE6" />
+        <pixel index="170" colour="0x84C37CE6" />
+        <pixel index="171" colour="0x9A3C75B8" />
+        <pixel index="172" colour="0x9A3C75B8" />
+        <pixel index="173" colour="0x9A3C75B8" />
+        <pixel index="177" colour="0xCC122C6B" />
+        <pixel index="178" colour="0xCC122C6B" />
+        <pixel index="179" colour="0xCC122C6B" />
+        <pixel index="183" colour="0xAE70ACDF" />
+        <pixel index="184" colour="0xAE70ACDF" />
+        <pixel index="185" colour="0xAE70ACDF" />
+        <pixel index="189" colour="0xA670A3CE" />
+        <pixel index="190" colour="0xA670A3CE" />
+        <pixel index="191" colour="0xA670A3CE" />
+        <pixel index="192" colour="0xACDB92E6" />
+        <pixel index="193" colour="0xACDB92E6" />
+        <pixel index="194" colour="0xACDB92E6" />
+        <pixel index="198" colour="0xAE70ACDF" />
+        <pixel index="199" colour="0xAE70ACDF" />
+        <pixel index="200" colour="0xAE70ACDF" />
+        <pixel index="204" colour="0xA670A3CE" />
+        <pixel index="205" colour="0xA670A3CE" />
+        <pixel index="206" colour="0xA670A3CE" />
+        <pixel index="207" colour="0xACDB92E6" />
+        <pixel index="208" colour="0xACDB92E6" />
+        <pixel index="209" colour="0xACDB92E6" />
+        <pixel index="213" colour="0xAE70ACDF" />
+        <pixel index="214" colour="0xAE70ACDF" />
+        <pixel index="215" colour="0xAE70ACDF" />
+        <pixel index="219" colour="0xA670A3CE" />
+        <pixel index="220" colour="0xA670A3CE" />
+        <pixel index="221" colour="0xA670A3CE" />
+        <pixel index="222" colour="0xACDB92E6" />
+        <pixel index="223" colour="0xACDB92E6" />
+        <pixel index="224" colour="0xACDB92E6" />
+    </pixels>
+</display>
+*/
