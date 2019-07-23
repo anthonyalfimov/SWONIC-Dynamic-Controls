@@ -1,0 +1,768 @@
+/*
+<metadata description="Create up to 16 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | DC16_1.2.8test"
+          details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
+          target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
+
+    <groups>
+        <group name="control" displayName="Control *" count="16"/>
+    </groups>
+
+    <variables>
+        <variable name="amount" displayName="Control Amount" type="int"
+                  min="1" max="16" value="1"
+                  tooltip="Number of controls to display, 1-16" />
+        <variable name="globalMidiChannel" displayName="Global MIDI Channel" type="option"
+                  value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
+                  tooltip="Default MIDI channel for controls" />
+        <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
+                  value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
+
+        <vector group="control" count="16"
+                wantsGetFunctions="true" wantsSetFunctions="false">
+
+            <variable name="ParamControlType" displayName="Type" type="option"
+                      options="Button;Note;Fader;XYZ Pad" value="Button"
+                      tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
+            <variable name="ControlColour" displayName="Colour" type="colour"
+                      value="random" tooltip="Colour of the control" />
+            <variable name="ParamControlMode" displayName="Behaviour" type="option"
+                      options="Momentary;Latch" value="Latch"
+                      tooltip="Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
+            <variable name="ParamMidiChannel" displayName="MIDI Channel" type="option"
+                      value="Global" options="Global;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
+                      tooltip="MIDI channel for Control *" />
+
+            <variable name="ControlPosX" displayName="x Position" type="int"
+                      min="1" max="15" value="1"
+                      tooltip="Horizontal position of Control * [1 - 15]"/>
+            <variable name="ControlPosY" displayName="y Position" type="int"
+                      min="1" max="15" value="1"
+                      tooltip="Vertical position of Control * [1 - 15]"/>
+            <variable name="ControlWidth" displayName="x Width" type="int"
+                      min="1" max="15" value="1"
+                      tooltip="Horizontal size of Control * [1 - 15]"/>
+            <variable name="ControlHeight" displayName="y Height" type="int"
+                      min="1" max="15" value="1"
+                      tooltip="Vertical size of Control * [1 - 15]"/>
+
+            <variable name="MidiNote" displayName="MIDI Note" type="midiNote"
+                      initStart="60" tooltip="MIDI Note number" />
+            <variable name="ParamControlCCA" displayName="x MIDI CC" type="int"
+                      min="0" max="127" initStart="102"
+                      tooltip="" />
+            <variable name="ParamControlCCB" displayName="y MIDI CC" type="int"
+                      min="0" max="127" initStart="102"
+                      tooltip="" />
+            <variable name="SendPress" displayName="Send Pressure" type="bool"
+                      value="false" tooltip="Activate to send pressure CC" />
+            <variable name="ControlCCP" displayName="Pressure MIDI CC" type="int"
+                      min="0" max="127" initStart="102"
+                      tooltip="MIDI CC message for pressure" />
+        </vector>
+
+    </variables>
+</metadata>
+*/
+
+//==============================================================================
+//
+//  DYNAMIC CONTROLS
+//
+//   ROLI Dashboard app for ROLI Lightpad BLOCK
+//
+//   developed by Anthony Alfimov & Andreas Swoboda (SWONIC)
+//
+//   contact: http://swonic.com | mail@swonic.com
+//
+//   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
+//
+//   version: DC16_1.2.8test
+//
+//==============================================================================
+
+#heapsize: 256
+//
+//  Heap Layout
+//  |-----------|-------------------------------------------------------------|
+//  | bytes:    | data:
+//  | 000 - 015 | 16 1-byte control CC A values [0, 127]
+//  | 016 - 031 | 16 1-byte control CC B values [0, 127]
+//  | 032 - 047 | 16 1-byte pressure values [0, 127]
+//  |-----------|-------------------------------------------------------------|
+//  | 048 - 063 | 16 1-byte control min X coordinates [0, 14]
+//  | 064 - 079 | 16 1-byte control max X coordinates [0, 14]
+//  | 080 - 095 | 16 1-byte control min Y coordinates [0, 14]
+//  | 096 - 111 | 16 1-byte control max Y coordinates [0, 14]
+//  |-----------|-------------------------------------------------------------|
+//  | 112 - 175 | 16 4-byte bitfields for touches registered on a control
+//  |-----------|-------------------------------------------------------------|
+//  | 176 - 191 | 16 1-byte control MIDI channels [0, 15]
+//  | 192 - 207 | 16 1-byte control MIDI CC A numbers [0, 127]
+//  | 208 - 223 | 16 1-byte control MIDI CC B numbers [0, 127]
+//  | 224 - 239 | 16 1-byte control type values [0, 3]
+//  | 240 - 255 | 16 1-byte control mode values [0, 1]
+//  |-----------|-------------------------------------------------------------|
+//
+
+// TODO: rearrange heap data
+
+//==============================================================================
+//  Global Constants
+//==============================================================================
+
+const int STATUS_CC = 0xB0;                 // status byte template for CC messages
+
+// Graphics
+const int inactiveShade = 0xDC << 24;
+const int faderMinShade = 0xF3 << 24;
+
+// Control types
+const int C_BUTTON = 0;
+const int C_NOTE   = 1;
+const int C_FADER  = 2;
+const int C_XYZPAD = 3;
+
+// Behaviour types
+const int B_MOMENTARY = 0;
+const int B_LATCH = 1;
+
+//==============================================================================
+//  Heap Setters and Getters
+//==============================================================================
+//------------------------------------------------------------------------------
+//  Control Settings
+//------------------------------------------------------------------------------
+void setMidiChannel(int controlIndex, int value)    { setHeapByte(controlIndex + 176, value); }
+int  getMidiChannel(int controlIndex)               { return getHeapByte(controlIndex + 176); }
+
+void setControlCCA(int controlIndex, int value)    { setHeapByte(controlIndex + 192, value); }
+int  getControlCCA(int controlIndex)               { return getHeapByte(controlIndex + 192); }
+
+void setControlCCB(int controlIndex, int value)    { setHeapByte(controlIndex + 208, value); }
+int  getControlCCB(int controlIndex)               { return getHeapByte(controlIndex + 208); }
+
+void setControlType(int controlIndex, int value)    { setHeapByte(controlIndex + 224, value); }
+int  getControlType(int controlIndex)               { return getHeapByte(controlIndex + 224); }
+
+void setControlMode(int controlIndex, int value)    { setHeapByte(controlIndex + 240, value); }
+int  getControlMode(int controlIndex)               { return getHeapByte(controlIndex + 240); }
+
+//------------------------------------------------------------------------------
+//  Control Values
+//------------------------------------------------------------------------------
+void setControlValueA(int controlIndex, int value)  { setHeapByte(controlIndex, value); }
+int  getControlValueA(int controlIndex)             { return getHeapByte(controlIndex); }
+
+void setControlValueB(int controlIndex, int value)  { setHeapByte(controlIndex + 16, value); }
+int  getControlValueB(int controlIndex)             { return getHeapByte(controlIndex + 16); }
+
+void setPressureValue(int controlIndex, int value)  { setHeapByte(controlIndex + 32, value); }
+
+int getHighlight(int controlIndex)          // generates highlight colour from pressure value
+{
+    return 0xFFFFFF | ((getHeapByte(controlIndex + 32) * 2 + 1) << 24);
+}
+
+//------------------------------------------------------------------------------
+//  Control Coordinates
+//------------------------------------------------------------------------------
+void setControlMinX(int controlIndex, int minX)     { setHeapByte(controlIndex + 48, minX); }
+int  getControlMinX(int controlIndex)               { return getHeapByte(controlIndex + 48); }
+
+void setControlMaxX(int controlIndex, int maxX)     { setHeapByte(controlIndex + 64, maxX); }
+int  getControlMaxX(int controlIndex)               { return getHeapByte(controlIndex + 64); }
+
+void setControlMinY(int controlIndex, int minY)     { setHeapByte(controlIndex + 80, minY); }
+int  getControlMinY(int controlIndex)               { return getHeapByte(controlIndex + 80); }
+
+void setControlMaxY(int controlIndex, int maxY)     { setHeapByte(controlIndex + 96, maxY); }
+int  getControlMaxY(int controlIndex)               { return getHeapByte(controlIndex + 96); }
+
+//------------------------------------------------------------------------------
+//  Touch Bit Fields
+//------------------------------------------------------------------------------
+void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 112, touchField); }
+int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 112); }
+
+//==============================================================================
+//  Control Sizes and Aspect Ratios
+//==============================================================================
+
+int  getControlSizeX(int controlIndex)
+{
+    return getControlMaxX(controlIndex) - getControlMinX(controlIndex) + 1;
+}
+
+int  getControlSizeY(int controlIndex)
+{
+    return getControlMaxY(controlIndex) - getControlMinY(controlIndex) + 1;
+}
+
+bool isFaderVertical(int controlIndex)
+{
+    // Use integer division: 0 if horizontal, >=1 if vertical or square
+    return getControlSizeY(controlIndex) / getControlSizeX(controlIndex);
+}
+
+//==============================================================================
+//  Conversion Functions
+//==============================================================================
+
+// Convert touch positin on a control to CC value [0, 127]
+//     position in (0, 2); pixelMin and pixelMax in [0, 14]
+int convertPositionToCC(float position, int pixelMin, int pixelMax)
+{
+    // Coordinate conversion from (0.0, 2.0) to (0.0, 15.0)
+    position = position * 0.5 * 15;
+
+    // map [min + d, max + 1 - d] to [0, 127]; d = 0.6 - edge offset
+    position = map(position, float(pixelMin) + 0.6, float(pixelMax) + 0.4, 0.0, 128.0);
+
+    return clamp(0, 127, int(position));
+}
+
+// Convert CC value to a pixel value
+//     pixelMin and pixelMax can be swapped to invert the value
+int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
+{
+    return int(map(float(valueCC), 0.0, 127.0, float(pixelMin), float(pixelMax)));
+}
+
+//==============================================================================
+//  Touch Functions
+//==============================================================================
+//------------------------------------------------------------------------------
+//  Touch Event Handlers
+//------------------------------------------------------------------------------
+void touchStart(int index, float x, float y, float z, float vz)
+{
+    doTouch(index, x, y, z);
+}
+
+void touchMove(int index, float x, float y, float z, float vz)
+{
+    for (int i = 0; i < 10; ++i)
+        doTouch(index, x, y, z);
+    
+    log(getTimeInCurrentFunctionCall());
+}
+
+void touchEnd (int touchIndex, float x, float y, float z, float vz)
+{
+    int touchFlag = 1 << touchIndex;        // bitflag for current touch
+
+    for (int i = 0; i < amount; ++i)        // unregister touch from all ctrls
+        doTouchEnd(i, touchFlag);
+
+    // log(getTimeInCurrentFunctionCall());
+}
+
+//------------------------------------------------------------------------------
+//  Touch Processing Functions
+//------------------------------------------------------------------------------
+void doTouch(int touchIndex, float x, float y, float z)
+{
+    // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
+    //       But how and why would this ever happen?
+
+    // Coordinate conversion from (0.0, 2.0) to [0, 14]
+    int intX = int(x * 0.5 * 15.0);
+    int intY = int(y * 0.5 * 15.0);
+
+    int touchedControl = -1;
+    int touchFlag = 1 << touchIndex;        // bitflag for current touch
+
+    for (int i = amount - 1; i >= 0; --i)                               // start counting ctrls from the top
+    {
+        if (   intX >= getControlMinX(i) && intX <= getControlMaxX(i)
+            && intY >= getControlMinY(i) && intY <= getControlMaxY(i))
+        {
+            int touchField = getControlTouchField(i);                   // fetch bitfield with registered touches for ctrl
+            int controlType = getControlType(i);
+            bool isHighestTouch = !(touchField >> (touchIndex + 1));    // are there any touches with higher index registered to the control?
+
+            if (controlType == C_BUTTON && !touchField)                 // is a button and no other touches present
+                doButton(i);
+            else if (controlType == C_NOTE && !touchField)              // is a note and no other touches present
+                doNote(i);
+            else if (controlType == C_FADER && isHighestTouch)          // is a fader and highest touch index
+                doFader(i, x, y);
+            else if (controlType == C_XYZPAD && isHighestTouch)         // is a pad and highest touch index
+                doXYZPad(i, x, y);
+
+            if (getSendPress(i) && isHighestTouch)                      // send pressure and highest touch
+            {
+                int pressure = clamp(0, 127, int(z * 127.0));
+                sendCC(getMidiChannel(i), getControlCCP(i), pressure);
+                setPressureValue(i, pressure);
+            }
+
+            touchField = touchField | touchFlag;                        // register current touch with ctrl
+            setControlTouchField(i, touchField);                        // write updated bitfield for ctrl
+
+            touchedControl = i;             // save index of touched ctrl
+            break;                          // if overlap is not used, stop checking lower ctrls
+        }
+        else
+        {
+            doTouchEnd(i, touchFlag);       // unregister touch from ctrl
+        }
+    }
+
+    for (int i = touchedControl - 1; i >= 0; --i)                       // go through remaining controls and unregister touch
+    {
+        doTouchEnd(i, touchFlag);
+    }
+}
+
+void doTouchEnd(int controlIndex, int touchFlag)
+{
+    int touchField = getControlTouchField(controlIndex);                // fetch bitfield with registered touches for ctrl
+
+    if (touchField & touchFlag)                                         // if touch was registered with current ctrl, ...
+    {
+        touchField = touchField & ~touchFlag;                           // unregister touch from ctrl
+        setControlTouchField(controlIndex, touchField);
+
+        if (!touchField)                                                // if no touches left registered, ...
+        {
+            if (getControlMode(controlIndex) == B_MOMENTARY)            //     reset CCs for momentary controls
+            {
+                if (getControlType(controlIndex) == C_NOTE)
+                {
+                    sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
+                    setControlValueA(controlIndex, 0);
+                }
+                else
+                {
+                    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
+                    setControlValueA(controlIndex, 0);
+
+                    if (getControlType(controlIndex) == C_XYZPAD)       //     reset CC B only for XYZ pads
+                    {
+                        sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
+                        setControlValueB(controlIndex, 0);
+                    }
+                }
+            }
+
+            if (getSendPress(controlIndex))                             //     reset pressure if it's enabled
+                sendCC(getMidiChannel(controlIndex), getControlCCP(controlIndex), 0);
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+//  Control MIDI Functions
+//------------------------------------------------------------------------------
+
+// TODO: recosinder inlining these functions: they're only used once!
+
+void doButton(int controlIndex)
+{
+    // TODO: use CC B for active button value
+    int value = (getControlValueA(controlIndex) == 0) ? 127 : 0;
+    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
+    setControlValueA(controlIndex, value);
+}
+
+void doNote(int controlIndex)
+{
+    // Use CC A value to track whether note is held
+    //  0   - not held
+    //  127 - held
+    if (getControlValueA(controlIndex) == 0)
+    {
+        // TODO: use CC B for NoteOn velocity
+        sendMIDI(0x90 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 127);
+        setControlValueA(controlIndex, 127);
+    }
+    else
+    {
+        sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
+        setControlValueA(controlIndex, 0);
+    }
+}
+
+void doFader(int controlIndex, float x, float y)
+{
+    int value;
+
+    if (isFaderVertical(controlIndex))
+        value = 127 - convertPositionToCC(y, getControlMinY(controlIndex),
+                                             getControlMaxY(controlIndex));
+    else
+        value = convertPositionToCC(x, getControlMinX(controlIndex),
+                                       getControlMaxX(controlIndex));
+
+    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
+    setControlValueA(controlIndex, value);
+}
+
+void doXYZPad(int controlIndex, float x, float y)
+{
+    int valueX = convertPositionToCC(x, getControlMinX(controlIndex),
+                                        getControlMaxX(controlIndex));
+    int valueY = 127 - convertPositionToCC(y, getControlMinY(controlIndex),
+                                              getControlMaxY(controlIndex));
+
+    sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), valueX);
+    sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), valueY);
+    setControlValueA(controlIndex, valueX);
+    setControlValueB(controlIndex, valueY);
+}
+
+//==============================================================================
+//  Incoming MIDI Handler
+//==============================================================================
+
+void handleMIDI(int byteStatus, int byteCC, int byteValue)
+{
+    if (receiveMIDI)
+    {
+        byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+                                                //   if status byte is a CC message,
+                                                //   the result is its MIDI channel
+
+        for (int i = 0; i < amount; ++i)
+        {
+            if (getMidiChannel(i) == byteStatus && getControlMode(i) == B_LATCH)
+            {
+                if (getControlCCA(i) == byteCC)
+                    setControlValueA(i, byteValue);
+
+                // Check CC B only for XYZ pads
+                if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
+                    setControlValueB(i, byteValue);
+            }
+        }
+    }
+
+    // log(getTimeInCurrentFunctionCall());
+}
+
+//==============================================================================
+//  Initialisation
+//==============================================================================
+
+void initialise()
+{
+//  Disable duplicate note filter
+    useMPEDuplicateFilter(false);
+
+//  Turn gamma correction off
+    setLocalConfig(33, 0);
+
+//  IDEA: should we initialise the unused controls just in case?
+
+    for (int i = 0; i < amount; ++i)
+    {
+    //  Initialise MIDI channel and CC numbers
+
+        int channel = getParamMidiChannel(i);
+
+        if (channel == 0)                   // if global channel selected
+            channel = globalMidiChannel;    //     set channel to global value
+        else
+            --channel;                      // update channel value to [0, 15]
+
+        setMidiChannel(i, channel);
+
+    // Move parameters to the heap for improved performance
+        setControlType(i, getParamControlType(i));
+        setControlMode(i, getParamControlMode(i));
+        setControlCCA(i, getParamControlCCA(i));
+        setControlCCB(i, getParamControlCCB(i));
+
+    //  Initialise Control Values and Control/Touch table
+        setControlValueA(i, 0);
+        setControlValueB(i, 0);
+        setPressureValue(i, 64);
+        setControlTouchField(i, 0);
+
+    //  Precalculate control coordinates
+        // Mix X [0, 14]
+        int minX = clamp(0, 14, getControlPosX(i) - 1);
+        setControlMinX(i, minX);
+
+        // Max X [0, 14]
+        int maxX = clamp(0, 14, getControlPosX(i) + getControlWidth(i) - 2);
+        setControlMaxX(i, maxX);
+
+        // Min Y [0, 14]
+        int minY = clamp(0, 14, 16 - getControlPosY(i) - getControlHeight(i));
+        setControlMinY(i, minY);
+
+        // Max Y [0, 14]
+        int maxY = clamp(0, 14, 15 - getControlPosY(i));
+        setControlMaxY(i, maxY);
+    }
+}
+
+//==============================================================================
+//  Repaint
+//==============================================================================
+
+void repaint()
+{
+    clearDisplay();
+
+    for (int i = 0; i < amount; ++i)
+    {
+        int controlType = getControlType(i);
+
+        int activeColour = getControlColour(i);
+        int inactiveColour = blendARGB(activeColour, inactiveShade);
+
+        int minX = getControlMinX(i);
+        int minY = getControlMinY(i);
+        int sizeX = getControlSizeX(i);
+        int sizeY = getControlSizeY(i);
+
+        if (controlType == C_BUTTON || controlType == C_NOTE)
+        {
+        //----------------------------------------------------------------------
+        //  Draw Button
+        //----------------------------------------------------------------------
+            if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
+                drawButton(inactiveColour, i);  // inactive Switch
+            else
+                drawButton(activeColour, i);    // Button or active Switch
+        }
+        else if (controlType == C_FADER)
+        {
+        //----------------------------------------------------------------------
+        //  Draw Fader
+        //----------------------------------------------------------------------
+            int highlight = getControlTouchField(i) ? blendARGB(activeColour, getHighlight(i)) : activeColour;
+            int faderMinColour = blendARGB(activeColour, faderMinShade);
+
+            if (isFaderVertical(i))
+            {
+            //  Draw fader background
+                blendGradientRect(inactiveColour, inactiveColour, faderMinColour, faderMinColour,
+			                      minX,  minY, sizeX, sizeY);
+
+            //  Draw fader
+                int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeY, 0);
+
+                blendGradientRect(highlight, highlight, activeColour, activeColour,
+                                  minX, minY + pixelInvSize, sizeX, sizeY - pixelInvSize);
+            }
+            else
+            {
+            //  Draw fader background
+                blendGradientRect(faderMinColour, inactiveColour, inactiveColour, faderMinColour,
+			                      minX,  minY, sizeX, sizeY);
+
+            //  Draw fader
+                int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeX, 0);
+
+                blendGradientRect(activeColour, highlight, highlight, activeColour,
+                                  minX, minY, sizeX - pixelInvSize, sizeY);
+            }
+        }
+        else if (controlType == C_XYZPAD)
+        {
+        //----------------------------------------------------------------------
+        //  Draw XYZ Pad
+        //----------------------------------------------------------------------
+            //  Draw Pad
+            fillRect(inactiveColour, minX,  minY, sizeX, sizeY);
+
+            //  Draw Cross
+            int maxX = getControlMaxX(i);
+            int pixelX = convertCCToPixels(getControlValueA(i), minX, maxX + 1);
+            pixelX = clamp(minX, maxX, pixelX);
+
+            int maxY = getControlMaxY(i);
+            int pixelY = convertCCToPixels(getControlValueB(i), maxY + 1, minY);
+            pixelY = clamp(minY, maxY, pixelY);
+
+            if (getControlTouchField(i))
+                activeColour = blendARGB(activeColour, getHighlight(i));
+
+            // Vertical line
+            fillRect(activeColour, minX, pixelY, sizeX, 1);
+
+            // Horizontal line
+            fillRect(activeColour, pixelX, minY, 1, sizeY);
+        }
+    }
+    // log(getTimeInCurrentFunctionCall());
+}
+
+//==============================================================================
+//  Graphics Functions
+//==============================================================================
+
+void drawButton(int colour, int controlIndex)
+{
+    int halfShade = blendARGB(colour, 0x66000000);
+    int fullShade = blendARGB(colour, 0xCC000000);
+
+    if (getControlTouchField(controlIndex))     // if control is active
+    {
+        int highlight = getHighlight(controlIndex);
+        colour    = blendARGB(colour,    highlight);
+        halfShade = blendARGB(halfShade, highlight);
+        fullShade = blendARGB(fullShade, highlight);
+    }
+
+    blendGradientRect(colour, halfShade, fullShade, halfShade,
+					  getControlMinX(controlIndex),  getControlMinY(controlIndex),
+					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
+}
+
+//==============================================================================
+
+/*
+<display backgroundColour="0xFF7E7E7E" textColour ="0xFFFFFFFF">
+    <pixels>
+        <pixel index="1" colour="0xFFD37201" />
+        <pixel index="2" colour="0xFFD37201" />
+        <pixel index="4" colour="0xFFD37201" />
+        <pixel index="5" colour="0xFFD37201" />
+        <pixel index="7" colour="0xFFD37201" />
+        <pixel index="8" colour="0xFFD37201" />
+        <pixel index="10" colour="0xFFD37201" />
+        <pixel index="11" colour="0xFFD37201" />
+        <pixel index="13" colour="0xFFD37201" />
+        <pixel index="14" colour="0xFFD37201" />
+        <pixel index="16" colour="0xFFD37201" />
+        <pixel index="17" colour="0xFFD37201" />
+        <pixel index="19" colour="0xFFD37201" />
+        <pixel index="20" colour="0xFFD37201" />
+        <pixel index="22" colour="0xFFD37201" />
+        <pixel index="23" colour="0xFFD37201" />
+        <pixel index="25" colour="0xFFD37201" />
+        <pixel index="26" colour="0xFFD37201" />
+        <pixel index="28" colour="0xFFD37201" />
+        <pixel index="29" colour="0xFFD37201" />
+        <pixel index="31" colour="0xFFD37201" />
+        <pixel index="32" colour="0xFFD37201" />
+        <pixel index="34" colour="0xFFD37201" />
+        <pixel index="35" colour="0xFFD37201" />
+        <pixel index="46" colour="0xFFD37201" />
+        <pixel index="47" colour="0xFFD37201" />
+        <pixel index="49" colour="0xFFD37201" />
+        <pixel index="50" colour="0xFFD37201" />
+        <pixel index="52" colour="0xFFD37201" />
+        <pixel index="53" colour="0xFFD37201" />
+        <pixel index="55" colour="0xFFD37201" />
+        <pixel index="56" colour="0xFFD37201" />
+        <pixel index="58" colour="0xFFD37201" />
+        <pixel index="59" colour="0xFFD37201" />
+        <pixel index="61" colour="0xFFD37201" />
+        <pixel index="62" colour="0xFFD37201" />
+        <pixel index="64" colour="0xFFD37201" />
+        <pixel index="65" colour="0xFFD37201" />
+        <pixel index="67" colour="0xFFD37201" />
+        <pixel index="68" colour="0xFFD37201" />
+        <pixel index="70" colour="0xFFD37201" />
+        <pixel index="71" colour="0xFFD37201" />
+        <pixel index="73" colour="0xFFD37201" />
+        <pixel index="74" colour="0xFFD37201" />
+        <pixel index="76" colour="0xFFD37201" />
+        <pixel index="77" colour="0xFFD37201" />
+        <pixel index="79" colour="0xFFD37201" />
+        <pixel index="80" colour="0xFFD37201" />
+        <pixel index="91" colour="0xFFD37201" />
+        <pixel index="92" colour="0xFFD37201" />
+        <pixel index="94" colour="0xFFD37201" />
+        <pixel index="95" colour="0xFFD37201" />
+        <pixel index="97" colour="0xFFD37201" />
+        <pixel index="98" colour="0xFFD37201" />
+        <pixel index="99" colour="0xFFD37201" />
+        <pixel index="100" colour="0xFFD37201" />
+        <pixel index="101" colour="0xFFD37201" />
+        <pixel index="102" colour="0xFFD37201" />
+        <pixel index="103" colour="0xFFD37201" />
+        <pixel index="104" colour="0xFFD37201" />
+        <pixel index="106" colour="0xFFD37201" />
+        <pixel index="107" colour="0xFFD37201" />
+        <pixel index="109" colour="0xFFD37201" />
+        <pixel index="110" colour="0xFFD37201" />
+        <pixel index="112" colour="0xFFD37201" />
+        <pixel index="113" colour="0xFFD37201" />
+        <pixel index="114" colour="0xFFD37201" />
+        <pixel index="115" colour="0xFFD37201" />
+        <pixel index="116" colour="0xFFD37201" />
+        <pixel index="117" colour="0xFFD37201" />
+        <pixel index="118" colour="0xFFD37201" />
+        <pixel index="119" colour="0xFFD37201" />
+        <pixel index="121" colour="0xFFD37201" />
+        <pixel index="122" colour="0xFFD37201" />
+        <pixel index="124" colour="0xFFD37201" />
+        <pixel index="125" colour="0xFFD37201" />
+        <pixel index="127" colour="0xFFD37201" />
+        <pixel index="128" colour="0xFFD37201" />
+        <pixel index="129" colour="0xFFD37201" />
+        <pixel index="130" colour="0xFFD37201" />
+        <pixel index="131" colour="0xFFD37201" />
+        <pixel index="132" colour="0xFFD37201" />
+        <pixel index="133" colour="0xFFD37201" />
+        <pixel index="134" colour="0xFFD37201" />
+        <pixel index="136" colour="0xFFD37201" />
+        <pixel index="137" colour="0xFFD37201" />
+        <pixel index="139" colour="0xFFD37201" />
+        <pixel index="140" colour="0xFFD37201" />
+        <pixel index="142" colour="0xFFD37201" />
+        <pixel index="143" colour="0xFFD37201" />
+        <pixel index="144" colour="0xFFD37201" />
+        <pixel index="145" colour="0xFFD37201" />
+        <pixel index="146" colour="0xFFD37201" />
+        <pixel index="147" colour="0xFFD37201" />
+        <pixel index="148" colour="0xFFD37201" />
+        <pixel index="149" colour="0xFFD37201" />
+        <pixel index="151" colour="0xFFD37201" />
+        <pixel index="152" colour="0xFFD37201" />
+        <pixel index="154" colour="0xFFD37201" />
+        <pixel index="155" colour="0xFFD37201" />
+        <pixel index="157" colour="0xFFD37201" />
+        <pixel index="158" colour="0xFFD37201" />
+        <pixel index="159" colour="0xFFD37201" />
+        <pixel index="160" colour="0xFFD37201" />
+        <pixel index="161" colour="0xFFD37201" />
+        <pixel index="162" colour="0xFFD37201" />
+        <pixel index="163" colour="0xFFD37201" />
+        <pixel index="164" colour="0xFFD37201" />
+        <pixel index="166" colour="0xFFD37201" />
+        <pixel index="167" colour="0xFFD37201" />
+        <pixel index="169" colour="0xFFD37201" />
+        <pixel index="170" colour="0xFFD37201" />
+        <pixel index="172" colour="0xFFD37201" />
+        <pixel index="173" colour="0xFFD37201" />
+        <pixel index="174" colour="0xFFD37201" />
+        <pixel index="175" colour="0xFFD37201" />
+        <pixel index="176" colour="0xFFD37201" />
+        <pixel index="177" colour="0xFFD37201" />
+        <pixel index="178" colour="0xFFD37201" />
+        <pixel index="179" colour="0xFFD37201" />
+        <pixel index="181" colour="0xFFD37201" />
+        <pixel index="182" colour="0xFFD37201" />
+        <pixel index="184" colour="0xFFD37201" />
+        <pixel index="185" colour="0xFFD37201" />
+        <pixel index="187" colour="0xFFD37201" />
+        <pixel index="188" colour="0xFFD37201" />
+        <pixel index="189" colour="0xFFD37201" />
+        <pixel index="190" colour="0xFFD37201" />
+        <pixel index="191" colour="0xFFD37201" />
+        <pixel index="192" colour="0xFFD37201" />
+        <pixel index="193" colour="0xFFD37201" />
+        <pixel index="194" colour="0xFFD37201" />
+        <pixel index="196" colour="0xFFD37201" />
+        <pixel index="197" colour="0xFFD37201" />
+        <pixel index="199" colour="0xFFD37201" />
+        <pixel index="200" colour="0xFFD37201" />
+        <pixel index="202" colour="0xFFD37201" />
+        <pixel index="203" colour="0xFFD37201" />
+        <pixel index="204" colour="0xFFD37201" />
+        <pixel index="205" colour="0xFFD37201" />
+        <pixel index="206" colour="0xFFD37201" />
+        <pixel index="207" colour="0xFFD37201" />
+        <pixel index="208" colour="0xFFD37201" />
+        <pixel index="209" colour="0xFFD37201" />
+    </pixels>
+</display>
+*/
