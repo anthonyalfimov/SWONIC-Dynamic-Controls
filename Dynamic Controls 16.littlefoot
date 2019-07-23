@@ -302,15 +302,17 @@ void doTouch(int touchIndex, float x, float y, float z)
 
             touchedControl = i;             // save index of touched ctrl
 
-            if (! useOverlaps)              // if overlap is not used, stop checking lower ctrls
-                break;
+            // if (! useOverlaps)
+                break;                      // if overlap is not used, stop checking lower ctrls
         }
         else
         {
             doTouchEnd(i, touchFlag);       // unregister touch from ctrl
         }
     }
-
+    
+    // BUG: this shouldn't run when overlapping controls are enabled, yet it is
+    
     for (int i = touchedControl - 1; i >= 0; --i)                       // go through remaining controls and unregister touch
     {
         doTouchEnd(i, touchFlag);
