@@ -3,6 +3,7 @@
 <mode name="Contrast Test 1">
   <variable name="amount" value="15"/>
   <variable name="globalMidiChannel" value="1"/>
+  <variable name="useOverlaps" value="false"/>
   <variable name="receiveMIDI" value="false"/>
   <variable name="ParamControlType0" value="Fader"/>
   <variable name="ParamControlColour0" value="0xFF76479B"/>

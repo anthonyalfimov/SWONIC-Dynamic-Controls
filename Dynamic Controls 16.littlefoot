@@ -1,5 +1,5 @@
 /*
-<metadata description="Create up to 16 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.8-dev"
+<metadata description="Create up to 16 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.9-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
@@ -14,6 +14,8 @@
         <variable name="globalMidiChannel" displayName="Global MIDI Channel" type="option"
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
                   tooltip="Default MIDI channel for controls" />
+        <variable name="useOverlaps" displayName="Use overlapping controls" type="bool"
+                  value="false" tooltip="Enable to propagate touch to all overlapping controls" />
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
@@ -76,7 +78,7 @@
 //
 //   copyright: Anthony Alfimov & Andreas Swoboda, 2018-2019
 //
-//   version: 1.2.8-dev
+//   version: 1.2.9-dev
 //
 //==============================================================================
 
@@ -135,11 +137,11 @@ const int B_LATCH = 1;
 void setMidiChannel(int controlIndex, int value)    { setHeapByte(controlIndex + 176, value); }
 int  getMidiChannel(int controlIndex)               { return getHeapByte(controlIndex + 176); }
 
-void setControlCCA(int controlIndex, int value)    { setHeapByte(controlIndex + 192, value); }
-int  getControlCCA(int controlIndex)               { return getHeapByte(controlIndex + 192); }
+void setControlCCA(int controlIndex, int value)     { setHeapByte(controlIndex + 192, value); }
+int  getControlCCA(int controlIndex)                { return getHeapByte(controlIndex + 192); }
 
-void setControlCCB(int controlIndex, int value)    { setHeapByte(controlIndex + 208, value); }
-int  getControlCCB(int controlIndex)               { return getHeapByte(controlIndex + 208); }
+void setControlCCB(int controlIndex, int value)     { setHeapByte(controlIndex + 208, value); }
+int  getControlCCB(int controlIndex)                { return getHeapByte(controlIndex + 208); }
 
 void setControlType(int controlIndex, int value)    { setHeapByte(controlIndex + 224, value); }
 int  getControlType(int controlIndex)               { return getHeapByte(controlIndex + 224); }
@@ -299,7 +301,9 @@ void doTouch(int touchIndex, float x, float y, float z)
             setControlTouchField(i, touchField);                        // write updated bitfield for ctrl
 
             touchedControl = i;             // save index of touched ctrl
-            break;                          // if overlap is not used, stop checking lower ctrls
+
+            if (! useOverlaps)              // if overlap is not used, stop checking lower ctrls
+                break;
         }
         else
         {

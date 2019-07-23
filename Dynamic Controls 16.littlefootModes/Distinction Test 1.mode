@@ -3,6 +3,7 @@
 <mode name="Distinction Test 1">
   <variable name="amount" value="7"/>
   <variable name="globalMidiChannel" value="1"/>
+  <variable name="useOverlaps" value="false"/>
   <variable name="receiveMIDI" value="false"/>
   <variable name="ParamControlType0" value="Fader"/>
   <variable name="ControlColour0" value="0xFFFF0000"/>
