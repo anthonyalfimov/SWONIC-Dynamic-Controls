@@ -290,6 +290,8 @@ void doTouch(int touchIndex, float x, float y, float z)
             else if (controlType == C_XYZPAD && isHighestTouch)         // is a pad and highest touch index
                 doXYZPad(i, x, y);
 
+            // ISSUE: using metadata vector parameters for pressure is slower
+            //        for controls with higher i
             if (getSendPress(i) && isHighestTouch)                      // send pressure and highest touch
             {
                 int pressure = clamp(0, 127, int(z * 127.0));
@@ -300,23 +302,23 @@ void doTouch(int touchIndex, float x, float y, float z)
             touchField = touchField | touchFlag;                        // register current touch with ctrl
             setControlTouchField(i, touchField);                        // write updated bitfield for ctrl
 
-            touchedControl = i;             // save index of touched ctrl
-
-            // if (! useOverlaps)
-                break;                      // if overlap is not used, stop checking lower ctrls
+            if (! useOverlaps)              // if overlapps are not used ...
+            {
+                touchedControl = i;         // ... save index of touched ctrl
+                break;                      // ... stop checking lower ctrls
+            }
         }
         else
         {
             doTouchEnd(i, touchFlag);       // unregister touch from ctrl
         }
     }
-    
-    // BUG: this shouldn't run when overlapping controls are enabled, yet it is
-    
-    for (int i = touchedControl - 1; i >= 0; --i)                       // go through remaining controls and unregister touch
-    {
-        doTouchEnd(i, touchFlag);
-    }
+
+    if (! useOverlaps)
+        for (int i = touchedControl - 1; i >= 0; --i)                   // go through remaining controls and unregister touch
+        {
+            doTouchEnd(i, touchFlag);
+        }
 }
 
 void doTouchEnd(int controlIndex, int touchFlag)
