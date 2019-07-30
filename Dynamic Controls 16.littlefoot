@@ -375,8 +375,6 @@ void doTouchEnd(int controlIndex, int touchFlag)
 //  Control MIDI Functions
 //------------------------------------------------------------------------------
 
-// TODO: recosinder inlining these functions: they're only used once!
-
 void doButton(int controlIndex)
 {
     // TODO: use CC B for active button value
@@ -479,7 +477,7 @@ void initialise()
 //  Turn gamma correction off
     setLocalConfig(33, 0);
 
-//  IDEA: should we initialise the unused controls just in case?
+//  TODO: should we initialise the unused controls just in case?
 
     for (int i = 0; i < amount; ++i)
     {
