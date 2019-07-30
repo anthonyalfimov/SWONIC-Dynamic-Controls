@@ -281,23 +281,36 @@ void doTouch(int touchIndex, float x, float y, float z)
             int controlType = getControlType(i);
             bool isHighestTouch = !(touchField >> (touchIndex + 1));    // are there any touches with higher index registered to the control?
 
-            if (controlType == C_BUTTON && !touchField)                 // is a button and no other touches present
-                doButton(i);
-            else if (controlType == C_NOTE && !touchField)              // is a note and no other touches present
-                doNote(i);
-            else if (controlType == C_FADER && isHighestTouch)          // is a fader and highest touch index
-                doFader(i, x, y);
-            else if (controlType == C_XYZPAD && isHighestTouch)         // is a pad and highest touch index
-                doXYZPad(i, x, y);
+            if (controlType == C_BUTTON)                                // is a button and no other touches present
+            {
+                if (!touchField)
+                    doButton(i);
+            }
+            else if (controlType == C_NOTE)                             // is a note and no other touches present
+            {
+                if (!touchField)
+                    doNote(i);
+            }
+            else if (controlType == C_FADER)                            // is a fader and highest touch index
+            {
+                if (isHighestTouch)
+                    doFader(i, x, y);
+            }
+            else if (controlType == C_XYZPAD)                           // is a pad and highest touch index
+            {
+                if (isHighestTouch)
+                    doXYZPad(i, x, y);
+            }
 
             // ISSUE: using metadata vector parameters for pressure is slower
             //        for controls with higher i
-            if (getSendPress(i) && isHighestTouch)                      // send pressure and highest touch
-            {
-                int pressure = clamp(0, 127, int(z * 127.0));
-                sendCC(getMidiChannel(i), getControlCCP(i), pressure);
-                setPressureValue(i, pressure);
-            }
+            if (isHighestTouch)             // if highest touch and "send pressure" enabled
+                if (getSendPress(i))
+                {
+                    int pressure = clamp(0, 127, int(z * 127.0));
+                    sendCC(getMidiChannel(i), getControlCCP(i), pressure);
+                    setPressureValue(i, pressure);
+                }
 
             touchField = touchField | touchFlag;                        // register current touch with ctrl
             setControlTouchField(i, touchField);                        // write updated bitfield for ctrl
@@ -433,21 +446,21 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
         for (int i = 0; i < amount; ++i)
         {
             if (getMidiChannel(i) == byteStatus)
-            if (getControlMode(i) == B_LATCH)
-            {
-                int controlType = getControlType(i);
-                
-                if (controlType != C_NOTE)
+                if (getControlMode(i) == B_LATCH)
                 {
-                    if (getControlCCA(i) == byteCC)
-                        setControlValueA(i, byteValue);
+                    int controlType = getControlType(i);
 
-                    // Check CC B only for XYZ pads
-                    if (controlType == C_XYZPAD)
-                    if (getControlCCB(i) == byteCC)
-                        setControlValueB(i, byteValue);
+                    if (controlType != C_NOTE)
+                    {
+                        if (getControlCCA(i) == byteCC)
+                            setControlValueA(i, byteValue);
+
+                        // Check CC B only for XYZ pads
+                        if (controlType == C_XYZPAD)
+                            if (getControlCCB(i) == byteCC)
+                                setControlValueB(i, byteValue);
+                    }
                 }
-            }
         }
     }
 
