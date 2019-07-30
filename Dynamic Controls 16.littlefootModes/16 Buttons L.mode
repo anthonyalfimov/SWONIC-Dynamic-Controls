@@ -4,7 +4,7 @@
   <variable name="amount" value="16"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="useOverlaps" value="false"/>
-  <variable name="receiveMIDI" value="false"/>
+  <variable name="receiveMIDI" value="true"/>
   <variable name="ParamControlType0" value="Button"/>
   <variable name="ControlColour0" value="0xFF80FF00"/>
   <variable name="ParamControlMode0" value="Latch"/>
