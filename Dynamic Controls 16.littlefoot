@@ -279,16 +279,16 @@ void doTouch(int touchIndex, float x, float y, float z)
         {
             int touchField = getControlTouchField(i);                   // fetch bitfield with registered touches for ctrl
             int controlType = getControlType(i);
-            bool isHighestTouch = !(touchField >> (touchIndex + 1));    // are there any touches with higher index registered to the control?
+            bool isHighestTouch = ! (touchField >> (touchIndex + 1));   // are there any touches with higher index registered to the control?
 
             if (controlType == C_BUTTON)                                // is a button and no other touches present
             {
-                if (!touchField)
+                if (! touchField)
                     doButton(i);
             }
             else if (controlType == C_NOTE)                             // is a note and no other touches present
             {
-                if (!touchField)
+                if (! touchField)
                     doNote(i);
             }
             else if (controlType == C_FADER)                            // is a fader and highest touch index
@@ -304,7 +304,7 @@ void doTouch(int touchIndex, float x, float y, float z)
 
             // ISSUE: using metadata vector parameters for pressure is slower
             //        for controls with higher i
-            if (isHighestTouch)             // if highest touch and "send pressure" enabled
+            if (isHighestTouch)             // if highest touch and "send pressure" enabled, handle pressure
                 if (getSendPress(i))
                 {
                     int pressure = clamp(0, 127, int(z * 127.0));
