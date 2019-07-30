@@ -243,8 +243,9 @@ void touchStart(int index, float x, float y, float z, float vz)
 
 void touchMove(int index, float x, float y, float z, float vz)
 {
-    doTouch(index, x, y, z);
-    // log(getTimeInCurrentFunctionCall());
+    for (int i = 0; i < 10; ++i)
+        doTouch(index, x, y, z);
+    log(getTimeInCurrentFunctionCall());
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -432,21 +433,14 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 
         for (int i = 0; i < amount; ++i)
         {
-            if (getMidiChannel(i) == byteStatus)
-            if (getControlMode(i) == B_LATCH)
+            if (getMidiChannel(i) == byteStatus && getControlMode(i) == B_LATCH)
             {
-                int controlType = getControlType(i);
-                
-                if (controlType != C_NOTE)
-                {
-                    if (getControlCCA(i) == byteCC)
-                        setControlValueA(i, byteValue);
+                if (getControlCCA(i) == byteCC)
+                    setControlValueA(i, byteValue);
 
-                    // Check CC B only for XYZ pads
-                    if (controlType == C_XYZPAD)
-                    if (getControlCCB(i) == byteCC)
-                        setControlValueB(i, byteValue);
-                }
+                // Check CC B only for XYZ pads
+                if (getControlType(i) == C_XYZPAD && getControlCCB(i) == byteCC)
+                    setControlValueB(i, byteValue);
             }
         }
     }

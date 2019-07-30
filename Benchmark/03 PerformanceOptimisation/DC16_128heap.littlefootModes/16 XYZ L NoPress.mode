@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mode name="16 Mixed">
+<mode name="16 XYZ L NOPRESS">
   <variable name="amount" value="16"/>
   <variable name="globalMidiChannel" value="1"/>
-  <variable name="useOverlaps" value="false"/>
-  <variable name="receiveMIDI" value="true"/>
+  <variable name="receiveMIDI" value="false"/>
   <variable name="ParamControlType0" value="XYZ Pad"/>
   <variable name="ControlColour0" value="0xFF80FF00"/>
   <variable name="ParamControlMode0" value="Latch"/>
@@ -16,9 +15,9 @@
   <variable name="MidiNote0" value="C3"/>
   <variable name="ParamControlCCA0" value="102"/>
   <variable name="ParamControlCCB0" value="102"/>
-  <variable name="SendPress0" value="true"/>
-  <variable name="ControlCCP0" value="102"/>
-  <variable name="ParamControlType1" value="Fader"/>
+  <variable name="ParamSendPress0" value="false"/>
+  <variable name="ParamControlCCP0" value="102"/>
+  <variable name="ParamControlType1" value="XYZ Pad"/>
   <variable name="ControlColour1" value="0xFF00F676"/>
   <variable name="ParamControlMode1" value="Latch"/>
   <variable name="ParamMidiChannel1" value="Global"/>
@@ -29,9 +28,9 @@
   <variable name="MidiNote1" value="C3"/>
   <variable name="ParamControlCCA1" value="103"/>
   <variable name="ParamControlCCB1" value="103"/>
-  <variable name="SendPress1" value="true"/>
-  <variable name="ControlCCP1" value="103"/>
-  <variable name="ParamControlType2" value="Fader"/>
+  <variable name="ParamSendPress1" value="false"/>
+  <variable name="ParamControlCCP1" value="103"/>
+  <variable name="ParamControlType2" value="XYZ Pad"/>
   <variable name="ControlColour2" value="0xFFFF001D"/>
   <variable name="ParamControlMode2" value="Latch"/>
   <variable name="ParamMidiChannel2" value="Global"/>
@@ -42,8 +41,8 @@
   <variable name="MidiNote2" value="C3"/>
   <variable name="ParamControlCCA2" value="104"/>
   <variable name="ParamControlCCB2" value="104"/>
-  <variable name="SendPress2" value="true"/>
-  <variable name="ControlCCP2" value="104"/>
+  <variable name="ParamSendPress2" value="false"/>
+  <variable name="ParamControlCCP2" value="104"/>
   <variable name="ParamControlType3" value="XYZ Pad"/>
   <variable name="ControlColour3" value="0xFF17FF00"/>
   <variable name="ParamControlMode3" value="Latch"/>
@@ -55,9 +54,9 @@
   <variable name="MidiNote3" value="C3"/>
   <variable name="ParamControlCCA3" value="105"/>
   <variable name="ParamControlCCB3" value="105"/>
-  <variable name="SendPress3" value="true"/>
-  <variable name="ControlCCP3" value="105"/>
-  <variable name="ParamControlType4" value="Fader"/>
+  <variable name="ParamSendPress3" value="false"/>
+  <variable name="ParamControlCCP3" value="105"/>
+  <variable name="ParamControlType4" value="XYZ Pad"/>
   <variable name="ControlColour4" value="0xFFFF4A00"/>
   <variable name="ParamControlMode4" value="Latch"/>
   <variable name="ParamMidiChannel4" value="Global"/>
@@ -68,9 +67,9 @@
   <variable name="MidiNote4" value="C3"/>
   <variable name="ParamControlCCA4" value="106"/>
   <variable name="ParamControlCCB4" value="106"/>
-  <variable name="SendPress4" value="true"/>
-  <variable name="ControlCCP4" value="106"/>
-  <variable name="ParamControlType5" value="Button"/>
+  <variable name="ParamSendPress4" value="false"/>
+  <variable name="ParamControlCCP4" value="106"/>
+  <variable name="ParamControlType5" value="XYZ Pad"/>
   <variable name="ControlColour5" value="0xFFFF0030"/>
   <variable name="ParamControlMode5" value="Latch"/>
   <variable name="ParamMidiChannel5" value="Global"/>
@@ -81,11 +80,11 @@
   <variable name="MidiNote5" value="C3"/>
   <variable name="ParamControlCCA5" value="107"/>
   <variable name="ParamControlCCB5" value="107"/>
-  <variable name="SendPress5" value="true"/>
-  <variable name="ControlCCP5" value="107"/>
-  <variable name="ParamControlType6" value="Button"/>
+  <variable name="ParamSendPress5" value="false"/>
+  <variable name="ParamControlCCP5" value="107"/>
+  <variable name="ParamControlType6" value="XYZ Pad"/>
   <variable name="ControlColour6" value="0xFF0000FF"/>
-  <variable name="ParamControlMode6" value="Momentary"/>
+  <variable name="ParamControlMode6" value="Latch"/>
   <variable name="ParamMidiChannel6" value="Global"/>
   <variable name="ControlPosX6" value="9"/>
   <variable name="ControlPosY6" value="5"/>
@@ -94,9 +93,9 @@
   <variable name="MidiNote6" value="C3"/>
   <variable name="ParamControlCCA6" value="108"/>
   <variable name="ParamControlCCB6" value="108"/>
-  <variable name="SendPress6" value="true"/>
-  <variable name="ControlCCP6" value="108"/>
-  <variable name="ParamControlType7" value="Fader"/>
+  <variable name="ParamSendPress6" value="false"/>
+  <variable name="ParamControlCCP6" value="108"/>
+  <variable name="ParamControlType7" value="XYZ Pad"/>
   <variable name="ControlColour7" value="0xFFFCFF00"/>
   <variable name="ParamControlMode7" value="Latch"/>
   <variable name="ParamMidiChannel7" value="Global"/>
@@ -107,9 +106,9 @@
   <variable name="MidiNote7" value="C3"/>
   <variable name="ParamControlCCA7" value="109"/>
   <variable name="ParamControlCCB7" value="109"/>
-  <variable name="SendPress7" value="true"/>
-  <variable name="ControlCCP7" value="109"/>
-  <variable name="ParamControlType8" value="Fader"/>
+  <variable name="ParamSendPress7" value="false"/>
+  <variable name="ParamControlCCP7" value="109"/>
+  <variable name="ParamControlType8" value="XYZ Pad"/>
   <variable name="ControlColour8" value="0xFF00FF0E"/>
   <variable name="ParamControlMode8" value="Latch"/>
   <variable name="ParamMidiChannel8" value="Global"/>
@@ -120,11 +119,11 @@
   <variable name="MidiNote8" value="C3"/>
   <variable name="ParamControlCCA8" value="110"/>
   <variable name="ParamControlCCB8" value="110"/>
-  <variable name="SendPress8" value="true"/>
-  <variable name="ControlCCP8" value="110"/>
-  <variable name="ParamControlType9" value="Button"/>
+  <variable name="ParamSendPress8" value="false"/>
+  <variable name="ParamControlCCP8" value="110"/>
+  <variable name="ParamControlType9" value="XYZ Pad"/>
   <variable name="ControlColour9" value="0xFFFF3900"/>
-  <variable name="ParamControlMode9" value="Momentary"/>
+  <variable name="ParamControlMode9" value="Latch"/>
   <variable name="ParamMidiChannel9" value="Global"/>
   <variable name="ControlPosX9" value="5"/>
   <variable name="ControlPosY9" value="9"/>
@@ -133,9 +132,9 @@
   <variable name="MidiNote9" value="C3"/>
   <variable name="ParamControlCCA9" value="111"/>
   <variable name="ParamControlCCB9" value="111"/>
-  <variable name="SendPress9" value="true"/>
-  <variable name="ControlCCP9" value="111"/>
-  <variable name="ParamControlType10" value="Button"/>
+  <variable name="ParamSendPress9" value="false"/>
+  <variable name="ParamControlCCP9" value="111"/>
+  <variable name="ParamControlType10" value="XYZ Pad"/>
   <variable name="ControlColour10" value="0xFF00DCFF"/>
   <variable name="ParamControlMode10" value="Latch"/>
   <variable name="ParamMidiChannel10" value="Global"/>
@@ -146,9 +145,9 @@
   <variable name="MidiNote10" value="C3"/>
   <variable name="ParamControlCCA10" value="112"/>
   <variable name="ParamControlCCB10" value="112"/>
-  <variable name="SendPress10" value="true"/>
-  <variable name="ControlCCP10" value="112"/>
-  <variable name="ParamControlType11" value="Fader"/>
+  <variable name="ParamSendPress10" value="false"/>
+  <variable name="ParamControlCCP10" value="112"/>
+  <variable name="ParamControlType11" value="XYZ Pad"/>
   <variable name="ControlColour11" value="0xFFB300FF"/>
   <variable name="ParamControlMode11" value="Latch"/>
   <variable name="ParamMidiChannel11" value="Global"/>
@@ -159,8 +158,8 @@
   <variable name="MidiNote11" value="C3"/>
   <variable name="ParamControlCCA11" value="113"/>
   <variable name="ParamControlCCB11" value="113"/>
-  <variable name="SendPress11" value="true"/>
-  <variable name="ControlCCP11" value="113"/>
+  <variable name="ParamSendPress11" value="false"/>
+  <variable name="ParamControlCCP11" value="113"/>
   <variable name="ParamControlType12" value="XYZ Pad"/>
   <variable name="ControlColour12" value="0xFFFF0700"/>
   <variable name="ParamControlMode12" value="Latch"/>
@@ -172,9 +171,9 @@
   <variable name="MidiNote12" value="C3"/>
   <variable name="ParamControlCCA12" value="114"/>
   <variable name="ParamControlCCB12" value="114"/>
-  <variable name="SendPress12" value="true"/>
-  <variable name="ControlCCP12" value="114"/>
-  <variable name="ParamControlType13" value="Fader"/>
+  <variable name="ParamSendPress12" value="false"/>
+  <variable name="ParamControlCCP12" value="114"/>
+  <variable name="ParamControlType13" value="XYZ Pad"/>
   <variable name="ControlColour13" value="0xFF00C4FF"/>
   <variable name="ParamControlMode13" value="Latch"/>
   <variable name="ParamMidiChannel13" value="Global"/>
@@ -185,9 +184,9 @@
   <variable name="MidiNote13" value="C3"/>
   <variable name="ParamControlCCA13" value="115"/>
   <variable name="ParamControlCCB13" value="115"/>
-  <variable name="SendPress13" value="true"/>
-  <variable name="ControlCCP13" value="115"/>
-  <variable name="ParamControlType14" value="Fader"/>
+  <variable name="ParamSendPress13" value="false"/>
+  <variable name="ParamControlCCP13" value="115"/>
+  <variable name="ParamControlType14" value="XYZ Pad"/>
   <variable name="ControlColour14" value="0xFF65FF00"/>
   <variable name="ParamControlMode14" value="Latch"/>
   <variable name="ParamMidiChannel14" value="Global"/>
@@ -198,8 +197,8 @@
   <variable name="MidiNote14" value="C3"/>
   <variable name="ParamControlCCA14" value="116"/>
   <variable name="ParamControlCCB14" value="116"/>
-  <variable name="SendPress14" value="true"/>
-  <variable name="ControlCCP14" value="116"/>
+  <variable name="ParamSendPress14" value="false"/>
+  <variable name="ParamControlCCP14" value="116"/>
   <variable name="ParamControlType15" value="XYZ Pad"/>
   <variable name="ControlColour15" value="0xFFFF0050"/>
   <variable name="ParamControlMode15" value="Latch"/>
@@ -211,6 +210,6 @@
   <variable name="MidiNote15" value="C3"/>
   <variable name="ParamControlCCA15" value="117"/>
   <variable name="ParamControlCCB15" value="117"/>
-  <variable name="SendPress15" value="true"/>
-  <variable name="ControlCCP15" value="117"/>
+  <variable name="ParamSendPress15" value="false"/>
+  <variable name="ParamControlCCP15" value="117"/>
 </mode>
