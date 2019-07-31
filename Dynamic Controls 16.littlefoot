@@ -4,6 +4,7 @@
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
+        <group name="graphics" displayName="Graphics"/>
         <group name="control" displayName="Control *" count="16"/>
     </groups>
 
@@ -18,6 +19,13 @@
                   value="false" tooltip="Enable to propagate touch to all overlapping controls" />
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
+
+        <variable name="contrast" displayName="Contrast" type="float"
+                  min="0" max="100" value="50" group="graphics"
+                  tooltip="Amount of contrast between active and inactive controls" />
+        <variable name="useShading" displayName="Control Shading" type="bool"
+                  value="true" group="graphics"
+                  tooltip="Use shaded graphics for controls" />
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -112,10 +120,10 @@
 //  Global Constants
 //==============================================================================
 
-// TODO: either make all MIDI status bytes into constants, or inline this
-
 // MIDI
 const int STATUS_CC = 0xB0;                 // status byte template for CC messages
+
+// TODO: either make all MIDI status bytes into constants, or inline this
 
 // Control types
 const int C_BUTTON = 0;
@@ -468,8 +476,14 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 //  Global Graphics Variables
 //==============================================================================
 
-const int inactiveShade = 0xDC << 24;
-const int faderMinShade = 0xF3 << 24;
+// Default NoGC settings:
+//
+// inactiveShade = 0xDC << 24;
+// halfShade = blendARGB(colour, 0x66000000);
+// fullShadeColour = blendARGB(colour, 0xCC000000);
+
+int inactiveDim;
+int halfShade, fullShade;
 
 //==============================================================================
 //  Initialisation
@@ -482,6 +496,12 @@ void initialise()
 
 //  Turn gamma correction off
     setLocalConfig(33, 0);
+
+//  Initialise graphics parameters
+    inactiveDim = 0xDC << 24;
+    int shade = useShading ? 0xCC : 0;
+    fullShade = shade << 24;
+    halfShade = shade << 23;
 
 //  TODO: should we initialise the unused controls just in case?
 
@@ -542,7 +562,7 @@ void repaint()
         int controlType = getControlType(i);
 
         int activeColour = getControlColour(i);
-        int inactiveColour = blendARGB(activeColour, inactiveShade);
+        int inactiveColour = blendARGB(activeColour, inactiveDim);
 
         int minX = getControlMinX(i);
         int minY = getControlMinY(i);
@@ -565,7 +585,7 @@ void repaint()
         //  Draw Fader
         //----------------------------------------------------------------------
             int highlight = getControlTouchField(i) ? blendARGB(activeColour, getHighlight(i)) : activeColour;
-            int faderMinColour = blendARGB(activeColour, faderMinShade);
+            int faderMinColour = blendARGB(inactiveColour, fullShade);
 
             if (isFaderVertical(i))
             {
@@ -628,18 +648,18 @@ void repaint()
 
 void drawButton(int colour, int controlIndex)
 {
-    int halfShade = blendARGB(colour, 0x66000000);
-    int fullShade = blendARGB(colour, 0xCC000000);
+    int halfShadeColour = blendARGB(colour, halfShade);
+    int fullShadeColour = blendARGB(colour, fullShade);
 
     if (getControlTouchField(controlIndex))     // if control is active
     {
         int highlight = getHighlight(controlIndex);
-        colour    = blendARGB(colour,    highlight);
-        halfShade = blendARGB(halfShade, highlight);
-        fullShade = blendARGB(fullShade, highlight);
+        colour = blendARGB(colour, highlight);
+        halfShadeColour = blendARGB(halfShadeColour, highlight);
+        fullShadeColour = blendARGB(fullShadeColour, highlight);
     }
 
-    blendGradientRect(colour, halfShade, fullShade, halfShade,
+    blendGradientRect(colour, halfShadeColour, fullShadeColour, halfShadeColour,
 					  getControlMinX(controlIndex),  getControlMinY(controlIndex),
 					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
 }
