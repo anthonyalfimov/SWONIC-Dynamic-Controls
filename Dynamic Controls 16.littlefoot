@@ -20,8 +20,8 @@
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
-        <variable name="contrast" displayName="Contrast" type="float"
-                  min="0" max="100" value="50" group="graphics"
+        <variable name="contrast" displayName="Contrast [220]" type="float"
+                  min="0" max="255" value="220" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
         <variable name="useShading" displayName="Control Shading" type="bool"
                   value="true" group="graphics"
@@ -498,7 +498,7 @@ void initialise()
     setLocalConfig(33, 0);
 
 //  Initialise graphics parameters
-    inactiveDim = 0xDC << 24;
+    inactiveDim = int(contrast) << 24;
     int shade = useShading ? 0xCC : 0;
     fullShade = shade << 24;
     halfShade = shade << 23;
