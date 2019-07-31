@@ -112,6 +112,8 @@
 //  Global Constants
 //==============================================================================
 
+// TODO: either make all MIDI status bytes into constants, or inline this
+
 const int STATUS_CC = 0xB0;                 // status byte template for CC messages
 
 // Graphics
