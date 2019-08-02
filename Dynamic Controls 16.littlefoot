@@ -24,7 +24,7 @@
                   min="0" max="210" value="140" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
         <variable name="shadingType" displayName="Control Shading" type="option"
-                  value="140" options="0;140;160;184" group="graphics"
+                  value="140" options="0;140;184" group="graphics"
                   tooltip="TODO" />
 
         <vector group="control" count="16"
@@ -499,15 +499,9 @@ void initialise()
 
 //  Initialise graphics parameters
     inactiveDim = int(contrast) << 24;
-    //int shade = shadingType ? (120 + shadingType * 20) : 0;
-    int shade = 0;
 
-    if (shadingType == 1)
-        shade = 120;
-    else if (shadingType == 2)
-        shade = 140;
-    else if (shadingType == 3)
-        shade = 184;
+    // 0 for type 0, 138 for type 1, 184 for type 2
+    int shade = shadingType * 46 * (4 - shadingType);
 
     fullShade = shade << 24;
     halfShade = shade << 23;
