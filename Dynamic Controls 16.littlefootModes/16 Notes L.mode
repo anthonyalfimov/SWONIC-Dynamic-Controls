@@ -6,7 +6,7 @@
   <variable name="useOverlaps" value="false"/>
   <variable name="receiveMIDI" value="true"/>
   <variable name="contrast" value="140.0"/>
-  <variable name="useShading" value="true"/>
+  <variable name="shadingType" value="140"/>
   <variable name="ParamControlType0" value="Note"/>
   <variable name="ControlColour0" value="0xFF80FF00"/>
   <variable name="ParamControlMode0" value="Momentary"/>

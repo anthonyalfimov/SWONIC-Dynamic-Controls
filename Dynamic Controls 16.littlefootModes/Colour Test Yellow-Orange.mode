@@ -6,7 +6,7 @@
   <variable name="useOverlaps" value="false"/>
   <variable name="receiveMIDI" value="false"/>
   <variable name="contrast" value="140.0"/>
-  <variable name="useShading" value="true"/>
+  <variable name="shadingType" value="140"/>
   <variable name="ParamControlType0" value="Button"/>
   <variable name="ControlColour0" value="0xFFfdf542"/>
   <variable name="ParamControlMode0" value="Latch"/>

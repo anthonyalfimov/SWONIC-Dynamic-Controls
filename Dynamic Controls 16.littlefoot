@@ -21,11 +21,11 @@
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
         <variable name="contrast" displayName="Contrast [140]" type="float"
-                  min="0" max="255" value="140" group="graphics"
+                  min="0" max="210" value="140" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
-        <variable name="useShading" displayName="Control Shading" type="bool"
-                  value="true" group="graphics"
-                  tooltip="Use shaded graphics for controls" />
+        <variable name="shadingType" displayName="Control Shading" type="option"
+                  value="140" options="0;140;160;184" group="graphics"
+                  tooltip="TODO" />
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -499,7 +499,16 @@ void initialise()
 
 //  Initialise graphics parameters
     inactiveDim = int(contrast) << 24;
-    int shade = useShading ? 0xA0 : 0;
+    //int shade = shadingType ? (120 + shadingType * 20) : 0;
+    int shade = 0;
+
+    if (shadingType == 1)
+        shade = 120;
+    else if (shadingType == 2)
+        shade = 140;
+    else if (shadingType == 3)
+        shade = 184;
+
     fullShade = shade << 24;
     halfShade = shade << 23;
 
