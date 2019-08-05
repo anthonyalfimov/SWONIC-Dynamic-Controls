@@ -3,9 +3,9 @@
 //==============================================================================
 //
 //  Script to test the look of Dashboard metadata parameters and tooltips.
-//  
+//
 //  Control Type:   Note
-// 
+//
 //==============================================================================
 
 //  Variable definitions are not correct!
@@ -19,94 +19,106 @@
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
+        <group name="graphics" displayName="Graphics"/>
         <group name="control" displayName="Control *" count="16"/>
     </groups>
 
     <variables>
-    
-    
+
+
         <variable name="amount" min="1" max="16" value="1" type="int"
-        
-            displayName=    "Amount of Controls" 
+
+            displayName=    "Amount of Controls"
             tooltip=        "Select the number of controls to display on the Lightpad Surface." />
-                  
+
         <variable name="globalMidiChannel"  type="option"  value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-        
+
             displayName=    "MIDI Default Channel"
             tooltip=        "Select the default MIDI channel used to send MIDI messages." />
 
-        <variable name="receiveMIDI" type="bool" value="false" 
-        
-            displayName=    "MIDI Receive [!]" 
+        <variable name="receiveMIDI" type="bool" value="false"
+
+            displayName=    "MIDI Receive [!]"
             tooltip=        "Enable to allow controls in Latch mode to respond to MIDI messages sent to the Block.&#13;&#13;[!] A high number of simultaneous incoming MIDI streams might freeze the app." />
-            
-        <variable name="useOverlaps"  type="bool" value="false" 
-        
+
+        <variable name="useOverlaps"  type="bool" value="false"
+
             displayName=    "Overlapping [!]"
             tooltip=        "Enable to allow controls partly or fully covered by others to send MIDI messages.&#13;&#13;[!] A high number of overlapping controls might freeze the app." />
 
 
+        <variable name="contrast" type="float" min="0" max="100" value="50" group="graphics"
+
+            displayName=    "Contrast"
+            tooltip=        "Amount of contrast between active and inactive controls" />
+
+        <variable name="shadingType" type="option" value="Light" options="Off;Light;Strong" group="graphics"
+
+            displayName=    "Control Shading"
+            tooltip=        "TODO" />
+
+
         <vector group="control" count="16" wantsGetFunctions="true" wantsSetFunctions="false">
-        
-        <variable name="ControlColour"  type="colour" value="random" 
-        
+
+        <variable name="ControlColour"  type="colour" value="random"
+
             displayName=    "Colour"
             tooltip=        "Select the colour of the control." />
-            
+
         <variable name="ParamControlType" type="option" options="Button;Fader;Pad;Note" value="Note"
-        
-            displayName=    "Type" 
+
+            displayName=    "Type"
             tooltip=        "Select between Button, Fader, Pad and Note." />
-        
+
         <variable name="ParamControlMode" type="option" options="Momentary;Latch" value="Momentary"
-        
+
             displayName=    "Behaviour"
             tooltip=        "Select whether control value is reset [Momentary] or retained [Latch] when control is released." />
-        
+
         <variable name="ParamMidiChannel" type="option" value="Default" options="Default;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-        
-            displayName=    "MIDI Channel" 
+
+            displayName=    "MIDI Channel"
             tooltip=        "Select the MIDI channel used by the control." />
 
         <variable name="ControlPosX" type="int" min="1" max="15" value="1"
-                      
+
             displayName=    "X-Coordinate"
             tooltip=        "Select the horizontal position on the 15x15 LED matrix."/>
-                      
+
         <variable name="ControlPosY" type="int" min="1" max="15" value="1"
 
-            displayName=    "Y-Coordinate"           
+            displayName=    "Y-Coordinate"
             tooltip=        "Select the vertical position on the 15x15 LED matrix."/>
-                      
+
         <variable name="ControlWidth" type="int" min="1" max="15" value="1"
 
-            displayName=    "Width" 
+            displayName=    "Width"
             tooltip=        "Select the horizontal size of the control."/>
-                      
+
         <variable name="ControlHeight"  type="int" min="1" max="15" value="1"
-                      
+
             displayName=    "Height"
             tooltip=        "Select the vertical size of the control."/>
-                      
-        <variable name="MidiNote"  type="midiNote" initStart="60" 
-        
+
+        <variable name="MidiNote"  type="midiNote" initStart="60"
+
             displayName=    "MIDI Note"
-            tooltip=        "Select the MIDI message sent by the control."/>            
-                                           
+            tooltip=        "Select the MIDI message sent by the control."/>
+
         <variable name="ParamControlCCB"  type="int" min="0" max="127" initStart="102"
-        
-            displayName=    "MIDI Velocity"              
-            tooltip=        "Select the MIDI value/message sent by the control."/>              
-                      
+
+            displayName=    "MIDI Velocity"
+            tooltip=        "Select the MIDI value/message sent by the control."/>
+
         <variable name="ControlCCP"  type="int" min="0" max="127" initStart="102"
-        
+
             displayName=    "MIDI Pressure CC"
             tooltip=        "Select the MIDI message used to transmit pressure." />
-                      
-        <variable name="SendPress"  type="bool" value="false" 
-        
+
+        <variable name="SendPress"  type="bool" value="false"
+
             displayName=    "Send Pressure"
-            tooltip=        "Enable to send MIDI messages for pressure applied to the control." /> 
+            tooltip=        "Enable to send MIDI messages for pressure applied to the control." />
 
         </vector>
 
