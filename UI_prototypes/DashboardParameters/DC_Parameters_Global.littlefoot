@@ -54,7 +54,7 @@
         <variable name="shadingType" type="option" value="Light" options="Off;Light;Strong" group="graphics"
 
             displayName=    "Shading"
-            tooltip=        "Select the shading preset for controls.&#13;&#13;The Strong preset matches the ROLI factory apps." />
+            tooltip=        "Select the shading preset for controls.&#13;&#13;The Strong preset matches the ROLI Note Grid app." />
 
     </variables>
 </metadata>
