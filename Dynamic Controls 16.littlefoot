@@ -20,6 +20,9 @@
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
+        <variable name="brightness" displayName="Brightness" type="float"
+                  min="0" max="255" value="255" group="graphics"
+                  tooltip="Global brightness" />
         <variable name="contrast" displayName="Contrast" type="float"
                   min="110" max="220" value="140" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
@@ -33,7 +36,7 @@
             <variable name="ParamControlType" displayName="Type" type="option"
                       options="Button;Note;Fader;XYZ Pad" value="Button"
                       tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
-            <variable name="ControlColour" displayName="Colour" type="colour"
+            <variable name="ParamControlColour" displayName="Colour" type="colour"
                       value="random" tooltip="Colour of the control" />
             <variable name="ParamControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
@@ -90,7 +93,7 @@
 //
 //==============================================================================
 
-#heapsize: 256
+#heapsize: 320
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
@@ -111,6 +114,8 @@
 //  | 208 - 223 | 16 1-byte control MIDI CC B numbers [0, 127]
 //  | 224 - 239 | 16 1-byte control type values [0, 3]
 //  | 240 - 255 | 16 1-byte control mode values [0, 1]
+//  |-----------|-------------------------------------------------------------|
+//  | 256 - 319 | 16 4-byte control colours
 //  |-----------|-------------------------------------------------------------|
 //
 
@@ -155,6 +160,9 @@ int  getControlType(int controlIndex)               { return getHeapByte(control
 
 void setControlMode(int controlIndex, int value)    { setHeapByte(controlIndex + 240, value); }
 int  getControlMode(int controlIndex)               { return getHeapByte(controlIndex + 240); }
+
+void setControlColour(int controlIndex, int value)  { setHeapInt(controlIndex * 4 + 256, value); }
+int  getControlColour(int controlIndex)             { return getHeapInt(controlIndex * 4 + 256); }
 
 //------------------------------------------------------------------------------
 //  Control Values
@@ -532,6 +540,22 @@ void initialise()
         setControlValueB(i, 0);
         setPressureValue(i, 64);
         setControlTouchField(i, 0);
+
+    //  Initialise control colours
+        int colour = getParamControlColour(i);
+
+        float r = (colour & 0xff0000) >> 16;
+        float g = (colour & 0xff00) >> 8;
+        float b = colour & 0xff;
+
+        float maxc = max(r, max(g, b));
+        maxc = brightness / maxc;
+
+        r *= maxc;
+        g *= maxc;
+        b *= maxc;
+
+        setControlColour(i, makeARGB(0xFF, int(r), int(g), int(b)));
 
     //  Precalculate control coordinates
         // Mix X [0, 14]
