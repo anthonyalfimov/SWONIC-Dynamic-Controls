@@ -512,7 +512,7 @@ void initialise()
     int shade = shadingType * 46 * (4 - shadingType);
 
     fullShade = shade << 24;
-    halfShade = shade << 23;
+    halfShade = (shade / 2) << 24;
 
 //  TODO: should we initialise the unused controls just in case?
 
