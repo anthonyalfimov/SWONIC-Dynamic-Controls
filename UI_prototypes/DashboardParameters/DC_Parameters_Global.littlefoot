@@ -4,7 +4,7 @@
 //
 //  Script to test the look of Dashboard metadata parameters and tooltips.
 //
-//  Control Type:   Button
+//  Global & Graphics Parameters
 //
 //==============================================================================
 
@@ -38,7 +38,7 @@
         <variable name="receiveMIDI" type="bool" value="false"
 
             displayName=    "MIDI Receive [!]"
-            tooltip=        "Enable to allow controls in Latch mode to respond to MIDI messages sent to the Block.&#13;&#13;[!] A high number of simultaneous incoming MIDI streams might freeze the app." />
+            tooltip=        "Enable to allow controls in Latch mode to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A high number of simultaneous incoming MIDI streams might freeze the app.&#13;&#13;[!] MIDI Note and Pressure CC are not received." />
 
         <variable name="useOverlaps"  type="bool" value="false"
 
@@ -49,12 +49,12 @@
         <variable name="contrast" type="float" min="0" max="100" value="50" group="graphics"
 
             displayName=    "Contrast"
-            tooltip=        "Amount of contrast between active and inactive controls" />
+            tooltip=        "Adjust the amount of contrast between active and inactive control colour." />
 
         <variable name="shadingType" type="option" value="Light" options="Off;Light;Strong" group="graphics"
 
-            displayName=    "Control Shading"
-            tooltip=        "TODO" />
+            displayName=    "Shading"
+            tooltip=        "Select the shading preset for controls.&#13;&#13;The Strong preset matches the ROLI factory apps." />
 
     </variables>
 </metadata>
