@@ -24,7 +24,7 @@
                   min="0" max="255" value="255" group="graphics"
                   tooltip="Global brightness" />
         <variable name="contrast" displayName="Contrast" type="float"
-                  min="110" max="220" value="140" group="graphics"
+                  min="0" max="100" value="50" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
         <variable name="shadingType" displayName="Control Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
@@ -493,6 +493,10 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 int inactiveDim;
 int halfShade, fullShade;
 
+// TEMPORARY: adaptive shading
+const int thresh = 80;
+const float factor = 0.5 / (100 - thresh);
+
 //==============================================================================
 //  Initialisation
 //==============================================================================
@@ -506,10 +510,14 @@ void initialise()
     setLocalConfig(33, 1);
 
 //  Initialise graphics parameters
-    inactiveDim = int(contrast) << 24;
+    // actual contrast range [110, 220]
+    inactiveDim = (110 + int(contrast * 1.1)) << 24;
 
     // 0 for type 0, 138 for type 1, 184 for type 2
     int shade = shadingType * 46 * (4 - shadingType);
+    
+    if (int(contrast) / thresh)             // if contrast is above threshold
+        shade -= int(shade * factor * (contrast - thresh));
 
     fullShade = shade << 24;
     halfShade = shade << 23;
