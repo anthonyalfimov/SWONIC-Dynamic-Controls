@@ -510,10 +510,10 @@ void initialise()
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
     const int contrastThreshold = 80;
-    const float shadeFactor = 0.5 / (100 - contrastThreshold);
+    const float shadeReductionFactor = 0.5 / (100 - contrastThreshold);
 
     if (int(contrast) / contrastThreshold)             // if contrast is above threshold
-        inactiveShade -= int(inactiveShade * shadeFactor * (contrast - contrastThreshold));
+        inactiveShade -= int(inactiveShade * shadeReductionFactor * (contrast - contrastThreshold));
 
     // TODO: consider clearer code for extra 10 bytes of memory:
     // float shadeReduction = shade * 0.5;
