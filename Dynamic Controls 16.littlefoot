@@ -484,12 +484,6 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 //  Global Graphics Variables
 //==============================================================================
 
-// Default NoGC settings:
-//
-// inactiveShade = 0xDC << 24;
-// halfShade = blendARGB(colour, 0x66000000);
-// fullShadeColour = blendARGB(colour, 0xCC000000);
-
 int inactiveDim;
 int halfShade, fullShade;
 
@@ -510,17 +504,24 @@ void initialise()
     setLocalConfig(33, 1);
 
 //  Initialise graphics parameters
-    // actual contrast range [110, 220]
+    // Contrast parameter mapped to [110, 220]
     inactiveDim = (110 + int(contrast * 1.1)) << 24;
 
-    // 0 for type 0, 138 for type 1, 184 for type 2
+    // TODO: consider clearer code for extra 16 bytes of memory:
+    // inactiveDim = int(map(contrast, 0.0, 100.0, 110.0, 220.0)) << 24;
+
+    // Shading value: 0 for type 0, 138 for type 1, 184 for type 2
     int shade = shadingType * 46 * (4 - shadingType);
-    
+
     if (int(contrast) / thresh)             // if contrast is above threshold
         shade -= int(shade * factor * (contrast - thresh));
 
+    // TODO: consider clearer code for extra 10 bytes of memory:
+    // float shadeDim = shade * 0.5;
+    // shade -= int(clamp(0.0, shadeDim, map(contrast, 80.0, 100.0, 0.0, shadeDim)));
+
     fullShade = shade << 24;
-    halfShade = shade << 23;
+    halfShade = (shade / 2) << 24;
 
 //  TODO: should we initialise the unused controls just in case?
 
