@@ -487,10 +487,6 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 int inactiveDim;
 int activeShade, inactiveShade;
 
-// TEMPORARY: adaptive shading
-const int thresh = 80;
-const float factor = 0.5 / (100 - thresh);
-
 //==============================================================================
 //  Initialisation
 //==============================================================================
@@ -513,12 +509,15 @@ void initialise()
     // Shading value: 0 for type 0, 138 for type 1, 184 for type 2
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
-    if (int(contrast) / thresh)             // if contrast is above threshold
-        inactiveShade -= int(inactiveShade * factor * (contrast - thresh));
+    const int contrastThreshold = 80;
+    const float shadeFactor = 0.5 / (100 - contrastThreshold);
+
+    if (int(contrast) / contrastThreshold)             // if contrast is above threshold
+        inactiveShade -= int(inactiveShade * shadeFactor * (contrast - contrastThreshold));
 
     // TODO: consider clearer code for extra 10 bytes of memory:
-    // float shadeDim = shade * 0.5;
-    // shade -= int(clamp(0.0, shadeDim, map(contrast, 80.0, 100.0, 0.0, shadeDim)));
+    // float shadeReduction = shade * 0.5;
+    // inactiveShade -= int(clamp(0.0, shadeReduction, map(contrast, 80.0, 100.0, 0.0, shadeReduction)));
 
 //  TODO: should we initialise the unused controls just in case?
 
