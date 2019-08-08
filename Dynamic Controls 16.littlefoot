@@ -485,7 +485,7 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 //==============================================================================
 
 int inactiveDim;
-int halfShade, fullShade;
+int activeShade, inactiveShade;
 
 // TEMPORARY: adaptive shading
 const int thresh = 80;
@@ -511,17 +511,14 @@ void initialise()
     // inactiveDim = int(map(contrast, 0.0, 100.0, 110.0, 220.0)) << 24;
 
     // Shading value: 0 for type 0, 138 for type 1, 184 for type 2
-    int shade = shadingType * 46 * (4 - shadingType);
+    inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
     if (int(contrast) / thresh)             // if contrast is above threshold
-        shade -= int(shade * factor * (contrast - thresh));
+        inactiveShade -= int(inactiveShade * factor * (contrast - thresh));
 
     // TODO: consider clearer code for extra 10 bytes of memory:
     // float shadeDim = shade * 0.5;
     // shade -= int(clamp(0.0, shadeDim, map(contrast, 80.0, 100.0, 0.0, shadeDim)));
-
-    fullShade = shade << 24;
-    halfShade = (shade / 2) << 24;
 
 //  TODO: should we initialise the unused controls just in case?
 
@@ -611,9 +608,9 @@ void repaint()
         //  Draw Button
         //----------------------------------------------------------------------
             if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
-                drawButton(inactiveColour, i);  // inactive Switch
+                drawButton(i, inactiveColour, inactiveShade);  // inactive Switch
             else
-                drawButton(activeColour, i);    // Button or active Switch
+                drawButton(i, activeColour, activeShade);    // Button or active Switch
         }
         else if (controlType == C_FADER)
         {
@@ -621,7 +618,7 @@ void repaint()
         //  Draw Fader
         //----------------------------------------------------------------------
             int highlight = getControlTouchField(i) ? blendARGB(activeColour, getHighlight(i)) : activeColour;
-            int faderMinColour = blendARGB(inactiveColour, fullShade);
+            int faderMinColour = blendARGB(inactiveColour, inactiveShade << 24);
 
             if (isFaderVertical(i))
             {
@@ -682,10 +679,10 @@ void repaint()
 //  Graphics Functions
 //==============================================================================
 
-void drawButton(int colour, int controlIndex)
+void drawButton(int controlIndex, int colour, int shade)
 {
-    int halfShadeColour = blendARGB(colour, halfShade);
-    int fullShadeColour = blendARGB(colour, fullShade);
+    int halfShadeColour = blendARGB(colour, (shade / 2) << 24);
+    int fullShadeColour = blendARGB(colour, shade << 24);
 
     if (getControlTouchField(controlIndex))     // if control is active
     {
