@@ -21,7 +21,7 @@
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
         <variable name="brightness" displayName="Brightness" type="float"
-                  min="0" max="255" value="255" group="graphics"
+                  min="0" max="100" value="100" group="graphics"
                   tooltip="Global brightness" />
         <variable name="contrast" displayName="Contrast" type="float"
                   min="0" max="100" value="50" group="graphics"
@@ -499,25 +499,25 @@ void initialise()
 //  Turn gamma correction on
     setLocalConfig(33, 1);
 
-//  Initialise graphics parameters
-    // Contrast parameter mapped to [110, 220]
-    inactiveDim = (110 + int(contrast * 1.1)) << 24;
+// Map graphics parameters to their actual ranges
+    contrast = 110.0 + contrast * 1.1;      // [0, 100] -> [110, 220]
+    brightness = 155.5 + brightness;        // [0, 100] -> [155, 255]
 
-    // TODO: consider clearer code for extra 16 bytes of memory:
-    // inactiveDim = int(map(contrast, 0.0, 100.0, 110.0, 220.0)) << 24;
+    // TODO: consider using map() for more self-explanatory code
 
-    // Shading value: 0 for type 0, 138 for type 1, 184 for type 2
+// Initialise dimming and shading parameters
+    inactiveDim = int(contrast) << 24;
+
+    // Shading value: type 0 -> 0, type 1 -> 138, type 2 -> 184
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
-    const int contrastThreshold = 80;
-    const float shadeReductionFactor = 0.5 / (100 - contrastThreshold);
+    // TODO: more descriptive name?
+    // TODO: named constants to make code more readable
+    float factor = 155.5 / brightness;      // TODO: any reason to use 155.5 over 155.0 here?
+    factor *= (255.0 - 220.0) / (255.0 - contrast);
 
-    if (int(contrast) / contrastThreshold)             // if contrast is above threshold
-        inactiveShade -= int(inactiveShade * shadeReductionFactor * (contrast - contrastThreshold));
-
-    // TODO: consider clearer code for extra 10 bytes of memory:
-    // float shadeReduction = shade * 0.5;
-    // inactiveShade -= int(clamp(0.0, shadeReduction, map(contrast, 80.0, 100.0, 0.0, shadeReduction)));
+    int maxInactiveShade = int(255.0 * (1 - factor));
+    inactiveShade = clamp(0, maxInactiveShade, inactiveShade);
 
 //  TODO: should we initialise the unused controls just in case?
 

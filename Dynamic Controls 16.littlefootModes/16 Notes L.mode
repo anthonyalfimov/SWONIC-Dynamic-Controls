@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mode name="16 Notes">
+<mode name="16 Notes L">
   <variable name="amount" value="16"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="useOverlaps" value="false"/>
   <variable name="receiveMIDI" value="true"/>
-  <variable name="brightness" value="255.0"/>
+  <variable name="brightness" value="100.0"/>
   <variable name="contrast" value="50.0"/>
   <variable name="shadingType" value="Light"/>
   <variable name="ParamControlType0" value="Note"/>
