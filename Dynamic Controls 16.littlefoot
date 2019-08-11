@@ -21,10 +21,10 @@
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
         <variable name="brightness" displayName="Brightness" type="float"
-                  min="0" max="255" value="255" group="graphics"
+                  min="0" max="100" value="100" group="graphics"
                   tooltip="Global brightness" />
         <variable name="contrast" displayName="Contrast" type="float"
-                  min="110" max="220" value="140" group="graphics"
+                  min="0" max="100" value="50" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
         <variable name="shadingType" displayName="Control Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
@@ -484,14 +484,8 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 //  Global Graphics Variables
 //==============================================================================
 
-// Default NoGC settings:
-//
-// inactiveShade = 0xDC << 24;
-// halfShade = blendARGB(colour, 0x66000000);
-// fullShadeColour = blendARGB(colour, 0xCC000000);
-
 int inactiveDim;
-int halfShade, fullShade;
+int activeShade, inactiveShade;
 
 //==============================================================================
 //  Initialisation
@@ -505,14 +499,24 @@ void initialise()
 //  Turn gamma correction on
     setLocalConfig(33, 1);
 
-//  Initialise graphics parameters
+// Map graphics parameters to their actual ranges
+    contrast = 110.0 + contrast * 1.1;      // [0, 100] -> [110, 220]
+    brightness = 155.5 + brightness;        // [0, 100] -> [155, 255]
+
+    // TODO: consider using map() for more self-explanatory code
+
+// Initialise dimming and shading parameters
     inactiveDim = int(contrast) << 24;
 
-    // 0 for type 0, 138 for type 1, 184 for type 2
-    int shade = shadingType * 46 * (4 - shadingType);
+    // Shading value: type 0 -> 0, type 1 -> 138, type 2 -> 184
+    inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
-    fullShade = shade << 24;
-    halfShade = (shade / 2) << 24;
+    // TODO: named constants to make code more readable
+    float minShadeMultiplier = 155.5 / brightness;
+    minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
+
+    int maxInactiveShade = int(255.0 * (1 - minShadeMultiplier));
+    inactiveShade = clamp(0, maxInactiveShade, inactiveShade);
 
 //  TODO: should we initialise the unused controls just in case?
 
@@ -602,9 +606,9 @@ void repaint()
         //  Draw Button
         //----------------------------------------------------------------------
             if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
-                drawButton(inactiveColour, i);  // inactive Switch
+                drawButton(i, inactiveColour, inactiveShade);  // inactive Switch
             else
-                drawButton(activeColour, i);    // Button or active Switch
+                drawButton(i, activeColour, activeShade);    // Button or active Switch
         }
         else if (controlType == C_FADER)
         {
@@ -612,7 +616,7 @@ void repaint()
         //  Draw Fader
         //----------------------------------------------------------------------
             int highlight = getControlTouchField(i) ? blendARGB(activeColour, getHighlight(i)) : activeColour;
-            int faderMinColour = blendARGB(inactiveColour, fullShade);
+            int faderMinColour = blendARGB(inactiveColour, inactiveShade << 24);
 
             if (isFaderVertical(i))
             {
@@ -673,10 +677,10 @@ void repaint()
 //  Graphics Functions
 //==============================================================================
 
-void drawButton(int colour, int controlIndex)
+void drawButton(int controlIndex, int colour, int shade)
 {
-    int halfShadeColour = blendARGB(colour, halfShade);
-    int fullShadeColour = blendARGB(colour, fullShade);
+    int halfShadeColour = blendARGB(colour, (shade / 2) << 24);
+    int fullShadeColour = blendARGB(colour, shade << 24);
 
     if (getControlTouchField(controlIndex))     // if control is active
     {
