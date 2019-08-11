@@ -512,7 +512,7 @@ void initialise()
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
     // TODO: named constants to make code more readable
-    float minShadeMultiplier = 155.5 / brightness;      // TODO: any reason to use 155.5 over 155.0 here?
+    float minShadeMultiplier = 155.5 / brightness;
     minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
 
     int maxInactiveShade = int(255.0 * (1 - minShadeMultiplier));
