@@ -20,10 +20,10 @@
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
-        <variable name="brightness" displayName="Brightness" type="float"
+        <variable name="brightness" displayName="Control Brightness" type="float"
                   min="0" max="100" value="100" group="graphics"
                   tooltip="Global brightness" />
-        <variable name="contrast" displayName="Contrast" type="float"
+        <variable name="contrast" displayName="Control Contrast" type="float"
                   min="0" max="100" value="50" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
         <variable name="shadingType" displayName="Control Shading" type="option"
