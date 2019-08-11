@@ -511,12 +511,11 @@ void initialise()
     // Shading value: type 0 -> 0, type 1 -> 138, type 2 -> 184
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
-    // TODO: more descriptive name?
     // TODO: named constants to make code more readable
-    float factor = 155.5 / brightness;      // TODO: any reason to use 155.5 over 155.0 here?
-    factor *= (255.0 - 220.0) / (255.0 - contrast);
+    float minShadeMultiplier = 155.5 / brightness;      // TODO: any reason to use 155.5 over 155.0 here?
+    minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
 
-    int maxInactiveShade = int(255.0 * (1 - factor));
+    int maxInactiveShade = int(255.0 * (1 - minShadeMultiplier));
     inactiveShade = clamp(0, maxInactiveShade, inactiveShade);
 
 //  TODO: should we initialise the unused controls just in case?
