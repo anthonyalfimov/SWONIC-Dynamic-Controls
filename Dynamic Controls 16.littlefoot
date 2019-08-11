@@ -20,11 +20,11 @@
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
-        <variable name="brightness" displayName="Control Brightness" type="float"
-                  min="0" max="100" value="100" group="graphics"
+        <variable name="brightness" displayName="Control Brightness" type="option"
+                  value="100" options="Individual;0;10;20;30;40;50;60;70;80;90;100" group="graphics"
                   tooltip="Global brightness" />
-        <variable name="contrast" displayName="Control Contrast" type="float"
-                  min="0" max="100" value="50" group="graphics"
+        <variable name="contrast" displayName="Control Contrast" type="option"
+                  value="50" options="0;10;20;30;40;50;60;70;80;90;100" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
         <variable name="shadingType" displayName="Control Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
@@ -500,19 +500,26 @@ void initialise()
     setLocalConfig(33, 1);
 
 // Map graphics parameters to their actual ranges
-    contrast = 110.0 + contrast * 1.1;      // [0, 100] -> [110, 220]
-    brightness = 155.5 + brightness;        // [0, 100] -> [155, 255]
-
-    // TODO: consider using map() for more self-explanatory code
+    contrast = 110 + contrast * 11;         // [0, 100] -> [110, 220]
+    bool overrideBrightness = true;
+    
+    if (brightness != 0)
+        brightness = 145 + brightness * 10; // [0, 100] -> [155, 255]
+    else
+    {
+        brightness = 255;
+        overrideBrightness = false;
+    }
+  
 
 // Initialise dimming and shading parameters
-    inactiveDim = int(contrast) << 24;
+    inactiveDim = contrast << 24;
 
     // Shading value: type 0 -> 0, type 1 -> 138, type 2 -> 184
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
     // TODO: named constants to make code more readable
-    float minShadeMultiplier = 155.5 / brightness;
+    float minShadeMultiplier = 155.0 / brightness;
     minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
 
     int maxInactiveShade = int(255.0 * (1 - minShadeMultiplier));
@@ -551,14 +558,17 @@ void initialise()
         float r = (colour & 0xff0000) >> 16;
         float g = (colour & 0xff00) >> 8;
         float b = colour & 0xff;
+        
+        if (overrideBrightness)
+        {
+            float maxc = max(r, max(g, b));
+            maxc = brightness / maxc;
 
-        float maxc = max(r, max(g, b));
-        maxc = brightness / maxc;
-
-        r *= maxc;
-        g *= maxc;
-        b *= maxc;
-
+            r *= maxc;
+            g *= maxc;
+            b *= maxc;
+        }
+        
         setControlColour(i, makeARGB(0xFF, int(r), int(g), int(b)));
 
     //  Precalculate control coordinates
