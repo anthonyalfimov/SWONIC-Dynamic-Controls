@@ -20,11 +20,14 @@
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
-        <variable name="brightness" displayName="Control Brightness" type="option"
-                  value="100" options="Individual;0;10;20;30;40;50;60;70;80;90;100" group="graphics"
+        <variable name="overrideBrightness" displayName="Use Global Brightness" type="bool"
+                  value="true" group="graphics"
+                  tooltip="TODO" />
+        <variable name="brightness" displayName="Control Brightness" type="int"
+                  min="0" max="10" value="10" group="graphics"
                   tooltip="Global brightness" />
-        <variable name="contrast" displayName="Control Contrast" type="option"
-                  value="50" options="0;10;20;30;40;50;60;70;80;90;100" group="graphics"
+        <variable name="contrast" displayName="Control Contrast" type="int"
+                  min="0" max="10" value="5" group="graphics"
                   tooltip="Amount of contrast between active and inactive controls" />
         <variable name="shadingType" displayName="Control Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
@@ -500,17 +503,8 @@ void initialise()
     setLocalConfig(33, 1);
 
 // Map graphics parameters to their actual ranges
-    contrast = 110 + contrast * 11;         // [0, 100] -> [110, 220]
-    bool overrideBrightness = true;
-    
-    if (brightness != 0)
-        brightness = 145 + brightness * 10; // [0, 100] -> [155, 255]
-    else
-    {
-        brightness = 255;
-        overrideBrightness = false;
-    }
-  
+    contrast = 110 + contrast * 11;                                     // [0, 100] -> [110, 220]
+    brightness = overrideBrightness ? 155 + brightness * 10 : 255;      // [0, 100] -> [155, 255]
 
 // Initialise dimming and shading parameters
     inactiveDim = contrast << 24;
@@ -558,7 +552,7 @@ void initialise()
         float r = (colour & 0xff0000) >> 16;
         float g = (colour & 0xff00) >> 8;
         float b = colour & 0xff;
-        
+
         if (overrideBrightness)
         {
             float maxc = max(r, max(g, b));
@@ -568,7 +562,7 @@ void initialise()
             g *= maxc;
             b *= maxc;
         }
-        
+
         setControlColour(i, makeARGB(0xFF, int(r), int(g), int(b)));
 
     //  Precalculate control coordinates
