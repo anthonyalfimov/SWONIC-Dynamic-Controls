@@ -46,25 +46,26 @@
             tooltip=        "Enable to allow controls partly or fully covered by others to send MIDI messages.&#13;&#13;[!] A high number of overlapping controls might freeze the app." />
 
 
-        <variable name="brightness" type="float" min="0" max="100" value="75" group="graphics"
+
+        <variable name="brightness" type="int" min="0" max="10" value="10" group="graphics"
 
             displayName=    "Brightness"
-            tooltip=        "Adjust the brightness of the control colour." />
+            tooltip=        "Select the brightness of the control colour." />
             
-        <variable name="contrast" type="float" min="0" max="100" value="50" group="graphics"
+        <variable name="contrast" type="int" min="0" max="10" value="5" group="graphics"
 
             displayName=    "Contrast"
-            tooltip=        "Adjust the amount of contrast between active and inactive control colour." />
+            tooltip=        "Select the amount of contrast between active and inactive control colour." />
 
         <variable name="shadingType" type="option" value="Light" options="Off;Light;Strong" group="graphics"
 
             displayName=    "Shading"
             tooltip=        "Select the shading preset for controls.&#13;&#13;The Strong preset matches the ROLI factory apps." />
 
-        <variable name="autoColourCorrection"  type="bool" value="true" group="graphics"
+        <variable name="overrideBrightness"  type="bool" value="true" group="graphics"
 
-            displayName=    "Auto Colour Correction [!]"
-            tooltip=        "Disable to allow Brightness of control colours to be controlled by the individual control colour selections.&#13;&#13;[!] Disabling Auto Colour Correction might lead to black LEDs or strange behaviours of shading, depending on the indivual control colour selections." />
+            displayName=    "Brightness Correction [!]"
+            tooltip=        "Disable to allow Brightness of control colours to be controlled by the individual control colour selections.&#13;&#13;[!] Disabling Birghtness Correction might lead to black LEDs or strange behaviours of shading, depending on the indivual control colour selections." />
 
     </variables>
 </metadata>
