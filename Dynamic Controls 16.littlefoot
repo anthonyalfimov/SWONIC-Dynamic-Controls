@@ -512,7 +512,7 @@ void initialise()
     // Shading value: type 0 -> 0, type 1 -> 138, type 2 -> 184
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
-    // TODO: named constants to make code more readable
+    // TODO: named constants to make code more readable?
     float minShadeMultiplier = 155.0 / brightness;
     minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
 
@@ -556,7 +556,7 @@ void initialise()
         if (overrideBrightness)
         {
             float maxc = max(r, max(g, b));
-            maxc = brightness / maxc;
+            maxc = (brightness + 0.5) / maxc;
 
             r *= maxc;
             g *= maxc;
