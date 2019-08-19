@@ -77,6 +77,14 @@
         </vector>
 
     </variables>
+
+
+    <script onChange="overrideBrightness">
+    <![CDATA[
+        brightness.visible = overrideBrightness.value;
+    ]]>
+    </script>
+
 </metadata>
 */
 
