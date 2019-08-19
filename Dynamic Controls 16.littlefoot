@@ -503,8 +503,8 @@ void initialise()
     setLocalConfig(33, 1);
 
 // Map graphics parameters to their actual ranges
-    contrast = 110 + contrast * 11;                                     // [0, 100] -> [110, 220]
-    brightness = overrideBrightness ? 155 + brightness * 10 : 255;      // [0, 100] -> [155, 255]
+    contrast = 110 + contrast * 11;                                     // [0, 10] -> [110, 220]
+    brightness = overrideBrightness ? 155 + brightness * 10 : 255;      // [0, 10] -> [155, 255]
 
 // Initialise dimming and shading parameters
     inactiveDim = contrast << 24;
