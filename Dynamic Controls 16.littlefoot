@@ -371,7 +371,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
 
         if (!touchField)                                                // if no touches left registered, ...
         {
-            if (getControlMode(controlIndex) == B_MOMENTARY)            //     reset CCs for momentary controls
+            if (getControlMode(controlIndex) == B_MOMENTARY)            // ...reset CCs for momentary controls
             {
                 if (getControlType(controlIndex) == C_NOTE)
                 {
@@ -383,7 +383,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
                     sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
                     setControlValueA(controlIndex, 0);
 
-                    if (getControlType(controlIndex) == C_XYZPAD)       //     reset CC B only for XYZ pads
+                    if (getControlType(controlIndex) == C_XYZPAD)       // ...reset CC B only for XYZ pads
                     {
                         sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
                         setControlValueB(controlIndex, 0);
@@ -391,7 +391,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
                 }
             }
 
-            if (getSendPress(controlIndex))                             //     reset pressure if it's enabled
+            if (getSendPress(controlIndex))                             // ...reset pressure if it's enabled
                 sendCC(getMidiChannel(controlIndex), getControlCCP(controlIndex), 0);
         }
     }
@@ -463,7 +463,7 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
     if (receiveMIDI)
     {
-        byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
+        byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte:
                                                 //   if status byte is a CC message,
                                                 //   the result is its MIDI channel
 
@@ -487,8 +487,6 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
                 }
         }
     }
-
-    // log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
@@ -520,15 +518,16 @@ void initialise()
     // Shading value: type 0 -> 0, type 1 -> 138, type 2 -> 184
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
-    // TODO: named constants to make code more readable?
+// Ensure that shading does not result in LEDs with brightness lower than a
+// minimum, set to the inactice colour brightness at maximum global contrast
+// setting and minimum global brightness setting
     float minShadeMultiplier = 155.0 / brightness;
     minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
 
     int maxInactiveShade = int(255.0 * (1 - minShadeMultiplier));
     inactiveShade = clamp(0, maxInactiveShade, inactiveShade);
 
-//  TODO: should we initialise the unused controls just in case?
-
+// Initialise per-control parameters
     for (int i = 0; i < amount; ++i)
     {
     //  Initialise MIDI channel and CC numbers
@@ -682,7 +681,6 @@ void repaint()
             fillRect(activeColour, pixelX, minY, 1, sizeY);
         }
     }
-    // log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
