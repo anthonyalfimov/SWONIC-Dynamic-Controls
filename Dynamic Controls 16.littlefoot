@@ -293,7 +293,7 @@ void doTouch(int touchIndex, float x, float y, float z)
         {
             int touchField = getControlTouchField(i);                   // fetch bitfield with registered touches for ctrl
             int controlType = getControlType(i);
-            bool isHighestTouch = ! (touchField >> (touchIndex + 1));   // are there any touches with higher index registered to the control?
+            bool isHighestTouch = ! (touchField >> (touchIndex + 1));   // is this the touch with the highest index on this ctrl?
 
             if (controlType == C_BUTTON)                                // is a button and no other touches present
             {
