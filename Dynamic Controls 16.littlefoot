@@ -295,30 +295,30 @@ void doTouch(int touchIndex, float x, float y, float z)
             int controlType = getControlType(i);
             bool isHighestTouch = ! (touchField >> (touchIndex + 1));   // is this the touch with the highest index on this ctrl?
 
-            if (controlType == C_BUTTON)                                // is a button and no other touches present
+            if (controlType == C_BUTTON)
             {
-                if (! touchField)
+                if (! touchField)           // if no other touches present
                     doButton(i);
             }
-            else if (controlType == C_NOTE)                             // is a note and no other touches present
+            else if (controlType == C_NOTE)
             {
-                if (! touchField)
+                if (! touchField)           // if no other touches present
                     doNote(i);
             }
-            else if (controlType == C_FADER)                            // is a fader and highest touch index
+            else if (controlType == C_FADER)
             {
-                if (isHighestTouch)
+                if (isHighestTouch)         // if highest touch index
                     doFader(i, x, y);
             }
-            else if (controlType == C_XYZPAD)                           // is a pad and highest touch index
+            else if (controlType == C_XYZPAD)
             {
-                if (isHighestTouch)
+                if (isHighestTouch)         // if highest touch index
                     doXYZPad(i, x, y);
             }
 
             // ISSUE: using metadata vector parameters for pressure is slower
             //        for controls with higher i
-            if (isHighestTouch)             // if highest touch and "send pressure" enabled, handle pressure
+            if (isHighestTouch)
                 if (getSendPress(i))
                 {
                     int pressure = clamp(0, 127, int(z * 127.0));
@@ -329,20 +329,20 @@ void doTouch(int touchIndex, float x, float y, float z)
             touchField = touchField | touchFlag;                        // register current touch with ctrl
             setControlTouchField(i, touchField);                        // write updated bitfield for ctrl
 
-            if (! useOverlaps)              // if overlapps are not used ...
+            if (! useOverlaps)
             {
-                touchedControl = i;         // ... save index of touched ctrl
-                break;                      // ... stop checking lower ctrls
+                touchedControl = i;         // save index of touched ctrl
+                break;                      // stop checking lower ctrls
             }
         }
         else
         {
-            doTouchEnd(i, touchFlag);       // unregister touch from ctrl
+            doTouchEnd(i, touchFlag);
         }
     }
 
     if (! useOverlaps)
-        for (int i = touchedControl - 1; i >= 0; --i)                   // go through remaining controls and unregister touch
+        for (int i = touchedControl - 1; i >= 0; --i)                   // go through remaining controls
         {
             doTouchEnd(i, touchFlag);
         }
