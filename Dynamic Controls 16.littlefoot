@@ -136,11 +136,6 @@
 //  Global Constants
 //==============================================================================
 
-// MIDI
-const int STATUS_CC = 0xB0;                 // status byte template for CC messages
-
-// TODO: either make all MIDI status bytes into constants, or inline this
-
 // Control types
 const int C_BUTTON = 0;
 const int C_NOTE   = 1;
@@ -463,9 +458,9 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
     if (receiveMIDI)
     {
-        byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte:
-                                                //   if status byte is a CC message,
-                                                //   the result is its MIDI channel
+        byteStatus = byteStatus ^ 0xB0;     // flip CC template bits in status byte:
+                                            //   if status byte is a CC message,
+                                            //   the result is its MIDI channel
 
         for (int i = 0; i < amount; ++i)
         {
