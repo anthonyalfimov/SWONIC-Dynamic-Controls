@@ -235,7 +235,7 @@ bool isFaderVertical(int controlIndex)
 int convertPositionToCC(float position, int pixelMin, int pixelMax)
 {
     // Coordinate conversion from (0.0, 2.0) to (0.0, 15.0)
-    position = position * 0.5 * 15;
+    position *= 0.5 * 15;
 
     // map [min + d, max + 1 - d] to [0, 127]; d = 0.6 - edge offset
     position = map(position, float(pixelMin) + 0.6, float(pixelMax) + 0.4, 0.0, 128.0);
@@ -264,7 +264,6 @@ void touchStart(int index, float x, float y, float z, float vz)
 void touchMove(int index, float x, float y, float z, float vz)
 {
     doTouch(index, x, y, z);
-    // log(getTimeInCurrentFunctionCall());
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -273,8 +272,6 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 
     for (int i = 0; i < amount; ++i)        // unregister touch from all ctrls
         doTouchEnd(i, touchFlag);
-
-    // log(getTimeInCurrentFunctionCall());
 }
 
 //------------------------------------------------------------------------------
@@ -282,9 +279,6 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 //------------------------------------------------------------------------------
 void doTouch(int touchIndex, float x, float y, float z)
 {
-    // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
-    //       But how and why would this ever happen?
-
     // Coordinate conversion from (0.0, 2.0) to [0, 14]
     int intX = int(x * 0.5 * 15.0);
     int intY = int(y * 0.5 * 15.0);
