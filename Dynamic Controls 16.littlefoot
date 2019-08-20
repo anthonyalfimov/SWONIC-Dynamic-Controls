@@ -231,11 +231,11 @@ bool isFaderVertical(int controlIndex)
 //==============================================================================
 
 // Convert touch positin on a control to CC value [0, 127]
-//     position in (0, 2); pixelMin and pixelMax in [0, 14]
+//   position in (0, 2); pixelMin and pixelMax in [0, 14]
 int convertPositionToCC(float position, int pixelMin, int pixelMax)
 {
     // Coordinate conversion from (0.0, 2.0) to (0.0, 15.0)
-    position *= 0.5 * 15;
+    position *= 0.5 * 15.0;
 
     // map [min + d, max + 1 - d] to [0, 127]; d = 0.6 - edge offset
     position = map(position, float(pixelMin) + 0.6, float(pixelMax) + 0.4, 0.0, 128.0);
@@ -244,7 +244,7 @@ int convertPositionToCC(float position, int pixelMin, int pixelMax)
 }
 
 // Convert CC value to a pixel value
-//     pixelMin and pixelMax can be swapped to invert the value
+//   pixelMin and pixelMax can be swapped to invert the value
 int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
 {
     return int(map(float(valueCC), 0.0, 127.0, float(pixelMin), float(pixelMax)));
