@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mode name="16 Notes">
+<mode name="16 Notes L">
   <variable name="amount" value="16"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="useOverlaps" value="false"/>
   <variable name="receiveMIDI" value="true"/>
+  <variable name="brightness" value="10"/>
+  <variable name="contrast" value="5"/>
+  <variable name="shadingType" value="Light"/>
   <variable name="ParamControlType0" value="Note"/>
-  <variable name="ControlColour0" value="0xFF80FF00"/>
+  <variable name="ParamControlColour0" value="0xFF80FF00"/>
   <variable name="ParamControlMode0" value="Momentary"/>
   <variable name="ParamMidiChannel0" value="Global"/>
   <variable name="ControlPosX0" value="1"/>
@@ -19,7 +22,7 @@
   <variable name="SendPress0" value="true"/>
   <variable name="ControlCCP0" value="102"/>
   <variable name="ParamControlType1" value="Note"/>
-  <variable name="ControlColour1" value="0xFF00F676"/>
+  <variable name="ParamControlColour1" value="0xFF00F676"/>
   <variable name="ParamControlMode1" value="Momentary"/>
   <variable name="ParamMidiChannel1" value="Global"/>
   <variable name="ControlPosX1" value="5"/>
@@ -32,7 +35,7 @@
   <variable name="SendPress1" value="true"/>
   <variable name="ControlCCP1" value="103"/>
   <variable name="ParamControlType2" value="Note"/>
-  <variable name="ControlColour2" value="0xFFFF001D"/>
+  <variable name="ParamControlColour2" value="0xFFFF001D"/>
   <variable name="ParamControlMode2" value="Momentary"/>
   <variable name="ParamMidiChannel2" value="Global"/>
   <variable name="ControlPosX2" value="9"/>
@@ -45,7 +48,7 @@
   <variable name="SendPress2" value="true"/>
   <variable name="ControlCCP2" value="104"/>
   <variable name="ParamControlType3" value="Note"/>
-  <variable name="ControlColour3" value="0xFF17FF00"/>
+  <variable name="ParamControlColour3" value="0xFF17FF00"/>
   <variable name="ParamControlMode3" value="Momentary"/>
   <variable name="ParamMidiChannel3" value="Global"/>
   <variable name="ControlPosX3" value="12"/>
@@ -58,7 +61,7 @@
   <variable name="SendPress3" value="true"/>
   <variable name="ControlCCP3" value="105"/>
   <variable name="ParamControlType4" value="Note"/>
-  <variable name="ControlColour4" value="0xFFFF4A00"/>
+  <variable name="ParamControlColour4" value="0xFFFF4A00"/>
   <variable name="ParamControlMode4" value="Momentary"/>
   <variable name="ParamMidiChannel4" value="Global"/>
   <variable name="ControlPosX4" value="1"/>
@@ -71,7 +74,7 @@
   <variable name="SendPress4" value="true"/>
   <variable name="ControlCCP4" value="106"/>
   <variable name="ParamControlType5" value="Note"/>
-  <variable name="ControlColour5" value="0xFFFF0030"/>
+  <variable name="ParamControlColour5" value="0xFFFF0030"/>
   <variable name="ParamControlMode5" value="Momentary"/>
   <variable name="ParamMidiChannel5" value="Global"/>
   <variable name="ControlPosX5" value="5"/>
@@ -84,7 +87,7 @@
   <variable name="SendPress5" value="true"/>
   <variable name="ControlCCP5" value="107"/>
   <variable name="ParamControlType6" value="Note"/>
-  <variable name="ControlColour6" value="0xFF0000FF"/>
+  <variable name="ParamControlColour6" value="0xFF0000FF"/>
   <variable name="ParamControlMode6" value="Momentary"/>
   <variable name="ParamMidiChannel6" value="Global"/>
   <variable name="ControlPosX6" value="9"/>
@@ -97,7 +100,7 @@
   <variable name="SendPress6" value="true"/>
   <variable name="ControlCCP6" value="108"/>
   <variable name="ParamControlType7" value="Note"/>
-  <variable name="ControlColour7" value="0xFFFCFF00"/>
+  <variable name="ParamControlColour7" value="0xFFFCFF00"/>
   <variable name="ParamControlMode7" value="Momentary"/>
   <variable name="ParamMidiChannel7" value="Global"/>
   <variable name="ControlPosX7" value="12"/>
@@ -110,7 +113,7 @@
   <variable name="SendPress7" value="true"/>
   <variable name="ControlCCP7" value="109"/>
   <variable name="ParamControlType8" value="Note"/>
-  <variable name="ControlColour8" value="0xFF00FF0E"/>
+  <variable name="ParamControlColour8" value="0xFF00FF0E"/>
   <variable name="ParamControlMode8" value="Momentary"/>
   <variable name="ParamMidiChannel8" value="Global"/>
   <variable name="ControlPosX8" value="1"/>
@@ -123,7 +126,7 @@
   <variable name="SendPress8" value="true"/>
   <variable name="ControlCCP8" value="110"/>
   <variable name="ParamControlType9" value="Note"/>
-  <variable name="ControlColour9" value="0xFFFF3900"/>
+  <variable name="ParamControlColour9" value="0xFFFF3900"/>
   <variable name="ParamControlMode9" value="Momentary"/>
   <variable name="ParamMidiChannel9" value="Global"/>
   <variable name="ControlPosX9" value="5"/>
@@ -136,7 +139,7 @@
   <variable name="SendPress9" value="true"/>
   <variable name="ControlCCP9" value="111"/>
   <variable name="ParamControlType10" value="Note"/>
-  <variable name="ControlColour10" value="0xFF00DCFF"/>
+  <variable name="ParamControlColour10" value="0xFF00DCFF"/>
   <variable name="ParamControlMode10" value="Momentary"/>
   <variable name="ParamMidiChannel10" value="Global"/>
   <variable name="ControlPosX10" value="9"/>
@@ -149,7 +152,7 @@
   <variable name="SendPress10" value="true"/>
   <variable name="ControlCCP10" value="112"/>
   <variable name="ParamControlType11" value="Note"/>
-  <variable name="ControlColour11" value="0xFFB300FF"/>
+  <variable name="ParamControlColour11" value="0xFFB300FF"/>
   <variable name="ParamControlMode11" value="Momentary"/>
   <variable name="ParamMidiChannel11" value="Global"/>
   <variable name="ControlPosX11" value="12"/>
@@ -162,7 +165,7 @@
   <variable name="SendPress11" value="true"/>
   <variable name="ControlCCP11" value="113"/>
   <variable name="ParamControlType12" value="Note"/>
-  <variable name="ControlColour12" value="0xFFFF0700"/>
+  <variable name="ParamControlColour12" value="0xFFFF0700"/>
   <variable name="ParamControlMode12" value="Momentary"/>
   <variable name="ParamMidiChannel12" value="Global"/>
   <variable name="ControlPosX12" value="1"/>
@@ -175,7 +178,7 @@
   <variable name="SendPress12" value="true"/>
   <variable name="ControlCCP12" value="114"/>
   <variable name="ParamControlType13" value="Note"/>
-  <variable name="ControlColour13" value="0xFF00C4FF"/>
+  <variable name="ParamControlColour13" value="0xFF00C4FF"/>
   <variable name="ParamControlMode13" value="Momentary"/>
   <variable name="ParamMidiChannel13" value="Global"/>
   <variable name="ControlPosX13" value="5"/>
@@ -188,7 +191,7 @@
   <variable name="SendPress13" value="true"/>
   <variable name="ControlCCP13" value="115"/>
   <variable name="ParamControlType14" value="Note"/>
-  <variable name="ControlColour14" value="0xFF65FF00"/>
+  <variable name="ParamControlColour14" value="0xFF65FF00"/>
   <variable name="ParamControlMode14" value="Momentary"/>
   <variable name="ParamMidiChannel14" value="Global"/>
   <variable name="ControlPosX14" value="9"/>
@@ -201,7 +204,7 @@
   <variable name="SendPress14" value="true"/>
   <variable name="ControlCCP14" value="116"/>
   <variable name="ParamControlType15" value="Note"/>
-  <variable name="ControlColour15" value="0xFFFF0050"/>
+  <variable name="ParamControlColour15" value="0xFFFF0050"/>
   <variable name="ParamControlMode15" value="Momentary"/>
   <variable name="ParamMidiChannel15" value="Global"/>
   <variable name="ControlPosX15" value="12"/>

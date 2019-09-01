@@ -4,6 +4,7 @@
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
+        <group name="graphics" displayName="Graphics"/>
         <group name="control" displayName="Control *" count="16"/>
     </groups>
 
@@ -19,13 +20,26 @@
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
+        <variable name="overrideBrightness" displayName="Use Global Brightness" type="bool"
+                  value="true" group="graphics"
+                  tooltip="TODO" />
+        <variable name="brightness" displayName="Control Brightness" type="int"
+                  min="0" max="10" value="10" group="graphics"
+                  tooltip="Global brightness" />
+        <variable name="contrast" displayName="Control Contrast" type="int"
+                  min="0" max="10" value="5" group="graphics"
+                  tooltip="Amount of contrast between active and inactive controls" />
+        <variable name="shadingType" displayName="Control Shading" type="option"
+                  value="Light" options="Off;Light;Strong" group="graphics"
+                  tooltip="TODO" />
+
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
             <variable name="ParamControlType" displayName="Type" type="option"
                       options="Button;Note;Fader;XYZ Pad" value="Button"
                       tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
-            <variable name="ControlColour" displayName="Colour" type="colour"
+            <variable name="ParamControlColour" displayName="Colour" type="colour"
                       value="random" tooltip="Colour of the control" />
             <variable name="ParamControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
@@ -63,6 +77,13 @@
         </vector>
 
     </variables>
+
+    <script onChange="overrideBrightness">
+    <![CDATA[
+        brightness.visible = overrideBrightness.value;
+    ]]>
+    </script>
+
 </metadata>
 */
 
@@ -82,7 +103,7 @@
 //
 //==============================================================================
 
-#heapsize: 256
+#heapsize: 320
 //
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
@@ -104,6 +125,8 @@
 //  | 224 - 239 | 16 1-byte control type values [0, 3]
 //  | 240 - 255 | 16 1-byte control mode values [0, 1]
 //  |-----------|-------------------------------------------------------------|
+//  | 256 - 319 | 16 4-byte control colours
+//  |-----------|-------------------------------------------------------------|
 //
 
 // TODO: rearrange heap data
@@ -111,11 +134,6 @@
 //==============================================================================
 //  Global Constants
 //==============================================================================
-
-// TODO: either make all MIDI status bytes into constants, or inline this
-
-// MIDI
-const int STATUS_CC = 0xB0;                 // status byte template for CC messages
 
 // Control types
 const int C_BUTTON = 0;
@@ -147,6 +165,9 @@ int  getControlType(int controlIndex)               { return getHeapByte(control
 
 void setControlMode(int controlIndex, int value)    { setHeapByte(controlIndex + 240, value); }
 int  getControlMode(int controlIndex)               { return getHeapByte(controlIndex + 240); }
+
+void setControlColour(int controlIndex, int value)  { setHeapInt(controlIndex * 4 + 256, value); }
+int  getControlColour(int controlIndex)             { return getHeapInt(controlIndex * 4 + 256); }
 
 //------------------------------------------------------------------------------
 //  Control Values
@@ -210,11 +231,11 @@ bool isFaderVertical(int controlIndex)
 //==============================================================================
 
 // Convert touch positin on a control to CC value [0, 127]
-//     position in (0, 2); pixelMin and pixelMax in [0, 14]
+//   position in (0, 2); pixelMin and pixelMax in [0, 14]
 int convertPositionToCC(float position, int pixelMin, int pixelMax)
 {
     // Coordinate conversion from (0.0, 2.0) to (0.0, 15.0)
-    position = position * 0.5 * 15;
+    position *= 0.5 * 15.0;
 
     // map [min + d, max + 1 - d] to [0, 127]; d = 0.6 - edge offset
     position = map(position, float(pixelMin) + 0.6, float(pixelMax) + 0.4, 0.0, 128.0);
@@ -223,7 +244,7 @@ int convertPositionToCC(float position, int pixelMin, int pixelMax)
 }
 
 // Convert CC value to a pixel value
-//     pixelMin and pixelMax can be swapped to invert the value
+//   pixelMin and pixelMax can be swapped to invert the value
 int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
 {
     return int(map(float(valueCC), 0.0, 127.0, float(pixelMin), float(pixelMax)));
@@ -243,7 +264,6 @@ void touchStart(int index, float x, float y, float z, float vz)
 void touchMove(int index, float x, float y, float z, float vz)
 {
     doTouch(index, x, y, z);
-    // log(getTimeInCurrentFunctionCall());
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -252,8 +272,6 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 
     for (int i = 0; i < amount; ++i)        // unregister touch from all ctrls
         doTouchEnd(i, touchFlag);
-
-    // log(getTimeInCurrentFunctionCall());
 }
 
 //------------------------------------------------------------------------------
@@ -261,9 +279,6 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 //------------------------------------------------------------------------------
 void doTouch(int touchIndex, float x, float y, float z)
 {
-    // NOTE: whole system breaks if a touch with touchIndex > 30 is registered.
-    //       But how and why would this ever happen?
-
     // Coordinate conversion from (0.0, 2.0) to [0, 14]
     int intX = int(x * 0.5 * 15.0);
     int intY = int(y * 0.5 * 15.0);
@@ -278,32 +293,32 @@ void doTouch(int touchIndex, float x, float y, float z)
         {
             int touchField = getControlTouchField(i);                   // fetch bitfield with registered touches for ctrl
             int controlType = getControlType(i);
-            bool isHighestTouch = ! (touchField >> (touchIndex + 1));   // are there any touches with higher index registered to the control?
+            bool isHighestTouch = ! (touchField >> (touchIndex + 1));   // is this the touch with the highest index on this ctrl?
 
-            if (controlType == C_BUTTON)                                // is a button and no other touches present
+            if (controlType == C_BUTTON)
             {
-                if (! touchField)
+                if (! touchField)           // if no other touches present
                     doButton(i);
             }
-            else if (controlType == C_NOTE)                             // is a note and no other touches present
+            else if (controlType == C_NOTE)
             {
-                if (! touchField)
+                if (! touchField)           // if no other touches present
                     doNote(i);
             }
-            else if (controlType == C_FADER)                            // is a fader and highest touch index
+            else if (controlType == C_FADER)
             {
-                if (isHighestTouch)
+                if (isHighestTouch)         // if highest touch index
                     doFader(i, x, y);
             }
-            else if (controlType == C_XYZPAD)                           // is a pad and highest touch index
+            else if (controlType == C_XYZPAD)
             {
-                if (isHighestTouch)
+                if (isHighestTouch)         // if highest touch index
                     doXYZPad(i, x, y);
             }
 
             // ISSUE: using metadata vector parameters for pressure is slower
             //        for controls with higher i
-            if (isHighestTouch)             // if highest touch and "send pressure" enabled, handle pressure
+            if (isHighestTouch)
                 if (getSendPress(i))
                 {
                     int pressure = clamp(0, 127, int(z * 127.0));
@@ -314,20 +329,20 @@ void doTouch(int touchIndex, float x, float y, float z)
             touchField = touchField | touchFlag;                        // register current touch with ctrl
             setControlTouchField(i, touchField);                        // write updated bitfield for ctrl
 
-            if (! useOverlaps)              // if overlapps are not used ...
+            if (! useOverlaps)
             {
-                touchedControl = i;         // ... save index of touched ctrl
-                break;                      // ... stop checking lower ctrls
+                touchedControl = i;         // save index of touched ctrl
+                break;                      // stop checking lower ctrls
             }
         }
         else
         {
-            doTouchEnd(i, touchFlag);       // unregister touch from ctrl
+            doTouchEnd(i, touchFlag);
         }
     }
 
     if (! useOverlaps)
-        for (int i = touchedControl - 1; i >= 0; --i)                   // go through remaining controls and unregister touch
+        for (int i = touchedControl - 1; i >= 0; --i)                   // go through remaining controls
         {
             doTouchEnd(i, touchFlag);
         }
@@ -344,7 +359,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
 
         if (!touchField)                                                // if no touches left registered, ...
         {
-            if (getControlMode(controlIndex) == B_MOMENTARY)            //     reset CCs for momentary controls
+            if (getControlMode(controlIndex) == B_MOMENTARY)            // ...reset CCs for momentary controls
             {
                 if (getControlType(controlIndex) == C_NOTE)
                 {
@@ -356,7 +371,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
                     sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
                     setControlValueA(controlIndex, 0);
 
-                    if (getControlType(controlIndex) == C_XYZPAD)       //     reset CC B only for XYZ pads
+                    if (getControlType(controlIndex) == C_XYZPAD)       // ...reset CC B only for XYZ pads
                     {
                         sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
                         setControlValueB(controlIndex, 0);
@@ -364,7 +379,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
                 }
             }
 
-            if (getSendPress(controlIndex))                             //     reset pressure if it's enabled
+            if (getSendPress(controlIndex))                             // ...reset pressure if it's enabled
                 sendCC(getMidiChannel(controlIndex), getControlCCP(controlIndex), 0);
         }
     }
@@ -436,9 +451,9 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
     if (receiveMIDI)
     {
-        byteStatus = byteStatus ^ STATUS_CC;    // flip CC template bits in status byte
-                                                //   if status byte is a CC message,
-                                                //   the result is its MIDI channel
+        byteStatus = byteStatus ^ 0xB0;     // flip MIDI CC template bits in status byte:
+                                            //   if status byte is a CC message,
+                                            //   the result is its MIDI channel
 
         for (int i = 0; i < amount; ++i)
         {
@@ -460,16 +475,14 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
                 }
         }
     }
-
-    // log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
 //  Global Graphics Variables
 //==============================================================================
 
-const int inactiveShade = 0xDC << 24;
-const int faderMinShade = 0xF3 << 24;
+int inactiveDim;
+int activeShade, inactiveShade;
 
 //==============================================================================
 //  Initialisation
@@ -480,19 +493,37 @@ void initialise()
 //  Disable duplicate note filter
     useMPEDuplicateFilter(false);
 
-//  Turn gamma correction off
-    setLocalConfig(33, 0);
+//  Turn gamma correction on
+    setLocalConfig(33, 1);
 
-//  TODO: should we initialise the unused controls just in case?
+// Map graphics parameters to their actual ranges
+    contrast = 110 + contrast * 11;                                     // [0, 10] -> [110, 220]
+    brightness = overrideBrightness ? 155 + brightness * 10 : 255;      // [0, 10] -> [155, 255]
 
+// Initialise dimming and shading parameters
+    inactiveDim = contrast << 24;
+
+    // Shading value: type 0 -> 0, type 1 -> 138, type 2 -> 184
+    inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
+
+// Ensure that shading does not result in LEDs with brightness lower than a
+//   minimum, set to the inactice colour brightness at maximum global contrast
+//   setting and minimum global brightness setting
+    float minShadeMultiplier = 155.0 / brightness;
+    minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
+
+    int maxInactiveShade = int(255.0 * (1 - minShadeMultiplier));
+    inactiveShade = clamp(0, maxInactiveShade, inactiveShade);
+
+// Initialise per-control parameters
     for (int i = 0; i < amount; ++i)
     {
     //  Initialise MIDI channel and CC numbers
 
         int channel = getParamMidiChannel(i);
 
-        if (channel == 0)                   // if global channel selected
-            channel = globalMidiChannel;    //     set channel to global value
+        if (channel == 0)                   // if global channel selected,
+            channel = globalMidiChannel;    //   set channel to global value
         else
             --channel;                      // update channel value to [0, 15]
 
@@ -509,6 +540,25 @@ void initialise()
         setControlValueB(i, 0);
         setPressureValue(i, 64);
         setControlTouchField(i, 0);
+
+    //  Initialise control colours
+        int colour = getParamControlColour(i);
+
+        float r = (colour & 0xff0000) >> 16;
+        float g = (colour & 0xff00) >> 8;
+        float b = colour & 0xff;
+
+        if (overrideBrightness)
+        {
+            float maxc = max(r, max(g, b));
+            maxc = (brightness + 0.5) / maxc;
+
+            r *= maxc;
+            g *= maxc;
+            b *= maxc;
+        }
+
+        setControlColour(i, makeARGB(0xFF, int(r), int(g), int(b)));
 
     //  Precalculate control coordinates
         // Mix X [0, 14]
@@ -542,7 +592,7 @@ void repaint()
         int controlType = getControlType(i);
 
         int activeColour = getControlColour(i);
-        int inactiveColour = blendARGB(activeColour, inactiveShade);
+        int inactiveColour = blendARGB(activeColour, inactiveDim);
 
         int minX = getControlMinX(i);
         int minY = getControlMinY(i);
@@ -555,9 +605,9 @@ void repaint()
         //  Draw Button
         //----------------------------------------------------------------------
             if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
-                drawButton(inactiveColour, i);  // inactive Switch
+                drawButton(i, inactiveColour, inactiveShade);   // inactive Switch
             else
-                drawButton(activeColour, i);    // Button or active Switch
+                drawButton(i, activeColour, activeShade);       // Button or active Switch
         }
         else if (controlType == C_FADER)
         {
@@ -565,7 +615,7 @@ void repaint()
         //  Draw Fader
         //----------------------------------------------------------------------
             int highlight = getControlTouchField(i) ? blendARGB(activeColour, getHighlight(i)) : activeColour;
-            int faderMinColour = blendARGB(activeColour, faderMinShade);
+            int faderMinColour = blendARGB(inactiveColour, inactiveShade << 24);
 
             if (isFaderVertical(i))
             {
@@ -619,27 +669,26 @@ void repaint()
             fillRect(activeColour, pixelX, minY, 1, sizeY);
         }
     }
-    // log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
 //  Graphics Functions
 //==============================================================================
 
-void drawButton(int colour, int controlIndex)
+void drawButton(int controlIndex, int colour, int shade)
 {
-    int halfShade = blendARGB(colour, 0x66000000);
-    int fullShade = blendARGB(colour, 0xCC000000);
+    int halfShadeColour = blendARGB(colour, (shade / 2) << 24);
+    int fullShadeColour = blendARGB(colour, shade << 24);
 
     if (getControlTouchField(controlIndex))     // if control is active
     {
         int highlight = getHighlight(controlIndex);
-        colour    = blendARGB(colour,    highlight);
-        halfShade = blendARGB(halfShade, highlight);
-        fullShade = blendARGB(fullShade, highlight);
+        colour = blendARGB(colour, highlight);
+        halfShadeColour = blendARGB(halfShadeColour, highlight);
+        fullShadeColour = blendARGB(fullShadeColour, highlight);
     }
 
-    blendGradientRect(colour, halfShade, fullShade, halfShade,
+    blendGradientRect(colour, halfShadeColour, fullShadeColour, halfShadeColour,
 					  getControlMinX(controlIndex),  getControlMinY(controlIndex),
 					  getControlSizeX(controlIndex), getControlSizeY(controlIndex));
 }
