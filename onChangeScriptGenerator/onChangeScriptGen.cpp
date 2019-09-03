@@ -74,7 +74,7 @@ int main()
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
 
-            << "\telse if (ParamControlType" << i << ".value == 1)\n"     // note
+            << "\telse if (ParamControlType" << i << ".value == 1)\n"   // note
             << "\t{\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tMidiNote" << i << ".visible = true;\n"
@@ -86,7 +86,7 @@ int main()
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
 
-            << "\telse if (ParamControlType" << i << ".value == 2)\n"     // fader
+            << "\telse if (ParamControlType" << i << ".value == 2)\n"   // fader
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
@@ -97,7 +97,7 @@ int main()
             << "\t\tParamControlCCB" << i << ".visible = false;\n"
             << "\t}\n"
 
-            << "\telse if (ParamControlType" << i << ".value == 3)\n"     // XYZ Pad
+            << "\telse if (ParamControlType" << i << ".value == 3)\n"   // XYZ Pad
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
