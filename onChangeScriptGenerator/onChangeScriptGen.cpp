@@ -74,24 +74,30 @@ int main()
                 outFile << "\t\tControlWidth"       << i << ".visible = " << state << ";\n";
                 outFile << "\t\tControlHeight"      << i << ".visible = " << state << ";\n";
 
-                outFile << "\t\tParamControlCCA"    << i << ".visible = " << state << ";\n";
                 outFile << "\t\tSendPress"          << i << ".visible = " << state << ";\n";
                 outFile << "\t\tControlCCP"         << i << ".visible = " << state << ";\n";
 
                 if (isVisible)
                 {
+                    // Show MIDI Note parameter only for Note-type controls
                     outFile
                         << "\t\tif (ParamControlType" << i << ".value == 1)\n"
                         << "\t\t\tMidiNote" << i << ".visible = true;\n";
 
+                    // Show CC A parameter for all controls except Note-type
                     outFile
-                        << "\t\tif (ParamControlType" << i << ".value == 0 || "
-                        << "ParamControlType" << i << ".value == 3)\n"
+                        << "\t\tif (ParamControlType" << i << ".value != 1)\n"
+                        << "\t\t\tParamControlCCA" << i << ".visible = true;\n";
+
+                    // Show CC B parameter for all controls except Fader-type
+                    outFile
+                        << "\t\tif (ParamControlType" << i << ".value != 2)\n"
                         << "\t\t\tParamControlCCB" << i << ".visible = true;\n";
                 }
                 else
                 {
                     outFile << "\t\tMidiNote"        << i << ".visible = false;\n";
+                    outFile << "\t\tParamControlCCA" << i << ".visible = false;\n";
                     outFile << "\t\tParamControlCCB" << i << ".visible = false;\n";
                 }
 

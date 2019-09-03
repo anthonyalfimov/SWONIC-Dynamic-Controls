@@ -10,12 +10,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = false;
@@ -26,10 +27,10 @@
         ControlPosY1.visible = false;
         ControlWidth1.visible = false;
         ControlHeight1.visible = false;
-        ParamControlCCA1.visible = false;
         SendPress1.visible = false;
         ControlCCP1.visible = false;
         MidiNote1.visible = false;
+        ParamControlCCA1.visible = false;
         ParamControlCCB1.visible = false;
 
         ParamControlType2.visible = false;
@@ -40,10 +41,10 @@
         ControlPosY2.visible = false;
         ControlWidth2.visible = false;
         ControlHeight2.visible = false;
-        ParamControlCCA2.visible = false;
         SendPress2.visible = false;
         ControlCCP2.visible = false;
         MidiNote2.visible = false;
+        ParamControlCCA2.visible = false;
         ParamControlCCB2.visible = false;
 
         ParamControlType3.visible = false;
@@ -54,10 +55,10 @@
         ControlPosY3.visible = false;
         ControlWidth3.visible = false;
         ControlHeight3.visible = false;
-        ParamControlCCA3.visible = false;
         SendPress3.visible = false;
         ControlCCP3.visible = false;
         MidiNote3.visible = false;
+        ParamControlCCA3.visible = false;
         ParamControlCCB3.visible = false;
 
         ParamControlType4.visible = false;
@@ -68,10 +69,10 @@
         ControlPosY4.visible = false;
         ControlWidth4.visible = false;
         ControlHeight4.visible = false;
-        ParamControlCCA4.visible = false;
         SendPress4.visible = false;
         ControlCCP4.visible = false;
         MidiNote4.visible = false;
+        ParamControlCCA4.visible = false;
         ParamControlCCB4.visible = false;
 
         ParamControlType5.visible = false;
@@ -82,10 +83,10 @@
         ControlPosY5.visible = false;
         ControlWidth5.visible = false;
         ControlHeight5.visible = false;
-        ParamControlCCA5.visible = false;
         SendPress5.visible = false;
         ControlCCP5.visible = false;
         MidiNote5.visible = false;
+        ParamControlCCA5.visible = false;
         ParamControlCCB5.visible = false;
 
         ParamControlType6.visible = false;
@@ -96,10 +97,10 @@
         ControlPosY6.visible = false;
         ControlWidth6.visible = false;
         ControlHeight6.visible = false;
-        ParamControlCCA6.visible = false;
         SendPress6.visible = false;
         ControlCCP6.visible = false;
         MidiNote6.visible = false;
+        ParamControlCCA6.visible = false;
         ParamControlCCB6.visible = false;
 
         ParamControlType7.visible = false;
@@ -110,10 +111,10 @@
         ControlPosY7.visible = false;
         ControlWidth7.visible = false;
         ControlHeight7.visible = false;
-        ParamControlCCA7.visible = false;
         SendPress7.visible = false;
         ControlCCP7.visible = false;
         MidiNote7.visible = false;
+        ParamControlCCA7.visible = false;
         ParamControlCCB7.visible = false;
 
         ParamControlType8.visible = false;
@@ -124,10 +125,10 @@
         ControlPosY8.visible = false;
         ControlWidth8.visible = false;
         ControlHeight8.visible = false;
-        ParamControlCCA8.visible = false;
         SendPress8.visible = false;
         ControlCCP8.visible = false;
         MidiNote8.visible = false;
+        ParamControlCCA8.visible = false;
         ParamControlCCB8.visible = false;
 
         ParamControlType9.visible = false;
@@ -138,10 +139,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -152,10 +153,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -166,10 +167,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -180,10 +181,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -194,10 +195,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -208,10 +209,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -222,10 +223,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -239,12 +240,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -255,12 +257,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = false;
@@ -271,10 +274,10 @@
         ControlPosY2.visible = false;
         ControlWidth2.visible = false;
         ControlHeight2.visible = false;
-        ParamControlCCA2.visible = false;
         SendPress2.visible = false;
         ControlCCP2.visible = false;
         MidiNote2.visible = false;
+        ParamControlCCA2.visible = false;
         ParamControlCCB2.visible = false;
 
         ParamControlType3.visible = false;
@@ -285,10 +288,10 @@
         ControlPosY3.visible = false;
         ControlWidth3.visible = false;
         ControlHeight3.visible = false;
-        ParamControlCCA3.visible = false;
         SendPress3.visible = false;
         ControlCCP3.visible = false;
         MidiNote3.visible = false;
+        ParamControlCCA3.visible = false;
         ParamControlCCB3.visible = false;
 
         ParamControlType4.visible = false;
@@ -299,10 +302,10 @@
         ControlPosY4.visible = false;
         ControlWidth4.visible = false;
         ControlHeight4.visible = false;
-        ParamControlCCA4.visible = false;
         SendPress4.visible = false;
         ControlCCP4.visible = false;
         MidiNote4.visible = false;
+        ParamControlCCA4.visible = false;
         ParamControlCCB4.visible = false;
 
         ParamControlType5.visible = false;
@@ -313,10 +316,10 @@
         ControlPosY5.visible = false;
         ControlWidth5.visible = false;
         ControlHeight5.visible = false;
-        ParamControlCCA5.visible = false;
         SendPress5.visible = false;
         ControlCCP5.visible = false;
         MidiNote5.visible = false;
+        ParamControlCCA5.visible = false;
         ParamControlCCB5.visible = false;
 
         ParamControlType6.visible = false;
@@ -327,10 +330,10 @@
         ControlPosY6.visible = false;
         ControlWidth6.visible = false;
         ControlHeight6.visible = false;
-        ParamControlCCA6.visible = false;
         SendPress6.visible = false;
         ControlCCP6.visible = false;
         MidiNote6.visible = false;
+        ParamControlCCA6.visible = false;
         ParamControlCCB6.visible = false;
 
         ParamControlType7.visible = false;
@@ -341,10 +344,10 @@
         ControlPosY7.visible = false;
         ControlWidth7.visible = false;
         ControlHeight7.visible = false;
-        ParamControlCCA7.visible = false;
         SendPress7.visible = false;
         ControlCCP7.visible = false;
         MidiNote7.visible = false;
+        ParamControlCCA7.visible = false;
         ParamControlCCB7.visible = false;
 
         ParamControlType8.visible = false;
@@ -355,10 +358,10 @@
         ControlPosY8.visible = false;
         ControlWidth8.visible = false;
         ControlHeight8.visible = false;
-        ParamControlCCA8.visible = false;
         SendPress8.visible = false;
         ControlCCP8.visible = false;
         MidiNote8.visible = false;
+        ParamControlCCA8.visible = false;
         ParamControlCCB8.visible = false;
 
         ParamControlType9.visible = false;
@@ -369,10 +372,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -383,10 +386,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -397,10 +400,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -411,10 +414,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -425,10 +428,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -439,10 +442,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -453,10 +456,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -470,12 +473,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -486,12 +490,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -502,12 +507,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = false;
@@ -518,10 +524,10 @@
         ControlPosY3.visible = false;
         ControlWidth3.visible = false;
         ControlHeight3.visible = false;
-        ParamControlCCA3.visible = false;
         SendPress3.visible = false;
         ControlCCP3.visible = false;
         MidiNote3.visible = false;
+        ParamControlCCA3.visible = false;
         ParamControlCCB3.visible = false;
 
         ParamControlType4.visible = false;
@@ -532,10 +538,10 @@
         ControlPosY4.visible = false;
         ControlWidth4.visible = false;
         ControlHeight4.visible = false;
-        ParamControlCCA4.visible = false;
         SendPress4.visible = false;
         ControlCCP4.visible = false;
         MidiNote4.visible = false;
+        ParamControlCCA4.visible = false;
         ParamControlCCB4.visible = false;
 
         ParamControlType5.visible = false;
@@ -546,10 +552,10 @@
         ControlPosY5.visible = false;
         ControlWidth5.visible = false;
         ControlHeight5.visible = false;
-        ParamControlCCA5.visible = false;
         SendPress5.visible = false;
         ControlCCP5.visible = false;
         MidiNote5.visible = false;
+        ParamControlCCA5.visible = false;
         ParamControlCCB5.visible = false;
 
         ParamControlType6.visible = false;
@@ -560,10 +566,10 @@
         ControlPosY6.visible = false;
         ControlWidth6.visible = false;
         ControlHeight6.visible = false;
-        ParamControlCCA6.visible = false;
         SendPress6.visible = false;
         ControlCCP6.visible = false;
         MidiNote6.visible = false;
+        ParamControlCCA6.visible = false;
         ParamControlCCB6.visible = false;
 
         ParamControlType7.visible = false;
@@ -574,10 +580,10 @@
         ControlPosY7.visible = false;
         ControlWidth7.visible = false;
         ControlHeight7.visible = false;
-        ParamControlCCA7.visible = false;
         SendPress7.visible = false;
         ControlCCP7.visible = false;
         MidiNote7.visible = false;
+        ParamControlCCA7.visible = false;
         ParamControlCCB7.visible = false;
 
         ParamControlType8.visible = false;
@@ -588,10 +594,10 @@
         ControlPosY8.visible = false;
         ControlWidth8.visible = false;
         ControlHeight8.visible = false;
-        ParamControlCCA8.visible = false;
         SendPress8.visible = false;
         ControlCCP8.visible = false;
         MidiNote8.visible = false;
+        ParamControlCCA8.visible = false;
         ParamControlCCB8.visible = false;
 
         ParamControlType9.visible = false;
@@ -602,10 +608,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -616,10 +622,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -630,10 +636,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -644,10 +650,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -658,10 +664,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -672,10 +678,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -686,10 +692,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -703,12 +709,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -719,12 +726,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -735,12 +743,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -751,12 +760,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = false;
@@ -767,10 +777,10 @@
         ControlPosY4.visible = false;
         ControlWidth4.visible = false;
         ControlHeight4.visible = false;
-        ParamControlCCA4.visible = false;
         SendPress4.visible = false;
         ControlCCP4.visible = false;
         MidiNote4.visible = false;
+        ParamControlCCA4.visible = false;
         ParamControlCCB4.visible = false;
 
         ParamControlType5.visible = false;
@@ -781,10 +791,10 @@
         ControlPosY5.visible = false;
         ControlWidth5.visible = false;
         ControlHeight5.visible = false;
-        ParamControlCCA5.visible = false;
         SendPress5.visible = false;
         ControlCCP5.visible = false;
         MidiNote5.visible = false;
+        ParamControlCCA5.visible = false;
         ParamControlCCB5.visible = false;
 
         ParamControlType6.visible = false;
@@ -795,10 +805,10 @@
         ControlPosY6.visible = false;
         ControlWidth6.visible = false;
         ControlHeight6.visible = false;
-        ParamControlCCA6.visible = false;
         SendPress6.visible = false;
         ControlCCP6.visible = false;
         MidiNote6.visible = false;
+        ParamControlCCA6.visible = false;
         ParamControlCCB6.visible = false;
 
         ParamControlType7.visible = false;
@@ -809,10 +819,10 @@
         ControlPosY7.visible = false;
         ControlWidth7.visible = false;
         ControlHeight7.visible = false;
-        ParamControlCCA7.visible = false;
         SendPress7.visible = false;
         ControlCCP7.visible = false;
         MidiNote7.visible = false;
+        ParamControlCCA7.visible = false;
         ParamControlCCB7.visible = false;
 
         ParamControlType8.visible = false;
@@ -823,10 +833,10 @@
         ControlPosY8.visible = false;
         ControlWidth8.visible = false;
         ControlHeight8.visible = false;
-        ParamControlCCA8.visible = false;
         SendPress8.visible = false;
         ControlCCP8.visible = false;
         MidiNote8.visible = false;
+        ParamControlCCA8.visible = false;
         ParamControlCCB8.visible = false;
 
         ParamControlType9.visible = false;
@@ -837,10 +847,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -851,10 +861,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -865,10 +875,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -879,10 +889,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -893,10 +903,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -907,10 +917,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -921,10 +931,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -938,12 +948,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -954,12 +965,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -970,12 +982,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -986,12 +999,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -1002,12 +1016,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = false;
@@ -1018,10 +1033,10 @@
         ControlPosY5.visible = false;
         ControlWidth5.visible = false;
         ControlHeight5.visible = false;
-        ParamControlCCA5.visible = false;
         SendPress5.visible = false;
         ControlCCP5.visible = false;
         MidiNote5.visible = false;
+        ParamControlCCA5.visible = false;
         ParamControlCCB5.visible = false;
 
         ParamControlType6.visible = false;
@@ -1032,10 +1047,10 @@
         ControlPosY6.visible = false;
         ControlWidth6.visible = false;
         ControlHeight6.visible = false;
-        ParamControlCCA6.visible = false;
         SendPress6.visible = false;
         ControlCCP6.visible = false;
         MidiNote6.visible = false;
+        ParamControlCCA6.visible = false;
         ParamControlCCB6.visible = false;
 
         ParamControlType7.visible = false;
@@ -1046,10 +1061,10 @@
         ControlPosY7.visible = false;
         ControlWidth7.visible = false;
         ControlHeight7.visible = false;
-        ParamControlCCA7.visible = false;
         SendPress7.visible = false;
         ControlCCP7.visible = false;
         MidiNote7.visible = false;
+        ParamControlCCA7.visible = false;
         ParamControlCCB7.visible = false;
 
         ParamControlType8.visible = false;
@@ -1060,10 +1075,10 @@
         ControlPosY8.visible = false;
         ControlWidth8.visible = false;
         ControlHeight8.visible = false;
-        ParamControlCCA8.visible = false;
         SendPress8.visible = false;
         ControlCCP8.visible = false;
         MidiNote8.visible = false;
+        ParamControlCCA8.visible = false;
         ParamControlCCB8.visible = false;
 
         ParamControlType9.visible = false;
@@ -1074,10 +1089,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -1088,10 +1103,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -1102,10 +1117,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -1116,10 +1131,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -1130,10 +1145,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -1144,10 +1159,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -1158,10 +1173,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -1175,12 +1190,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -1191,12 +1207,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -1207,12 +1224,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -1223,12 +1241,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -1239,12 +1258,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -1255,12 +1275,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = false;
@@ -1271,10 +1292,10 @@
         ControlPosY6.visible = false;
         ControlWidth6.visible = false;
         ControlHeight6.visible = false;
-        ParamControlCCA6.visible = false;
         SendPress6.visible = false;
         ControlCCP6.visible = false;
         MidiNote6.visible = false;
+        ParamControlCCA6.visible = false;
         ParamControlCCB6.visible = false;
 
         ParamControlType7.visible = false;
@@ -1285,10 +1306,10 @@
         ControlPosY7.visible = false;
         ControlWidth7.visible = false;
         ControlHeight7.visible = false;
-        ParamControlCCA7.visible = false;
         SendPress7.visible = false;
         ControlCCP7.visible = false;
         MidiNote7.visible = false;
+        ParamControlCCA7.visible = false;
         ParamControlCCB7.visible = false;
 
         ParamControlType8.visible = false;
@@ -1299,10 +1320,10 @@
         ControlPosY8.visible = false;
         ControlWidth8.visible = false;
         ControlHeight8.visible = false;
-        ParamControlCCA8.visible = false;
         SendPress8.visible = false;
         ControlCCP8.visible = false;
         MidiNote8.visible = false;
+        ParamControlCCA8.visible = false;
         ParamControlCCB8.visible = false;
 
         ParamControlType9.visible = false;
@@ -1313,10 +1334,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -1327,10 +1348,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -1341,10 +1362,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -1355,10 +1376,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -1369,10 +1390,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -1383,10 +1404,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -1397,10 +1418,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -1414,12 +1435,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -1430,12 +1452,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -1446,12 +1469,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -1462,12 +1486,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -1478,12 +1503,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -1494,12 +1520,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -1510,12 +1537,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = false;
@@ -1526,10 +1554,10 @@
         ControlPosY7.visible = false;
         ControlWidth7.visible = false;
         ControlHeight7.visible = false;
-        ParamControlCCA7.visible = false;
         SendPress7.visible = false;
         ControlCCP7.visible = false;
         MidiNote7.visible = false;
+        ParamControlCCA7.visible = false;
         ParamControlCCB7.visible = false;
 
         ParamControlType8.visible = false;
@@ -1540,10 +1568,10 @@
         ControlPosY8.visible = false;
         ControlWidth8.visible = false;
         ControlHeight8.visible = false;
-        ParamControlCCA8.visible = false;
         SendPress8.visible = false;
         ControlCCP8.visible = false;
         MidiNote8.visible = false;
+        ParamControlCCA8.visible = false;
         ParamControlCCB8.visible = false;
 
         ParamControlType9.visible = false;
@@ -1554,10 +1582,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -1568,10 +1596,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -1582,10 +1610,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -1596,10 +1624,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -1610,10 +1638,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -1624,10 +1652,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -1638,10 +1666,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -1655,12 +1683,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -1671,12 +1700,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -1687,12 +1717,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -1703,12 +1734,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -1719,12 +1751,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -1735,12 +1768,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -1751,12 +1785,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -1767,12 +1802,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = false;
@@ -1783,10 +1819,10 @@
         ControlPosY8.visible = false;
         ControlWidth8.visible = false;
         ControlHeight8.visible = false;
-        ParamControlCCA8.visible = false;
         SendPress8.visible = false;
         ControlCCP8.visible = false;
         MidiNote8.visible = false;
+        ParamControlCCA8.visible = false;
         ParamControlCCB8.visible = false;
 
         ParamControlType9.visible = false;
@@ -1797,10 +1833,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -1811,10 +1847,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -1825,10 +1861,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -1839,10 +1875,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -1853,10 +1889,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -1867,10 +1903,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -1881,10 +1917,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -1898,12 +1934,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -1914,12 +1951,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -1930,12 +1968,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -1946,12 +1985,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -1962,12 +2002,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -1978,12 +2019,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -1994,12 +2036,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -2010,12 +2053,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = true;
@@ -2026,12 +2070,13 @@
         ControlPosY8.visible = true;
         ControlWidth8.visible = true;
         ControlHeight8.visible = true;
-        ParamControlCCA8.visible = true;
         SendPress8.visible = true;
         ControlCCP8.visible = true;
         if (ParamControlType8.value == 1)
             MidiNote8.visible = true;
-        if (ParamControlType8.value == 0 || ParamControlType8.value == 3)
+        if (ParamControlType8.value != 1)
+            ParamControlCCA8.visible = true;
+        if (ParamControlType8.value != 2)
             ParamControlCCB8.visible = true;
 
         ParamControlType9.visible = false;
@@ -2042,10 +2087,10 @@
         ControlPosY9.visible = false;
         ControlWidth9.visible = false;
         ControlHeight9.visible = false;
-        ParamControlCCA9.visible = false;
         SendPress9.visible = false;
         ControlCCP9.visible = false;
         MidiNote9.visible = false;
+        ParamControlCCA9.visible = false;
         ParamControlCCB9.visible = false;
 
         ParamControlType10.visible = false;
@@ -2056,10 +2101,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -2070,10 +2115,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -2084,10 +2129,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -2098,10 +2143,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -2112,10 +2157,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -2126,10 +2171,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -2143,12 +2188,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -2159,12 +2205,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -2175,12 +2222,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -2191,12 +2239,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -2207,12 +2256,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -2223,12 +2273,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -2239,12 +2290,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -2255,12 +2307,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = true;
@@ -2271,12 +2324,13 @@
         ControlPosY8.visible = true;
         ControlWidth8.visible = true;
         ControlHeight8.visible = true;
-        ParamControlCCA8.visible = true;
         SendPress8.visible = true;
         ControlCCP8.visible = true;
         if (ParamControlType8.value == 1)
             MidiNote8.visible = true;
-        if (ParamControlType8.value == 0 || ParamControlType8.value == 3)
+        if (ParamControlType8.value != 1)
+            ParamControlCCA8.visible = true;
+        if (ParamControlType8.value != 2)
             ParamControlCCB8.visible = true;
 
         ParamControlType9.visible = true;
@@ -2287,12 +2341,13 @@
         ControlPosY9.visible = true;
         ControlWidth9.visible = true;
         ControlHeight9.visible = true;
-        ParamControlCCA9.visible = true;
         SendPress9.visible = true;
         ControlCCP9.visible = true;
         if (ParamControlType9.value == 1)
             MidiNote9.visible = true;
-        if (ParamControlType9.value == 0 || ParamControlType9.value == 3)
+        if (ParamControlType9.value != 1)
+            ParamControlCCA9.visible = true;
+        if (ParamControlType9.value != 2)
             ParamControlCCB9.visible = true;
 
         ParamControlType10.visible = false;
@@ -2303,10 +2358,10 @@
         ControlPosY10.visible = false;
         ControlWidth10.visible = false;
         ControlHeight10.visible = false;
-        ParamControlCCA10.visible = false;
         SendPress10.visible = false;
         ControlCCP10.visible = false;
         MidiNote10.visible = false;
+        ParamControlCCA10.visible = false;
         ParamControlCCB10.visible = false;
 
         ParamControlType11.visible = false;
@@ -2317,10 +2372,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -2331,10 +2386,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -2345,10 +2400,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -2359,10 +2414,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -2373,10 +2428,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -2390,12 +2445,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -2406,12 +2462,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -2422,12 +2479,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -2438,12 +2496,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -2454,12 +2513,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -2470,12 +2530,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -2486,12 +2547,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -2502,12 +2564,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = true;
@@ -2518,12 +2581,13 @@
         ControlPosY8.visible = true;
         ControlWidth8.visible = true;
         ControlHeight8.visible = true;
-        ParamControlCCA8.visible = true;
         SendPress8.visible = true;
         ControlCCP8.visible = true;
         if (ParamControlType8.value == 1)
             MidiNote8.visible = true;
-        if (ParamControlType8.value == 0 || ParamControlType8.value == 3)
+        if (ParamControlType8.value != 1)
+            ParamControlCCA8.visible = true;
+        if (ParamControlType8.value != 2)
             ParamControlCCB8.visible = true;
 
         ParamControlType9.visible = true;
@@ -2534,12 +2598,13 @@
         ControlPosY9.visible = true;
         ControlWidth9.visible = true;
         ControlHeight9.visible = true;
-        ParamControlCCA9.visible = true;
         SendPress9.visible = true;
         ControlCCP9.visible = true;
         if (ParamControlType9.value == 1)
             MidiNote9.visible = true;
-        if (ParamControlType9.value == 0 || ParamControlType9.value == 3)
+        if (ParamControlType9.value != 1)
+            ParamControlCCA9.visible = true;
+        if (ParamControlType9.value != 2)
             ParamControlCCB9.visible = true;
 
         ParamControlType10.visible = true;
@@ -2550,12 +2615,13 @@
         ControlPosY10.visible = true;
         ControlWidth10.visible = true;
         ControlHeight10.visible = true;
-        ParamControlCCA10.visible = true;
         SendPress10.visible = true;
         ControlCCP10.visible = true;
         if (ParamControlType10.value == 1)
             MidiNote10.visible = true;
-        if (ParamControlType10.value == 0 || ParamControlType10.value == 3)
+        if (ParamControlType10.value != 1)
+            ParamControlCCA10.visible = true;
+        if (ParamControlType10.value != 2)
             ParamControlCCB10.visible = true;
 
         ParamControlType11.visible = false;
@@ -2566,10 +2632,10 @@
         ControlPosY11.visible = false;
         ControlWidth11.visible = false;
         ControlHeight11.visible = false;
-        ParamControlCCA11.visible = false;
         SendPress11.visible = false;
         ControlCCP11.visible = false;
         MidiNote11.visible = false;
+        ParamControlCCA11.visible = false;
         ParamControlCCB11.visible = false;
 
         ParamControlType12.visible = false;
@@ -2580,10 +2646,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -2594,10 +2660,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -2608,10 +2674,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -2622,10 +2688,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -2639,12 +2705,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -2655,12 +2722,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -2671,12 +2739,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -2687,12 +2756,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -2703,12 +2773,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -2719,12 +2790,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -2735,12 +2807,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -2751,12 +2824,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = true;
@@ -2767,12 +2841,13 @@
         ControlPosY8.visible = true;
         ControlWidth8.visible = true;
         ControlHeight8.visible = true;
-        ParamControlCCA8.visible = true;
         SendPress8.visible = true;
         ControlCCP8.visible = true;
         if (ParamControlType8.value == 1)
             MidiNote8.visible = true;
-        if (ParamControlType8.value == 0 || ParamControlType8.value == 3)
+        if (ParamControlType8.value != 1)
+            ParamControlCCA8.visible = true;
+        if (ParamControlType8.value != 2)
             ParamControlCCB8.visible = true;
 
         ParamControlType9.visible = true;
@@ -2783,12 +2858,13 @@
         ControlPosY9.visible = true;
         ControlWidth9.visible = true;
         ControlHeight9.visible = true;
-        ParamControlCCA9.visible = true;
         SendPress9.visible = true;
         ControlCCP9.visible = true;
         if (ParamControlType9.value == 1)
             MidiNote9.visible = true;
-        if (ParamControlType9.value == 0 || ParamControlType9.value == 3)
+        if (ParamControlType9.value != 1)
+            ParamControlCCA9.visible = true;
+        if (ParamControlType9.value != 2)
             ParamControlCCB9.visible = true;
 
         ParamControlType10.visible = true;
@@ -2799,12 +2875,13 @@
         ControlPosY10.visible = true;
         ControlWidth10.visible = true;
         ControlHeight10.visible = true;
-        ParamControlCCA10.visible = true;
         SendPress10.visible = true;
         ControlCCP10.visible = true;
         if (ParamControlType10.value == 1)
             MidiNote10.visible = true;
-        if (ParamControlType10.value == 0 || ParamControlType10.value == 3)
+        if (ParamControlType10.value != 1)
+            ParamControlCCA10.visible = true;
+        if (ParamControlType10.value != 2)
             ParamControlCCB10.visible = true;
 
         ParamControlType11.visible = true;
@@ -2815,12 +2892,13 @@
         ControlPosY11.visible = true;
         ControlWidth11.visible = true;
         ControlHeight11.visible = true;
-        ParamControlCCA11.visible = true;
         SendPress11.visible = true;
         ControlCCP11.visible = true;
         if (ParamControlType11.value == 1)
             MidiNote11.visible = true;
-        if (ParamControlType11.value == 0 || ParamControlType11.value == 3)
+        if (ParamControlType11.value != 1)
+            ParamControlCCA11.visible = true;
+        if (ParamControlType11.value != 2)
             ParamControlCCB11.visible = true;
 
         ParamControlType12.visible = false;
@@ -2831,10 +2909,10 @@
         ControlPosY12.visible = false;
         ControlWidth12.visible = false;
         ControlHeight12.visible = false;
-        ParamControlCCA12.visible = false;
         SendPress12.visible = false;
         ControlCCP12.visible = false;
         MidiNote12.visible = false;
+        ParamControlCCA12.visible = false;
         ParamControlCCB12.visible = false;
 
         ParamControlType13.visible = false;
@@ -2845,10 +2923,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -2859,10 +2937,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -2873,10 +2951,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -2890,12 +2968,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -2906,12 +2985,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -2922,12 +3002,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -2938,12 +3019,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -2954,12 +3036,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -2970,12 +3053,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -2986,12 +3070,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -3002,12 +3087,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = true;
@@ -3018,12 +3104,13 @@
         ControlPosY8.visible = true;
         ControlWidth8.visible = true;
         ControlHeight8.visible = true;
-        ParamControlCCA8.visible = true;
         SendPress8.visible = true;
         ControlCCP8.visible = true;
         if (ParamControlType8.value == 1)
             MidiNote8.visible = true;
-        if (ParamControlType8.value == 0 || ParamControlType8.value == 3)
+        if (ParamControlType8.value != 1)
+            ParamControlCCA8.visible = true;
+        if (ParamControlType8.value != 2)
             ParamControlCCB8.visible = true;
 
         ParamControlType9.visible = true;
@@ -3034,12 +3121,13 @@
         ControlPosY9.visible = true;
         ControlWidth9.visible = true;
         ControlHeight9.visible = true;
-        ParamControlCCA9.visible = true;
         SendPress9.visible = true;
         ControlCCP9.visible = true;
         if (ParamControlType9.value == 1)
             MidiNote9.visible = true;
-        if (ParamControlType9.value == 0 || ParamControlType9.value == 3)
+        if (ParamControlType9.value != 1)
+            ParamControlCCA9.visible = true;
+        if (ParamControlType9.value != 2)
             ParamControlCCB9.visible = true;
 
         ParamControlType10.visible = true;
@@ -3050,12 +3138,13 @@
         ControlPosY10.visible = true;
         ControlWidth10.visible = true;
         ControlHeight10.visible = true;
-        ParamControlCCA10.visible = true;
         SendPress10.visible = true;
         ControlCCP10.visible = true;
         if (ParamControlType10.value == 1)
             MidiNote10.visible = true;
-        if (ParamControlType10.value == 0 || ParamControlType10.value == 3)
+        if (ParamControlType10.value != 1)
+            ParamControlCCA10.visible = true;
+        if (ParamControlType10.value != 2)
             ParamControlCCB10.visible = true;
 
         ParamControlType11.visible = true;
@@ -3066,12 +3155,13 @@
         ControlPosY11.visible = true;
         ControlWidth11.visible = true;
         ControlHeight11.visible = true;
-        ParamControlCCA11.visible = true;
         SendPress11.visible = true;
         ControlCCP11.visible = true;
         if (ParamControlType11.value == 1)
             MidiNote11.visible = true;
-        if (ParamControlType11.value == 0 || ParamControlType11.value == 3)
+        if (ParamControlType11.value != 1)
+            ParamControlCCA11.visible = true;
+        if (ParamControlType11.value != 2)
             ParamControlCCB11.visible = true;
 
         ParamControlType12.visible = true;
@@ -3082,12 +3172,13 @@
         ControlPosY12.visible = true;
         ControlWidth12.visible = true;
         ControlHeight12.visible = true;
-        ParamControlCCA12.visible = true;
         SendPress12.visible = true;
         ControlCCP12.visible = true;
         if (ParamControlType12.value == 1)
             MidiNote12.visible = true;
-        if (ParamControlType12.value == 0 || ParamControlType12.value == 3)
+        if (ParamControlType12.value != 1)
+            ParamControlCCA12.visible = true;
+        if (ParamControlType12.value != 2)
             ParamControlCCB12.visible = true;
 
         ParamControlType13.visible = false;
@@ -3098,10 +3189,10 @@
         ControlPosY13.visible = false;
         ControlWidth13.visible = false;
         ControlHeight13.visible = false;
-        ParamControlCCA13.visible = false;
         SendPress13.visible = false;
         ControlCCP13.visible = false;
         MidiNote13.visible = false;
+        ParamControlCCA13.visible = false;
         ParamControlCCB13.visible = false;
 
         ParamControlType14.visible = false;
@@ -3112,10 +3203,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -3126,10 +3217,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -3143,12 +3234,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -3159,12 +3251,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -3175,12 +3268,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -3191,12 +3285,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -3207,12 +3302,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -3223,12 +3319,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -3239,12 +3336,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -3255,12 +3353,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = true;
@@ -3271,12 +3370,13 @@
         ControlPosY8.visible = true;
         ControlWidth8.visible = true;
         ControlHeight8.visible = true;
-        ParamControlCCA8.visible = true;
         SendPress8.visible = true;
         ControlCCP8.visible = true;
         if (ParamControlType8.value == 1)
             MidiNote8.visible = true;
-        if (ParamControlType8.value == 0 || ParamControlType8.value == 3)
+        if (ParamControlType8.value != 1)
+            ParamControlCCA8.visible = true;
+        if (ParamControlType8.value != 2)
             ParamControlCCB8.visible = true;
 
         ParamControlType9.visible = true;
@@ -3287,12 +3387,13 @@
         ControlPosY9.visible = true;
         ControlWidth9.visible = true;
         ControlHeight9.visible = true;
-        ParamControlCCA9.visible = true;
         SendPress9.visible = true;
         ControlCCP9.visible = true;
         if (ParamControlType9.value == 1)
             MidiNote9.visible = true;
-        if (ParamControlType9.value == 0 || ParamControlType9.value == 3)
+        if (ParamControlType9.value != 1)
+            ParamControlCCA9.visible = true;
+        if (ParamControlType9.value != 2)
             ParamControlCCB9.visible = true;
 
         ParamControlType10.visible = true;
@@ -3303,12 +3404,13 @@
         ControlPosY10.visible = true;
         ControlWidth10.visible = true;
         ControlHeight10.visible = true;
-        ParamControlCCA10.visible = true;
         SendPress10.visible = true;
         ControlCCP10.visible = true;
         if (ParamControlType10.value == 1)
             MidiNote10.visible = true;
-        if (ParamControlType10.value == 0 || ParamControlType10.value == 3)
+        if (ParamControlType10.value != 1)
+            ParamControlCCA10.visible = true;
+        if (ParamControlType10.value != 2)
             ParamControlCCB10.visible = true;
 
         ParamControlType11.visible = true;
@@ -3319,12 +3421,13 @@
         ControlPosY11.visible = true;
         ControlWidth11.visible = true;
         ControlHeight11.visible = true;
-        ParamControlCCA11.visible = true;
         SendPress11.visible = true;
         ControlCCP11.visible = true;
         if (ParamControlType11.value == 1)
             MidiNote11.visible = true;
-        if (ParamControlType11.value == 0 || ParamControlType11.value == 3)
+        if (ParamControlType11.value != 1)
+            ParamControlCCA11.visible = true;
+        if (ParamControlType11.value != 2)
             ParamControlCCB11.visible = true;
 
         ParamControlType12.visible = true;
@@ -3335,12 +3438,13 @@
         ControlPosY12.visible = true;
         ControlWidth12.visible = true;
         ControlHeight12.visible = true;
-        ParamControlCCA12.visible = true;
         SendPress12.visible = true;
         ControlCCP12.visible = true;
         if (ParamControlType12.value == 1)
             MidiNote12.visible = true;
-        if (ParamControlType12.value == 0 || ParamControlType12.value == 3)
+        if (ParamControlType12.value != 1)
+            ParamControlCCA12.visible = true;
+        if (ParamControlType12.value != 2)
             ParamControlCCB12.visible = true;
 
         ParamControlType13.visible = true;
@@ -3351,12 +3455,13 @@
         ControlPosY13.visible = true;
         ControlWidth13.visible = true;
         ControlHeight13.visible = true;
-        ParamControlCCA13.visible = true;
         SendPress13.visible = true;
         ControlCCP13.visible = true;
         if (ParamControlType13.value == 1)
             MidiNote13.visible = true;
-        if (ParamControlType13.value == 0 || ParamControlType13.value == 3)
+        if (ParamControlType13.value != 1)
+            ParamControlCCA13.visible = true;
+        if (ParamControlType13.value != 2)
             ParamControlCCB13.visible = true;
 
         ParamControlType14.visible = false;
@@ -3367,10 +3472,10 @@
         ControlPosY14.visible = false;
         ControlWidth14.visible = false;
         ControlHeight14.visible = false;
-        ParamControlCCA14.visible = false;
         SendPress14.visible = false;
         ControlCCP14.visible = false;
         MidiNote14.visible = false;
+        ParamControlCCA14.visible = false;
         ParamControlCCB14.visible = false;
 
         ParamControlType15.visible = false;
@@ -3381,10 +3486,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -3398,12 +3503,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -3414,12 +3520,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -3430,12 +3537,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -3446,12 +3554,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -3462,12 +3571,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -3478,12 +3588,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -3494,12 +3605,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -3510,12 +3622,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = true;
@@ -3526,12 +3639,13 @@
         ControlPosY8.visible = true;
         ControlWidth8.visible = true;
         ControlHeight8.visible = true;
-        ParamControlCCA8.visible = true;
         SendPress8.visible = true;
         ControlCCP8.visible = true;
         if (ParamControlType8.value == 1)
             MidiNote8.visible = true;
-        if (ParamControlType8.value == 0 || ParamControlType8.value == 3)
+        if (ParamControlType8.value != 1)
+            ParamControlCCA8.visible = true;
+        if (ParamControlType8.value != 2)
             ParamControlCCB8.visible = true;
 
         ParamControlType9.visible = true;
@@ -3542,12 +3656,13 @@
         ControlPosY9.visible = true;
         ControlWidth9.visible = true;
         ControlHeight9.visible = true;
-        ParamControlCCA9.visible = true;
         SendPress9.visible = true;
         ControlCCP9.visible = true;
         if (ParamControlType9.value == 1)
             MidiNote9.visible = true;
-        if (ParamControlType9.value == 0 || ParamControlType9.value == 3)
+        if (ParamControlType9.value != 1)
+            ParamControlCCA9.visible = true;
+        if (ParamControlType9.value != 2)
             ParamControlCCB9.visible = true;
 
         ParamControlType10.visible = true;
@@ -3558,12 +3673,13 @@
         ControlPosY10.visible = true;
         ControlWidth10.visible = true;
         ControlHeight10.visible = true;
-        ParamControlCCA10.visible = true;
         SendPress10.visible = true;
         ControlCCP10.visible = true;
         if (ParamControlType10.value == 1)
             MidiNote10.visible = true;
-        if (ParamControlType10.value == 0 || ParamControlType10.value == 3)
+        if (ParamControlType10.value != 1)
+            ParamControlCCA10.visible = true;
+        if (ParamControlType10.value != 2)
             ParamControlCCB10.visible = true;
 
         ParamControlType11.visible = true;
@@ -3574,12 +3690,13 @@
         ControlPosY11.visible = true;
         ControlWidth11.visible = true;
         ControlHeight11.visible = true;
-        ParamControlCCA11.visible = true;
         SendPress11.visible = true;
         ControlCCP11.visible = true;
         if (ParamControlType11.value == 1)
             MidiNote11.visible = true;
-        if (ParamControlType11.value == 0 || ParamControlType11.value == 3)
+        if (ParamControlType11.value != 1)
+            ParamControlCCA11.visible = true;
+        if (ParamControlType11.value != 2)
             ParamControlCCB11.visible = true;
 
         ParamControlType12.visible = true;
@@ -3590,12 +3707,13 @@
         ControlPosY12.visible = true;
         ControlWidth12.visible = true;
         ControlHeight12.visible = true;
-        ParamControlCCA12.visible = true;
         SendPress12.visible = true;
         ControlCCP12.visible = true;
         if (ParamControlType12.value == 1)
             MidiNote12.visible = true;
-        if (ParamControlType12.value == 0 || ParamControlType12.value == 3)
+        if (ParamControlType12.value != 1)
+            ParamControlCCA12.visible = true;
+        if (ParamControlType12.value != 2)
             ParamControlCCB12.visible = true;
 
         ParamControlType13.visible = true;
@@ -3606,12 +3724,13 @@
         ControlPosY13.visible = true;
         ControlWidth13.visible = true;
         ControlHeight13.visible = true;
-        ParamControlCCA13.visible = true;
         SendPress13.visible = true;
         ControlCCP13.visible = true;
         if (ParamControlType13.value == 1)
             MidiNote13.visible = true;
-        if (ParamControlType13.value == 0 || ParamControlType13.value == 3)
+        if (ParamControlType13.value != 1)
+            ParamControlCCA13.visible = true;
+        if (ParamControlType13.value != 2)
             ParamControlCCB13.visible = true;
 
         ParamControlType14.visible = true;
@@ -3622,12 +3741,13 @@
         ControlPosY14.visible = true;
         ControlWidth14.visible = true;
         ControlHeight14.visible = true;
-        ParamControlCCA14.visible = true;
         SendPress14.visible = true;
         ControlCCP14.visible = true;
         if (ParamControlType14.value == 1)
             MidiNote14.visible = true;
-        if (ParamControlType14.value == 0 || ParamControlType14.value == 3)
+        if (ParamControlType14.value != 1)
+            ParamControlCCA14.visible = true;
+        if (ParamControlType14.value != 2)
             ParamControlCCB14.visible = true;
 
         ParamControlType15.visible = false;
@@ -3638,10 +3758,10 @@
         ControlPosY15.visible = false;
         ControlWidth15.visible = false;
         ControlHeight15.visible = false;
-        ParamControlCCA15.visible = false;
         SendPress15.visible = false;
         ControlCCP15.visible = false;
         MidiNote15.visible = false;
+        ParamControlCCA15.visible = false;
         ParamControlCCB15.visible = false;
 
     }
@@ -3655,12 +3775,13 @@
         ControlPosY0.visible = true;
         ControlWidth0.visible = true;
         ControlHeight0.visible = true;
-        ParamControlCCA0.visible = true;
         SendPress0.visible = true;
         ControlCCP0.visible = true;
         if (ParamControlType0.value == 1)
             MidiNote0.visible = true;
-        if (ParamControlType0.value == 0 || ParamControlType0.value == 3)
+        if (ParamControlType0.value != 1)
+            ParamControlCCA0.visible = true;
+        if (ParamControlType0.value != 2)
             ParamControlCCB0.visible = true;
 
         ParamControlType1.visible = true;
@@ -3671,12 +3792,13 @@
         ControlPosY1.visible = true;
         ControlWidth1.visible = true;
         ControlHeight1.visible = true;
-        ParamControlCCA1.visible = true;
         SendPress1.visible = true;
         ControlCCP1.visible = true;
         if (ParamControlType1.value == 1)
             MidiNote1.visible = true;
-        if (ParamControlType1.value == 0 || ParamControlType1.value == 3)
+        if (ParamControlType1.value != 1)
+            ParamControlCCA1.visible = true;
+        if (ParamControlType1.value != 2)
             ParamControlCCB1.visible = true;
 
         ParamControlType2.visible = true;
@@ -3687,12 +3809,13 @@
         ControlPosY2.visible = true;
         ControlWidth2.visible = true;
         ControlHeight2.visible = true;
-        ParamControlCCA2.visible = true;
         SendPress2.visible = true;
         ControlCCP2.visible = true;
         if (ParamControlType2.value == 1)
             MidiNote2.visible = true;
-        if (ParamControlType2.value == 0 || ParamControlType2.value == 3)
+        if (ParamControlType2.value != 1)
+            ParamControlCCA2.visible = true;
+        if (ParamControlType2.value != 2)
             ParamControlCCB2.visible = true;
 
         ParamControlType3.visible = true;
@@ -3703,12 +3826,13 @@
         ControlPosY3.visible = true;
         ControlWidth3.visible = true;
         ControlHeight3.visible = true;
-        ParamControlCCA3.visible = true;
         SendPress3.visible = true;
         ControlCCP3.visible = true;
         if (ParamControlType3.value == 1)
             MidiNote3.visible = true;
-        if (ParamControlType3.value == 0 || ParamControlType3.value == 3)
+        if (ParamControlType3.value != 1)
+            ParamControlCCA3.visible = true;
+        if (ParamControlType3.value != 2)
             ParamControlCCB3.visible = true;
 
         ParamControlType4.visible = true;
@@ -3719,12 +3843,13 @@
         ControlPosY4.visible = true;
         ControlWidth4.visible = true;
         ControlHeight4.visible = true;
-        ParamControlCCA4.visible = true;
         SendPress4.visible = true;
         ControlCCP4.visible = true;
         if (ParamControlType4.value == 1)
             MidiNote4.visible = true;
-        if (ParamControlType4.value == 0 || ParamControlType4.value == 3)
+        if (ParamControlType4.value != 1)
+            ParamControlCCA4.visible = true;
+        if (ParamControlType4.value != 2)
             ParamControlCCB4.visible = true;
 
         ParamControlType5.visible = true;
@@ -3735,12 +3860,13 @@
         ControlPosY5.visible = true;
         ControlWidth5.visible = true;
         ControlHeight5.visible = true;
-        ParamControlCCA5.visible = true;
         SendPress5.visible = true;
         ControlCCP5.visible = true;
         if (ParamControlType5.value == 1)
             MidiNote5.visible = true;
-        if (ParamControlType5.value == 0 || ParamControlType5.value == 3)
+        if (ParamControlType5.value != 1)
+            ParamControlCCA5.visible = true;
+        if (ParamControlType5.value != 2)
             ParamControlCCB5.visible = true;
 
         ParamControlType6.visible = true;
@@ -3751,12 +3877,13 @@
         ControlPosY6.visible = true;
         ControlWidth6.visible = true;
         ControlHeight6.visible = true;
-        ParamControlCCA6.visible = true;
         SendPress6.visible = true;
         ControlCCP6.visible = true;
         if (ParamControlType6.value == 1)
             MidiNote6.visible = true;
-        if (ParamControlType6.value == 0 || ParamControlType6.value == 3)
+        if (ParamControlType6.value != 1)
+            ParamControlCCA6.visible = true;
+        if (ParamControlType6.value != 2)
             ParamControlCCB6.visible = true;
 
         ParamControlType7.visible = true;
@@ -3767,12 +3894,13 @@
         ControlPosY7.visible = true;
         ControlWidth7.visible = true;
         ControlHeight7.visible = true;
-        ParamControlCCA7.visible = true;
         SendPress7.visible = true;
         ControlCCP7.visible = true;
         if (ParamControlType7.value == 1)
             MidiNote7.visible = true;
-        if (ParamControlType7.value == 0 || ParamControlType7.value == 3)
+        if (ParamControlType7.value != 1)
+            ParamControlCCA7.visible = true;
+        if (ParamControlType7.value != 2)
             ParamControlCCB7.visible = true;
 
         ParamControlType8.visible = true;
@@ -3783,12 +3911,13 @@
         ControlPosY8.visible = true;
         ControlWidth8.visible = true;
         ControlHeight8.visible = true;
-        ParamControlCCA8.visible = true;
         SendPress8.visible = true;
         ControlCCP8.visible = true;
         if (ParamControlType8.value == 1)
             MidiNote8.visible = true;
-        if (ParamControlType8.value == 0 || ParamControlType8.value == 3)
+        if (ParamControlType8.value != 1)
+            ParamControlCCA8.visible = true;
+        if (ParamControlType8.value != 2)
             ParamControlCCB8.visible = true;
 
         ParamControlType9.visible = true;
@@ -3799,12 +3928,13 @@
         ControlPosY9.visible = true;
         ControlWidth9.visible = true;
         ControlHeight9.visible = true;
-        ParamControlCCA9.visible = true;
         SendPress9.visible = true;
         ControlCCP9.visible = true;
         if (ParamControlType9.value == 1)
             MidiNote9.visible = true;
-        if (ParamControlType9.value == 0 || ParamControlType9.value == 3)
+        if (ParamControlType9.value != 1)
+            ParamControlCCA9.visible = true;
+        if (ParamControlType9.value != 2)
             ParamControlCCB9.visible = true;
 
         ParamControlType10.visible = true;
@@ -3815,12 +3945,13 @@
         ControlPosY10.visible = true;
         ControlWidth10.visible = true;
         ControlHeight10.visible = true;
-        ParamControlCCA10.visible = true;
         SendPress10.visible = true;
         ControlCCP10.visible = true;
         if (ParamControlType10.value == 1)
             MidiNote10.visible = true;
-        if (ParamControlType10.value == 0 || ParamControlType10.value == 3)
+        if (ParamControlType10.value != 1)
+            ParamControlCCA10.visible = true;
+        if (ParamControlType10.value != 2)
             ParamControlCCB10.visible = true;
 
         ParamControlType11.visible = true;
@@ -3831,12 +3962,13 @@
         ControlPosY11.visible = true;
         ControlWidth11.visible = true;
         ControlHeight11.visible = true;
-        ParamControlCCA11.visible = true;
         SendPress11.visible = true;
         ControlCCP11.visible = true;
         if (ParamControlType11.value == 1)
             MidiNote11.visible = true;
-        if (ParamControlType11.value == 0 || ParamControlType11.value == 3)
+        if (ParamControlType11.value != 1)
+            ParamControlCCA11.visible = true;
+        if (ParamControlType11.value != 2)
             ParamControlCCB11.visible = true;
 
         ParamControlType12.visible = true;
@@ -3847,12 +3979,13 @@
         ControlPosY12.visible = true;
         ControlWidth12.visible = true;
         ControlHeight12.visible = true;
-        ParamControlCCA12.visible = true;
         SendPress12.visible = true;
         ControlCCP12.visible = true;
         if (ParamControlType12.value == 1)
             MidiNote12.visible = true;
-        if (ParamControlType12.value == 0 || ParamControlType12.value == 3)
+        if (ParamControlType12.value != 1)
+            ParamControlCCA12.visible = true;
+        if (ParamControlType12.value != 2)
             ParamControlCCB12.visible = true;
 
         ParamControlType13.visible = true;
@@ -3863,12 +3996,13 @@
         ControlPosY13.visible = true;
         ControlWidth13.visible = true;
         ControlHeight13.visible = true;
-        ParamControlCCA13.visible = true;
         SendPress13.visible = true;
         ControlCCP13.visible = true;
         if (ParamControlType13.value == 1)
             MidiNote13.visible = true;
-        if (ParamControlType13.value == 0 || ParamControlType13.value == 3)
+        if (ParamControlType13.value != 1)
+            ParamControlCCA13.visible = true;
+        if (ParamControlType13.value != 2)
             ParamControlCCB13.visible = true;
 
         ParamControlType14.visible = true;
@@ -3879,12 +4013,13 @@
         ControlPosY14.visible = true;
         ControlWidth14.visible = true;
         ControlHeight14.visible = true;
-        ParamControlCCA14.visible = true;
         SendPress14.visible = true;
         ControlCCP14.visible = true;
         if (ParamControlType14.value == 1)
             MidiNote14.visible = true;
-        if (ParamControlType14.value == 0 || ParamControlType14.value == 3)
+        if (ParamControlType14.value != 1)
+            ParamControlCCA14.visible = true;
+        if (ParamControlType14.value != 2)
             ParamControlCCB14.visible = true;
 
         ParamControlType15.visible = true;
@@ -3895,12 +4030,13 @@
         ControlPosY15.visible = true;
         ControlWidth15.visible = true;
         ControlHeight15.visible = true;
-        ParamControlCCA15.visible = true;
         SendPress15.visible = true;
         ControlCCP15.visible = true;
         if (ParamControlType15.value == 1)
             MidiNote15.visible = true;
-        if (ParamControlType15.value == 0 || ParamControlType15.value == 3)
+        if (ParamControlType15.value != 1)
+            ParamControlCCA15.visible = true;
+        if (ParamControlType15.value != 2)
             ParamControlCCB15.visible = true;
 
     }
