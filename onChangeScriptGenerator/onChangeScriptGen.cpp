@@ -56,7 +56,7 @@ int main()
     for (int i = 0; i < controlCount; ++i)
     {
         outFile << "\n";
-        OnChangeScript script(outFile, "ParamControlType" + std::to_string (i));
+        OnChangeScript script (outFile, "ParamControlType" + std::to_string (i));
 
         // TODO: consider checking if control is visible for extra safety
 
@@ -107,7 +107,7 @@ int main()
     // onChange="amount"
     {
         outFile << "\n";
-        OnChangeScript script(outFile, "amount");
+        OnChangeScript script (outFile, "amount");
 
         for (int amount = 1; amount <= controlCount; ++amount)
         {
