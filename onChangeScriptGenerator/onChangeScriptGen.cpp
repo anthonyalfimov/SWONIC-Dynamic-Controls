@@ -49,7 +49,7 @@ int main()
     {
         OnChangeScript script (outFile, "overrideBrightness");
 
-        outFile << "\tbrightness.visible = overrideBrightness.value;";
+        outFile << "\tbrightness.visible = overrideBrightness.value;\n";
     }
 
     // onChange="ParamControlType"
