@@ -90,31 +90,38 @@
         {
             MidiNote0.visible = false;
             ParamControlCCA0.displayName = "MIDI CC";
-            ParamControlCCA0.visible = true;
+            if (amount.value > 0)
+                ParamControlCCA0.visible = true;
             ParamControlCCB0.displayName = "ON Value";
-            ParamControlCCB0.visible = true;
+            if (amount.value > 0)
+                ParamControlCCB0.visible = true;
         }
         else if (ParamControlType0.value == 1)
         {
-            MidiNote0.visible = true;
+            if (amount.value > 0)
+                MidiNote0.visible = true;
             ParamControlCCA0.visible = false;
             ParamControlCCB0.displayName = "Velocity";
-            ParamControlCCB0.visible = true;
+            if (amount.value > 0)
+                ParamControlCCB0.visible = true;
         }
         else if (ParamControlType0.value == 2)
         {
             MidiNote0.visible = false;
             ParamControlCCA0.displayName = "MIDI CC";
-            ParamControlCCA0.visible = true;
+            if (amount.value > 0)
+                ParamControlCCA0.visible = true;
             ParamControlCCB0.visible = false;
         }
         else if (ParamControlType0.value == 3)
         {
             MidiNote0.visible = false;
             ParamControlCCA0.displayName = "MIDI CC X";
-            ParamControlCCA0.visible = true;
+            if (amount.value > 0)
+                ParamControlCCA0.visible = true;
             ParamControlCCB0.displayName = "MIDI CC Y";
-            ParamControlCCB0.visible = true;
+            if (amount.value > 0)
+                ParamControlCCB0.visible = true;
         }
     ]]>
     </script>
@@ -125,31 +132,38 @@
         {
             MidiNote1.visible = false;
             ParamControlCCA1.displayName = "MIDI CC";
-            ParamControlCCA1.visible = true;
+            if (amount.value > 1)
+                ParamControlCCA1.visible = true;
             ParamControlCCB1.displayName = "ON Value";
-            ParamControlCCB1.visible = true;
+            if (amount.value > 1)
+                ParamControlCCB1.visible = true;
         }
         else if (ParamControlType1.value == 1)
         {
-            MidiNote1.visible = true;
+            if (amount.value > 1)
+                MidiNote1.visible = true;
             ParamControlCCA1.visible = false;
             ParamControlCCB1.displayName = "Velocity";
-            ParamControlCCB1.visible = true;
+            if (amount.value > 1)
+                ParamControlCCB1.visible = true;
         }
         else if (ParamControlType1.value == 2)
         {
             MidiNote1.visible = false;
             ParamControlCCA1.displayName = "MIDI CC";
-            ParamControlCCA1.visible = true;
+            if (amount.value > 1)
+                ParamControlCCA1.visible = true;
             ParamControlCCB1.visible = false;
         }
         else if (ParamControlType1.value == 3)
         {
             MidiNote1.visible = false;
             ParamControlCCA1.displayName = "MIDI CC X";
-            ParamControlCCA1.visible = true;
+            if (amount.value > 1)
+                ParamControlCCA1.visible = true;
             ParamControlCCB1.displayName = "MIDI CC Y";
-            ParamControlCCB1.visible = true;
+            if (amount.value > 1)
+                ParamControlCCB1.visible = true;
         }
     ]]>
     </script>
@@ -160,31 +174,38 @@
         {
             MidiNote2.visible = false;
             ParamControlCCA2.displayName = "MIDI CC";
-            ParamControlCCA2.visible = true;
+            if (amount.value > 2)
+                ParamControlCCA2.visible = true;
             ParamControlCCB2.displayName = "ON Value";
-            ParamControlCCB2.visible = true;
+            if (amount.value > 2)
+                ParamControlCCB2.visible = true;
         }
         else if (ParamControlType2.value == 1)
         {
-            MidiNote2.visible = true;
+            if (amount.value > 2)
+                MidiNote2.visible = true;
             ParamControlCCA2.visible = false;
             ParamControlCCB2.displayName = "Velocity";
-            ParamControlCCB2.visible = true;
+            if (amount.value > 2)
+                ParamControlCCB2.visible = true;
         }
         else if (ParamControlType2.value == 2)
         {
             MidiNote2.visible = false;
             ParamControlCCA2.displayName = "MIDI CC";
-            ParamControlCCA2.visible = true;
+            if (amount.value > 2)
+                ParamControlCCA2.visible = true;
             ParamControlCCB2.visible = false;
         }
         else if (ParamControlType2.value == 3)
         {
             MidiNote2.visible = false;
             ParamControlCCA2.displayName = "MIDI CC X";
-            ParamControlCCA2.visible = true;
+            if (amount.value > 2)
+                ParamControlCCA2.visible = true;
             ParamControlCCB2.displayName = "MIDI CC Y";
-            ParamControlCCB2.visible = true;
+            if (amount.value > 2)
+                ParamControlCCB2.visible = true;
         }
     ]]>
     </script>
@@ -195,31 +216,38 @@
         {
             MidiNote3.visible = false;
             ParamControlCCA3.displayName = "MIDI CC";
-            ParamControlCCA3.visible = true;
+            if (amount.value > 3)
+                ParamControlCCA3.visible = true;
             ParamControlCCB3.displayName = "ON Value";
-            ParamControlCCB3.visible = true;
+            if (amount.value > 3)
+                ParamControlCCB3.visible = true;
         }
         else if (ParamControlType3.value == 1)
         {
-            MidiNote3.visible = true;
+            if (amount.value > 3)
+                MidiNote3.visible = true;
             ParamControlCCA3.visible = false;
             ParamControlCCB3.displayName = "Velocity";
-            ParamControlCCB3.visible = true;
+            if (amount.value > 3)
+                ParamControlCCB3.visible = true;
         }
         else if (ParamControlType3.value == 2)
         {
             MidiNote3.visible = false;
             ParamControlCCA3.displayName = "MIDI CC";
-            ParamControlCCA3.visible = true;
+            if (amount.value > 3)
+                ParamControlCCA3.visible = true;
             ParamControlCCB3.visible = false;
         }
         else if (ParamControlType3.value == 3)
         {
             MidiNote3.visible = false;
             ParamControlCCA3.displayName = "MIDI CC X";
-            ParamControlCCA3.visible = true;
+            if (amount.value > 3)
+                ParamControlCCA3.visible = true;
             ParamControlCCB3.displayName = "MIDI CC Y";
-            ParamControlCCB3.visible = true;
+            if (amount.value > 3)
+                ParamControlCCB3.visible = true;
         }
     ]]>
     </script>
@@ -230,31 +258,38 @@
         {
             MidiNote4.visible = false;
             ParamControlCCA4.displayName = "MIDI CC";
-            ParamControlCCA4.visible = true;
+            if (amount.value > 4)
+                ParamControlCCA4.visible = true;
             ParamControlCCB4.displayName = "ON Value";
-            ParamControlCCB4.visible = true;
+            if (amount.value > 4)
+                ParamControlCCB4.visible = true;
         }
         else if (ParamControlType4.value == 1)
         {
-            MidiNote4.visible = true;
+            if (amount.value > 4)
+                MidiNote4.visible = true;
             ParamControlCCA4.visible = false;
             ParamControlCCB4.displayName = "Velocity";
-            ParamControlCCB4.visible = true;
+            if (amount.value > 4)
+                ParamControlCCB4.visible = true;
         }
         else if (ParamControlType4.value == 2)
         {
             MidiNote4.visible = false;
             ParamControlCCA4.displayName = "MIDI CC";
-            ParamControlCCA4.visible = true;
+            if (amount.value > 4)
+                ParamControlCCA4.visible = true;
             ParamControlCCB4.visible = false;
         }
         else if (ParamControlType4.value == 3)
         {
             MidiNote4.visible = false;
             ParamControlCCA4.displayName = "MIDI CC X";
-            ParamControlCCA4.visible = true;
+            if (amount.value > 4)
+                ParamControlCCA4.visible = true;
             ParamControlCCB4.displayName = "MIDI CC Y";
-            ParamControlCCB4.visible = true;
+            if (amount.value > 4)
+                ParamControlCCB4.visible = true;
         }
     ]]>
     </script>
@@ -265,31 +300,38 @@
         {
             MidiNote5.visible = false;
             ParamControlCCA5.displayName = "MIDI CC";
-            ParamControlCCA5.visible = true;
+            if (amount.value > 5)
+                ParamControlCCA5.visible = true;
             ParamControlCCB5.displayName = "ON Value";
-            ParamControlCCB5.visible = true;
+            if (amount.value > 5)
+                ParamControlCCB5.visible = true;
         }
         else if (ParamControlType5.value == 1)
         {
-            MidiNote5.visible = true;
+            if (amount.value > 5)
+                MidiNote5.visible = true;
             ParamControlCCA5.visible = false;
             ParamControlCCB5.displayName = "Velocity";
-            ParamControlCCB5.visible = true;
+            if (amount.value > 5)
+                ParamControlCCB5.visible = true;
         }
         else if (ParamControlType5.value == 2)
         {
             MidiNote5.visible = false;
             ParamControlCCA5.displayName = "MIDI CC";
-            ParamControlCCA5.visible = true;
+            if (amount.value > 5)
+                ParamControlCCA5.visible = true;
             ParamControlCCB5.visible = false;
         }
         else if (ParamControlType5.value == 3)
         {
             MidiNote5.visible = false;
             ParamControlCCA5.displayName = "MIDI CC X";
-            ParamControlCCA5.visible = true;
+            if (amount.value > 5)
+                ParamControlCCA5.visible = true;
             ParamControlCCB5.displayName = "MIDI CC Y";
-            ParamControlCCB5.visible = true;
+            if (amount.value > 5)
+                ParamControlCCB5.visible = true;
         }
     ]]>
     </script>
@@ -300,31 +342,38 @@
         {
             MidiNote6.visible = false;
             ParamControlCCA6.displayName = "MIDI CC";
-            ParamControlCCA6.visible = true;
+            if (amount.value > 6)
+                ParamControlCCA6.visible = true;
             ParamControlCCB6.displayName = "ON Value";
-            ParamControlCCB6.visible = true;
+            if (amount.value > 6)
+                ParamControlCCB6.visible = true;
         }
         else if (ParamControlType6.value == 1)
         {
-            MidiNote6.visible = true;
+            if (amount.value > 6)
+                MidiNote6.visible = true;
             ParamControlCCA6.visible = false;
             ParamControlCCB6.displayName = "Velocity";
-            ParamControlCCB6.visible = true;
+            if (amount.value > 6)
+                ParamControlCCB6.visible = true;
         }
         else if (ParamControlType6.value == 2)
         {
             MidiNote6.visible = false;
             ParamControlCCA6.displayName = "MIDI CC";
-            ParamControlCCA6.visible = true;
+            if (amount.value > 6)
+                ParamControlCCA6.visible = true;
             ParamControlCCB6.visible = false;
         }
         else if (ParamControlType6.value == 3)
         {
             MidiNote6.visible = false;
             ParamControlCCA6.displayName = "MIDI CC X";
-            ParamControlCCA6.visible = true;
+            if (amount.value > 6)
+                ParamControlCCA6.visible = true;
             ParamControlCCB6.displayName = "MIDI CC Y";
-            ParamControlCCB6.visible = true;
+            if (amount.value > 6)
+                ParamControlCCB6.visible = true;
         }
     ]]>
     </script>
@@ -335,31 +384,38 @@
         {
             MidiNote7.visible = false;
             ParamControlCCA7.displayName = "MIDI CC";
-            ParamControlCCA7.visible = true;
+            if (amount.value > 7)
+                ParamControlCCA7.visible = true;
             ParamControlCCB7.displayName = "ON Value";
-            ParamControlCCB7.visible = true;
+            if (amount.value > 7)
+                ParamControlCCB7.visible = true;
         }
         else if (ParamControlType7.value == 1)
         {
-            MidiNote7.visible = true;
+            if (amount.value > 7)
+                MidiNote7.visible = true;
             ParamControlCCA7.visible = false;
             ParamControlCCB7.displayName = "Velocity";
-            ParamControlCCB7.visible = true;
+            if (amount.value > 7)
+                ParamControlCCB7.visible = true;
         }
         else if (ParamControlType7.value == 2)
         {
             MidiNote7.visible = false;
             ParamControlCCA7.displayName = "MIDI CC";
-            ParamControlCCA7.visible = true;
+            if (amount.value > 7)
+                ParamControlCCA7.visible = true;
             ParamControlCCB7.visible = false;
         }
         else if (ParamControlType7.value == 3)
         {
             MidiNote7.visible = false;
             ParamControlCCA7.displayName = "MIDI CC X";
-            ParamControlCCA7.visible = true;
+            if (amount.value > 7)
+                ParamControlCCA7.visible = true;
             ParamControlCCB7.displayName = "MIDI CC Y";
-            ParamControlCCB7.visible = true;
+            if (amount.value > 7)
+                ParamControlCCB7.visible = true;
         }
     ]]>
     </script>
@@ -370,31 +426,38 @@
         {
             MidiNote8.visible = false;
             ParamControlCCA8.displayName = "MIDI CC";
-            ParamControlCCA8.visible = true;
+            if (amount.value > 8)
+                ParamControlCCA8.visible = true;
             ParamControlCCB8.displayName = "ON Value";
-            ParamControlCCB8.visible = true;
+            if (amount.value > 8)
+                ParamControlCCB8.visible = true;
         }
         else if (ParamControlType8.value == 1)
         {
-            MidiNote8.visible = true;
+            if (amount.value > 8)
+                MidiNote8.visible = true;
             ParamControlCCA8.visible = false;
             ParamControlCCB8.displayName = "Velocity";
-            ParamControlCCB8.visible = true;
+            if (amount.value > 8)
+                ParamControlCCB8.visible = true;
         }
         else if (ParamControlType8.value == 2)
         {
             MidiNote8.visible = false;
             ParamControlCCA8.displayName = "MIDI CC";
-            ParamControlCCA8.visible = true;
+            if (amount.value > 8)
+                ParamControlCCA8.visible = true;
             ParamControlCCB8.visible = false;
         }
         else if (ParamControlType8.value == 3)
         {
             MidiNote8.visible = false;
             ParamControlCCA8.displayName = "MIDI CC X";
-            ParamControlCCA8.visible = true;
+            if (amount.value > 8)
+                ParamControlCCA8.visible = true;
             ParamControlCCB8.displayName = "MIDI CC Y";
-            ParamControlCCB8.visible = true;
+            if (amount.value > 8)
+                ParamControlCCB8.visible = true;
         }
     ]]>
     </script>
@@ -405,31 +468,38 @@
         {
             MidiNote9.visible = false;
             ParamControlCCA9.displayName = "MIDI CC";
-            ParamControlCCA9.visible = true;
+            if (amount.value > 9)
+                ParamControlCCA9.visible = true;
             ParamControlCCB9.displayName = "ON Value";
-            ParamControlCCB9.visible = true;
+            if (amount.value > 9)
+                ParamControlCCB9.visible = true;
         }
         else if (ParamControlType9.value == 1)
         {
-            MidiNote9.visible = true;
+            if (amount.value > 9)
+                MidiNote9.visible = true;
             ParamControlCCA9.visible = false;
             ParamControlCCB9.displayName = "Velocity";
-            ParamControlCCB9.visible = true;
+            if (amount.value > 9)
+                ParamControlCCB9.visible = true;
         }
         else if (ParamControlType9.value == 2)
         {
             MidiNote9.visible = false;
             ParamControlCCA9.displayName = "MIDI CC";
-            ParamControlCCA9.visible = true;
+            if (amount.value > 9)
+                ParamControlCCA9.visible = true;
             ParamControlCCB9.visible = false;
         }
         else if (ParamControlType9.value == 3)
         {
             MidiNote9.visible = false;
             ParamControlCCA9.displayName = "MIDI CC X";
-            ParamControlCCA9.visible = true;
+            if (amount.value > 9)
+                ParamControlCCA9.visible = true;
             ParamControlCCB9.displayName = "MIDI CC Y";
-            ParamControlCCB9.visible = true;
+            if (amount.value > 9)
+                ParamControlCCB9.visible = true;
         }
     ]]>
     </script>
@@ -440,31 +510,38 @@
         {
             MidiNote10.visible = false;
             ParamControlCCA10.displayName = "MIDI CC";
-            ParamControlCCA10.visible = true;
+            if (amount.value > 10)
+                ParamControlCCA10.visible = true;
             ParamControlCCB10.displayName = "ON Value";
-            ParamControlCCB10.visible = true;
+            if (amount.value > 10)
+                ParamControlCCB10.visible = true;
         }
         else if (ParamControlType10.value == 1)
         {
-            MidiNote10.visible = true;
+            if (amount.value > 10)
+                MidiNote10.visible = true;
             ParamControlCCA10.visible = false;
             ParamControlCCB10.displayName = "Velocity";
-            ParamControlCCB10.visible = true;
+            if (amount.value > 10)
+                ParamControlCCB10.visible = true;
         }
         else if (ParamControlType10.value == 2)
         {
             MidiNote10.visible = false;
             ParamControlCCA10.displayName = "MIDI CC";
-            ParamControlCCA10.visible = true;
+            if (amount.value > 10)
+                ParamControlCCA10.visible = true;
             ParamControlCCB10.visible = false;
         }
         else if (ParamControlType10.value == 3)
         {
             MidiNote10.visible = false;
             ParamControlCCA10.displayName = "MIDI CC X";
-            ParamControlCCA10.visible = true;
+            if (amount.value > 10)
+                ParamControlCCA10.visible = true;
             ParamControlCCB10.displayName = "MIDI CC Y";
-            ParamControlCCB10.visible = true;
+            if (amount.value > 10)
+                ParamControlCCB10.visible = true;
         }
     ]]>
     </script>
@@ -475,31 +552,38 @@
         {
             MidiNote11.visible = false;
             ParamControlCCA11.displayName = "MIDI CC";
-            ParamControlCCA11.visible = true;
+            if (amount.value > 11)
+                ParamControlCCA11.visible = true;
             ParamControlCCB11.displayName = "ON Value";
-            ParamControlCCB11.visible = true;
+            if (amount.value > 11)
+                ParamControlCCB11.visible = true;
         }
         else if (ParamControlType11.value == 1)
         {
-            MidiNote11.visible = true;
+            if (amount.value > 11)
+                MidiNote11.visible = true;
             ParamControlCCA11.visible = false;
             ParamControlCCB11.displayName = "Velocity";
-            ParamControlCCB11.visible = true;
+            if (amount.value > 11)
+                ParamControlCCB11.visible = true;
         }
         else if (ParamControlType11.value == 2)
         {
             MidiNote11.visible = false;
             ParamControlCCA11.displayName = "MIDI CC";
-            ParamControlCCA11.visible = true;
+            if (amount.value > 11)
+                ParamControlCCA11.visible = true;
             ParamControlCCB11.visible = false;
         }
         else if (ParamControlType11.value == 3)
         {
             MidiNote11.visible = false;
             ParamControlCCA11.displayName = "MIDI CC X";
-            ParamControlCCA11.visible = true;
+            if (amount.value > 11)
+                ParamControlCCA11.visible = true;
             ParamControlCCB11.displayName = "MIDI CC Y";
-            ParamControlCCB11.visible = true;
+            if (amount.value > 11)
+                ParamControlCCB11.visible = true;
         }
     ]]>
     </script>
@@ -510,31 +594,38 @@
         {
             MidiNote12.visible = false;
             ParamControlCCA12.displayName = "MIDI CC";
-            ParamControlCCA12.visible = true;
+            if (amount.value > 12)
+                ParamControlCCA12.visible = true;
             ParamControlCCB12.displayName = "ON Value";
-            ParamControlCCB12.visible = true;
+            if (amount.value > 12)
+                ParamControlCCB12.visible = true;
         }
         else if (ParamControlType12.value == 1)
         {
-            MidiNote12.visible = true;
+            if (amount.value > 12)
+                MidiNote12.visible = true;
             ParamControlCCA12.visible = false;
             ParamControlCCB12.displayName = "Velocity";
-            ParamControlCCB12.visible = true;
+            if (amount.value > 12)
+                ParamControlCCB12.visible = true;
         }
         else if (ParamControlType12.value == 2)
         {
             MidiNote12.visible = false;
             ParamControlCCA12.displayName = "MIDI CC";
-            ParamControlCCA12.visible = true;
+            if (amount.value > 12)
+                ParamControlCCA12.visible = true;
             ParamControlCCB12.visible = false;
         }
         else if (ParamControlType12.value == 3)
         {
             MidiNote12.visible = false;
             ParamControlCCA12.displayName = "MIDI CC X";
-            ParamControlCCA12.visible = true;
+            if (amount.value > 12)
+                ParamControlCCA12.visible = true;
             ParamControlCCB12.displayName = "MIDI CC Y";
-            ParamControlCCB12.visible = true;
+            if (amount.value > 12)
+                ParamControlCCB12.visible = true;
         }
     ]]>
     </script>
@@ -545,31 +636,38 @@
         {
             MidiNote13.visible = false;
             ParamControlCCA13.displayName = "MIDI CC";
-            ParamControlCCA13.visible = true;
+            if (amount.value > 13)
+                ParamControlCCA13.visible = true;
             ParamControlCCB13.displayName = "ON Value";
-            ParamControlCCB13.visible = true;
+            if (amount.value > 13)
+                ParamControlCCB13.visible = true;
         }
         else if (ParamControlType13.value == 1)
         {
-            MidiNote13.visible = true;
+            if (amount.value > 13)
+                MidiNote13.visible = true;
             ParamControlCCA13.visible = false;
             ParamControlCCB13.displayName = "Velocity";
-            ParamControlCCB13.visible = true;
+            if (amount.value > 13)
+                ParamControlCCB13.visible = true;
         }
         else if (ParamControlType13.value == 2)
         {
             MidiNote13.visible = false;
             ParamControlCCA13.displayName = "MIDI CC";
-            ParamControlCCA13.visible = true;
+            if (amount.value > 13)
+                ParamControlCCA13.visible = true;
             ParamControlCCB13.visible = false;
         }
         else if (ParamControlType13.value == 3)
         {
             MidiNote13.visible = false;
             ParamControlCCA13.displayName = "MIDI CC X";
-            ParamControlCCA13.visible = true;
+            if (amount.value > 13)
+                ParamControlCCA13.visible = true;
             ParamControlCCB13.displayName = "MIDI CC Y";
-            ParamControlCCB13.visible = true;
+            if (amount.value > 13)
+                ParamControlCCB13.visible = true;
         }
     ]]>
     </script>
@@ -580,31 +678,38 @@
         {
             MidiNote14.visible = false;
             ParamControlCCA14.displayName = "MIDI CC";
-            ParamControlCCA14.visible = true;
+            if (amount.value > 14)
+                ParamControlCCA14.visible = true;
             ParamControlCCB14.displayName = "ON Value";
-            ParamControlCCB14.visible = true;
+            if (amount.value > 14)
+                ParamControlCCB14.visible = true;
         }
         else if (ParamControlType14.value == 1)
         {
-            MidiNote14.visible = true;
+            if (amount.value > 14)
+                MidiNote14.visible = true;
             ParamControlCCA14.visible = false;
             ParamControlCCB14.displayName = "Velocity";
-            ParamControlCCB14.visible = true;
+            if (amount.value > 14)
+                ParamControlCCB14.visible = true;
         }
         else if (ParamControlType14.value == 2)
         {
             MidiNote14.visible = false;
             ParamControlCCA14.displayName = "MIDI CC";
-            ParamControlCCA14.visible = true;
+            if (amount.value > 14)
+                ParamControlCCA14.visible = true;
             ParamControlCCB14.visible = false;
         }
         else if (ParamControlType14.value == 3)
         {
             MidiNote14.visible = false;
             ParamControlCCA14.displayName = "MIDI CC X";
-            ParamControlCCA14.visible = true;
+            if (amount.value > 14)
+                ParamControlCCA14.visible = true;
             ParamControlCCB14.displayName = "MIDI CC Y";
-            ParamControlCCB14.visible = true;
+            if (amount.value > 14)
+                ParamControlCCB14.visible = true;
         }
     ]]>
     </script>
@@ -615,31 +720,38 @@
         {
             MidiNote15.visible = false;
             ParamControlCCA15.displayName = "MIDI CC";
-            ParamControlCCA15.visible = true;
+            if (amount.value > 15)
+                ParamControlCCA15.visible = true;
             ParamControlCCB15.displayName = "ON Value";
-            ParamControlCCB15.visible = true;
+            if (amount.value > 15)
+                ParamControlCCB15.visible = true;
         }
         else if (ParamControlType15.value == 1)
         {
-            MidiNote15.visible = true;
+            if (amount.value > 15)
+                MidiNote15.visible = true;
             ParamControlCCA15.visible = false;
             ParamControlCCB15.displayName = "Velocity";
-            ParamControlCCB15.visible = true;
+            if (amount.value > 15)
+                ParamControlCCB15.visible = true;
         }
         else if (ParamControlType15.value == 2)
         {
             MidiNote15.visible = false;
             ParamControlCCA15.displayName = "MIDI CC";
-            ParamControlCCA15.visible = true;
+            if (amount.value > 15)
+                ParamControlCCA15.visible = true;
             ParamControlCCB15.visible = false;
         }
         else if (ParamControlType15.value == 3)
         {
             MidiNote15.visible = false;
             ParamControlCCA15.displayName = "MIDI CC X";
-            ParamControlCCA15.visible = true;
+            if (amount.value > 15)
+                ParamControlCCA15.visible = true;
             ParamControlCCB15.displayName = "MIDI CC Y";
-            ParamControlCCB15.visible = true;
+            if (amount.value > 15)
+                ParamControlCCB15.visible = true;
         }
     ]]>
     </script>

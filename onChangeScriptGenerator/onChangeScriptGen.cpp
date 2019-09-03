@@ -58,7 +58,7 @@ int main()
         outFile << "\n";
         OnChangeScript script (outFile, "ParamControlType" + std::to_string (i));
 
-        // TODO: consider checking if control is visible for extra safety
+        // TODO: consider not checking the control amount for control 0
 
         outFile
             << "\tif (ParamControlType" << i << ".value == 0)\n"        // button
@@ -66,20 +66,24 @@ int main()
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
             << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC\";\n"
-            << "\t\tParamControlCCA" << i << ".visible = true;\n"
+            << "\t\tif (amount.value > " << i << ")\n"
+            << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"ON Value\";\n"
-            << "\t\tParamControlCCB" << i << ".visible = true;\n"
+            << "\t\tif (amount.value > " << i << ")\n"
+            << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
 
             << "\telse if (ParamControlType" << i << ".value == 1)\n"     // note
             << "\t{\n"
-            << "\t\tMidiNote" << i << ".visible = true;\n"
+            << "\t\tif (amount.value > " << i << ")\n"
+            << "\t\t\tMidiNote" << i << ".visible = true;\n"
 
             << "\t\tParamControlCCA" << i << ".visible = false;\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"Velocity\";\n"
-            << "\t\tParamControlCCB" << i << ".visible = true;\n"
+            << "\t\tif (amount.value > " << i << ")\n"
+            << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
 
             << "\telse if (ParamControlType" << i << ".value == 2)\n"     // fader
@@ -87,7 +91,8 @@ int main()
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
             << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC\";\n"
-            << "\t\tParamControlCCA" << i << ".visible = true;\n"
+            << "\t\tif (amount.value > " << i << ")\n"
+            << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
             << "\t\tParamControlCCB" << i << ".visible = false;\n"
             << "\t}\n"
@@ -97,10 +102,12 @@ int main()
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
             << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC X\";\n"
-            << "\t\tParamControlCCA" << i << ".visible = true;\n"
+            << "\t\tif (amount.value > " << i << ")\n"
+            << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"MIDI CC Y\";\n"
-            << "\t\tParamControlCCB" << i << ".visible = true;\n"
+            << "\t\tif (amount.value > " << i << ")\n"
+            << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n";
     }
 
