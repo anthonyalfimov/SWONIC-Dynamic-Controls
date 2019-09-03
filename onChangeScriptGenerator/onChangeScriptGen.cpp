@@ -51,7 +51,7 @@ int main()
         outFile << "\n";
         OnChangeScript script(outFile, "ParamControlType" + std::to_string (i));
 
-        // TODO: consider checking if control is visible when showing it for extra safety
+        // TODO: consider checking if control is visible for extra safety
 
         outFile
             << "\tif (ParamControlType" << i << ".value == 0)\n"        // button
