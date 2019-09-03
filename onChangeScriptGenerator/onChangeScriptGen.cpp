@@ -26,11 +26,11 @@ private:
 
 int main()
 {
-    int count = 0;
+    int controlCount = 0;
 
     std::cout << "Number of controls: ";
 
-    while (! (std::cin >> count) || count < 1)
+    while (! (std::cin >> controlCount) || controlCount < 1)
     {
         std::cin.clear();
 
@@ -40,7 +40,7 @@ int main()
         std::cout << "Invalid, try again: ";
     }
 
-    std::string fileName {"OnChangeScripts" + std::to_string (count)
+    std::string fileName {"OnChangeScripts" + std::to_string (controlCount)
                           + ".littlefoot"};
     std::ofstream outFile;
     outFile.open (fileName);
@@ -49,17 +49,54 @@ int main()
     {
         OnChangeScript script(outFile, "amount");
 
-        for (int i = 1; i <= count; ++i)
+        for (int amount = 1; amount <= controlCount; ++amount)
         {
             outFile << "\t";
 
-            if (i > 1)
+            if (amount > 1)
                 outFile << "else ";
 
-            outFile << "if (amount.value == " << i << ")";
+            outFile << "if (amount.value == " << amount << ")"
                     << "\n\t{\n";
 
+            for (int i = 0; i < controlCount; ++i)
+            {
+                bool isVisible {i < amount};
+                std::string state = isVisible ? "true" : "false";
 
+                outFile << "\t\tParamControlType"   << i << ".visible = " << state << ";\n";
+                outFile << "\t\tParamControlColour" << i << ".visible = " << state << ";\n";
+                outFile << "\t\tParamControlMode"   << i << ".visible = " << state << ";\n";
+                outFile << "\t\tParamMidiChannel"   << i << ".visible = " << state << ";\n";
+
+                outFile << "\t\tControlPosX"        << i << ".visible = " << state << ";\n";
+                outFile << "\t\tControlPosY"        << i << ".visible = " << state << ";\n";
+                outFile << "\t\tControlWidth"       << i << ".visible = " << state << ";\n";
+                outFile << "\t\tControlHeight"      << i << ".visible = " << state << ";\n";
+
+                outFile << "\t\tParamControlCCA"    << i << ".visible = " << state << ";\n";
+                outFile << "\t\tSendPress"          << i << ".visible = " << state << ";\n";
+                outFile << "\t\tControlCCP"         << i << ".visible = " << state << ";\n";
+
+                if (isVisible)
+                {
+                    outFile
+                        << "\t\tif (ParamControlType" << i << ".value == 1)\n"
+                        << "\t\t\tMidiNote" << i << ".visible = true;\n";
+
+                    outFile
+                        << "\t\tif (ParamControlType" << i << ".value == 0 || "
+                        << "ParamControlType" << i << ".value == 3)\n"
+                        << "\t\t\tParamControlCCB" << i << ".visible = true;\n";
+                }
+                else
+                {
+                    outFile << "\t\tMidiNote"        << i << ".visible = false;\n";
+                    outFile << "\t\tParamControlCCB" << i << ".visible = false;\n";
+                }
+
+                outFile << "\n";
+            }
 
             outFile << "\t}\n";
         }
