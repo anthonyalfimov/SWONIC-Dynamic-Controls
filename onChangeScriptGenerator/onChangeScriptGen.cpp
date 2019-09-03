@@ -45,6 +45,13 @@ int main()
     std::ofstream outFile;
     outFile.open (fileName);
 
+    // onChange="overrideBrightness"
+    {
+        OnChangeScript script (outFile, "overrideBrightness");
+
+        outFile << "\tbrightness.visible = overrideBrightness.value;";
+    }
+
     // onChange="ParamControlType"
     for (int i = 0; i < controlCount; ++i)
     {
