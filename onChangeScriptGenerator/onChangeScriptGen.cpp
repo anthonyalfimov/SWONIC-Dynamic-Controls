@@ -45,8 +45,61 @@ int main()
     std::ofstream outFile;
     outFile.open (fileName);
 
+    // onChange="ParamControlType"
+    for (int i = 0; i < controlCount; ++i)
+    {
+        outFile << "\n";
+        OnChangeScript script(outFile, "ParamControlType" + std::to_string (i));
+
+        // TODO: consider checking if control is visible when showing it for extra safety
+
+        outFile
+            << "\tif (ParamControlType" << i << ".value == 0)\n"        // button
+            << "\t{\n"
+            << "\t\tMidiNote" << i << ".visible = false;\n"
+
+            << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC\";\n"
+            << "\t\tParamControlCCA" << i << ".visible = true;\n"
+
+            << "\t\tParamControlCCB" << i << ".displayName = \"ON Value\";\n"
+            << "\t\tParamControlCCB" << i << ".visible = true;\n"
+            << "\t}\n"
+
+            << "\telse if (ParamControlType" << i << ".value == 1)\n"     // note
+            << "\t{\n"
+            << "\t\tMidiNote" << i << ".visible = true;\n"
+
+            << "\t\tParamControlCCA" << i << ".visible = false;\n"
+
+            << "\t\tParamControlCCB" << i << ".displayName = \"Velocity\";\n"
+            << "\t\tParamControlCCB" << i << ".visible = true;\n"
+            << "\t}\n"
+
+            << "\telse if (ParamControlType" << i << ".value == 2)\n"     // fader
+            << "\t{\n"
+            << "\t\tMidiNote" << i << ".visible = false;\n"
+
+            << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC\";\n"
+            << "\t\tParamControlCCA" << i << ".visible = true;\n"
+
+            << "\t\tParamControlCCB" << i << ".visible = false;\n"
+            << "\t}\n"
+
+            << "\telse if (ParamControlType" << i << ".value == 3)\n"     // XYZ Pad
+            << "\t{\n"
+            << "\t\tMidiNote" << i << ".visible = false;\n"
+
+            << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC X\";\n"
+            << "\t\tParamControlCCA" << i << ".visible = true;\n"
+
+            << "\t\tParamControlCCB" << i << ".displayName = \"MIDI CC Y\";\n"
+            << "\t\tParamControlCCB" << i << ".visible = true;\n"
+            << "\t}\n";
+    }
+
     // onChange="amount"
     {
+        outFile << "\n";
         OnChangeScript script(outFile, "amount");
 
         for (int amount = 1; amount <= controlCount; ++amount)
