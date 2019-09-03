@@ -26,19 +26,7 @@ private:
 
 int main()
 {
-    int controlCount = 0;
-
-    std::cout << "Number of controls: ";
-
-    while (! (std::cin >> controlCount) || controlCount < 1)
-    {
-        std::cin.clear();
-
-        while (std::cin.get() != '\n')
-            continue;
-
-        std::cout << "Invalid, try again: ";
-    }
+    const int controlCount = 16;
 
     std::string fileName {"OnChangeScripts" + std::to_string (controlCount)
                           + ".littlefoot"};
