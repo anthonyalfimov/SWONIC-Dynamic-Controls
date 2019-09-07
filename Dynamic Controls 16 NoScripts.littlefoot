@@ -399,9 +399,9 @@ void doNote(int controlIndex)
     //  127 - held
     if (getControlValueA(controlIndex) == 0)
     {
-        // TODO: use CC B for NoteOn velocity
-        sendMIDI(0x90 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 127);
-        setControlValueA(controlIndex, 127);
+        int velocity = getControlCCB(controlIndex);
+        sendMIDI(0x90 | getMidiChannel(controlIndex), getMidiNote(controlIndex), velocity);
+        setControlValueA(controlIndex, velocity);
     }
     else
     {
