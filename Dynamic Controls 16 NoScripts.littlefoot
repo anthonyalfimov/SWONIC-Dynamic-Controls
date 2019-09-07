@@ -387,7 +387,6 @@ void doTouchEnd(int controlIndex, int touchFlag)
 
 void doButton(int controlIndex)
 {
-    // TODO: use CC B for active button value
     int value = (getControlValueA(controlIndex) == 0) ? getControlCCB(controlIndex) : 0;
     sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), value);
     setControlValueA(controlIndex, value);
