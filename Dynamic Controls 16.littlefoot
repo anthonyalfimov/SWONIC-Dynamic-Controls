@@ -5080,7 +5080,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
             {
                 if (getControlType(controlIndex) == C_NOTE)
                 {
-                    sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
+                    sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 0);
                     setControlValueA(controlIndex, 0);
                 }
                 else
@@ -5126,7 +5126,7 @@ void doNote(int controlIndex)
     }
     else
     {
-        sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 64);
+        sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 0);
         setControlValueA(controlIndex, 0);
     }
 }
