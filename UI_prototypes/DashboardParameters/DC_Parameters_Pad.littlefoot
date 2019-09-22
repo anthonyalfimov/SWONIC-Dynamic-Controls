@@ -29,14 +29,9 @@
         <variable name="ControlColour"  type="colour" value="random"
 
             displayName=    "Colour"
-            tooltip=        "Select the colour of the control." />
+            tooltip=        "Select the type of the control." />
 
-        <variable name="ParamControlType" type="option" options="Button;Fader;Pad;Note" value="Pad"
-
-            displayName=    "Type"
-            tooltip=        "Select the type [Button, Fader, Pad, Note] of the control." />
-
-        <variable name="ParamControlMode" type="option" options="Momentary;Latch" value="Latch"
+        <variable name="ParamControlMode" type="option" options="Momentary;Latch" value="Momentary"
 
             displayName=    "Behaviour"
             tooltip=        "Select whether control value is reset [Momentary] or retained [Latch] when control is released." />
@@ -44,47 +39,47 @@
         <variable name="ParamMidiChannel" type="option" value="Default" options="Default;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
 
             displayName=    "MIDI Channel"
-            tooltip=        "Select the MIDI channel [Default, 1-16] used by the control." />
+            tooltip=        "Select the MIDI channel used by the control." />
 
         <variable name="ControlPosX" type="int" min="1" max="15" value="1"
 
             displayName=    "X-Coordinate"
-            tooltip=        "Select the horizontal position [1-15] on the 15x15 LED matrix."/>
+            tooltip=        "Select the horizontal position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlPosY" type="int" min="1" max="15" value="1"
 
             displayName=    "Y-Coordinate"
-            tooltip=        "Select the vertical position [1-15] on the 15x15 LED matrix."/>
+            tooltip=        "Select the vertical position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlWidth" type="int" min="1" max="15" value="1"
 
             displayName=    "Width"
-            tooltip=        "Select the horizontal size [1-15]of the control."/>
+            tooltip=        "Select the horizontal size of the control.&#13;&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlHeight"  type="int" min="1" max="15" value="1"
 
             displayName=    "Height"
-            tooltip=        "Select the vertical size [1-15] of the control."/>
+            tooltip=        "Select the vertical size of the control.&#13;&#13;&#13;Range: [1-15]"/>
 
         <variable name="ParamControlCCA"  type="int" min="0" max="127" initStart="102"
 
             displayName=    "MIDI X-Axis CC"
-            tooltip=        "Select the MIDI message [0-127] sent by the control." />
+            tooltip=        "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]"/>
 
         <variable name="ParamControlCCB"  type="int" min="0" max="127" initStart="102"
 
             displayName=    "MIDI Y-Axis CC"
-            tooltip=        "Select the MIDI value/message [0-127] sent by the control."/>
+            tooltip=        "Select the MIDI value/message sent by the control.&#13;&#13;Range: [0-127]"/>
 
         <variable name="ControlCCP"  type="int" min="0" max="127" initStart="102"
 
             displayName=    "MIDI Pressure CC"
-            tooltip=        "Select the MIDI message [0-127] used to transmit pressure." />
+            tooltip=        "Select the MIDI message used to transmit pressure.&#13;&#13;Range: [0-127]" />
 
         <variable name="SendPress"  type="bool" value="false"
 
             displayName=    "Send Pressure"
-            tooltip=        "Enable to send MIDI messages [Pressure CC] for pressure applied to the control." />
+            tooltip=        "Enable to send MIDI messages [MIDI Pressure CC] for pressure applied to the control." />
 
         </vector>
 

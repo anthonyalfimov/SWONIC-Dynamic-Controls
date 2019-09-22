@@ -28,12 +28,12 @@
         <variable name="amount" min="1" max="16" value="1" type="int"
 
             displayName=    "Amount of Controls"
-            tooltip=        "Select the number [1-16] of controls to display on the Lightpad Surface." />
+            tooltip=        "Select the number of controls to display on the Lightpad Surface.&#13;&#13;Range: [1-16]" />
 
         <variable name="globalMidiChannel"  type="option"  value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
 
             displayName=    "MIDI Default Channel"
-            tooltip=        "Select the default MIDI channel [1-16] used to send MIDI messages." />
+            tooltip=        "Select the default MIDI channel used to send MIDI messages." />
 
         <variable name="receiveMIDI" type="bool" value="false"
 
@@ -50,17 +50,17 @@
         <variable name="brightness" type="int" min="0" max="10" value="10" group="graphics"
 
             displayName=    "Brightness"
-            tooltip=        "Select the brightness [0-10] of the control colour." />
+            tooltip=        "Select the brightness of the control colour.&#13;&#13;Range: [0-10]" />
             
         <variable name="contrast" type="int" min="0" max="10" value="5" group="graphics"
 
             displayName=    "Contrast"
-            tooltip=        "Select the contrast [0-10] between active and inactive control colour." />
+            tooltip=        "Select the contrast between active and inactive control colour.&#13;&#13;Range: [0-10]" />
 
         <variable name="shadingType" type="option" value="Light" options="Off;Light;Strong" group="graphics"
 
             displayName=    "Shading"
-            tooltip=        "Select the shading preset [Off, Light, Strong] for controls." />
+            tooltip=        "Select the shading preset for controls." />
 
         <variable name="overrideBrightness"  type="bool" value="true" group="graphics"
 
