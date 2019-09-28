@@ -8,7 +8,7 @@
   <variable name="overrideBrightness" value="true"/>
   <variable name="brightness" value="10"/>
   <variable name="contrast" value="5"/>
-  <variable name="shadingType" value="Strong"/>
+  <variable name="shadingType" value="Light"/>
   <variable name="ParamControlType0" value="Fader"/>
   <variable name="ParamControlColour0" value="0xFFFF3A00"/>
   <variable name="ParamControlMode0" value="Latch"/>
