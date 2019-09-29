@@ -67,7 +67,7 @@
                       min="0" max="127" initStart="102"
                       tooltip="" />
             <variable name="ParamControlCCB" displayName="y MIDI CC" type="int"
-                      min="0" max="127" initStart="102"
+                      min="0" max="127" value="127"
                       tooltip="" />
             <variable name="SendPress" displayName="Send Pressure" type="bool"
                       value="false" tooltip="Activate to send pressure CC" />
