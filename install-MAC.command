@@ -21,10 +21,10 @@ mkdir -p "$path"         # create directory if it doesn't exist
 
 echo ""
 echo ""
-cp    *.littlefoot      "$path" 2>/dev/null || fail  # 2>/dev/null supresses console output
+cp -f  *.littlefoot      "$path" 2>/dev/null || fail  # 2>/dev/null supresses console output
 echo "Successfully installed:"
 ls -1 | grep "littlefoot$"
-cp -R *.littlefootModes "$path" 2>/dev/null && ls -1 | grep "littlefootModes$"
+cp -fR *.littlefootModes "$path" 2>/dev/null && ls -1 | grep "littlefootModes$"
 echo ""
 echo ""
 echo "> You may now close this window <"
