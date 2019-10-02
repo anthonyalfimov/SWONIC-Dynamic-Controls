@@ -8,6 +8,9 @@ function fail
     echo "Place \`install-OSX.command\` in the same folder as \`.littlefoot\` files you want to install and try again!"
     echo ""
     echo ""
+    echo "> You may now close this window <"
+    echo ""
+    echo ""
     exit 1
 }
 
