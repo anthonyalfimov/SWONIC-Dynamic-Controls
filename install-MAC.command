@@ -3,9 +3,9 @@
 
 function fail
 {
-    echo "Error: no \`.littlefoot\` files found!"
+    echo "ERROR: could not install any \`.littlefoot\` files!"
     echo ""
-    echo "Place \`install-OSX.command\` in the same folder as \`.littlefoot\` files you want to install and try again!"
+    echo "Make sure \`install-OSX.command\` is in the same folder as \`.littlefoot\` files you want to install and try again!"
     echo ""
     echo ""
     echo "> You may now close this window <"
