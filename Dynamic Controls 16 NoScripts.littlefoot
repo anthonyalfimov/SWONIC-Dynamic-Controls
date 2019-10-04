@@ -20,9 +20,6 @@
         <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
                   value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
 
-        <variable name="overrideBrightness" displayName="Use Global Brightness" type="bool"
-                  value="true" group="graphics"
-                  tooltip="TODO" />
         <variable name="brightness" displayName="Control Brightness" type="int"
                   min="0" max="10" value="10" group="graphics"
                   tooltip="Global brightness" />
@@ -31,6 +28,9 @@
                   tooltip="Amount of contrast between active and inactive controls" />
         <variable name="shadingType" displayName="Control Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
+                  tooltip="TODO" />
+        <variable name="disableGlobalBrightness" displayName="Disable Global Brightness [!]" type="bool"
+                  value="false" group="graphics"
                   tooltip="TODO" />
 
         <vector group="control" count="16"
@@ -510,7 +510,7 @@ void initialise()
 
 // Map graphics parameters to their actual ranges
     contrast = 110 + contrast * 11;                                     // [0, 10] -> [110, 220]
-    brightness = overrideBrightness ? 155 + brightness * 10 : 255;      // [0, 10] -> [155, 255]
+    brightness = disableGlobalBrightness ? 255 : 155 + brightness * 10; // [0, 10] -> [155, 255]
 
 // Initialise dimming and shading parameters
     inactiveDim = contrast << 24;
@@ -560,7 +560,7 @@ void initialise()
         float g = (colour & 0xff00) >> 8;
         float b = colour & 0xff;
 
-        if (overrideBrightness)
+        if (! disableGlobalBrightness)
         {
             float maxc = max(r, max(g, b));
             maxc = (brightness + 0.5) / maxc;
