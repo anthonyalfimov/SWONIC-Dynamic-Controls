@@ -57,7 +57,7 @@ int main()
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
-            << "\t\tParamControlCCB" << i << ".displayName = \"ON Value\";\n"
+            << "\t\tParamControlCCB" << i << ".displayName = \"Button ON Value\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
@@ -69,7 +69,7 @@ int main()
 
             << "\t\tParamControlCCA" << i << ".visible = false;\n"
 
-            << "\t\tParamControlCCB" << i << ".displayName = \"Velocity\";\n"
+            << "\t\tParamControlCCB" << i << ".displayName = \"Note Velocity\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
@@ -89,11 +89,11 @@ int main()
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
-            << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC X\";\n"
+            << "\t\tParamControlCCA" << i << ".displayName = \"X MIDI CC\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
-            << "\t\tParamControlCCB" << i << ".displayName = \"MIDI CC Y\";\n"
+            << "\t\tParamControlCCB" << i << ".displayName = \"Y MIDI CC\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n";

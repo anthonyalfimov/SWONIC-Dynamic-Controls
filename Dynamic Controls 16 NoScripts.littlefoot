@@ -11,22 +11,24 @@
     <variables>
         <variable name="amount" displayName="Control Amount" type="int"
                   min="1" max="16" value="1"
-                  tooltip="Number of controls to display, 1-16" />
+                  tooltip="TODO Number of controls to display, 1-16" />
         <variable name="globalMidiChannel" displayName="Global MIDI Channel" type="option"
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-                  tooltip="Default MIDI channel for controls" />
-        <variable name="useOverlaps" displayName="Use overlapping controls" type="bool"
-                  value="false" tooltip="Enable to propagate touch to all overlapping controls" />
-        <variable name="receiveMIDI" displayName="Receive MIDI" type="bool"
-                  value="false" tooltip="Activate for controls in Latch mode to reflect external MIDI CCs" />
+                  tooltip="TODO Default MIDI channel for controls" />
+        <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
+                  value="false"
+                  tooltip="TODO Enable to propagate touch to all overlapping controls" />
+        <variable name="receiveMIDI" displayName="Receive MIDI [!]" type="bool"
+                  value="false"
+                  tooltip="TODO Activate for controls in Latch mode to reflect external MIDI CCs" />
 
-        <variable name="brightness" displayName="Control Brightness" type="int"
+        <variable name="brightness" displayName="Brightness" type="int"
                   min="0" max="10" value="10" group="graphics"
-                  tooltip="Global brightness" />
-        <variable name="contrast" displayName="Control Contrast" type="int"
+                  tooltip="TODO Global brightness" />
+        <variable name="contrast" displayName="Contrast" type="int"
                   min="0" max="10" value="5" group="graphics"
-                  tooltip="Amount of contrast between active and inactive controls" />
-        <variable name="shadingType" displayName="Control Shading" type="option"
+                  tooltip="TODO Amount of contrast between active and inactive controls" />
+        <variable name="shadingType" displayName="Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
                   tooltip="TODO" />
         <variable name="disableGlobalBrightness" displayName="Disable Global Brightness [!]" type="bool"
@@ -37,43 +39,46 @@
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
             <variable name="ParamControlColour" displayName="Colour" type="colour"
-                      value="random" tooltip="Colour of the control" />
+                      value="random"
+                      tooltip="TODO Colour of the control" />
             <variable name="ParamControlType" displayName="Type" type="option"
                       options="Button;Note;Fader;XYZ Pad" value="Button"
-                      tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
+                      tooltip="TODO Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
             <variable name="ParamControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
-                      tooltip="Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
+                      tooltip="TODO Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
             <variable name="ParamMidiChannel" displayName="MIDI Channel" type="option"
                       value="Global" options="Global;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-                      tooltip="MIDI channel for Control *" />
+                      tooltip="TODO MIDI channel for Control *" />
 
-            <variable name="ControlPosX" displayName="x Position" type="int"
+            <variable name="ControlPosX" displayName="X Position" type="int"
                       min="1" max="15" value="1"
-                      tooltip="Horizontal position of Control * [1 - 15]"/>
-            <variable name="ControlPosY" displayName="y Position" type="int"
+                      tooltip="TODO Horizontal position of Control * [1 - 15]"/>
+            <variable name="ControlPosY" displayName="Y Position" type="int"
                       min="1" max="15" value="1"
-                      tooltip="Vertical position of Control * [1 - 15]"/>
-            <variable name="ControlWidth" displayName="x Width" type="int"
+                      tooltip="TODO Vertical position of Control * [1 - 15]"/>
+            <variable name="ControlWidth" displayName="Width" type="int"
                       min="1" max="15" value="1"
-                      tooltip="Horizontal size of Control * [1 - 15]"/>
-            <variable name="ControlHeight" displayName="y Height" type="int"
+                      tooltip="TODO Horizontal size of Control * [1 - 15]"/>
+            <variable name="ControlHeight" displayName="Height" type="int"
                       min="1" max="15" value="1"
-                      tooltip="Vertical size of Control * [1 - 15]"/>
+                      tooltip="TODO Vertical size of Control * [1 - 15]"/>
 
             <variable name="MidiNote" displayName="MIDI Note" type="midiNote"
-                      initStart="60" tooltip="MIDI Note number" />
-            <variable name="ParamControlCCA" displayName="x MIDI CC" type="int"
+                      initStart="60"
+                      tooltip="TODO MIDI Note number" />
+            <variable name="ParamControlCCA" displayName="MIDI CC" type="int"
                       min="0" max="127" initStart="102"
-                      tooltip="" />
-            <variable name="ParamControlCCB" displayName="y MIDI CC" type="int"
+                      tooltip="TODO" />
+            <variable name="ParamControlCCB" displayName="Button ON Value" type="int"
                       min="0" max="127" value="127"
-                      tooltip="" />
+                      tooltip="TODO" />
             <variable name="SendPress" displayName="Send Pressure" type="bool"
-                      value="false" tooltip="Activate to send pressure CC" />
+                      value="false"
+                      tooltip="TODO Activate to send pressure CC" />
             <variable name="ControlCCP" displayName="Pressure MIDI CC" type="int"
                       min="0" max="127" initStart="102"
-                      tooltip="MIDI CC message for pressure" />
+                      tooltip="TODO MIDI CC message for pressure" />
         </vector>
 
     </variables>
