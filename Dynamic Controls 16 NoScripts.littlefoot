@@ -9,7 +9,7 @@
     </groups>
 
     <variables>
-        <variable name="amount" displayName="Control Amount" type="int"
+        <variable name="amount" displayName="Number of Controls" type="int"
                   min="1" max="16" value="1"
                   tooltip="TODO Number of controls to display, 1-16" />
         <variable name="globalMidiChannel" displayName="Global MIDI Channel" type="option"
