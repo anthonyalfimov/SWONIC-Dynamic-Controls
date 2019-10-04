@@ -9,7 +9,7 @@
         if (ParamControlType0.value == 0)
         {
             MidiNote0.visible = false;
-            ParamControlCCA0.displayName = "MIDI CC";
+            ParamControlCCA0.displayName = "Button MIDI CC";
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
             ParamControlCCB0.displayName = "Button ON Value";
@@ -28,7 +28,7 @@
         else if (ParamControlType0.value == 2)
         {
             MidiNote0.visible = false;
-            ParamControlCCA0.displayName = "MIDI CC";
+            ParamControlCCA0.displayName = "Fader MIDI CC";
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
             ParamControlCCB0.visible = false;
@@ -51,7 +51,7 @@
         if (ParamControlType1.value == 0)
         {
             MidiNote1.visible = false;
-            ParamControlCCA1.displayName = "MIDI CC";
+            ParamControlCCA1.displayName = "Button MIDI CC";
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
             ParamControlCCB1.displayName = "Button ON Value";
@@ -70,7 +70,7 @@
         else if (ParamControlType1.value == 2)
         {
             MidiNote1.visible = false;
-            ParamControlCCA1.displayName = "MIDI CC";
+            ParamControlCCA1.displayName = "Fader MIDI CC";
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
             ParamControlCCB1.visible = false;
@@ -93,7 +93,7 @@
         if (ParamControlType2.value == 0)
         {
             MidiNote2.visible = false;
-            ParamControlCCA2.displayName = "MIDI CC";
+            ParamControlCCA2.displayName = "Button MIDI CC";
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
             ParamControlCCB2.displayName = "Button ON Value";
@@ -112,7 +112,7 @@
         else if (ParamControlType2.value == 2)
         {
             MidiNote2.visible = false;
-            ParamControlCCA2.displayName = "MIDI CC";
+            ParamControlCCA2.displayName = "Fader MIDI CC";
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
             ParamControlCCB2.visible = false;
@@ -135,7 +135,7 @@
         if (ParamControlType3.value == 0)
         {
             MidiNote3.visible = false;
-            ParamControlCCA3.displayName = "MIDI CC";
+            ParamControlCCA3.displayName = "Button MIDI CC";
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
             ParamControlCCB3.displayName = "Button ON Value";
@@ -154,7 +154,7 @@
         else if (ParamControlType3.value == 2)
         {
             MidiNote3.visible = false;
-            ParamControlCCA3.displayName = "MIDI CC";
+            ParamControlCCA3.displayName = "Fader MIDI CC";
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
             ParamControlCCB3.visible = false;
@@ -177,7 +177,7 @@
         if (ParamControlType4.value == 0)
         {
             MidiNote4.visible = false;
-            ParamControlCCA4.displayName = "MIDI CC";
+            ParamControlCCA4.displayName = "Button MIDI CC";
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
             ParamControlCCB4.displayName = "Button ON Value";
@@ -196,7 +196,7 @@
         else if (ParamControlType4.value == 2)
         {
             MidiNote4.visible = false;
-            ParamControlCCA4.displayName = "MIDI CC";
+            ParamControlCCA4.displayName = "Fader MIDI CC";
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
             ParamControlCCB4.visible = false;
@@ -219,7 +219,7 @@
         if (ParamControlType5.value == 0)
         {
             MidiNote5.visible = false;
-            ParamControlCCA5.displayName = "MIDI CC";
+            ParamControlCCA5.displayName = "Button MIDI CC";
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
             ParamControlCCB5.displayName = "Button ON Value";
@@ -238,7 +238,7 @@
         else if (ParamControlType5.value == 2)
         {
             MidiNote5.visible = false;
-            ParamControlCCA5.displayName = "MIDI CC";
+            ParamControlCCA5.displayName = "Fader MIDI CC";
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
             ParamControlCCB5.visible = false;
@@ -261,7 +261,7 @@
         if (ParamControlType6.value == 0)
         {
             MidiNote6.visible = false;
-            ParamControlCCA6.displayName = "MIDI CC";
+            ParamControlCCA6.displayName = "Button MIDI CC";
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
             ParamControlCCB6.displayName = "Button ON Value";
@@ -280,7 +280,7 @@
         else if (ParamControlType6.value == 2)
         {
             MidiNote6.visible = false;
-            ParamControlCCA6.displayName = "MIDI CC";
+            ParamControlCCA6.displayName = "Fader MIDI CC";
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
             ParamControlCCB6.visible = false;
@@ -303,7 +303,7 @@
         if (ParamControlType7.value == 0)
         {
             MidiNote7.visible = false;
-            ParamControlCCA7.displayName = "MIDI CC";
+            ParamControlCCA7.displayName = "Button MIDI CC";
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
             ParamControlCCB7.displayName = "Button ON Value";
@@ -322,7 +322,7 @@
         else if (ParamControlType7.value == 2)
         {
             MidiNote7.visible = false;
-            ParamControlCCA7.displayName = "MIDI CC";
+            ParamControlCCA7.displayName = "Fader MIDI CC";
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
             ParamControlCCB7.visible = false;
@@ -345,7 +345,7 @@
         if (ParamControlType8.value == 0)
         {
             MidiNote8.visible = false;
-            ParamControlCCA8.displayName = "MIDI CC";
+            ParamControlCCA8.displayName = "Button MIDI CC";
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
             ParamControlCCB8.displayName = "Button ON Value";
@@ -364,7 +364,7 @@
         else if (ParamControlType8.value == 2)
         {
             MidiNote8.visible = false;
-            ParamControlCCA8.displayName = "MIDI CC";
+            ParamControlCCA8.displayName = "Fader MIDI CC";
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
             ParamControlCCB8.visible = false;
@@ -387,7 +387,7 @@
         if (ParamControlType9.value == 0)
         {
             MidiNote9.visible = false;
-            ParamControlCCA9.displayName = "MIDI CC";
+            ParamControlCCA9.displayName = "Button MIDI CC";
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
             ParamControlCCB9.displayName = "Button ON Value";
@@ -406,7 +406,7 @@
         else if (ParamControlType9.value == 2)
         {
             MidiNote9.visible = false;
-            ParamControlCCA9.displayName = "MIDI CC";
+            ParamControlCCA9.displayName = "Fader MIDI CC";
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
             ParamControlCCB9.visible = false;
@@ -429,7 +429,7 @@
         if (ParamControlType10.value == 0)
         {
             MidiNote10.visible = false;
-            ParamControlCCA10.displayName = "MIDI CC";
+            ParamControlCCA10.displayName = "Button MIDI CC";
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
             ParamControlCCB10.displayName = "Button ON Value";
@@ -448,7 +448,7 @@
         else if (ParamControlType10.value == 2)
         {
             MidiNote10.visible = false;
-            ParamControlCCA10.displayName = "MIDI CC";
+            ParamControlCCA10.displayName = "Fader MIDI CC";
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
             ParamControlCCB10.visible = false;
@@ -471,7 +471,7 @@
         if (ParamControlType11.value == 0)
         {
             MidiNote11.visible = false;
-            ParamControlCCA11.displayName = "MIDI CC";
+            ParamControlCCA11.displayName = "Button MIDI CC";
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
             ParamControlCCB11.displayName = "Button ON Value";
@@ -490,7 +490,7 @@
         else if (ParamControlType11.value == 2)
         {
             MidiNote11.visible = false;
-            ParamControlCCA11.displayName = "MIDI CC";
+            ParamControlCCA11.displayName = "Fader MIDI CC";
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
             ParamControlCCB11.visible = false;
@@ -513,7 +513,7 @@
         if (ParamControlType12.value == 0)
         {
             MidiNote12.visible = false;
-            ParamControlCCA12.displayName = "MIDI CC";
+            ParamControlCCA12.displayName = "Button MIDI CC";
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
             ParamControlCCB12.displayName = "Button ON Value";
@@ -532,7 +532,7 @@
         else if (ParamControlType12.value == 2)
         {
             MidiNote12.visible = false;
-            ParamControlCCA12.displayName = "MIDI CC";
+            ParamControlCCA12.displayName = "Fader MIDI CC";
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
             ParamControlCCB12.visible = false;
@@ -555,7 +555,7 @@
         if (ParamControlType13.value == 0)
         {
             MidiNote13.visible = false;
-            ParamControlCCA13.displayName = "MIDI CC";
+            ParamControlCCA13.displayName = "Button MIDI CC";
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
             ParamControlCCB13.displayName = "Button ON Value";
@@ -574,7 +574,7 @@
         else if (ParamControlType13.value == 2)
         {
             MidiNote13.visible = false;
-            ParamControlCCA13.displayName = "MIDI CC";
+            ParamControlCCA13.displayName = "Fader MIDI CC";
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
             ParamControlCCB13.visible = false;
@@ -597,7 +597,7 @@
         if (ParamControlType14.value == 0)
         {
             MidiNote14.visible = false;
-            ParamControlCCA14.displayName = "MIDI CC";
+            ParamControlCCA14.displayName = "Button MIDI CC";
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
             ParamControlCCB14.displayName = "Button ON Value";
@@ -616,7 +616,7 @@
         else if (ParamControlType14.value == 2)
         {
             MidiNote14.visible = false;
-            ParamControlCCA14.displayName = "MIDI CC";
+            ParamControlCCA14.displayName = "Fader MIDI CC";
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
             ParamControlCCB14.visible = false;
@@ -639,7 +639,7 @@
         if (ParamControlType15.value == 0)
         {
             MidiNote15.visible = false;
-            ParamControlCCA15.displayName = "MIDI CC";
+            ParamControlCCA15.displayName = "Button MIDI CC";
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
             ParamControlCCB15.displayName = "Button ON Value";
@@ -658,7 +658,7 @@
         else if (ParamControlType15.value == 2)
         {
             MidiNote15.visible = false;
-            ParamControlCCA15.displayName = "MIDI CC";
+            ParamControlCCA15.displayName = "Fader MIDI CC";
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
             ParamControlCCB15.visible = false;

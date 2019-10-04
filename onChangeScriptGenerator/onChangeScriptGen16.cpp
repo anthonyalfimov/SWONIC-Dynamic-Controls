@@ -51,7 +51,7 @@ int main()
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
-            << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC\";\n"
+            << "\t\tParamControlCCA" << i << ".displayName = \"Button MIDI CC\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
@@ -76,7 +76,7 @@ int main()
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
-            << "\t\tParamControlCCA" << i << ".displayName = \"MIDI CC\";\n"
+            << "\t\tParamControlCCA" << i << ".displayName = \"Fader MIDI CC\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 

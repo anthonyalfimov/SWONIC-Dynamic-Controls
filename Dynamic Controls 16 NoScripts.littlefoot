@@ -67,7 +67,7 @@
             <variable name="MidiNote" displayName="MIDI Note" type="midiNote"
                       initStart="60"
                       tooltip="TODO MIDI Note number" />
-            <variable name="ParamControlCCA" displayName="MIDI CC" type="int"
+            <variable name="ParamControlCCA" displayName="Button MIDI CC" type="int"
                       min="0" max="127" initStart="102"
                       tooltip="TODO" />
             <variable name="ParamControlCCB" displayName="Button ON Value" type="int"
