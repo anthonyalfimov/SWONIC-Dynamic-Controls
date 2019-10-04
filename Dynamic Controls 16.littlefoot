@@ -36,11 +36,11 @@
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
+            <variable name="ParamControlColour" displayName="Colour" type="colour"
+                      value="random" tooltip="Colour of the control" />
             <variable name="ParamControlType" displayName="Type" type="option"
                       options="Button;Note;Fader;XYZ Pad" value="Button"
                       tooltip="Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
-            <variable name="ParamControlColour" displayName="Colour" type="colour"
-                      value="random" tooltip="Colour of the control" />
             <variable name="ParamControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
                       tooltip="Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
