@@ -1,6 +1,6 @@
-    <script onChange="overrideBrightness">
+    <script onChange="disableGlobalBrightness">
     <![CDATA[
-        brightness.visible = overrideBrightness.value;
+        brightness.visible = ! disableGlobalBrightness.value;
     ]]>
     </script>
 
