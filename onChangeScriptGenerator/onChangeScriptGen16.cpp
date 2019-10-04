@@ -46,8 +46,6 @@ int main()
         outFile << "\n";
         OnChangeScript script (outFile, "ParamControlType" + std::to_string (i));
 
-        // TODO: consider not checking the control amount for control 0
-
         outFile
             << "\tif (ParamControlType" << i << ".value == 0)\n"        // button
             << "\t{\n"
