@@ -18,7 +18,7 @@
         <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
                   value="false"
                   tooltip="TODO Enable to propagate touch to all overlapping controls" />
-        <variable name="receiveMIDI" displayName="Receive MIDI [!]" type="bool"
+        <variable name="receiveMIDI" displayName="Receive MIDI CC [!]" type="bool"
                   value="false"
                   tooltip="TODO Activate for controls in Latch mode to reflect external MIDI CCs" />
 
