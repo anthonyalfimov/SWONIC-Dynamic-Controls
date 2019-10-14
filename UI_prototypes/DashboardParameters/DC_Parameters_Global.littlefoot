@@ -51,7 +51,7 @@
 
             displayName=    "Brightness"
             tooltip=        "Select the brightness of the control colour.&#13;&#13;Range: [0-10]" />
-            
+
         <variable name="contrast" type="int" min="0" max="10" value="5" group="graphics"
 
             displayName=    "Contrast"
@@ -62,9 +62,9 @@
             displayName=    "Shading"
             tooltip=        "Select the shading preset for controls." />
 
-        <variable name="overrideBrightness"  type="bool" value="true" group="graphics"
+        <variable name="disableGlobalBrightness" type="bool" value="true" group="graphics"
 
-            displayName=    "Brightness Correction [!]"
+            displayName=    "Disable Global Brightness [!]"
             tooltip=        "Disable to allow brightness of control colours to be controlled by the individual control colour selections.&#13;&#13;[!] Disabling brightness correction might lead to black LEDs or strange behaviours of shading, depending on the indivual control colour selections." />
 
     </variables>
