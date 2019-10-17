@@ -18,7 +18,7 @@
         <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
                   value="false"
                   tooltip="TODO Enable to propagate touch to all overlapping controls" />
-        <variable name="receiveMIDI" displayName="Receive MIDI CC [!]" type="bool"
+        <variable name="receiveMIDI" displayName="Receive External MIDI CC [!]" type="bool"
                   value="false"
                   tooltip="TODO Activate for controls in Latch mode to reflect external MIDI CCs" />
 
@@ -70,7 +70,7 @@
             <variable name="ParamControlCCA" displayName="Button MIDI CC" type="int"
                       min="0" max="127" initStart="102"
                       tooltip="TODO" />
-            <variable name="ParamControlCCB" displayName="Button ON Value" type="int"
+            <variable name="ParamControlCCB" displayName="Button 'On' MIDI Value" type="int"
                       min="0" max="127" value="127"
                       tooltip="TODO" />
             <variable name="SendPress" displayName="Send Pressure" type="bool"
