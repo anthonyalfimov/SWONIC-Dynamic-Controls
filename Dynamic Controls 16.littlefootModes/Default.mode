@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mode name="Default Mode Candidate 01">
+<mode name="Default">
   <variable name="amount" value="13"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="useOverlaps" value="false"/>
@@ -23,7 +23,7 @@
   <variable name="SendPress0" value="false"/>
   <variable name="ControlCCP0" value="102"/>
   <variable name="ParamControlType1" value="Fader"/>
-  <variable name="ParamControlColour1" value="0xFFFFF900"/>
+  <variable name="ParamControlColour1" value="0xFFFFFE00"/>
   <variable name="ParamControlMode1" value="Latch"/>
   <variable name="ParamMidiChannel1" value="Global"/>
   <variable name="ControlPosX1" value="4"/>
@@ -88,7 +88,7 @@
   <variable name="SendPress5" value="false"/>
   <variable name="ControlCCP5" value="107"/>
   <variable name="ParamControlType6" value="Button"/>
-  <variable name="ParamControlColour6" value="0xFFFFF900"/>
+  <variable name="ParamControlColour6" value="0xFFFFFE00"/>
   <variable name="ParamControlMode6" value="Latch"/>
   <variable name="ParamMidiChannel6" value="Global"/>
   <variable name="ControlPosX6" value="4"/>
@@ -153,7 +153,7 @@
   <variable name="SendPress10" value="false"/>
   <variable name="ControlCCP10" value="112"/>
   <variable name="ParamControlType11" value="XYZ Pad"/>
-  <variable name="ParamControlColour11" value="0xFFFFF900"/>
+  <variable name="ParamControlColour11" value="0xFFFFFE00"/>
   <variable name="ParamControlMode11" value="Latch"/>
   <variable name="ParamMidiChannel11" value="Global"/>
   <variable name="ControlPosX11" value="6"/>
