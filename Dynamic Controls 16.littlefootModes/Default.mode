@@ -140,7 +140,7 @@
   <variable name="SendPress9" value="false"/>
   <variable name="ControlCCP9" value="111"/>
   <variable name="ParamControlColour10" value="0xFFFF3A00"/>
-  <variable name="ParamControlType10" value="XYZ Pad"/>
+  <variable name="ParamControlType10" value="XY Pad"/>
   <variable name="ParamControlMode10" value="Latch"/>
   <variable name="ParamMidiChannel10" value="Global"/>
   <variable name="ControlPosX10" value="1"/>
@@ -153,7 +153,7 @@
   <variable name="SendPress10" value="false"/>
   <variable name="ControlCCP10" value="112"/>
   <variable name="ParamControlColour11" value="0xFFFFFE00"/>
-  <variable name="ParamControlType11" value="XYZ Pad"/>
+  <variable name="ParamControlType11" value="XY Pad"/>
   <variable name="ParamControlMode11" value="Latch"/>
   <variable name="ParamMidiChannel11" value="Global"/>
   <variable name="ControlPosX11" value="6"/>
@@ -166,7 +166,7 @@
   <variable name="SendPress11" value="false"/>
   <variable name="ControlCCP11" value="113"/>
   <variable name="ParamControlColour12" value="0xFF00C5FF"/>
-  <variable name="ParamControlType12" value="XYZ Pad"/>
+  <variable name="ParamControlType12" value="XY Pad"/>
   <variable name="ParamControlMode12" value="Latch"/>
   <variable name="ParamMidiChannel12" value="Global"/>
   <variable name="ControlPosX12" value="11"/>

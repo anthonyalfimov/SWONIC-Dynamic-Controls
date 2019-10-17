@@ -83,7 +83,7 @@ int main()
             << "\t\tParamControlCCB" << i << ".visible = false;\n"
             << "\t}\n"
 
-            << "\telse if (ParamControlType" << i << ".value == 3)\n"   // XYZ Pad
+            << "\telse if (ParamControlType" << i << ".value == 3)\n"   // XY Pad
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 

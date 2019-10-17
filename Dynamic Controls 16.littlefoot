@@ -1,5 +1,5 @@
 /*
-<metadata description="Create up to 16 Buttons, Switches, Faders or XYZ Pads.&#13;&#13;SWONIC.com | v1.2.9-dev"
+<metadata description="Create up to 16 Buttons, Switches, Faders or XY Pads.&#13;&#13;SWONIC.com | v1.2.9-dev"
           details="Turns your Lightpad into a flexible MIDI control surface. Set your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
@@ -42,8 +42,8 @@
                       value="random"
                       tooltip="TODO Colour of the control" />
             <variable name="ParamControlType" displayName="Type" type="option"
-                      options="Button;Note;Fader;XYZ Pad" value="Button"
-                      tooltip="TODO Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XYZ-Pad: Sends x CC and y CC, 0-127." />
+                      options="Button;Note;Fader;XY Pad" value="Button"
+                      tooltip="TODO Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XY-Pad: Sends x CC and y CC, 0-127." />
             <variable name="ParamControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
                       tooltip="TODO Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
@@ -4878,7 +4878,7 @@
 const int C_BUTTON = 0;
 const int C_NOTE   = 1;
 const int C_FADER  = 2;
-const int C_XYZPAD = 3;
+const int C_XYPAD  = 3;
 
 // Behaviour types
 const int B_MOMENTARY = 0;
@@ -5049,10 +5049,10 @@ void doTouch(int touchIndex, float x, float y, float z)
                 if (isHighestTouch)         // if highest touch index
                     doFader(i, x, y);
             }
-            else if (controlType == C_XYZPAD)
+            else if (controlType == C_XYPAD)
             {
                 if (isHighestTouch)         // if highest touch index
-                    doXYZPad(i, x, y);
+                    doXYPad(i, x, y);
             }
 
             // ISSUE: using metadata vector parameters for pressure is slower
@@ -5110,7 +5110,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
                     sendCC(getMidiChannel(controlIndex), getControlCCA(controlIndex), 0);
                     setControlValueA(controlIndex, 0);
 
-                    if (getControlType(controlIndex) == C_XYZPAD)       // ...reset CC B only for XYZ pads
+                    if (getControlType(controlIndex) == C_XYPAD)        // ...reset CC B only for XY pads
                     {
                         sendCC(getMidiChannel(controlIndex), getControlCCB(controlIndex), 0);
                         setControlValueB(controlIndex, 0);
@@ -5168,7 +5168,7 @@ void doFader(int controlIndex, float x, float y)
     setControlValueA(controlIndex, value);
 }
 
-void doXYZPad(int controlIndex, float x, float y)
+void doXYPad(int controlIndex, float x, float y)
 {
     int valueX = convertPositionToCC(x, getControlMinX(controlIndex),
                                         getControlMaxX(controlIndex));
@@ -5205,8 +5205,8 @@ void handleMIDI(int byteStatus, int byteCC, int byteValue)
                         if (getControlCCA(i) == byteCC)
                             setControlValueA(i, byteValue);
 
-                        // Check CC B only for XYZ pads
-                        if (controlType == C_XYZPAD)
+                        // Check CC B only for XY pads
+                        if (controlType == C_XYPAD)
                             if (getControlCCB(i) == byteCC)
                                 setControlValueB(i, byteValue);
                     }
@@ -5380,10 +5380,10 @@ void repaint()
                                   minX, minY, sizeX - pixelInvSize, sizeY);
             }
         }
-        else if (controlType == C_XYZPAD)
+        else if (controlType == C_XYPAD)
         {
         //----------------------------------------------------------------------
-        //  Draw XYZ Pad
+        //  Draw XY Pad
         //----------------------------------------------------------------------
             //  Draw Pad
             fillRect(inactiveColour, minX,  minY, sizeX, sizeY);

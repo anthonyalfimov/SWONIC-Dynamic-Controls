@@ -8,7 +8,7 @@
   <variable name="brightness" value="10"/>
   <variable name="contrast" value="5"/>
   <variable name="shadingType" value="Light"/>
-  <variable name="ParamControlType0" value="XYZ Pad"/>
+  <variable name="ParamControlType0" value="XY Pad"/>
   <variable name="ParamControlColour0" value="0xFF80FF00"/>
   <variable name="ParamControlMode0" value="Latch"/>
   <variable name="ParamMidiChannel0" value="Global"/>
@@ -47,7 +47,7 @@
   <variable name="ParamControlCCB2" value="104"/>
   <variable name="SendPress2" value="true"/>
   <variable name="ControlCCP2" value="104"/>
-  <variable name="ParamControlType3" value="XYZ Pad"/>
+  <variable name="ParamControlType3" value="XY Pad"/>
   <variable name="ParamControlColour3" value="0xFF17FF00"/>
   <variable name="ParamControlMode3" value="Latch"/>
   <variable name="ParamMidiChannel3" value="Global"/>
@@ -164,7 +164,7 @@
   <variable name="ParamControlCCB11" value="113"/>
   <variable name="SendPress11" value="true"/>
   <variable name="ControlCCP11" value="113"/>
-  <variable name="ParamControlType12" value="XYZ Pad"/>
+  <variable name="ParamControlType12" value="XY Pad"/>
   <variable name="ParamControlColour12" value="0xFFFF0700"/>
   <variable name="ParamControlMode12" value="Latch"/>
   <variable name="ParamMidiChannel12" value="Global"/>
@@ -203,7 +203,7 @@
   <variable name="ParamControlCCB14" value="116"/>
   <variable name="SendPress14" value="true"/>
   <variable name="ControlCCP14" value="116"/>
-  <variable name="ParamControlType15" value="XYZ Pad"/>
+  <variable name="ParamControlType15" value="XY Pad"/>
   <variable name="ParamControlColour15" value="0xFFFF0050"/>
   <variable name="ParamControlMode15" value="Latch"/>
   <variable name="ParamMidiChannel15" value="Global"/>

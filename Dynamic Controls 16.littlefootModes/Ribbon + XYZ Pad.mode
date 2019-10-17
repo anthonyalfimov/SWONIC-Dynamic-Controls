@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mode name="Ribbon + XYZ Pad">
+<mode name="Ribbon + XY Pad">
   <variable name="amount" value="16"/>
   <variable name="globalMidiChannel" value="1"/>
   <variable name="useOverlaps" value="false"/>
@@ -203,7 +203,7 @@
   <variable name="ParamControlCCB14" value="116"/>
   <variable name="SendPress14" value="true"/>
   <variable name="ControlCCP14" value="116"/>
-  <variable name="ParamControlType15" value="XYZ Pad"/>
+  <variable name="ParamControlType15" value="XY Pad"/>
   <variable name="ParamControlColour15" value="0xFFFF0050"/>
   <variable name="ParamControlMode15" value="Latch"/>
   <variable name="ParamMidiChannel15" value="Global"/>
