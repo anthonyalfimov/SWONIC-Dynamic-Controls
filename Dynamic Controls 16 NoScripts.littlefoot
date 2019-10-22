@@ -18,7 +18,7 @@
         <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
                   value="false"
                   tooltip="TODO Enable to propagate touch to all overlapping controls" />
-        <variable name="receiveMIDI" displayName="Receive External MIDI CC [!]" type="bool"
+        <variable name="receiveMIDI" displayName="Receive&#13;MIDI CC [!]" type="bool"
                   value="false"
                   tooltip="TODO Activate for controls in Latch mode to reflect external MIDI CCs" />
 
@@ -31,7 +31,7 @@
         <variable name="shadingType" displayName="Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
                   tooltip="TODO" />
-        <variable name="disableGlobalBrightness" displayName="Disable Global Brightness [!]" type="bool"
+        <variable name="individualBrightness" displayName="Individual Brightness [!]" type="bool"
                   value="false" group="graphics"
                   tooltip="TODO" />
 
@@ -64,19 +64,19 @@
                       min="1" max="15" value="1"
                       tooltip="TODO Vertical size of Control * [1 - 15]"/>
 
-            <variable name="MidiNote" displayName="MIDI Note" type="midiNote"
+            <variable name="MidiNote" displayName="Note" type="midiNote"
                       initStart="60"
                       tooltip="TODO MIDI Note number" />
-            <variable name="ParamControlCCA" displayName="Button MIDI CC" type="int"
+            <variable name="ParamControlCCA" displayName="Button CC" type="int"
                       min="0" max="127" initStart="102"
                       tooltip="TODO" />
-            <variable name="ParamControlCCB" displayName="Button 'On' MIDI Value" type="int"
+            <variable name="ParamControlCCB" displayName="On Value" type="int"
                       min="0" max="127" value="127"
                       tooltip="TODO" />
             <variable name="SendPress" displayName="Send Pressure" type="bool"
                       value="false"
                       tooltip="TODO Activate to send pressure CC" />
-            <variable name="ControlCCP" displayName="Pressure MIDI CC" type="int"
+            <variable name="ControlCCP" displayName="Pressure CC" type="int"
                       min="0" max="127" initStart="102"
                       tooltip="TODO MIDI CC message for pressure" />
         </vector>
@@ -515,7 +515,7 @@ void initialise()
 
 // Map graphics parameters to their actual ranges
     contrast = 110 + contrast * 11;                                     // [0, 10] -> [110, 220]
-    brightness = disableGlobalBrightness ? 255 : 155 + brightness * 10; // [0, 10] -> [155, 255]
+    brightness = individualBrightness ? 255 : 155 + brightness * 10;    // [0, 10] -> [155, 255]
 
 // Initialise dimming and shading parameters
     inactiveDim = contrast << 24;
@@ -565,7 +565,7 @@ void initialise()
         float g = (colour & 0xff00) >> 8;
         float b = colour & 0xff;
 
-        if (! disableGlobalBrightness)
+        if (! individualBrightness)
         {
             float maxc = max(r, max(g, b));
             maxc = (brightness + 0.5) / maxc;

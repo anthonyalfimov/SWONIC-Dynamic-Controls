@@ -51,11 +51,11 @@ int main()
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
-            << "\t\tParamControlCCA" << i << ".displayName = \"Button MIDI CC\";\n"
+            << "\t\tParamControlCCA" << i << ".displayName = \"Button CC\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
-            << "\t\tParamControlCCB" << i << ".displayName = \"Button \'On\' MIDI Value\";\n"
+            << "\t\tParamControlCCB" << i << ".displayName = \"On Value\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
@@ -67,7 +67,7 @@ int main()
 
             << "\t\tParamControlCCA" << i << ".visible = false;\n"
 
-            << "\t\tParamControlCCB" << i << ".displayName = \"MIDI Note Velocity\";\n"
+            << "\t\tParamControlCCB" << i << ".displayName = \"Velocity\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
@@ -76,7 +76,7 @@ int main()
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
-            << "\t\tParamControlCCA" << i << ".displayName = \"Fader MIDI CC\";\n"
+            << "\t\tParamControlCCA" << i << ".displayName = \"Fader CC\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
@@ -87,11 +87,11 @@ int main()
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
-            << "\t\tParamControlCCA" << i << ".displayName = \"X MIDI CC\";\n"
+            << "\t\tParamControlCCA" << i << ".displayName = \"X Axis CC\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
-            << "\t\tParamControlCCB" << i << ".displayName = \"Y MIDI CC\";\n"
+            << "\t\tParamControlCCB" << i << ".displayName = \"Y Axis CC\";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n";

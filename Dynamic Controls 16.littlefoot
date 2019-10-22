@@ -18,7 +18,7 @@
         <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
                   value="false"
                   tooltip="TODO Enable to propagate touch to all overlapping controls" />
-        <variable name="receiveMIDI" displayName="Receive External MIDI CC [!]" type="bool"
+        <variable name="receiveMIDI" displayName="Receive&#13;MIDI CC [!]" type="bool"
                   value="false"
                   tooltip="TODO Activate for controls in Latch mode to reflect external MIDI CCs" />
 
@@ -31,7 +31,7 @@
         <variable name="shadingType" displayName="Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
                   tooltip="TODO" />
-        <variable name="disableGlobalBrightness" displayName="Disable Global Brightness [!]" type="bool"
+        <variable name="individualBrightness" displayName="Individual Brightness [!]" type="bool"
                   value="false" group="graphics"
                   tooltip="TODO" />
 
@@ -64,19 +64,19 @@
                       min="1" max="15" value="1"
                       tooltip="TODO Vertical size of Control * [1 - 15]"/>
 
-            <variable name="MidiNote" displayName="MIDI Note" type="midiNote"
+            <variable name="MidiNote" displayName="Note" type="midiNote"
                       initStart="60"
                       tooltip="TODO MIDI Note number" />
-            <variable name="ParamControlCCA" displayName="Button MIDI CC" type="int"
+            <variable name="ParamControlCCA" displayName="Button CC" type="int"
                       min="0" max="127" initStart="102"
                       tooltip="TODO" />
-            <variable name="ParamControlCCB" displayName="Button 'On' MIDI Value" type="int"
+            <variable name="ParamControlCCB" displayName="On Value" type="int"
                       min="0" max="127" value="127"
                       tooltip="TODO" />
             <variable name="SendPress" displayName="Send Pressure" type="bool"
                       value="false"
                       tooltip="TODO Activate to send pressure CC" />
-            <variable name="ControlCCP" displayName="Pressure MIDI CC" type="int"
+            <variable name="ControlCCP" displayName="Pressure CC" type="int"
                       min="0" max="127" initStart="102"
                       tooltip="TODO MIDI CC message for pressure" />
         </vector>
@@ -94,10 +94,10 @@
         if (ParamControlType0.value == 0)
         {
             MidiNote0.visible = false;
-            ParamControlCCA0.displayName = "Button MIDI CC";
+            ParamControlCCA0.displayName = "Button CC";
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
-            ParamControlCCB0.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB0.displayName = "On Value";
             if (amount.value > 0)
                 ParamControlCCB0.visible = true;
         }
@@ -106,14 +106,14 @@
             if (amount.value > 0)
                 MidiNote0.visible = true;
             ParamControlCCA0.visible = false;
-            ParamControlCCB0.displayName = "MIDI Note Velocity";
+            ParamControlCCB0.displayName = "Velocity";
             if (amount.value > 0)
                 ParamControlCCB0.visible = true;
         }
         else if (ParamControlType0.value == 2)
         {
             MidiNote0.visible = false;
-            ParamControlCCA0.displayName = "Fader MIDI CC";
+            ParamControlCCA0.displayName = "Fader CC";
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
             ParamControlCCB0.visible = false;
@@ -121,10 +121,10 @@
         else if (ParamControlType0.value == 3)
         {
             MidiNote0.visible = false;
-            ParamControlCCA0.displayName = "X MIDI CC";
+            ParamControlCCA0.displayName = "X Axis CC";
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
-            ParamControlCCB0.displayName = "Y MIDI CC";
+            ParamControlCCB0.displayName = "Y Axis CC";
             if (amount.value > 0)
                 ParamControlCCB0.visible = true;
         }
@@ -136,10 +136,10 @@
         if (ParamControlType1.value == 0)
         {
             MidiNote1.visible = false;
-            ParamControlCCA1.displayName = "Button MIDI CC";
+            ParamControlCCA1.displayName = "Button CC";
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
-            ParamControlCCB1.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB1.displayName = "On Value";
             if (amount.value > 1)
                 ParamControlCCB1.visible = true;
         }
@@ -148,14 +148,14 @@
             if (amount.value > 1)
                 MidiNote1.visible = true;
             ParamControlCCA1.visible = false;
-            ParamControlCCB1.displayName = "MIDI Note Velocity";
+            ParamControlCCB1.displayName = "Velocity";
             if (amount.value > 1)
                 ParamControlCCB1.visible = true;
         }
         else if (ParamControlType1.value == 2)
         {
             MidiNote1.visible = false;
-            ParamControlCCA1.displayName = "Fader MIDI CC";
+            ParamControlCCA1.displayName = "Fader CC";
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
             ParamControlCCB1.visible = false;
@@ -163,10 +163,10 @@
         else if (ParamControlType1.value == 3)
         {
             MidiNote1.visible = false;
-            ParamControlCCA1.displayName = "X MIDI CC";
+            ParamControlCCA1.displayName = "X Axis CC";
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
-            ParamControlCCB1.displayName = "Y MIDI CC";
+            ParamControlCCB1.displayName = "Y Axis CC";
             if (amount.value > 1)
                 ParamControlCCB1.visible = true;
         }
@@ -178,10 +178,10 @@
         if (ParamControlType2.value == 0)
         {
             MidiNote2.visible = false;
-            ParamControlCCA2.displayName = "Button MIDI CC";
+            ParamControlCCA2.displayName = "Button CC";
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
-            ParamControlCCB2.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB2.displayName = "On Value";
             if (amount.value > 2)
                 ParamControlCCB2.visible = true;
         }
@@ -190,14 +190,14 @@
             if (amount.value > 2)
                 MidiNote2.visible = true;
             ParamControlCCA2.visible = false;
-            ParamControlCCB2.displayName = "MIDI Note Velocity";
+            ParamControlCCB2.displayName = "Velocity";
             if (amount.value > 2)
                 ParamControlCCB2.visible = true;
         }
         else if (ParamControlType2.value == 2)
         {
             MidiNote2.visible = false;
-            ParamControlCCA2.displayName = "Fader MIDI CC";
+            ParamControlCCA2.displayName = "Fader CC";
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
             ParamControlCCB2.visible = false;
@@ -205,10 +205,10 @@
         else if (ParamControlType2.value == 3)
         {
             MidiNote2.visible = false;
-            ParamControlCCA2.displayName = "X MIDI CC";
+            ParamControlCCA2.displayName = "X Axis CC";
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
-            ParamControlCCB2.displayName = "Y MIDI CC";
+            ParamControlCCB2.displayName = "Y Axis CC";
             if (amount.value > 2)
                 ParamControlCCB2.visible = true;
         }
@@ -220,10 +220,10 @@
         if (ParamControlType3.value == 0)
         {
             MidiNote3.visible = false;
-            ParamControlCCA3.displayName = "Button MIDI CC";
+            ParamControlCCA3.displayName = "Button CC";
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
-            ParamControlCCB3.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB3.displayName = "On Value";
             if (amount.value > 3)
                 ParamControlCCB3.visible = true;
         }
@@ -232,14 +232,14 @@
             if (amount.value > 3)
                 MidiNote3.visible = true;
             ParamControlCCA3.visible = false;
-            ParamControlCCB3.displayName = "MIDI Note Velocity";
+            ParamControlCCB3.displayName = "Velocity";
             if (amount.value > 3)
                 ParamControlCCB3.visible = true;
         }
         else if (ParamControlType3.value == 2)
         {
             MidiNote3.visible = false;
-            ParamControlCCA3.displayName = "Fader MIDI CC";
+            ParamControlCCA3.displayName = "Fader CC";
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
             ParamControlCCB3.visible = false;
@@ -247,10 +247,10 @@
         else if (ParamControlType3.value == 3)
         {
             MidiNote3.visible = false;
-            ParamControlCCA3.displayName = "X MIDI CC";
+            ParamControlCCA3.displayName = "X Axis CC";
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
-            ParamControlCCB3.displayName = "Y MIDI CC";
+            ParamControlCCB3.displayName = "Y Axis CC";
             if (amount.value > 3)
                 ParamControlCCB3.visible = true;
         }
@@ -262,10 +262,10 @@
         if (ParamControlType4.value == 0)
         {
             MidiNote4.visible = false;
-            ParamControlCCA4.displayName = "Button MIDI CC";
+            ParamControlCCA4.displayName = "Button CC";
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
-            ParamControlCCB4.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB4.displayName = "On Value";
             if (amount.value > 4)
                 ParamControlCCB4.visible = true;
         }
@@ -274,14 +274,14 @@
             if (amount.value > 4)
                 MidiNote4.visible = true;
             ParamControlCCA4.visible = false;
-            ParamControlCCB4.displayName = "MIDI Note Velocity";
+            ParamControlCCB4.displayName = "Velocity";
             if (amount.value > 4)
                 ParamControlCCB4.visible = true;
         }
         else if (ParamControlType4.value == 2)
         {
             MidiNote4.visible = false;
-            ParamControlCCA4.displayName = "Fader MIDI CC";
+            ParamControlCCA4.displayName = "Fader CC";
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
             ParamControlCCB4.visible = false;
@@ -289,10 +289,10 @@
         else if (ParamControlType4.value == 3)
         {
             MidiNote4.visible = false;
-            ParamControlCCA4.displayName = "X MIDI CC";
+            ParamControlCCA4.displayName = "X Axis CC";
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
-            ParamControlCCB4.displayName = "Y MIDI CC";
+            ParamControlCCB4.displayName = "Y Axis CC";
             if (amount.value > 4)
                 ParamControlCCB4.visible = true;
         }
@@ -304,10 +304,10 @@
         if (ParamControlType5.value == 0)
         {
             MidiNote5.visible = false;
-            ParamControlCCA5.displayName = "Button MIDI CC";
+            ParamControlCCA5.displayName = "Button CC";
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
-            ParamControlCCB5.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB5.displayName = "On Value";
             if (amount.value > 5)
                 ParamControlCCB5.visible = true;
         }
@@ -316,14 +316,14 @@
             if (amount.value > 5)
                 MidiNote5.visible = true;
             ParamControlCCA5.visible = false;
-            ParamControlCCB5.displayName = "MIDI Note Velocity";
+            ParamControlCCB5.displayName = "Velocity";
             if (amount.value > 5)
                 ParamControlCCB5.visible = true;
         }
         else if (ParamControlType5.value == 2)
         {
             MidiNote5.visible = false;
-            ParamControlCCA5.displayName = "Fader MIDI CC";
+            ParamControlCCA5.displayName = "Fader CC";
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
             ParamControlCCB5.visible = false;
@@ -331,10 +331,10 @@
         else if (ParamControlType5.value == 3)
         {
             MidiNote5.visible = false;
-            ParamControlCCA5.displayName = "X MIDI CC";
+            ParamControlCCA5.displayName = "X Axis CC";
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
-            ParamControlCCB5.displayName = "Y MIDI CC";
+            ParamControlCCB5.displayName = "Y Axis CC";
             if (amount.value > 5)
                 ParamControlCCB5.visible = true;
         }
@@ -346,10 +346,10 @@
         if (ParamControlType6.value == 0)
         {
             MidiNote6.visible = false;
-            ParamControlCCA6.displayName = "Button MIDI CC";
+            ParamControlCCA6.displayName = "Button CC";
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
-            ParamControlCCB6.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB6.displayName = "On Value";
             if (amount.value > 6)
                 ParamControlCCB6.visible = true;
         }
@@ -358,14 +358,14 @@
             if (amount.value > 6)
                 MidiNote6.visible = true;
             ParamControlCCA6.visible = false;
-            ParamControlCCB6.displayName = "MIDI Note Velocity";
+            ParamControlCCB6.displayName = "Velocity";
             if (amount.value > 6)
                 ParamControlCCB6.visible = true;
         }
         else if (ParamControlType6.value == 2)
         {
             MidiNote6.visible = false;
-            ParamControlCCA6.displayName = "Fader MIDI CC";
+            ParamControlCCA6.displayName = "Fader CC";
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
             ParamControlCCB6.visible = false;
@@ -373,10 +373,10 @@
         else if (ParamControlType6.value == 3)
         {
             MidiNote6.visible = false;
-            ParamControlCCA6.displayName = "X MIDI CC";
+            ParamControlCCA6.displayName = "X Axis CC";
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
-            ParamControlCCB6.displayName = "Y MIDI CC";
+            ParamControlCCB6.displayName = "Y Axis CC";
             if (amount.value > 6)
                 ParamControlCCB6.visible = true;
         }
@@ -388,10 +388,10 @@
         if (ParamControlType7.value == 0)
         {
             MidiNote7.visible = false;
-            ParamControlCCA7.displayName = "Button MIDI CC";
+            ParamControlCCA7.displayName = "Button CC";
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
-            ParamControlCCB7.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB7.displayName = "On Value";
             if (amount.value > 7)
                 ParamControlCCB7.visible = true;
         }
@@ -400,14 +400,14 @@
             if (amount.value > 7)
                 MidiNote7.visible = true;
             ParamControlCCA7.visible = false;
-            ParamControlCCB7.displayName = "MIDI Note Velocity";
+            ParamControlCCB7.displayName = "Velocity";
             if (amount.value > 7)
                 ParamControlCCB7.visible = true;
         }
         else if (ParamControlType7.value == 2)
         {
             MidiNote7.visible = false;
-            ParamControlCCA7.displayName = "Fader MIDI CC";
+            ParamControlCCA7.displayName = "Fader CC";
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
             ParamControlCCB7.visible = false;
@@ -415,10 +415,10 @@
         else if (ParamControlType7.value == 3)
         {
             MidiNote7.visible = false;
-            ParamControlCCA7.displayName = "X MIDI CC";
+            ParamControlCCA7.displayName = "X Axis CC";
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
-            ParamControlCCB7.displayName = "Y MIDI CC";
+            ParamControlCCB7.displayName = "Y Axis CC";
             if (amount.value > 7)
                 ParamControlCCB7.visible = true;
         }
@@ -430,10 +430,10 @@
         if (ParamControlType8.value == 0)
         {
             MidiNote8.visible = false;
-            ParamControlCCA8.displayName = "Button MIDI CC";
+            ParamControlCCA8.displayName = "Button CC";
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
-            ParamControlCCB8.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB8.displayName = "On Value";
             if (amount.value > 8)
                 ParamControlCCB8.visible = true;
         }
@@ -442,14 +442,14 @@
             if (amount.value > 8)
                 MidiNote8.visible = true;
             ParamControlCCA8.visible = false;
-            ParamControlCCB8.displayName = "MIDI Note Velocity";
+            ParamControlCCB8.displayName = "Velocity";
             if (amount.value > 8)
                 ParamControlCCB8.visible = true;
         }
         else if (ParamControlType8.value == 2)
         {
             MidiNote8.visible = false;
-            ParamControlCCA8.displayName = "Fader MIDI CC";
+            ParamControlCCA8.displayName = "Fader CC";
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
             ParamControlCCB8.visible = false;
@@ -457,10 +457,10 @@
         else if (ParamControlType8.value == 3)
         {
             MidiNote8.visible = false;
-            ParamControlCCA8.displayName = "X MIDI CC";
+            ParamControlCCA8.displayName = "X Axis CC";
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
-            ParamControlCCB8.displayName = "Y MIDI CC";
+            ParamControlCCB8.displayName = "Y Axis CC";
             if (amount.value > 8)
                 ParamControlCCB8.visible = true;
         }
@@ -472,10 +472,10 @@
         if (ParamControlType9.value == 0)
         {
             MidiNote9.visible = false;
-            ParamControlCCA9.displayName = "Button MIDI CC";
+            ParamControlCCA9.displayName = "Button CC";
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
-            ParamControlCCB9.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB9.displayName = "On Value";
             if (amount.value > 9)
                 ParamControlCCB9.visible = true;
         }
@@ -484,14 +484,14 @@
             if (amount.value > 9)
                 MidiNote9.visible = true;
             ParamControlCCA9.visible = false;
-            ParamControlCCB9.displayName = "MIDI Note Velocity";
+            ParamControlCCB9.displayName = "Velocity";
             if (amount.value > 9)
                 ParamControlCCB9.visible = true;
         }
         else if (ParamControlType9.value == 2)
         {
             MidiNote9.visible = false;
-            ParamControlCCA9.displayName = "Fader MIDI CC";
+            ParamControlCCA9.displayName = "Fader CC";
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
             ParamControlCCB9.visible = false;
@@ -499,10 +499,10 @@
         else if (ParamControlType9.value == 3)
         {
             MidiNote9.visible = false;
-            ParamControlCCA9.displayName = "X MIDI CC";
+            ParamControlCCA9.displayName = "X Axis CC";
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
-            ParamControlCCB9.displayName = "Y MIDI CC";
+            ParamControlCCB9.displayName = "Y Axis CC";
             if (amount.value > 9)
                 ParamControlCCB9.visible = true;
         }
@@ -514,10 +514,10 @@
         if (ParamControlType10.value == 0)
         {
             MidiNote10.visible = false;
-            ParamControlCCA10.displayName = "Button MIDI CC";
+            ParamControlCCA10.displayName = "Button CC";
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
-            ParamControlCCB10.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB10.displayName = "On Value";
             if (amount.value > 10)
                 ParamControlCCB10.visible = true;
         }
@@ -526,14 +526,14 @@
             if (amount.value > 10)
                 MidiNote10.visible = true;
             ParamControlCCA10.visible = false;
-            ParamControlCCB10.displayName = "MIDI Note Velocity";
+            ParamControlCCB10.displayName = "Velocity";
             if (amount.value > 10)
                 ParamControlCCB10.visible = true;
         }
         else if (ParamControlType10.value == 2)
         {
             MidiNote10.visible = false;
-            ParamControlCCA10.displayName = "Fader MIDI CC";
+            ParamControlCCA10.displayName = "Fader CC";
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
             ParamControlCCB10.visible = false;
@@ -541,10 +541,10 @@
         else if (ParamControlType10.value == 3)
         {
             MidiNote10.visible = false;
-            ParamControlCCA10.displayName = "X MIDI CC";
+            ParamControlCCA10.displayName = "X Axis CC";
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
-            ParamControlCCB10.displayName = "Y MIDI CC";
+            ParamControlCCB10.displayName = "Y Axis CC";
             if (amount.value > 10)
                 ParamControlCCB10.visible = true;
         }
@@ -556,10 +556,10 @@
         if (ParamControlType11.value == 0)
         {
             MidiNote11.visible = false;
-            ParamControlCCA11.displayName = "Button MIDI CC";
+            ParamControlCCA11.displayName = "Button CC";
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
-            ParamControlCCB11.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB11.displayName = "On Value";
             if (amount.value > 11)
                 ParamControlCCB11.visible = true;
         }
@@ -568,14 +568,14 @@
             if (amount.value > 11)
                 MidiNote11.visible = true;
             ParamControlCCA11.visible = false;
-            ParamControlCCB11.displayName = "MIDI Note Velocity";
+            ParamControlCCB11.displayName = "Velocity";
             if (amount.value > 11)
                 ParamControlCCB11.visible = true;
         }
         else if (ParamControlType11.value == 2)
         {
             MidiNote11.visible = false;
-            ParamControlCCA11.displayName = "Fader MIDI CC";
+            ParamControlCCA11.displayName = "Fader CC";
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
             ParamControlCCB11.visible = false;
@@ -583,10 +583,10 @@
         else if (ParamControlType11.value == 3)
         {
             MidiNote11.visible = false;
-            ParamControlCCA11.displayName = "X MIDI CC";
+            ParamControlCCA11.displayName = "X Axis CC";
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
-            ParamControlCCB11.displayName = "Y MIDI CC";
+            ParamControlCCB11.displayName = "Y Axis CC";
             if (amount.value > 11)
                 ParamControlCCB11.visible = true;
         }
@@ -598,10 +598,10 @@
         if (ParamControlType12.value == 0)
         {
             MidiNote12.visible = false;
-            ParamControlCCA12.displayName = "Button MIDI CC";
+            ParamControlCCA12.displayName = "Button CC";
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
-            ParamControlCCB12.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB12.displayName = "On Value";
             if (amount.value > 12)
                 ParamControlCCB12.visible = true;
         }
@@ -610,14 +610,14 @@
             if (amount.value > 12)
                 MidiNote12.visible = true;
             ParamControlCCA12.visible = false;
-            ParamControlCCB12.displayName = "MIDI Note Velocity";
+            ParamControlCCB12.displayName = "Velocity";
             if (amount.value > 12)
                 ParamControlCCB12.visible = true;
         }
         else if (ParamControlType12.value == 2)
         {
             MidiNote12.visible = false;
-            ParamControlCCA12.displayName = "Fader MIDI CC";
+            ParamControlCCA12.displayName = "Fader CC";
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
             ParamControlCCB12.visible = false;
@@ -625,10 +625,10 @@
         else if (ParamControlType12.value == 3)
         {
             MidiNote12.visible = false;
-            ParamControlCCA12.displayName = "X MIDI CC";
+            ParamControlCCA12.displayName = "X Axis CC";
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
-            ParamControlCCB12.displayName = "Y MIDI CC";
+            ParamControlCCB12.displayName = "Y Axis CC";
             if (amount.value > 12)
                 ParamControlCCB12.visible = true;
         }
@@ -640,10 +640,10 @@
         if (ParamControlType13.value == 0)
         {
             MidiNote13.visible = false;
-            ParamControlCCA13.displayName = "Button MIDI CC";
+            ParamControlCCA13.displayName = "Button CC";
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
-            ParamControlCCB13.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB13.displayName = "On Value";
             if (amount.value > 13)
                 ParamControlCCB13.visible = true;
         }
@@ -652,14 +652,14 @@
             if (amount.value > 13)
                 MidiNote13.visible = true;
             ParamControlCCA13.visible = false;
-            ParamControlCCB13.displayName = "MIDI Note Velocity";
+            ParamControlCCB13.displayName = "Velocity";
             if (amount.value > 13)
                 ParamControlCCB13.visible = true;
         }
         else if (ParamControlType13.value == 2)
         {
             MidiNote13.visible = false;
-            ParamControlCCA13.displayName = "Fader MIDI CC";
+            ParamControlCCA13.displayName = "Fader CC";
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
             ParamControlCCB13.visible = false;
@@ -667,10 +667,10 @@
         else if (ParamControlType13.value == 3)
         {
             MidiNote13.visible = false;
-            ParamControlCCA13.displayName = "X MIDI CC";
+            ParamControlCCA13.displayName = "X Axis CC";
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
-            ParamControlCCB13.displayName = "Y MIDI CC";
+            ParamControlCCB13.displayName = "Y Axis CC";
             if (amount.value > 13)
                 ParamControlCCB13.visible = true;
         }
@@ -682,10 +682,10 @@
         if (ParamControlType14.value == 0)
         {
             MidiNote14.visible = false;
-            ParamControlCCA14.displayName = "Button MIDI CC";
+            ParamControlCCA14.displayName = "Button CC";
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
-            ParamControlCCB14.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB14.displayName = "On Value";
             if (amount.value > 14)
                 ParamControlCCB14.visible = true;
         }
@@ -694,14 +694,14 @@
             if (amount.value > 14)
                 MidiNote14.visible = true;
             ParamControlCCA14.visible = false;
-            ParamControlCCB14.displayName = "MIDI Note Velocity";
+            ParamControlCCB14.displayName = "Velocity";
             if (amount.value > 14)
                 ParamControlCCB14.visible = true;
         }
         else if (ParamControlType14.value == 2)
         {
             MidiNote14.visible = false;
-            ParamControlCCA14.displayName = "Fader MIDI CC";
+            ParamControlCCA14.displayName = "Fader CC";
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
             ParamControlCCB14.visible = false;
@@ -709,10 +709,10 @@
         else if (ParamControlType14.value == 3)
         {
             MidiNote14.visible = false;
-            ParamControlCCA14.displayName = "X MIDI CC";
+            ParamControlCCA14.displayName = "X Axis CC";
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
-            ParamControlCCB14.displayName = "Y MIDI CC";
+            ParamControlCCB14.displayName = "Y Axis CC";
             if (amount.value > 14)
                 ParamControlCCB14.visible = true;
         }
@@ -724,10 +724,10 @@
         if (ParamControlType15.value == 0)
         {
             MidiNote15.visible = false;
-            ParamControlCCA15.displayName = "Button MIDI CC";
+            ParamControlCCA15.displayName = "Button CC";
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
-            ParamControlCCB15.displayName = "Button 'On' MIDI Value";
+            ParamControlCCB15.displayName = "On Value";
             if (amount.value > 15)
                 ParamControlCCB15.visible = true;
         }
@@ -736,14 +736,14 @@
             if (amount.value > 15)
                 MidiNote15.visible = true;
             ParamControlCCA15.visible = false;
-            ParamControlCCB15.displayName = "MIDI Note Velocity";
+            ParamControlCCB15.displayName = "Velocity";
             if (amount.value > 15)
                 ParamControlCCB15.visible = true;
         }
         else if (ParamControlType15.value == 2)
         {
             MidiNote15.visible = false;
-            ParamControlCCA15.displayName = "Fader MIDI CC";
+            ParamControlCCA15.displayName = "Fader CC";
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
             ParamControlCCB15.visible = false;
@@ -751,10 +751,10 @@
         else if (ParamControlType15.value == 3)
         {
             MidiNote15.visible = false;
-            ParamControlCCA15.displayName = "X MIDI CC";
+            ParamControlCCA15.displayName = "X Axis CC";
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
-            ParamControlCCB15.displayName = "Y MIDI CC";
+            ParamControlCCB15.displayName = "Y Axis CC";
             if (amount.value > 15)
                 ParamControlCCB15.visible = true;
         }
@@ -5236,7 +5236,7 @@ void initialise()
 
 // Map graphics parameters to their actual ranges
     contrast = 110 + contrast * 11;                                     // [0, 10] -> [110, 220]
-    brightness = disableGlobalBrightness ? 255 : 155 + brightness * 10; // [0, 10] -> [155, 255]
+    brightness = individualBrightness ? 255 : 155 + brightness * 10;    // [0, 10] -> [155, 255]
 
 // Initialise dimming and shading parameters
     inactiveDim = contrast << 24;
@@ -5286,7 +5286,7 @@ void initialise()
         float g = (colour & 0xff00) >> 8;
         float b = colour & 0xff;
 
-        if (! disableGlobalBrightness)
+        if (! individualBrightness)
         {
             float maxc = max(r, max(g, b));
             maxc = (brightness + 0.5) / maxc;
