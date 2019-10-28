@@ -2,6 +2,14 @@
 #include <fstream>
 #include <string>
 
+// Parameter default values
+
+int getDefaultYAxisCC (int controlIndex) { return 127; }                // can depend on control index
+int getDefaultNote (int controlIndex)    { return 60 + controlIndex; }  // can depend on control index
+const int defaultButtonOnValue = 127;
+const int defaultNoteVelocity = 127;
+
+
 class OnChangeScript
 {
 public:
@@ -47,7 +55,7 @@ int main()
         OnChangeScript script (outFile, "ParamControlType" + std::to_string (i));
 
         outFile
-            << "\tif (ParamControlType" << i << ".value == 0)\n"        // button
+            << "\tif (ParamControlType" << i << ".value == 0)\n"                // BUTTON
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
@@ -56,23 +64,26 @@ int main()
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"On Value\";\n"
+            << "\t\tParamControlCCB" << i << ".value = " << defaultButtonOnValue << ";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
 
-            << "\telse if (ParamControlType" << i << ".value == 1)\n"   // note
+            << "\telse if (ParamControlType" << i << ".value == 1)\n"           // NOTE
             << "\t{\n"
+            << "\t\tMidiNote" << i << ".value = " << getDefaultNote (i) << ";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tMidiNote" << i << ".visible = true;\n"
 
             << "\t\tParamControlCCA" << i << ".visible = false;\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"Velocity\";\n"
+            << "\t\tParamControlCCB" << i << ".value = " << defaultNoteVelocity << ";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n"
 
-            << "\telse if (ParamControlType" << i << ".value == 2)\n"   // fader
+            << "\telse if (ParamControlType" << i << ".value == 2)\n"           // FADER
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
@@ -83,7 +94,7 @@ int main()
             << "\t\tParamControlCCB" << i << ".visible = false;\n"
             << "\t}\n"
 
-            << "\telse if (ParamControlType" << i << ".value == 3)\n"   // XY Pad
+            << "\telse if (ParamControlType" << i << ".value == 3)\n"           // XY PAD
             << "\t{\n"
             << "\t\tMidiNote" << i << ".visible = false;\n"
 
@@ -92,6 +103,7 @@ int main()
             << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"Y Axis CC\";\n"
+            << "\t\tParamControlCCB" << i << ".value = " << getDefaultYAxisCC (i) << ";\n"
             << "\t\tif (amount.value > " << i << ")\n"
             << "\t\t\tParamControlCCB" << i << ".visible = true;\n"
             << "\t}\n";

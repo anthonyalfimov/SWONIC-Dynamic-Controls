@@ -13,15 +13,18 @@
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
             ParamControlCCB0.displayName = "On Value";
+            ParamControlCCB0.value = 127;
             if (amount.value > 0)
                 ParamControlCCB0.visible = true;
         }
         else if (ParamControlType0.value == 1)
         {
+            MidiNote0.value = 60;
             if (amount.value > 0)
                 MidiNote0.visible = true;
             ParamControlCCA0.visible = false;
             ParamControlCCB0.displayName = "Velocity";
+            ParamControlCCB0.value = 127;
             if (amount.value > 0)
                 ParamControlCCB0.visible = true;
         }
@@ -40,6 +43,7 @@
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
             ParamControlCCB0.displayName = "Y Axis CC";
+            ParamControlCCB0.value = 127;
             if (amount.value > 0)
                 ParamControlCCB0.visible = true;
         }
@@ -55,15 +59,18 @@
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
             ParamControlCCB1.displayName = "On Value";
+            ParamControlCCB1.value = 127;
             if (amount.value > 1)
                 ParamControlCCB1.visible = true;
         }
         else if (ParamControlType1.value == 1)
         {
+            MidiNote1.value = 61;
             if (amount.value > 1)
                 MidiNote1.visible = true;
             ParamControlCCA1.visible = false;
             ParamControlCCB1.displayName = "Velocity";
+            ParamControlCCB1.value = 127;
             if (amount.value > 1)
                 ParamControlCCB1.visible = true;
         }
@@ -82,6 +89,7 @@
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
             ParamControlCCB1.displayName = "Y Axis CC";
+            ParamControlCCB1.value = 127;
             if (amount.value > 1)
                 ParamControlCCB1.visible = true;
         }
@@ -97,15 +105,18 @@
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
             ParamControlCCB2.displayName = "On Value";
+            ParamControlCCB2.value = 127;
             if (amount.value > 2)
                 ParamControlCCB2.visible = true;
         }
         else if (ParamControlType2.value == 1)
         {
+            MidiNote2.value = 62;
             if (amount.value > 2)
                 MidiNote2.visible = true;
             ParamControlCCA2.visible = false;
             ParamControlCCB2.displayName = "Velocity";
+            ParamControlCCB2.value = 127;
             if (amount.value > 2)
                 ParamControlCCB2.visible = true;
         }
@@ -124,6 +135,7 @@
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
             ParamControlCCB2.displayName = "Y Axis CC";
+            ParamControlCCB2.value = 127;
             if (amount.value > 2)
                 ParamControlCCB2.visible = true;
         }
@@ -139,15 +151,18 @@
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
             ParamControlCCB3.displayName = "On Value";
+            ParamControlCCB3.value = 127;
             if (amount.value > 3)
                 ParamControlCCB3.visible = true;
         }
         else if (ParamControlType3.value == 1)
         {
+            MidiNote3.value = 63;
             if (amount.value > 3)
                 MidiNote3.visible = true;
             ParamControlCCA3.visible = false;
             ParamControlCCB3.displayName = "Velocity";
+            ParamControlCCB3.value = 127;
             if (amount.value > 3)
                 ParamControlCCB3.visible = true;
         }
@@ -166,6 +181,7 @@
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
             ParamControlCCB3.displayName = "Y Axis CC";
+            ParamControlCCB3.value = 127;
             if (amount.value > 3)
                 ParamControlCCB3.visible = true;
         }
@@ -181,15 +197,18 @@
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
             ParamControlCCB4.displayName = "On Value";
+            ParamControlCCB4.value = 127;
             if (amount.value > 4)
                 ParamControlCCB4.visible = true;
         }
         else if (ParamControlType4.value == 1)
         {
+            MidiNote4.value = 64;
             if (amount.value > 4)
                 MidiNote4.visible = true;
             ParamControlCCA4.visible = false;
             ParamControlCCB4.displayName = "Velocity";
+            ParamControlCCB4.value = 127;
             if (amount.value > 4)
                 ParamControlCCB4.visible = true;
         }
@@ -208,6 +227,7 @@
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
             ParamControlCCB4.displayName = "Y Axis CC";
+            ParamControlCCB4.value = 127;
             if (amount.value > 4)
                 ParamControlCCB4.visible = true;
         }
@@ -223,15 +243,18 @@
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
             ParamControlCCB5.displayName = "On Value";
+            ParamControlCCB5.value = 127;
             if (amount.value > 5)
                 ParamControlCCB5.visible = true;
         }
         else if (ParamControlType5.value == 1)
         {
+            MidiNote5.value = 65;
             if (amount.value > 5)
                 MidiNote5.visible = true;
             ParamControlCCA5.visible = false;
             ParamControlCCB5.displayName = "Velocity";
+            ParamControlCCB5.value = 127;
             if (amount.value > 5)
                 ParamControlCCB5.visible = true;
         }
@@ -250,6 +273,7 @@
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
             ParamControlCCB5.displayName = "Y Axis CC";
+            ParamControlCCB5.value = 127;
             if (amount.value > 5)
                 ParamControlCCB5.visible = true;
         }
@@ -265,15 +289,18 @@
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
             ParamControlCCB6.displayName = "On Value";
+            ParamControlCCB6.value = 127;
             if (amount.value > 6)
                 ParamControlCCB6.visible = true;
         }
         else if (ParamControlType6.value == 1)
         {
+            MidiNote6.value = 66;
             if (amount.value > 6)
                 MidiNote6.visible = true;
             ParamControlCCA6.visible = false;
             ParamControlCCB6.displayName = "Velocity";
+            ParamControlCCB6.value = 127;
             if (amount.value > 6)
                 ParamControlCCB6.visible = true;
         }
@@ -292,6 +319,7 @@
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
             ParamControlCCB6.displayName = "Y Axis CC";
+            ParamControlCCB6.value = 127;
             if (amount.value > 6)
                 ParamControlCCB6.visible = true;
         }
@@ -307,15 +335,18 @@
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
             ParamControlCCB7.displayName = "On Value";
+            ParamControlCCB7.value = 127;
             if (amount.value > 7)
                 ParamControlCCB7.visible = true;
         }
         else if (ParamControlType7.value == 1)
         {
+            MidiNote7.value = 67;
             if (amount.value > 7)
                 MidiNote7.visible = true;
             ParamControlCCA7.visible = false;
             ParamControlCCB7.displayName = "Velocity";
+            ParamControlCCB7.value = 127;
             if (amount.value > 7)
                 ParamControlCCB7.visible = true;
         }
@@ -334,6 +365,7 @@
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
             ParamControlCCB7.displayName = "Y Axis CC";
+            ParamControlCCB7.value = 127;
             if (amount.value > 7)
                 ParamControlCCB7.visible = true;
         }
@@ -349,15 +381,18 @@
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
             ParamControlCCB8.displayName = "On Value";
+            ParamControlCCB8.value = 127;
             if (amount.value > 8)
                 ParamControlCCB8.visible = true;
         }
         else if (ParamControlType8.value == 1)
         {
+            MidiNote8.value = 68;
             if (amount.value > 8)
                 MidiNote8.visible = true;
             ParamControlCCA8.visible = false;
             ParamControlCCB8.displayName = "Velocity";
+            ParamControlCCB8.value = 127;
             if (amount.value > 8)
                 ParamControlCCB8.visible = true;
         }
@@ -376,6 +411,7 @@
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
             ParamControlCCB8.displayName = "Y Axis CC";
+            ParamControlCCB8.value = 127;
             if (amount.value > 8)
                 ParamControlCCB8.visible = true;
         }
@@ -391,15 +427,18 @@
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
             ParamControlCCB9.displayName = "On Value";
+            ParamControlCCB9.value = 127;
             if (amount.value > 9)
                 ParamControlCCB9.visible = true;
         }
         else if (ParamControlType9.value == 1)
         {
+            MidiNote9.value = 69;
             if (amount.value > 9)
                 MidiNote9.visible = true;
             ParamControlCCA9.visible = false;
             ParamControlCCB9.displayName = "Velocity";
+            ParamControlCCB9.value = 127;
             if (amount.value > 9)
                 ParamControlCCB9.visible = true;
         }
@@ -418,6 +457,7 @@
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
             ParamControlCCB9.displayName = "Y Axis CC";
+            ParamControlCCB9.value = 127;
             if (amount.value > 9)
                 ParamControlCCB9.visible = true;
         }
@@ -433,15 +473,18 @@
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
             ParamControlCCB10.displayName = "On Value";
+            ParamControlCCB10.value = 127;
             if (amount.value > 10)
                 ParamControlCCB10.visible = true;
         }
         else if (ParamControlType10.value == 1)
         {
+            MidiNote10.value = 70;
             if (amount.value > 10)
                 MidiNote10.visible = true;
             ParamControlCCA10.visible = false;
             ParamControlCCB10.displayName = "Velocity";
+            ParamControlCCB10.value = 127;
             if (amount.value > 10)
                 ParamControlCCB10.visible = true;
         }
@@ -460,6 +503,7 @@
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
             ParamControlCCB10.displayName = "Y Axis CC";
+            ParamControlCCB10.value = 127;
             if (amount.value > 10)
                 ParamControlCCB10.visible = true;
         }
@@ -475,15 +519,18 @@
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
             ParamControlCCB11.displayName = "On Value";
+            ParamControlCCB11.value = 127;
             if (amount.value > 11)
                 ParamControlCCB11.visible = true;
         }
         else if (ParamControlType11.value == 1)
         {
+            MidiNote11.value = 71;
             if (amount.value > 11)
                 MidiNote11.visible = true;
             ParamControlCCA11.visible = false;
             ParamControlCCB11.displayName = "Velocity";
+            ParamControlCCB11.value = 127;
             if (amount.value > 11)
                 ParamControlCCB11.visible = true;
         }
@@ -502,6 +549,7 @@
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
             ParamControlCCB11.displayName = "Y Axis CC";
+            ParamControlCCB11.value = 127;
             if (amount.value > 11)
                 ParamControlCCB11.visible = true;
         }
@@ -517,15 +565,18 @@
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
             ParamControlCCB12.displayName = "On Value";
+            ParamControlCCB12.value = 127;
             if (amount.value > 12)
                 ParamControlCCB12.visible = true;
         }
         else if (ParamControlType12.value == 1)
         {
+            MidiNote12.value = 72;
             if (amount.value > 12)
                 MidiNote12.visible = true;
             ParamControlCCA12.visible = false;
             ParamControlCCB12.displayName = "Velocity";
+            ParamControlCCB12.value = 127;
             if (amount.value > 12)
                 ParamControlCCB12.visible = true;
         }
@@ -544,6 +595,7 @@
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
             ParamControlCCB12.displayName = "Y Axis CC";
+            ParamControlCCB12.value = 127;
             if (amount.value > 12)
                 ParamControlCCB12.visible = true;
         }
@@ -559,15 +611,18 @@
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
             ParamControlCCB13.displayName = "On Value";
+            ParamControlCCB13.value = 127;
             if (amount.value > 13)
                 ParamControlCCB13.visible = true;
         }
         else if (ParamControlType13.value == 1)
         {
+            MidiNote13.value = 73;
             if (amount.value > 13)
                 MidiNote13.visible = true;
             ParamControlCCA13.visible = false;
             ParamControlCCB13.displayName = "Velocity";
+            ParamControlCCB13.value = 127;
             if (amount.value > 13)
                 ParamControlCCB13.visible = true;
         }
@@ -586,6 +641,7 @@
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
             ParamControlCCB13.displayName = "Y Axis CC";
+            ParamControlCCB13.value = 127;
             if (amount.value > 13)
                 ParamControlCCB13.visible = true;
         }
@@ -601,15 +657,18 @@
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
             ParamControlCCB14.displayName = "On Value";
+            ParamControlCCB14.value = 127;
             if (amount.value > 14)
                 ParamControlCCB14.visible = true;
         }
         else if (ParamControlType14.value == 1)
         {
+            MidiNote14.value = 74;
             if (amount.value > 14)
                 MidiNote14.visible = true;
             ParamControlCCA14.visible = false;
             ParamControlCCB14.displayName = "Velocity";
+            ParamControlCCB14.value = 127;
             if (amount.value > 14)
                 ParamControlCCB14.visible = true;
         }
@@ -628,6 +687,7 @@
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
             ParamControlCCB14.displayName = "Y Axis CC";
+            ParamControlCCB14.value = 127;
             if (amount.value > 14)
                 ParamControlCCB14.visible = true;
         }
@@ -643,15 +703,18 @@
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
             ParamControlCCB15.displayName = "On Value";
+            ParamControlCCB15.value = 127;
             if (amount.value > 15)
                 ParamControlCCB15.visible = true;
         }
         else if (ParamControlType15.value == 1)
         {
+            MidiNote15.value = 75;
             if (amount.value > 15)
                 MidiNote15.visible = true;
             ParamControlCCA15.visible = false;
             ParamControlCCB15.displayName = "Velocity";
+            ParamControlCCB15.value = 127;
             if (amount.value > 15)
                 ParamControlCCB15.visible = true;
         }
@@ -670,6 +733,7 @@
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
             ParamControlCCB15.displayName = "Y Axis CC";
+            ParamControlCCB15.value = 127;
             if (amount.value > 15)
                 ParamControlCCB15.visible = true;
         }
