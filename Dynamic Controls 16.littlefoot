@@ -4847,6 +4847,7 @@
 //  Heap Layout
 //  |-----------|-------------------------------------------------------------|
 //  | bytes:    | data:
+//  |-----------|-------------------------------------------------------------|
 //  | 000 - 015 | 16 1-byte control CC A values [0, 127]
 //  | 016 - 031 | 16 1-byte control CC B values [0, 127]
 //  | 032 - 047 | 16 1-byte pressure values [0, 127]
@@ -4868,8 +4869,6 @@
 //  |-----------|-------------------------------------------------------------|
 //
 
-// TODO: rearrange heap data
-
 //==============================================================================
 //  Global Constants
 //==============================================================================
@@ -4887,27 +4886,6 @@ const int B_LATCH = 1;
 //==============================================================================
 //  Heap Setters and Getters
 //==============================================================================
-//------------------------------------------------------------------------------
-//  Control Settings
-//------------------------------------------------------------------------------
-void setMidiChannel(int controlIndex, int value)    { setHeapByte(controlIndex + 176, value); }
-int  getMidiChannel(int controlIndex)               { return getHeapByte(controlIndex + 176); }
-
-void setControlCCA(int controlIndex, int value)     { setHeapByte(controlIndex + 192, value); }
-int  getControlCCA(int controlIndex)                { return getHeapByte(controlIndex + 192); }
-
-void setControlCCB(int controlIndex, int value)     { setHeapByte(controlIndex + 208, value); }
-int  getControlCCB(int controlIndex)                { return getHeapByte(controlIndex + 208); }
-
-void setControlType(int controlIndex, int value)    { setHeapByte(controlIndex + 224, value); }
-int  getControlType(int controlIndex)               { return getHeapByte(controlIndex + 224); }
-
-void setControlMode(int controlIndex, int value)    { setHeapByte(controlIndex + 240, value); }
-int  getControlMode(int controlIndex)               { return getHeapByte(controlIndex + 240); }
-
-void setControlColour(int controlIndex, int value)  { setHeapInt(controlIndex * 4 + 256, value); }
-int  getControlColour(int controlIndex)             { return getHeapInt(controlIndex * 4 + 256); }
-
 //------------------------------------------------------------------------------
 //  Control Values
 //------------------------------------------------------------------------------
@@ -4944,6 +4922,27 @@ int  getControlMaxY(int controlIndex)               { return getHeapByte(control
 //------------------------------------------------------------------------------
 void setControlTouchField(int controlIndex, int touchField) { setHeapInt(controlIndex * 4 + 112, touchField); }
 int  getControlTouchField(int controlIndex)                 { return getHeapInt(controlIndex * 4 + 112); }
+
+//------------------------------------------------------------------------------
+//  Control Parameters
+//------------------------------------------------------------------------------
+void setMidiChannel(int controlIndex, int value)    { setHeapByte(controlIndex + 176, value); }
+int  getMidiChannel(int controlIndex)               { return getHeapByte(controlIndex + 176); }
+
+void setControlCCA(int controlIndex, int value)     { setHeapByte(controlIndex + 192, value); }
+int  getControlCCA(int controlIndex)                { return getHeapByte(controlIndex + 192); }
+
+void setControlCCB(int controlIndex, int value)     { setHeapByte(controlIndex + 208, value); }
+int  getControlCCB(int controlIndex)                { return getHeapByte(controlIndex + 208); }
+
+void setControlType(int controlIndex, int value)    { setHeapByte(controlIndex + 224, value); }
+int  getControlType(int controlIndex)               { return getHeapByte(controlIndex + 224); }
+
+void setControlMode(int controlIndex, int value)    { setHeapByte(controlIndex + 240, value); }
+int  getControlMode(int controlIndex)               { return getHeapByte(controlIndex + 240); }
+
+void setControlColour(int controlIndex, int value)  { setHeapInt(controlIndex * 4 + 256, value); }
+int  getControlColour(int controlIndex)             { return getHeapInt(controlIndex * 4 + 256); }
 
 //==============================================================================
 //  Control Sizes and Aspect Ratios
@@ -5433,7 +5432,6 @@ void drawButton(int controlIndex, int colour, int shade)
 
 //==============================================================================
 
-/*
 /*
 <display backgroundColour="0xFF7E7E7E" textColour ="0xFFFFFFFF">
     <pixels>
