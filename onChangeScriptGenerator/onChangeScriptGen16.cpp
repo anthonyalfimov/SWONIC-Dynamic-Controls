@@ -41,11 +41,11 @@ int main()
     std::ofstream outFile;
     outFile.open (fileName);
 
-    // onChange="disableGlobalBrightness"
+    // onChange="individualBrightness"
     {
-        OnChangeScript script (outFile, "disableGlobalBrightness");
+        OnChangeScript script (outFile, "individualBrightness");
 
-        outFile << "\tbrightness.visible = ! disableGlobalBrightness.value;\n";
+        outFile << "\tbrightness.visible = ! individualBrightness.value;\n";
     }
 
     // onChange="ParamControlType"

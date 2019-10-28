@@ -83,9 +83,9 @@
 
     </variables>
 
-    <script onChange="disableGlobalBrightness">
+    <script onChange="individualBrightness">
     <![CDATA[
-        brightness.visible = ! disableGlobalBrightness.value;
+        brightness.visible = ! individualBrightness.value;
     ]]>
     </script>
 
