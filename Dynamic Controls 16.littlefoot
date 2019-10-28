@@ -128,7 +128,7 @@
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
             ParamControlCCB0.displayName = "Y Axis CC";
-            ParamControlCCB0.value = 127;
+            ParamControlCCB0.value = 102;
             if (amount.value > 0)
                 ParamControlCCB0.visible = true;
         }
@@ -174,7 +174,7 @@
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
             ParamControlCCB1.displayName = "Y Axis CC";
-            ParamControlCCB1.value = 127;
+            ParamControlCCB1.value = 103;
             if (amount.value > 1)
                 ParamControlCCB1.visible = true;
         }
@@ -220,7 +220,7 @@
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
             ParamControlCCB2.displayName = "Y Axis CC";
-            ParamControlCCB2.value = 127;
+            ParamControlCCB2.value = 104;
             if (amount.value > 2)
                 ParamControlCCB2.visible = true;
         }
@@ -266,7 +266,7 @@
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
             ParamControlCCB3.displayName = "Y Axis CC";
-            ParamControlCCB3.value = 127;
+            ParamControlCCB3.value = 105;
             if (amount.value > 3)
                 ParamControlCCB3.visible = true;
         }
@@ -312,7 +312,7 @@
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
             ParamControlCCB4.displayName = "Y Axis CC";
-            ParamControlCCB4.value = 127;
+            ParamControlCCB4.value = 106;
             if (amount.value > 4)
                 ParamControlCCB4.visible = true;
         }
@@ -358,7 +358,7 @@
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
             ParamControlCCB5.displayName = "Y Axis CC";
-            ParamControlCCB5.value = 127;
+            ParamControlCCB5.value = 107;
             if (amount.value > 5)
                 ParamControlCCB5.visible = true;
         }
@@ -404,7 +404,7 @@
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
             ParamControlCCB6.displayName = "Y Axis CC";
-            ParamControlCCB6.value = 127;
+            ParamControlCCB6.value = 108;
             if (amount.value > 6)
                 ParamControlCCB6.visible = true;
         }
@@ -450,7 +450,7 @@
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
             ParamControlCCB7.displayName = "Y Axis CC";
-            ParamControlCCB7.value = 127;
+            ParamControlCCB7.value = 109;
             if (amount.value > 7)
                 ParamControlCCB7.visible = true;
         }
@@ -496,7 +496,7 @@
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
             ParamControlCCB8.displayName = "Y Axis CC";
-            ParamControlCCB8.value = 127;
+            ParamControlCCB8.value = 110;
             if (amount.value > 8)
                 ParamControlCCB8.visible = true;
         }
@@ -542,7 +542,7 @@
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
             ParamControlCCB9.displayName = "Y Axis CC";
-            ParamControlCCB9.value = 127;
+            ParamControlCCB9.value = 111;
             if (amount.value > 9)
                 ParamControlCCB9.visible = true;
         }
@@ -588,7 +588,7 @@
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
             ParamControlCCB10.displayName = "Y Axis CC";
-            ParamControlCCB10.value = 127;
+            ParamControlCCB10.value = 112;
             if (amount.value > 10)
                 ParamControlCCB10.visible = true;
         }
@@ -634,7 +634,7 @@
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
             ParamControlCCB11.displayName = "Y Axis CC";
-            ParamControlCCB11.value = 127;
+            ParamControlCCB11.value = 113;
             if (amount.value > 11)
                 ParamControlCCB11.visible = true;
         }
@@ -680,7 +680,7 @@
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
             ParamControlCCB12.displayName = "Y Axis CC";
-            ParamControlCCB12.value = 127;
+            ParamControlCCB12.value = 114;
             if (amount.value > 12)
                 ParamControlCCB12.visible = true;
         }
@@ -726,7 +726,7 @@
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
             ParamControlCCB13.displayName = "Y Axis CC";
-            ParamControlCCB13.value = 127;
+            ParamControlCCB13.value = 115;
             if (amount.value > 13)
                 ParamControlCCB13.visible = true;
         }
@@ -772,7 +772,7 @@
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
             ParamControlCCB14.displayName = "Y Axis CC";
-            ParamControlCCB14.value = 127;
+            ParamControlCCB14.value = 116;
             if (amount.value > 14)
                 ParamControlCCB14.visible = true;
         }
@@ -818,7 +818,7 @@
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
             ParamControlCCB15.displayName = "Y Axis CC";
-            ParamControlCCB15.value = 127;
+            ParamControlCCB15.value = 117;
             if (amount.value > 15)
                 ParamControlCCB15.visible = true;
         }
