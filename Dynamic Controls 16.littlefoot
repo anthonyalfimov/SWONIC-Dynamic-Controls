@@ -5497,7 +5497,7 @@ void drawButton(int controlIndex, int colour, int shade)
 //==============================================================================
 
 /*
-<display backgroundColour="0xFF7E7E7E" textColour ="0xFFFFFFFF">
+<display backgroundColour="0xFF7E7C7C" textColour ="0xFFFFFFFF">
     <pixels>
         <pixel index="0" colour="0xFFFF0600" />
         <pixel index="1" colour="0xFFFF0600" />
