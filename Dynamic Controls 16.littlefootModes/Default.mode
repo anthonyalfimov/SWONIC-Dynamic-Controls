@@ -187,7 +187,7 @@
   <variable name="ControlWidth13" value="1"/>
   <variable name="ControlHeight13" value="1"/>
   <variable name="MidiNote13" value="C#4"/>
-  <variable name="ParamControlCCA13" value="102"/>
+  <variable name="ParamControlCCA13" value="119"/>
   <variable name="ParamControlCCB13" value="127"/>
   <variable name="SendPress13" value="false"/>
   <variable name="ControlCCP13" value="86"/>
@@ -200,7 +200,7 @@
   <variable name="ControlWidth14" value="1"/>
   <variable name="ControlHeight14" value="1"/>
   <variable name="MidiNote14" value="D4"/>
-  <variable name="ParamControlCCA14" value="102"/>
+  <variable name="ParamControlCCA14" value="89"/>
   <variable name="ParamControlCCB14" value="127"/>
   <variable name="SendPress14" value="false"/>
   <variable name="ControlCCP14" value="87"/>
@@ -213,7 +213,7 @@
   <variable name="ControlWidth15" value="1"/>
   <variable name="ControlHeight15" value="1"/>
   <variable name="MidiNote15" value="D#4"/>
-  <variable name="ParamControlCCA15" value="102"/>
+  <variable name="ParamControlCCA15" value="90"/>
   <variable name="ParamControlCCB15" value="127"/>
   <variable name="SendPress15" value="false"/>
   <variable name="ControlCCP15" value="88"/>
