@@ -216,5 +216,5 @@
   <variable name="ParamControlCCA15" value="117"/>
   <variable name="ParamControlCCB15" value="127"/>
   <variable name="SendPress15" value="false"/>
-  <variable name="ControlCCP15" value="88"/>
+  <variable name="ControlCCP15" value="89"/>
 </mode>
