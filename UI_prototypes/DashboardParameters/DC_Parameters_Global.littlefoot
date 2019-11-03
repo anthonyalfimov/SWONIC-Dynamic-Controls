@@ -62,10 +62,10 @@
             displayName=    "Shading"
             tooltip=        "Select the shading preset for controls." />
 
-        <variable name="disableGlobalBrightness" type="bool" value="true" group="graphics"
+        <variable name="individualBrightness" type="bool" value="true" group="graphics"
 
-            displayName=    "Disable Global Brightness [!]"
-            tooltip=        "Disable to allow brightness of control colours to be controlled by the individual control colour selections.&#13;&#13;[!] Disabling brightness correction might lead to black LEDs or strange behaviours of shading, depending on the indivual control colour selections." />
+            displayName=    "Individual Brightness [!]"
+            tooltip=        "Disable to allow brightness of control colours to be controlled by the individual control colour selections.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive. Setting control brightness too low can lead to black LEDs." />
 
     </variables>
 </metadata>
