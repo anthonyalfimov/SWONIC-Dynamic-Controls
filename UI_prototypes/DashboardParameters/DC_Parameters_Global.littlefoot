@@ -27,23 +27,23 @@
 
         <variable name="amount" min="1" max="16" value="1" type="int"
 
-            displayName=    "Amount of Controls"
+            displayName=    "Number of Controls"
             tooltip=        "Select the number of controls to display on the Lightpad Surface.&#13;&#13;Range: [1-16]" />
 
         <variable name="globalMidiChannel"  type="option"  value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
 
-            displayName=    "MIDI Default Channel"
+            displayName=    "Global MIDI Channel"
             tooltip=        "Select the default MIDI channel used to send MIDI messages." />
-
-        <variable name="receiveMIDI" type="bool" value="false"
-
-            displayName=    "MIDI Receive [!]"
-            tooltip=        "Enable to allow controls in Latch mode to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A high number of simultaneous incoming MIDI streams might freeze the app.&#13;&#13;[!] MIDI Note and Pressure CC are not received." />
 
         <variable name="useOverlaps"  type="bool" value="false"
 
-            displayName=    "Overlapping [!]"
+            displayName=    "Overlapping Controls [!]"
             tooltip=        "Enable to allow controls partly or fully covered by others to send MIDI messages.&#13;&#13;[!] A high number of overlapping controls might freeze the app." />
+
+        <variable name="receiveMIDI" type="bool" value="false"
+
+            displayName=    "Receive&#13;MIDI CC [!]"
+            tooltip=        "Enable to allow controls in Latch mode to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A high number of simultaneous incoming MIDI streams might freeze the app.&#13;&#13;[!] MIDI Note and Pressure CC are not received." />
 
 
 

@@ -43,12 +43,12 @@
 
         <variable name="ControlPosX" type="int" min="1" max="15" value="1"
 
-            displayName=    "X-Coordinate"
+            displayName=    "X Position"
             tooltip=        "Select the horizontal position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlPosY" type="int" min="1" max="15" value="1"
 
-            displayName=    "Y-Coordinate"
+            displayName=    "Y Position"
             tooltip=        "Select the vertical position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlWidth" type="int" min="1" max="15" value="1"
@@ -63,23 +63,23 @@
 
         <variable name="ParamControlCCA"  type="int" min="0" max="127" initStart="102"
 
-            displayName=    "MIDI X-Axis CC"
-            tooltip=        "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]"/>
+            displayName=    "X Axis CC"
+            tooltip=        "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]"/>
 
         <variable name="ParamControlCCB"  type="int" min="0" max="127" initStart="102"
 
-            displayName=    "MIDI Y-Axis CC"
-            tooltip=        "Select the MIDI value/message sent by the control.&#13;&#13;Range: [0-127]"/>
-
-        <variable name="ControlCCP"  type="int" min="0" max="127" initStart="102"
-
-            displayName=    "MIDI Pressure CC"
-            tooltip=        "Select the MIDI message used to transmit pressure.&#13;&#13;Range: [0-127]" />
+            displayName=    "Y Axis CC"
+            tooltip=        "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]"/>
 
         <variable name="SendPress"  type="bool" value="false"
 
             displayName=    "Send Pressure"
             tooltip=        "Enable to send MIDI messages [MIDI Pressure CC] for pressure applied to the control." />
+
+        <variable name="ControlCCP"  type="int" min="0" max="127" initStart="102"
+
+            displayName=    "Pressure CC"
+            tooltip=        "Select the MIDI message for transmitting pressure.&#13;&#13;Range: [0-127]" />
 
         </vector>
 
