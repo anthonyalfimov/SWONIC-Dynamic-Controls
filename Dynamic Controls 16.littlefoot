@@ -93,44 +93,53 @@
     <![CDATA[
         if (ParamControlType0.value == 0)
         {
-            MidiNote0.visible = false;
             ParamControlCCA0.displayName = "Button CC";
-            if (amount.value > 0)
-                ParamControlCCA0.visible = true;
+            ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB0.displayName = "On Value";
+            ParamControlCCB0.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB0.value = 127;
+            MidiNote0.visible = false;
             if (amount.value > 0)
+            {
+                ParamControlCCA0.visible = true;
                 ParamControlCCB0.visible = true;
+            }
         }
         else if (ParamControlType0.value == 1)
         {
             MidiNote0.value = 60;
-            if (amount.value > 0)
-                MidiNote0.visible = true;
-            ParamControlCCA0.visible = false;
             ParamControlCCB0.displayName = "Velocity";
+            ParamControlCCB0.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB0.value = 127;
+            ParamControlCCA0.visible = false;
             if (amount.value > 0)
+            {
+                MidiNote0.visible = true;
                 ParamControlCCB0.visible = true;
+            }
         }
         else if (ParamControlType0.value == 2)
         {
-            MidiNote0.visible = false;
             ParamControlCCA0.displayName = "Fader CC";
+            ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote0.visible = false;
+            ParamControlCCB0.visible = false;
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
-            ParamControlCCB0.visible = false;
         }
         else if (ParamControlType0.value == 3)
         {
-            MidiNote0.visible = false;
             ParamControlCCA0.displayName = "X Axis CC";
-            if (amount.value > 0)
-                ParamControlCCA0.visible = true;
+            ParamControlCCA0.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB0.displayName = "Y Axis CC";
+            ParamControlCCB0.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB0.value = 118;
+            MidiNote0.visible = false;
             if (amount.value > 0)
+            {
+                ParamControlCCA0.visible = true;
                 ParamControlCCB0.visible = true;
+            }
         }
     ]]>
     </script>
@@ -139,44 +148,53 @@
     <![CDATA[
         if (ParamControlType1.value == 0)
         {
-            MidiNote1.visible = false;
             ParamControlCCA1.displayName = "Button CC";
-            if (amount.value > 1)
-                ParamControlCCA1.visible = true;
+            ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB1.displayName = "On Value";
+            ParamControlCCB1.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB1.value = 127;
+            MidiNote1.visible = false;
             if (amount.value > 1)
+            {
+                ParamControlCCA1.visible = true;
                 ParamControlCCB1.visible = true;
+            }
         }
         else if (ParamControlType1.value == 1)
         {
             MidiNote1.value = 61;
-            if (amount.value > 1)
-                MidiNote1.visible = true;
-            ParamControlCCA1.visible = false;
             ParamControlCCB1.displayName = "Velocity";
+            ParamControlCCB1.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB1.value = 127;
+            ParamControlCCA1.visible = false;
             if (amount.value > 1)
+            {
+                MidiNote1.visible = true;
                 ParamControlCCB1.visible = true;
+            }
         }
         else if (ParamControlType1.value == 2)
         {
-            MidiNote1.visible = false;
             ParamControlCCA1.displayName = "Fader CC";
+            ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote1.visible = false;
+            ParamControlCCB1.visible = false;
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
-            ParamControlCCB1.visible = false;
         }
         else if (ParamControlType1.value == 3)
         {
-            MidiNote1.visible = false;
             ParamControlCCA1.displayName = "X Axis CC";
-            if (amount.value > 1)
-                ParamControlCCA1.visible = true;
+            ParamControlCCA1.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB1.displayName = "Y Axis CC";
+            ParamControlCCB1.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB1.value = 118;
+            MidiNote1.visible = false;
             if (amount.value > 1)
+            {
+                ParamControlCCA1.visible = true;
                 ParamControlCCB1.visible = true;
+            }
         }
     ]]>
     </script>
@@ -185,44 +203,53 @@
     <![CDATA[
         if (ParamControlType2.value == 0)
         {
-            MidiNote2.visible = false;
             ParamControlCCA2.displayName = "Button CC";
-            if (amount.value > 2)
-                ParamControlCCA2.visible = true;
+            ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB2.displayName = "On Value";
+            ParamControlCCB2.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB2.value = 127;
+            MidiNote2.visible = false;
             if (amount.value > 2)
+            {
+                ParamControlCCA2.visible = true;
                 ParamControlCCB2.visible = true;
+            }
         }
         else if (ParamControlType2.value == 1)
         {
             MidiNote2.value = 62;
-            if (amount.value > 2)
-                MidiNote2.visible = true;
-            ParamControlCCA2.visible = false;
             ParamControlCCB2.displayName = "Velocity";
+            ParamControlCCB2.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB2.value = 127;
+            ParamControlCCA2.visible = false;
             if (amount.value > 2)
+            {
+                MidiNote2.visible = true;
                 ParamControlCCB2.visible = true;
+            }
         }
         else if (ParamControlType2.value == 2)
         {
-            MidiNote2.visible = false;
             ParamControlCCA2.displayName = "Fader CC";
+            ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote2.visible = false;
+            ParamControlCCB2.visible = false;
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
-            ParamControlCCB2.visible = false;
         }
         else if (ParamControlType2.value == 3)
         {
-            MidiNote2.visible = false;
             ParamControlCCA2.displayName = "X Axis CC";
-            if (amount.value > 2)
-                ParamControlCCA2.visible = true;
+            ParamControlCCA2.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB2.displayName = "Y Axis CC";
+            ParamControlCCB2.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB2.value = 118;
+            MidiNote2.visible = false;
             if (amount.value > 2)
+            {
+                ParamControlCCA2.visible = true;
                 ParamControlCCB2.visible = true;
+            }
         }
     ]]>
     </script>
@@ -231,44 +258,53 @@
     <![CDATA[
         if (ParamControlType3.value == 0)
         {
-            MidiNote3.visible = false;
             ParamControlCCA3.displayName = "Button CC";
-            if (amount.value > 3)
-                ParamControlCCA3.visible = true;
+            ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB3.displayName = "On Value";
+            ParamControlCCB3.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB3.value = 127;
+            MidiNote3.visible = false;
             if (amount.value > 3)
+            {
+                ParamControlCCA3.visible = true;
                 ParamControlCCB3.visible = true;
+            }
         }
         else if (ParamControlType3.value == 1)
         {
             MidiNote3.value = 63;
-            if (amount.value > 3)
-                MidiNote3.visible = true;
-            ParamControlCCA3.visible = false;
             ParamControlCCB3.displayName = "Velocity";
+            ParamControlCCB3.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB3.value = 127;
+            ParamControlCCA3.visible = false;
             if (amount.value > 3)
+            {
+                MidiNote3.visible = true;
                 ParamControlCCB3.visible = true;
+            }
         }
         else if (ParamControlType3.value == 2)
         {
-            MidiNote3.visible = false;
             ParamControlCCA3.displayName = "Fader CC";
+            ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote3.visible = false;
+            ParamControlCCB3.visible = false;
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
-            ParamControlCCB3.visible = false;
         }
         else if (ParamControlType3.value == 3)
         {
-            MidiNote3.visible = false;
             ParamControlCCA3.displayName = "X Axis CC";
-            if (amount.value > 3)
-                ParamControlCCA3.visible = true;
+            ParamControlCCA3.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB3.displayName = "Y Axis CC";
+            ParamControlCCB3.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB3.value = 118;
+            MidiNote3.visible = false;
             if (amount.value > 3)
+            {
+                ParamControlCCA3.visible = true;
                 ParamControlCCB3.visible = true;
+            }
         }
     ]]>
     </script>
@@ -277,44 +313,53 @@
     <![CDATA[
         if (ParamControlType4.value == 0)
         {
-            MidiNote4.visible = false;
             ParamControlCCA4.displayName = "Button CC";
-            if (amount.value > 4)
-                ParamControlCCA4.visible = true;
+            ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB4.displayName = "On Value";
+            ParamControlCCB4.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB4.value = 127;
+            MidiNote4.visible = false;
             if (amount.value > 4)
+            {
+                ParamControlCCA4.visible = true;
                 ParamControlCCB4.visible = true;
+            }
         }
         else if (ParamControlType4.value == 1)
         {
             MidiNote4.value = 64;
-            if (amount.value > 4)
-                MidiNote4.visible = true;
-            ParamControlCCA4.visible = false;
             ParamControlCCB4.displayName = "Velocity";
+            ParamControlCCB4.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB4.value = 127;
+            ParamControlCCA4.visible = false;
             if (amount.value > 4)
+            {
+                MidiNote4.visible = true;
                 ParamControlCCB4.visible = true;
+            }
         }
         else if (ParamControlType4.value == 2)
         {
-            MidiNote4.visible = false;
             ParamControlCCA4.displayName = "Fader CC";
+            ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote4.visible = false;
+            ParamControlCCB4.visible = false;
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
-            ParamControlCCB4.visible = false;
         }
         else if (ParamControlType4.value == 3)
         {
-            MidiNote4.visible = false;
             ParamControlCCA4.displayName = "X Axis CC";
-            if (amount.value > 4)
-                ParamControlCCA4.visible = true;
+            ParamControlCCA4.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB4.displayName = "Y Axis CC";
+            ParamControlCCB4.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB4.value = 118;
+            MidiNote4.visible = false;
             if (amount.value > 4)
+            {
+                ParamControlCCA4.visible = true;
                 ParamControlCCB4.visible = true;
+            }
         }
     ]]>
     </script>
@@ -323,44 +368,53 @@
     <![CDATA[
         if (ParamControlType5.value == 0)
         {
-            MidiNote5.visible = false;
             ParamControlCCA5.displayName = "Button CC";
-            if (amount.value > 5)
-                ParamControlCCA5.visible = true;
+            ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB5.displayName = "On Value";
+            ParamControlCCB5.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB5.value = 127;
+            MidiNote5.visible = false;
             if (amount.value > 5)
+            {
+                ParamControlCCA5.visible = true;
                 ParamControlCCB5.visible = true;
+            }
         }
         else if (ParamControlType5.value == 1)
         {
             MidiNote5.value = 65;
-            if (amount.value > 5)
-                MidiNote5.visible = true;
-            ParamControlCCA5.visible = false;
             ParamControlCCB5.displayName = "Velocity";
+            ParamControlCCB5.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB5.value = 127;
+            ParamControlCCA5.visible = false;
             if (amount.value > 5)
+            {
+                MidiNote5.visible = true;
                 ParamControlCCB5.visible = true;
+            }
         }
         else if (ParamControlType5.value == 2)
         {
-            MidiNote5.visible = false;
             ParamControlCCA5.displayName = "Fader CC";
+            ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote5.visible = false;
+            ParamControlCCB5.visible = false;
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
-            ParamControlCCB5.visible = false;
         }
         else if (ParamControlType5.value == 3)
         {
-            MidiNote5.visible = false;
             ParamControlCCA5.displayName = "X Axis CC";
-            if (amount.value > 5)
-                ParamControlCCA5.visible = true;
+            ParamControlCCA5.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB5.displayName = "Y Axis CC";
+            ParamControlCCB5.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB5.value = 118;
+            MidiNote5.visible = false;
             if (amount.value > 5)
+            {
+                ParamControlCCA5.visible = true;
                 ParamControlCCB5.visible = true;
+            }
         }
     ]]>
     </script>
@@ -369,44 +423,53 @@
     <![CDATA[
         if (ParamControlType6.value == 0)
         {
-            MidiNote6.visible = false;
             ParamControlCCA6.displayName = "Button CC";
-            if (amount.value > 6)
-                ParamControlCCA6.visible = true;
+            ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB6.displayName = "On Value";
+            ParamControlCCB6.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB6.value = 127;
+            MidiNote6.visible = false;
             if (amount.value > 6)
+            {
+                ParamControlCCA6.visible = true;
                 ParamControlCCB6.visible = true;
+            }
         }
         else if (ParamControlType6.value == 1)
         {
             MidiNote6.value = 66;
-            if (amount.value > 6)
-                MidiNote6.visible = true;
-            ParamControlCCA6.visible = false;
             ParamControlCCB6.displayName = "Velocity";
+            ParamControlCCB6.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB6.value = 127;
+            ParamControlCCA6.visible = false;
             if (amount.value > 6)
+            {
+                MidiNote6.visible = true;
                 ParamControlCCB6.visible = true;
+            }
         }
         else if (ParamControlType6.value == 2)
         {
-            MidiNote6.visible = false;
             ParamControlCCA6.displayName = "Fader CC";
+            ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote6.visible = false;
+            ParamControlCCB6.visible = false;
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
-            ParamControlCCB6.visible = false;
         }
         else if (ParamControlType6.value == 3)
         {
-            MidiNote6.visible = false;
             ParamControlCCA6.displayName = "X Axis CC";
-            if (amount.value > 6)
-                ParamControlCCA6.visible = true;
+            ParamControlCCA6.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB6.displayName = "Y Axis CC";
+            ParamControlCCB6.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB6.value = 118;
+            MidiNote6.visible = false;
             if (amount.value > 6)
+            {
+                ParamControlCCA6.visible = true;
                 ParamControlCCB6.visible = true;
+            }
         }
     ]]>
     </script>
@@ -415,44 +478,53 @@
     <![CDATA[
         if (ParamControlType7.value == 0)
         {
-            MidiNote7.visible = false;
             ParamControlCCA7.displayName = "Button CC";
-            if (amount.value > 7)
-                ParamControlCCA7.visible = true;
+            ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB7.displayName = "On Value";
+            ParamControlCCB7.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB7.value = 127;
+            MidiNote7.visible = false;
             if (amount.value > 7)
+            {
+                ParamControlCCA7.visible = true;
                 ParamControlCCB7.visible = true;
+            }
         }
         else if (ParamControlType7.value == 1)
         {
             MidiNote7.value = 67;
-            if (amount.value > 7)
-                MidiNote7.visible = true;
-            ParamControlCCA7.visible = false;
             ParamControlCCB7.displayName = "Velocity";
+            ParamControlCCB7.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB7.value = 127;
+            ParamControlCCA7.visible = false;
             if (amount.value > 7)
+            {
+                MidiNote7.visible = true;
                 ParamControlCCB7.visible = true;
+            }
         }
         else if (ParamControlType7.value == 2)
         {
-            MidiNote7.visible = false;
             ParamControlCCA7.displayName = "Fader CC";
+            ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote7.visible = false;
+            ParamControlCCB7.visible = false;
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
-            ParamControlCCB7.visible = false;
         }
         else if (ParamControlType7.value == 3)
         {
-            MidiNote7.visible = false;
             ParamControlCCA7.displayName = "X Axis CC";
-            if (amount.value > 7)
-                ParamControlCCA7.visible = true;
+            ParamControlCCA7.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB7.displayName = "Y Axis CC";
+            ParamControlCCB7.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB7.value = 118;
+            MidiNote7.visible = false;
             if (amount.value > 7)
+            {
+                ParamControlCCA7.visible = true;
                 ParamControlCCB7.visible = true;
+            }
         }
     ]]>
     </script>
@@ -461,44 +533,53 @@
     <![CDATA[
         if (ParamControlType8.value == 0)
         {
-            MidiNote8.visible = false;
             ParamControlCCA8.displayName = "Button CC";
-            if (amount.value > 8)
-                ParamControlCCA8.visible = true;
+            ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB8.displayName = "On Value";
+            ParamControlCCB8.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB8.value = 127;
+            MidiNote8.visible = false;
             if (amount.value > 8)
+            {
+                ParamControlCCA8.visible = true;
                 ParamControlCCB8.visible = true;
+            }
         }
         else if (ParamControlType8.value == 1)
         {
             MidiNote8.value = 68;
-            if (amount.value > 8)
-                MidiNote8.visible = true;
-            ParamControlCCA8.visible = false;
             ParamControlCCB8.displayName = "Velocity";
+            ParamControlCCB8.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB8.value = 127;
+            ParamControlCCA8.visible = false;
             if (amount.value > 8)
+            {
+                MidiNote8.visible = true;
                 ParamControlCCB8.visible = true;
+            }
         }
         else if (ParamControlType8.value == 2)
         {
-            MidiNote8.visible = false;
             ParamControlCCA8.displayName = "Fader CC";
+            ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote8.visible = false;
+            ParamControlCCB8.visible = false;
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
-            ParamControlCCB8.visible = false;
         }
         else if (ParamControlType8.value == 3)
         {
-            MidiNote8.visible = false;
             ParamControlCCA8.displayName = "X Axis CC";
-            if (amount.value > 8)
-                ParamControlCCA8.visible = true;
+            ParamControlCCA8.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB8.displayName = "Y Axis CC";
+            ParamControlCCB8.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB8.value = 118;
+            MidiNote8.visible = false;
             if (amount.value > 8)
+            {
+                ParamControlCCA8.visible = true;
                 ParamControlCCB8.visible = true;
+            }
         }
     ]]>
     </script>
@@ -507,44 +588,53 @@
     <![CDATA[
         if (ParamControlType9.value == 0)
         {
-            MidiNote9.visible = false;
             ParamControlCCA9.displayName = "Button CC";
-            if (amount.value > 9)
-                ParamControlCCA9.visible = true;
+            ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB9.displayName = "On Value";
+            ParamControlCCB9.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB9.value = 127;
+            MidiNote9.visible = false;
             if (amount.value > 9)
+            {
+                ParamControlCCA9.visible = true;
                 ParamControlCCB9.visible = true;
+            }
         }
         else if (ParamControlType9.value == 1)
         {
             MidiNote9.value = 69;
-            if (amount.value > 9)
-                MidiNote9.visible = true;
-            ParamControlCCA9.visible = false;
             ParamControlCCB9.displayName = "Velocity";
+            ParamControlCCB9.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB9.value = 127;
+            ParamControlCCA9.visible = false;
             if (amount.value > 9)
+            {
+                MidiNote9.visible = true;
                 ParamControlCCB9.visible = true;
+            }
         }
         else if (ParamControlType9.value == 2)
         {
-            MidiNote9.visible = false;
             ParamControlCCA9.displayName = "Fader CC";
+            ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote9.visible = false;
+            ParamControlCCB9.visible = false;
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
-            ParamControlCCB9.visible = false;
         }
         else if (ParamControlType9.value == 3)
         {
-            MidiNote9.visible = false;
             ParamControlCCA9.displayName = "X Axis CC";
-            if (amount.value > 9)
-                ParamControlCCA9.visible = true;
+            ParamControlCCA9.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB9.displayName = "Y Axis CC";
+            ParamControlCCB9.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB9.value = 118;
+            MidiNote9.visible = false;
             if (amount.value > 9)
+            {
+                ParamControlCCA9.visible = true;
                 ParamControlCCB9.visible = true;
+            }
         }
     ]]>
     </script>
@@ -553,44 +643,53 @@
     <![CDATA[
         if (ParamControlType10.value == 0)
         {
-            MidiNote10.visible = false;
             ParamControlCCA10.displayName = "Button CC";
-            if (amount.value > 10)
-                ParamControlCCA10.visible = true;
+            ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB10.displayName = "On Value";
+            ParamControlCCB10.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB10.value = 127;
+            MidiNote10.visible = false;
             if (amount.value > 10)
+            {
+                ParamControlCCA10.visible = true;
                 ParamControlCCB10.visible = true;
+            }
         }
         else if (ParamControlType10.value == 1)
         {
             MidiNote10.value = 70;
-            if (amount.value > 10)
-                MidiNote10.visible = true;
-            ParamControlCCA10.visible = false;
             ParamControlCCB10.displayName = "Velocity";
+            ParamControlCCB10.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB10.value = 127;
+            ParamControlCCA10.visible = false;
             if (amount.value > 10)
+            {
+                MidiNote10.visible = true;
                 ParamControlCCB10.visible = true;
+            }
         }
         else if (ParamControlType10.value == 2)
         {
-            MidiNote10.visible = false;
             ParamControlCCA10.displayName = "Fader CC";
+            ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote10.visible = false;
+            ParamControlCCB10.visible = false;
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
-            ParamControlCCB10.visible = false;
         }
         else if (ParamControlType10.value == 3)
         {
-            MidiNote10.visible = false;
             ParamControlCCA10.displayName = "X Axis CC";
-            if (amount.value > 10)
-                ParamControlCCA10.visible = true;
+            ParamControlCCA10.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB10.displayName = "Y Axis CC";
+            ParamControlCCB10.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB10.value = 118;
+            MidiNote10.visible = false;
             if (amount.value > 10)
+            {
+                ParamControlCCA10.visible = true;
                 ParamControlCCB10.visible = true;
+            }
         }
     ]]>
     </script>
@@ -599,44 +698,53 @@
     <![CDATA[
         if (ParamControlType11.value == 0)
         {
-            MidiNote11.visible = false;
             ParamControlCCA11.displayName = "Button CC";
-            if (amount.value > 11)
-                ParamControlCCA11.visible = true;
+            ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB11.displayName = "On Value";
+            ParamControlCCB11.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB11.value = 127;
+            MidiNote11.visible = false;
             if (amount.value > 11)
+            {
+                ParamControlCCA11.visible = true;
                 ParamControlCCB11.visible = true;
+            }
         }
         else if (ParamControlType11.value == 1)
         {
             MidiNote11.value = 71;
-            if (amount.value > 11)
-                MidiNote11.visible = true;
-            ParamControlCCA11.visible = false;
             ParamControlCCB11.displayName = "Velocity";
+            ParamControlCCB11.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB11.value = 127;
+            ParamControlCCA11.visible = false;
             if (amount.value > 11)
+            {
+                MidiNote11.visible = true;
                 ParamControlCCB11.visible = true;
+            }
         }
         else if (ParamControlType11.value == 2)
         {
-            MidiNote11.visible = false;
             ParamControlCCA11.displayName = "Fader CC";
+            ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote11.visible = false;
+            ParamControlCCB11.visible = false;
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
-            ParamControlCCB11.visible = false;
         }
         else if (ParamControlType11.value == 3)
         {
-            MidiNote11.visible = false;
             ParamControlCCA11.displayName = "X Axis CC";
-            if (amount.value > 11)
-                ParamControlCCA11.visible = true;
+            ParamControlCCA11.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB11.displayName = "Y Axis CC";
+            ParamControlCCB11.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB11.value = 118;
+            MidiNote11.visible = false;
             if (amount.value > 11)
+            {
+                ParamControlCCA11.visible = true;
                 ParamControlCCB11.visible = true;
+            }
         }
     ]]>
     </script>
@@ -645,44 +753,53 @@
     <![CDATA[
         if (ParamControlType12.value == 0)
         {
-            MidiNote12.visible = false;
             ParamControlCCA12.displayName = "Button CC";
-            if (amount.value > 12)
-                ParamControlCCA12.visible = true;
+            ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB12.displayName = "On Value";
+            ParamControlCCB12.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB12.value = 127;
+            MidiNote12.visible = false;
             if (amount.value > 12)
+            {
+                ParamControlCCA12.visible = true;
                 ParamControlCCB12.visible = true;
+            }
         }
         else if (ParamControlType12.value == 1)
         {
             MidiNote12.value = 72;
-            if (amount.value > 12)
-                MidiNote12.visible = true;
-            ParamControlCCA12.visible = false;
             ParamControlCCB12.displayName = "Velocity";
+            ParamControlCCB12.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB12.value = 127;
+            ParamControlCCA12.visible = false;
             if (amount.value > 12)
+            {
+                MidiNote12.visible = true;
                 ParamControlCCB12.visible = true;
+            }
         }
         else if (ParamControlType12.value == 2)
         {
-            MidiNote12.visible = false;
             ParamControlCCA12.displayName = "Fader CC";
+            ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote12.visible = false;
+            ParamControlCCB12.visible = false;
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
-            ParamControlCCB12.visible = false;
         }
         else if (ParamControlType12.value == 3)
         {
-            MidiNote12.visible = false;
             ParamControlCCA12.displayName = "X Axis CC";
-            if (amount.value > 12)
-                ParamControlCCA12.visible = true;
+            ParamControlCCA12.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB12.displayName = "Y Axis CC";
+            ParamControlCCB12.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB12.value = 118;
+            MidiNote12.visible = false;
             if (amount.value > 12)
+            {
+                ParamControlCCA12.visible = true;
                 ParamControlCCB12.visible = true;
+            }
         }
     ]]>
     </script>
@@ -691,44 +808,53 @@
     <![CDATA[
         if (ParamControlType13.value == 0)
         {
-            MidiNote13.visible = false;
             ParamControlCCA13.displayName = "Button CC";
-            if (amount.value > 13)
-                ParamControlCCA13.visible = true;
+            ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB13.displayName = "On Value";
+            ParamControlCCB13.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB13.value = 127;
+            MidiNote13.visible = false;
             if (amount.value > 13)
+            {
+                ParamControlCCA13.visible = true;
                 ParamControlCCB13.visible = true;
+            }
         }
         else if (ParamControlType13.value == 1)
         {
             MidiNote13.value = 73;
-            if (amount.value > 13)
-                MidiNote13.visible = true;
-            ParamControlCCA13.visible = false;
             ParamControlCCB13.displayName = "Velocity";
+            ParamControlCCB13.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB13.value = 127;
+            ParamControlCCA13.visible = false;
             if (amount.value > 13)
+            {
+                MidiNote13.visible = true;
                 ParamControlCCB13.visible = true;
+            }
         }
         else if (ParamControlType13.value == 2)
         {
-            MidiNote13.visible = false;
             ParamControlCCA13.displayName = "Fader CC";
+            ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote13.visible = false;
+            ParamControlCCB13.visible = false;
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
-            ParamControlCCB13.visible = false;
         }
         else if (ParamControlType13.value == 3)
         {
-            MidiNote13.visible = false;
             ParamControlCCA13.displayName = "X Axis CC";
-            if (amount.value > 13)
-                ParamControlCCA13.visible = true;
+            ParamControlCCA13.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB13.displayName = "Y Axis CC";
+            ParamControlCCB13.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB13.value = 118;
+            MidiNote13.visible = false;
             if (amount.value > 13)
+            {
+                ParamControlCCA13.visible = true;
                 ParamControlCCB13.visible = true;
+            }
         }
     ]]>
     </script>
@@ -737,44 +863,53 @@
     <![CDATA[
         if (ParamControlType14.value == 0)
         {
-            MidiNote14.visible = false;
             ParamControlCCA14.displayName = "Button CC";
-            if (amount.value > 14)
-                ParamControlCCA14.visible = true;
+            ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB14.displayName = "On Value";
+            ParamControlCCB14.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB14.value = 127;
+            MidiNote14.visible = false;
             if (amount.value > 14)
+            {
+                ParamControlCCA14.visible = true;
                 ParamControlCCB14.visible = true;
+            }
         }
         else if (ParamControlType14.value == 1)
         {
             MidiNote14.value = 74;
-            if (amount.value > 14)
-                MidiNote14.visible = true;
-            ParamControlCCA14.visible = false;
             ParamControlCCB14.displayName = "Velocity";
+            ParamControlCCB14.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB14.value = 127;
+            ParamControlCCA14.visible = false;
             if (amount.value > 14)
+            {
+                MidiNote14.visible = true;
                 ParamControlCCB14.visible = true;
+            }
         }
         else if (ParamControlType14.value == 2)
         {
-            MidiNote14.visible = false;
             ParamControlCCA14.displayName = "Fader CC";
+            ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote14.visible = false;
+            ParamControlCCB14.visible = false;
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
-            ParamControlCCB14.visible = false;
         }
         else if (ParamControlType14.value == 3)
         {
-            MidiNote14.visible = false;
             ParamControlCCA14.displayName = "X Axis CC";
-            if (amount.value > 14)
-                ParamControlCCA14.visible = true;
+            ParamControlCCA14.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB14.displayName = "Y Axis CC";
+            ParamControlCCB14.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB14.value = 118;
+            MidiNote14.visible = false;
             if (amount.value > 14)
+            {
+                ParamControlCCA14.visible = true;
                 ParamControlCCB14.visible = true;
+            }
         }
     ]]>
     </script>
@@ -783,44 +918,53 @@
     <![CDATA[
         if (ParamControlType15.value == 0)
         {
-            MidiNote15.visible = false;
             ParamControlCCA15.displayName = "Button CC";
-            if (amount.value > 15)
-                ParamControlCCA15.visible = true;
+            ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB15.displayName = "On Value";
+            ParamControlCCB15.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB15.value = 127;
+            MidiNote15.visible = false;
             if (amount.value > 15)
+            {
+                ParamControlCCA15.visible = true;
                 ParamControlCCB15.visible = true;
+            }
         }
         else if (ParamControlType15.value == 1)
         {
             MidiNote15.value = 75;
-            if (amount.value > 15)
-                MidiNote15.visible = true;
-            ParamControlCCA15.visible = false;
             ParamControlCCB15.displayName = "Velocity";
+            ParamControlCCB15.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB15.value = 127;
+            ParamControlCCA15.visible = false;
             if (amount.value > 15)
+            {
+                MidiNote15.visible = true;
                 ParamControlCCB15.visible = true;
+            }
         }
         else if (ParamControlType15.value == 2)
         {
-            MidiNote15.visible = false;
             ParamControlCCA15.displayName = "Fader CC";
+            ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
+            MidiNote15.visible = false;
+            ParamControlCCB15.visible = false;
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
-            ParamControlCCB15.visible = false;
         }
         else if (ParamControlType15.value == 3)
         {
-            MidiNote15.visible = false;
             ParamControlCCA15.displayName = "X Axis CC";
-            if (amount.value > 15)
-                ParamControlCCA15.visible = true;
+            ParamControlCCA15.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB15.displayName = "Y Axis CC";
+            ParamControlCCB15.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB15.value = 118;
+            MidiNote15.visible = false;
             if (amount.value > 15)
+            {
+                ParamControlCCA15.visible = true;
                 ParamControlCCB15.visible = true;
+            }
         }
     ]]>
     </script>
