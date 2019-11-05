@@ -58,10 +58,10 @@ int main()
             << "\tif (ParamControlType" << i << ".value == 0)\n"
             << "\t{\n"
             << "\t\tParamControlCCA" << i << ".displayName = \"Button CC\";\n"
-            << "\t\tParamControlCCA" << i << ".tooltip = \"Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]\";\n"
+            << "\t\tParamControlCCA" << i << ".tooltip = \"Select the MIDI message sent by the control.\\n\\nRange: [0-127]\";\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"On Value\";\n"
-            << "\t\tParamControlCCB" << i << ".tooltip = \"TODO.&#13;&#13;Range: [0-127]\";\n"
+            << "\t\tParamControlCCB" << i << ".tooltip = \"TODO.\\n\\nRange: [0-127]\";\n"
             << "\t\tParamControlCCB" << i << ".value = " << defaultButtonOnValue << ";\n"
 
             << "\t\tMidiNote" << i << ".visible = false;\n"
@@ -78,7 +78,7 @@ int main()
             << "\t\tMidiNote" << i << ".value = " << getDefaultNote (i) << ";\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"Velocity\";\n"
-            << "\t\tParamControlCCB" << i << ".tooltip = \"Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]\";\n"
+            << "\t\tParamControlCCB" << i << ".tooltip = \"Set the velocity of the MIDI note sent by the control.\\n\\nRange: [0-127]\";\n"
             << "\t\tParamControlCCB" << i << ".value = " << defaultNoteVelocity << ";\n"
 
             << "\t\tParamControlCCA" << i << ".visible = false;\n"
@@ -93,7 +93,7 @@ int main()
             << "\telse if (ParamControlType" << i << ".value == 2)\n"
             << "\t{\n"
             << "\t\tParamControlCCA" << i << ".displayName = \"Fader CC\";\n"
-            << "\t\tParamControlCCA" << i << ".tooltip = \"Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]\";\n"
+            << "\t\tParamControlCCA" << i << ".tooltip = \"Select the MIDI message sent by the control.\\n\\nRange: [0-127]\";\n"
 
             << "\t\tMidiNote" << i << ".visible = false;\n"
             << "\t\tParamControlCCB" << i << ".visible = false;\n"
@@ -105,10 +105,10 @@ int main()
             << "\telse if (ParamControlType" << i << ".value == 3)\n"
             << "\t{\n"
             << "\t\tParamControlCCA" << i << ".displayName = \"X Axis CC\";\n"
-            << "\t\tParamControlCCA" << i << ".tooltip = \"Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]\";\n"
+            << "\t\tParamControlCCA" << i << ".tooltip = \"Select the MIDI message sent by the horizontal axis.\\n\\nRange: [0-127]\";\n"
 
             << "\t\tParamControlCCB" << i << ".displayName = \"Y Axis CC\";\n"
-            << "\t\tParamControlCCB" << i << ".tooltip = \"Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]\";\n"
+            << "\t\tParamControlCCB" << i << ".tooltip = \"Select the MIDI message sent by the vertical axis.\\n\\nRange: [0-127]\";\n"
             << "\t\tParamControlCCB" << i << ".value = " << getDefaultYAxisCC (i) << ";\n"
 
             << "\t\tMidiNote" << i << ".visible = false;\n"

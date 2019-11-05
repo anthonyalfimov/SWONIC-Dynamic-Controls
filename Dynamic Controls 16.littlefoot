@@ -53,7 +53,7 @@
 
             <variable name="ControlPosX" displayName="X Position" type="int"
                       min="1" max="15" value="1"
-                      tooltip="Select the horizontal position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
+                      tooltip="TODO Horizontal position of Control * [1 - 15]"/>
             <variable name="ControlPosY" displayName="Y Position" type="int"
                       min="1" max="15" value="1"
                       tooltip="TODO Vertical position of Control * [1 - 15]"/>
@@ -94,9 +94,9 @@
         if (ParamControlType0.value == 0)
         {
             ParamControlCCA0.displayName = "Button CC";
-            ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB0.displayName = "On Value";
-            ParamControlCCB0.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB0.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB0.value = 127;
             MidiNote0.visible = false;
             if (amount.value > 0)
@@ -109,7 +109,7 @@
         {
             MidiNote0.value = 60;
             ParamControlCCB0.displayName = "Velocity";
-            ParamControlCCB0.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB0.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB0.value = 127;
             ParamControlCCA0.visible = false;
             if (amount.value > 0)
@@ -121,7 +121,7 @@
         else if (ParamControlType0.value == 2)
         {
             ParamControlCCA0.displayName = "Fader CC";
-            ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote0.visible = false;
             ParamControlCCB0.visible = false;
             if (amount.value > 0)
@@ -130,9 +130,9 @@
         else if (ParamControlType0.value == 3)
         {
             ParamControlCCA0.displayName = "X Axis CC";
-            ParamControlCCA0.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA0.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB0.displayName = "Y Axis CC";
-            ParamControlCCB0.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB0.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB0.value = 118;
             MidiNote0.visible = false;
             if (amount.value > 0)
@@ -149,9 +149,9 @@
         if (ParamControlType1.value == 0)
         {
             ParamControlCCA1.displayName = "Button CC";
-            ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB1.displayName = "On Value";
-            ParamControlCCB1.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB1.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB1.value = 127;
             MidiNote1.visible = false;
             if (amount.value > 1)
@@ -164,7 +164,7 @@
         {
             MidiNote1.value = 61;
             ParamControlCCB1.displayName = "Velocity";
-            ParamControlCCB1.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB1.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB1.value = 127;
             ParamControlCCA1.visible = false;
             if (amount.value > 1)
@@ -176,7 +176,7 @@
         else if (ParamControlType1.value == 2)
         {
             ParamControlCCA1.displayName = "Fader CC";
-            ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote1.visible = false;
             ParamControlCCB1.visible = false;
             if (amount.value > 1)
@@ -185,9 +185,9 @@
         else if (ParamControlType1.value == 3)
         {
             ParamControlCCA1.displayName = "X Axis CC";
-            ParamControlCCA1.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA1.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB1.displayName = "Y Axis CC";
-            ParamControlCCB1.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB1.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB1.value = 118;
             MidiNote1.visible = false;
             if (amount.value > 1)
@@ -204,9 +204,9 @@
         if (ParamControlType2.value == 0)
         {
             ParamControlCCA2.displayName = "Button CC";
-            ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB2.displayName = "On Value";
-            ParamControlCCB2.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB2.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB2.value = 127;
             MidiNote2.visible = false;
             if (amount.value > 2)
@@ -219,7 +219,7 @@
         {
             MidiNote2.value = 62;
             ParamControlCCB2.displayName = "Velocity";
-            ParamControlCCB2.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB2.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB2.value = 127;
             ParamControlCCA2.visible = false;
             if (amount.value > 2)
@@ -231,7 +231,7 @@
         else if (ParamControlType2.value == 2)
         {
             ParamControlCCA2.displayName = "Fader CC";
-            ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote2.visible = false;
             ParamControlCCB2.visible = false;
             if (amount.value > 2)
@@ -240,9 +240,9 @@
         else if (ParamControlType2.value == 3)
         {
             ParamControlCCA2.displayName = "X Axis CC";
-            ParamControlCCA2.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA2.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB2.displayName = "Y Axis CC";
-            ParamControlCCB2.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB2.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB2.value = 118;
             MidiNote2.visible = false;
             if (amount.value > 2)
@@ -259,9 +259,9 @@
         if (ParamControlType3.value == 0)
         {
             ParamControlCCA3.displayName = "Button CC";
-            ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB3.displayName = "On Value";
-            ParamControlCCB3.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB3.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB3.value = 127;
             MidiNote3.visible = false;
             if (amount.value > 3)
@@ -274,7 +274,7 @@
         {
             MidiNote3.value = 63;
             ParamControlCCB3.displayName = "Velocity";
-            ParamControlCCB3.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB3.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB3.value = 127;
             ParamControlCCA3.visible = false;
             if (amount.value > 3)
@@ -286,7 +286,7 @@
         else if (ParamControlType3.value == 2)
         {
             ParamControlCCA3.displayName = "Fader CC";
-            ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote3.visible = false;
             ParamControlCCB3.visible = false;
             if (amount.value > 3)
@@ -295,9 +295,9 @@
         else if (ParamControlType3.value == 3)
         {
             ParamControlCCA3.displayName = "X Axis CC";
-            ParamControlCCA3.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA3.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB3.displayName = "Y Axis CC";
-            ParamControlCCB3.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB3.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB3.value = 118;
             MidiNote3.visible = false;
             if (amount.value > 3)
@@ -314,9 +314,9 @@
         if (ParamControlType4.value == 0)
         {
             ParamControlCCA4.displayName = "Button CC";
-            ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB4.displayName = "On Value";
-            ParamControlCCB4.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB4.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB4.value = 127;
             MidiNote4.visible = false;
             if (amount.value > 4)
@@ -329,7 +329,7 @@
         {
             MidiNote4.value = 64;
             ParamControlCCB4.displayName = "Velocity";
-            ParamControlCCB4.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB4.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB4.value = 127;
             ParamControlCCA4.visible = false;
             if (amount.value > 4)
@@ -341,7 +341,7 @@
         else if (ParamControlType4.value == 2)
         {
             ParamControlCCA4.displayName = "Fader CC";
-            ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote4.visible = false;
             ParamControlCCB4.visible = false;
             if (amount.value > 4)
@@ -350,9 +350,9 @@
         else if (ParamControlType4.value == 3)
         {
             ParamControlCCA4.displayName = "X Axis CC";
-            ParamControlCCA4.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA4.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB4.displayName = "Y Axis CC";
-            ParamControlCCB4.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB4.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB4.value = 118;
             MidiNote4.visible = false;
             if (amount.value > 4)
@@ -369,9 +369,9 @@
         if (ParamControlType5.value == 0)
         {
             ParamControlCCA5.displayName = "Button CC";
-            ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB5.displayName = "On Value";
-            ParamControlCCB5.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB5.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB5.value = 127;
             MidiNote5.visible = false;
             if (amount.value > 5)
@@ -384,7 +384,7 @@
         {
             MidiNote5.value = 65;
             ParamControlCCB5.displayName = "Velocity";
-            ParamControlCCB5.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB5.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB5.value = 127;
             ParamControlCCA5.visible = false;
             if (amount.value > 5)
@@ -396,7 +396,7 @@
         else if (ParamControlType5.value == 2)
         {
             ParamControlCCA5.displayName = "Fader CC";
-            ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote5.visible = false;
             ParamControlCCB5.visible = false;
             if (amount.value > 5)
@@ -405,9 +405,9 @@
         else if (ParamControlType5.value == 3)
         {
             ParamControlCCA5.displayName = "X Axis CC";
-            ParamControlCCA5.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA5.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB5.displayName = "Y Axis CC";
-            ParamControlCCB5.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB5.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB5.value = 118;
             MidiNote5.visible = false;
             if (amount.value > 5)
@@ -424,9 +424,9 @@
         if (ParamControlType6.value == 0)
         {
             ParamControlCCA6.displayName = "Button CC";
-            ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB6.displayName = "On Value";
-            ParamControlCCB6.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB6.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB6.value = 127;
             MidiNote6.visible = false;
             if (amount.value > 6)
@@ -439,7 +439,7 @@
         {
             MidiNote6.value = 66;
             ParamControlCCB6.displayName = "Velocity";
-            ParamControlCCB6.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB6.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB6.value = 127;
             ParamControlCCA6.visible = false;
             if (amount.value > 6)
@@ -451,7 +451,7 @@
         else if (ParamControlType6.value == 2)
         {
             ParamControlCCA6.displayName = "Fader CC";
-            ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote6.visible = false;
             ParamControlCCB6.visible = false;
             if (amount.value > 6)
@@ -460,9 +460,9 @@
         else if (ParamControlType6.value == 3)
         {
             ParamControlCCA6.displayName = "X Axis CC";
-            ParamControlCCA6.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA6.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB6.displayName = "Y Axis CC";
-            ParamControlCCB6.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB6.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB6.value = 118;
             MidiNote6.visible = false;
             if (amount.value > 6)
@@ -479,9 +479,9 @@
         if (ParamControlType7.value == 0)
         {
             ParamControlCCA7.displayName = "Button CC";
-            ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB7.displayName = "On Value";
-            ParamControlCCB7.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB7.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB7.value = 127;
             MidiNote7.visible = false;
             if (amount.value > 7)
@@ -494,7 +494,7 @@
         {
             MidiNote7.value = 67;
             ParamControlCCB7.displayName = "Velocity";
-            ParamControlCCB7.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB7.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB7.value = 127;
             ParamControlCCA7.visible = false;
             if (amount.value > 7)
@@ -506,7 +506,7 @@
         else if (ParamControlType7.value == 2)
         {
             ParamControlCCA7.displayName = "Fader CC";
-            ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote7.visible = false;
             ParamControlCCB7.visible = false;
             if (amount.value > 7)
@@ -515,9 +515,9 @@
         else if (ParamControlType7.value == 3)
         {
             ParamControlCCA7.displayName = "X Axis CC";
-            ParamControlCCA7.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA7.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB7.displayName = "Y Axis CC";
-            ParamControlCCB7.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB7.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB7.value = 118;
             MidiNote7.visible = false;
             if (amount.value > 7)
@@ -534,9 +534,9 @@
         if (ParamControlType8.value == 0)
         {
             ParamControlCCA8.displayName = "Button CC";
-            ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB8.displayName = "On Value";
-            ParamControlCCB8.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB8.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB8.value = 127;
             MidiNote8.visible = false;
             if (amount.value > 8)
@@ -549,7 +549,7 @@
         {
             MidiNote8.value = 68;
             ParamControlCCB8.displayName = "Velocity";
-            ParamControlCCB8.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB8.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB8.value = 127;
             ParamControlCCA8.visible = false;
             if (amount.value > 8)
@@ -561,7 +561,7 @@
         else if (ParamControlType8.value == 2)
         {
             ParamControlCCA8.displayName = "Fader CC";
-            ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote8.visible = false;
             ParamControlCCB8.visible = false;
             if (amount.value > 8)
@@ -570,9 +570,9 @@
         else if (ParamControlType8.value == 3)
         {
             ParamControlCCA8.displayName = "X Axis CC";
-            ParamControlCCA8.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA8.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB8.displayName = "Y Axis CC";
-            ParamControlCCB8.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB8.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB8.value = 118;
             MidiNote8.visible = false;
             if (amount.value > 8)
@@ -589,9 +589,9 @@
         if (ParamControlType9.value == 0)
         {
             ParamControlCCA9.displayName = "Button CC";
-            ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB9.displayName = "On Value";
-            ParamControlCCB9.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB9.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB9.value = 127;
             MidiNote9.visible = false;
             if (amount.value > 9)
@@ -604,7 +604,7 @@
         {
             MidiNote9.value = 69;
             ParamControlCCB9.displayName = "Velocity";
-            ParamControlCCB9.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB9.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB9.value = 127;
             ParamControlCCA9.visible = false;
             if (amount.value > 9)
@@ -616,7 +616,7 @@
         else if (ParamControlType9.value == 2)
         {
             ParamControlCCA9.displayName = "Fader CC";
-            ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote9.visible = false;
             ParamControlCCB9.visible = false;
             if (amount.value > 9)
@@ -625,9 +625,9 @@
         else if (ParamControlType9.value == 3)
         {
             ParamControlCCA9.displayName = "X Axis CC";
-            ParamControlCCA9.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA9.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB9.displayName = "Y Axis CC";
-            ParamControlCCB9.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB9.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB9.value = 118;
             MidiNote9.visible = false;
             if (amount.value > 9)
@@ -644,9 +644,9 @@
         if (ParamControlType10.value == 0)
         {
             ParamControlCCA10.displayName = "Button CC";
-            ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB10.displayName = "On Value";
-            ParamControlCCB10.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB10.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB10.value = 127;
             MidiNote10.visible = false;
             if (amount.value > 10)
@@ -659,7 +659,7 @@
         {
             MidiNote10.value = 70;
             ParamControlCCB10.displayName = "Velocity";
-            ParamControlCCB10.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB10.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB10.value = 127;
             ParamControlCCA10.visible = false;
             if (amount.value > 10)
@@ -671,7 +671,7 @@
         else if (ParamControlType10.value == 2)
         {
             ParamControlCCA10.displayName = "Fader CC";
-            ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote10.visible = false;
             ParamControlCCB10.visible = false;
             if (amount.value > 10)
@@ -680,9 +680,9 @@
         else if (ParamControlType10.value == 3)
         {
             ParamControlCCA10.displayName = "X Axis CC";
-            ParamControlCCA10.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA10.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB10.displayName = "Y Axis CC";
-            ParamControlCCB10.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB10.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB10.value = 118;
             MidiNote10.visible = false;
             if (amount.value > 10)
@@ -699,9 +699,9 @@
         if (ParamControlType11.value == 0)
         {
             ParamControlCCA11.displayName = "Button CC";
-            ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB11.displayName = "On Value";
-            ParamControlCCB11.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB11.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB11.value = 127;
             MidiNote11.visible = false;
             if (amount.value > 11)
@@ -714,7 +714,7 @@
         {
             MidiNote11.value = 71;
             ParamControlCCB11.displayName = "Velocity";
-            ParamControlCCB11.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB11.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB11.value = 127;
             ParamControlCCA11.visible = false;
             if (amount.value > 11)
@@ -726,7 +726,7 @@
         else if (ParamControlType11.value == 2)
         {
             ParamControlCCA11.displayName = "Fader CC";
-            ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote11.visible = false;
             ParamControlCCB11.visible = false;
             if (amount.value > 11)
@@ -735,9 +735,9 @@
         else if (ParamControlType11.value == 3)
         {
             ParamControlCCA11.displayName = "X Axis CC";
-            ParamControlCCA11.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA11.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB11.displayName = "Y Axis CC";
-            ParamControlCCB11.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB11.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB11.value = 118;
             MidiNote11.visible = false;
             if (amount.value > 11)
@@ -754,9 +754,9 @@
         if (ParamControlType12.value == 0)
         {
             ParamControlCCA12.displayName = "Button CC";
-            ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB12.displayName = "On Value";
-            ParamControlCCB12.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB12.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB12.value = 127;
             MidiNote12.visible = false;
             if (amount.value > 12)
@@ -769,7 +769,7 @@
         {
             MidiNote12.value = 72;
             ParamControlCCB12.displayName = "Velocity";
-            ParamControlCCB12.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB12.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB12.value = 127;
             ParamControlCCA12.visible = false;
             if (amount.value > 12)
@@ -781,7 +781,7 @@
         else if (ParamControlType12.value == 2)
         {
             ParamControlCCA12.displayName = "Fader CC";
-            ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote12.visible = false;
             ParamControlCCB12.visible = false;
             if (amount.value > 12)
@@ -790,9 +790,9 @@
         else if (ParamControlType12.value == 3)
         {
             ParamControlCCA12.displayName = "X Axis CC";
-            ParamControlCCA12.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA12.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB12.displayName = "Y Axis CC";
-            ParamControlCCB12.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB12.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB12.value = 118;
             MidiNote12.visible = false;
             if (amount.value > 12)
@@ -809,9 +809,9 @@
         if (ParamControlType13.value == 0)
         {
             ParamControlCCA13.displayName = "Button CC";
-            ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB13.displayName = "On Value";
-            ParamControlCCB13.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB13.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB13.value = 127;
             MidiNote13.visible = false;
             if (amount.value > 13)
@@ -824,7 +824,7 @@
         {
             MidiNote13.value = 73;
             ParamControlCCB13.displayName = "Velocity";
-            ParamControlCCB13.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB13.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB13.value = 127;
             ParamControlCCA13.visible = false;
             if (amount.value > 13)
@@ -836,7 +836,7 @@
         else if (ParamControlType13.value == 2)
         {
             ParamControlCCA13.displayName = "Fader CC";
-            ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote13.visible = false;
             ParamControlCCB13.visible = false;
             if (amount.value > 13)
@@ -845,9 +845,9 @@
         else if (ParamControlType13.value == 3)
         {
             ParamControlCCA13.displayName = "X Axis CC";
-            ParamControlCCA13.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA13.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB13.displayName = "Y Axis CC";
-            ParamControlCCB13.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB13.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB13.value = 118;
             MidiNote13.visible = false;
             if (amount.value > 13)
@@ -864,9 +864,9 @@
         if (ParamControlType14.value == 0)
         {
             ParamControlCCA14.displayName = "Button CC";
-            ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB14.displayName = "On Value";
-            ParamControlCCB14.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB14.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB14.value = 127;
             MidiNote14.visible = false;
             if (amount.value > 14)
@@ -879,7 +879,7 @@
         {
             MidiNote14.value = 74;
             ParamControlCCB14.displayName = "Velocity";
-            ParamControlCCB14.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB14.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB14.value = 127;
             ParamControlCCA14.visible = false;
             if (amount.value > 14)
@@ -891,7 +891,7 @@
         else if (ParamControlType14.value == 2)
         {
             ParamControlCCA14.displayName = "Fader CC";
-            ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote14.visible = false;
             ParamControlCCB14.visible = false;
             if (amount.value > 14)
@@ -900,9 +900,9 @@
         else if (ParamControlType14.value == 3)
         {
             ParamControlCCA14.displayName = "X Axis CC";
-            ParamControlCCA14.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA14.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB14.displayName = "Y Axis CC";
-            ParamControlCCB14.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB14.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB14.value = 118;
             MidiNote14.visible = false;
             if (amount.value > 14)
@@ -919,9 +919,9 @@
         if (ParamControlType15.value == 0)
         {
             ParamControlCCA15.displayName = "Button CC";
-            ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB15.displayName = "On Value";
-            ParamControlCCB15.tooltip = "TODO.&#13;&#13;Range: [0-127]";
+            ParamControlCCB15.tooltip = "TODO.\n\nRange: [0-127]";
             ParamControlCCB15.value = 127;
             MidiNote15.visible = false;
             if (amount.value > 15)
@@ -934,7 +934,7 @@
         {
             MidiNote15.value = 75;
             ParamControlCCB15.displayName = "Velocity";
-            ParamControlCCB15.tooltip = "Set the velocity of the MIDI note sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCB15.tooltip = "Set the velocity of the MIDI note sent by the control.\n\nRange: [0-127]";
             ParamControlCCB15.value = 127;
             ParamControlCCA15.visible = false;
             if (amount.value > 15)
@@ -946,7 +946,7 @@
         else if (ParamControlType15.value == 2)
         {
             ParamControlCCA15.displayName = "Fader CC";
-            ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]";
+            ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote15.visible = false;
             ParamControlCCB15.visible = false;
             if (amount.value > 15)
@@ -955,9 +955,9 @@
         else if (ParamControlType15.value == 3)
         {
             ParamControlCCA15.displayName = "X Axis CC";
-            ParamControlCCA15.tooltip = "Select the MIDI message sent by the horizontal axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCA15.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB15.displayName = "Y Axis CC";
-            ParamControlCCB15.tooltip = "Select the MIDI message sent by the vertical axis.&#13;&#13;Range: [0-127]";
+            ParamControlCCB15.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
             ParamControlCCB15.value = 118;
             MidiNote15.visible = false;
             if (amount.value > 15)
