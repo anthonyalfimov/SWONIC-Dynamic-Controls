@@ -29,7 +29,7 @@
         <variable name="ControlColour"  type="colour" value="random"
 
             displayName=    "Colour"
-            tooltip=        "Select the type of the control." />
+            tooltip=        "Set the type of the control." />
 
         <variable name="ParamControlMode" type="option" options="Momentary;Latch" value="Momentary"
 
@@ -44,22 +44,22 @@
         <variable name="ControlPosX" type="int" min="1" max="15" value="1"
 
             displayName=    "X Position"
-            tooltip=        "Select the horizontal position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
+            tooltip=        "Set the horizontal position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlPosY" type="int" min="1" max="15" value="1"
 
             displayName=    "Y Position"
-            tooltip=        "Select the vertical position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
+            tooltip=        "Set the vertical position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlWidth" type="int" min="1" max="15" value="1"
 
             displayName=    "Width"
-            tooltip=        "Select the horizontal size of the control.&#13;&#13;&#13;Range: [1-15]"/>
+            tooltip=        "Set the horizontal size of the control.&#13;&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlHeight"  type="int" min="1" max="15" value="1"
 
             displayName=    "Height"
-            tooltip=        "Select the vertical size of the control.&#13;&#13;&#13;Range: [1-15]"/>
+            tooltip=        "Set the vertical size of the control.&#13;&#13;&#13;Range: [1-15]"/>
 
         <variable name="ParamControlCCA"  type="int" min="0" max="127" initStart="102"
 
@@ -74,7 +74,7 @@
         <variable name="SendPress"  type="bool" value="false"
 
             displayName=    "Send Pressure"
-            tooltip=        "Enable to send MIDI messages [MIDI Pressure CC] for pressure applied to the control." />
+            tooltip=        "Enable to send MIDI messages [Pressure CC] for pressure applied to the control." />
 
         <variable name="ControlCCP"  type="int" min="0" max="127" initStart="102"
 

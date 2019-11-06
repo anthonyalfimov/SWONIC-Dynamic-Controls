@@ -32,7 +32,7 @@
 
         <variable name="globalMidiChannel"  type="option"  value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
 
-            displayName=    "Global MIDI Channel"
+            displayName=    "Default MIDI Channel"
             tooltip=        "Select the default MIDI channel used to send MIDI messages." />
 
         <variable name="useOverlaps"  type="bool" value="false"
@@ -43,19 +43,19 @@
         <variable name="receiveMIDI" type="bool" value="false"
 
             displayName=    "Receive&#13;MIDI CC [!]"
-            tooltip=        "Enable to allow controls in Latch mode to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A high number of simultaneous incoming MIDI streams might freeze the app.&#13;&#13;[!] MIDI Note and Pressure CC are not received." />
+            tooltip=        "Enable to allow controls in Latch mode to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A high number of simultaneous incoming MIDI streams might freeze the app.&#13;&#13;[!] MIDI Notes and Pressure CC are not received." />
 
 
 
         <variable name="brightness" type="int" min="0" max="10" value="10" group="graphics"
 
             displayName=    "Brightness"
-            tooltip=        "Select the brightness of the control colour.&#13;&#13;Range: [0-10]" />
+            tooltip=        "Set the brightness of the control colour.&#13;&#13;Range: [0-10]" />
 
         <variable name="contrast" type="int" min="0" max="10" value="5" group="graphics"
 
             displayName=    "Contrast"
-            tooltip=        "Select the contrast between active and inactive control colour.&#13;&#13;Range: [0-10]" />
+            tooltip=        "Set the contrast between active and inactive control colour.&#13;&#13;Range: [0-10]" />
 
         <variable name="shadingType" type="option" value="Light" options="Off;Light;Strong" group="graphics"
 
@@ -65,7 +65,7 @@
         <variable name="individualBrightness" type="bool" value="true" group="graphics"
 
             displayName=    "Individual Brightness [!]"
-            tooltip=        "Disable to allow brightness of control colours to be controlled by the individual control colour selections.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive. Setting control brightness too low can lead to black LEDs." />
+            tooltip=        "Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive. Setting control brightness too low can lead to black LEDs." />
 
     </variables>
 </metadata>
