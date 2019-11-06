@@ -12,7 +12,7 @@
   <variable name="ParamControlColour0" value="0xFFFF3A00"/>
   <variable name="ParamControlType0" value="Fader"/>
   <variable name="ParamControlMode0" value="Latch"/>
-  <variable name="ParamMidiChannel0" value="Global"/>
+  <variable name="ParamMidiChannel0" value="Default"/>
   <variable name="ControlPosX0" value="1"/>
   <variable name="ControlPosY0" value="1"/>
   <variable name="ControlWidth0" value="3"/>
@@ -25,7 +25,7 @@
   <variable name="ParamControlColour1" value="0xFFFFFE00"/>
   <variable name="ParamControlType1" value="Fader"/>
   <variable name="ParamControlMode1" value="Latch"/>
-  <variable name="ParamMidiChannel1" value="Global"/>
+  <variable name="ParamMidiChannel1" value="Default"/>
   <variable name="ControlPosX1" value="4"/>
   <variable name="ControlPosY1" value="1"/>
   <variable name="ControlWidth1" value="3"/>
@@ -38,7 +38,7 @@
   <variable name="ParamControlColour2" value="0xFF07FF15"/>
   <variable name="ParamControlType2" value="Fader"/>
   <variable name="ParamControlMode2" value="Latch"/>
-  <variable name="ParamMidiChannel2" value="Global"/>
+  <variable name="ParamMidiChannel2" value="Default"/>
   <variable name="ControlPosX2" value="7"/>
   <variable name="ControlPosY2" value="1"/>
   <variable name="ControlWidth2" value="3"/>
@@ -51,7 +51,7 @@
   <variable name="ParamControlColour3" value="0xFF00C5FF"/>
   <variable name="ParamControlType3" value="Fader"/>
   <variable name="ParamControlMode3" value="Latch"/>
-  <variable name="ParamMidiChannel3" value="Global"/>
+  <variable name="ParamMidiChannel3" value="Default"/>
   <variable name="ControlPosX3" value="10"/>
   <variable name="ControlPosY3" value="1"/>
   <variable name="ControlWidth3" value="3"/>
@@ -64,7 +64,7 @@
   <variable name="ParamControlColour4" value="0xFFFF05C5"/>
   <variable name="ParamControlType4" value="Fader"/>
   <variable name="ParamControlMode4" value="Latch"/>
-  <variable name="ParamMidiChannel4" value="Global"/>
+  <variable name="ParamMidiChannel4" value="Default"/>
   <variable name="ControlPosX4" value="13"/>
   <variable name="ControlPosY4" value="1"/>
   <variable name="ControlWidth4" value="3"/>
@@ -77,7 +77,7 @@
   <variable name="ParamControlColour5" value="0xFFFF3A00"/>
   <variable name="ParamControlType5" value="Button"/>
   <variable name="ParamControlMode5" value="Latch"/>
-  <variable name="ParamMidiChannel5" value="Global"/>
+  <variable name="ParamMidiChannel5" value="Default"/>
   <variable name="ControlPosX5" value="1"/>
   <variable name="ControlPosY5" value="8"/>
   <variable name="ControlWidth5" value="3"/>
@@ -90,7 +90,7 @@
   <variable name="ParamControlColour6" value="0xFFFFFE00"/>
   <variable name="ParamControlType6" value="Button"/>
   <variable name="ParamControlMode6" value="Latch"/>
-  <variable name="ParamMidiChannel6" value="Global"/>
+  <variable name="ParamMidiChannel6" value="Default"/>
   <variable name="ControlPosX6" value="4"/>
   <variable name="ControlPosY6" value="8"/>
   <variable name="ControlWidth6" value="3"/>
@@ -103,7 +103,7 @@
   <variable name="ParamControlColour7" value="0xFF07FF15"/>
   <variable name="ParamControlType7" value="Button"/>
   <variable name="ParamControlMode7" value="Latch"/>
-  <variable name="ParamMidiChannel7" value="Global"/>
+  <variable name="ParamMidiChannel7" value="Default"/>
   <variable name="ControlPosX7" value="7"/>
   <variable name="ControlPosY7" value="8"/>
   <variable name="ControlWidth7" value="3"/>
@@ -116,7 +116,7 @@
   <variable name="ParamControlColour8" value="0xFF00C5FF"/>
   <variable name="ParamControlType8" value="Button"/>
   <variable name="ParamControlMode8" value="Latch"/>
-  <variable name="ParamMidiChannel8" value="Global"/>
+  <variable name="ParamMidiChannel8" value="Default"/>
   <variable name="ControlPosX8" value="10"/>
   <variable name="ControlPosY8" value="8"/>
   <variable name="ControlWidth8" value="3"/>
@@ -129,7 +129,7 @@
   <variable name="ParamControlColour9" value="0xFFFF05C5"/>
   <variable name="ParamControlType9" value="Button"/>
   <variable name="ParamControlMode9" value="Latch"/>
-  <variable name="ParamMidiChannel9" value="Global"/>
+  <variable name="ParamMidiChannel9" value="Default"/>
   <variable name="ControlPosX9" value="13"/>
   <variable name="ControlPosY9" value="8"/>
   <variable name="ControlWidth9" value="3"/>
@@ -142,7 +142,7 @@
   <variable name="ParamControlColour10" value="0xFFFF3A00"/>
   <variable name="ParamControlType10" value="XY Pad"/>
   <variable name="ParamControlMode10" value="Latch"/>
-  <variable name="ParamMidiChannel10" value="Global"/>
+  <variable name="ParamMidiChannel10" value="Default"/>
   <variable name="ControlPosX10" value="1"/>
   <variable name="ControlPosY10" value="11"/>
   <variable name="ControlWidth10" value="5"/>
@@ -155,7 +155,7 @@
   <variable name="ParamControlColour11" value="0xFFFFFE00"/>
   <variable name="ParamControlType11" value="XY Pad"/>
   <variable name="ParamControlMode11" value="Latch"/>
-  <variable name="ParamMidiChannel11" value="Global"/>
+  <variable name="ParamMidiChannel11" value="Default"/>
   <variable name="ControlPosX11" value="6"/>
   <variable name="ControlPosY11" value="11"/>
   <variable name="ControlWidth11" value="5"/>
@@ -168,7 +168,7 @@
   <variable name="ParamControlColour12" value="0xFF00C5FF"/>
   <variable name="ParamControlType12" value="XY Pad"/>
   <variable name="ParamControlMode12" value="Latch"/>
-  <variable name="ParamMidiChannel12" value="Global"/>
+  <variable name="ParamMidiChannel12" value="Default"/>
   <variable name="ControlPosX12" value="11"/>
   <variable name="ControlPosY12" value="11"/>
   <variable name="ControlWidth12" value="5"/>
@@ -181,7 +181,7 @@
   <variable name="ParamControlColour13" value="0xFFFF3A00"/>
   <variable name="ParamControlType13" value="Button"/>
   <variable name="ParamControlMode13" value="Latch"/>
-  <variable name="ParamMidiChannel13" value="Global"/>
+  <variable name="ParamMidiChannel13" value="Default"/>
   <variable name="ControlPosX13" value="1"/>
   <variable name="ControlPosY13" value="1"/>
   <variable name="ControlWidth13" value="1"/>
@@ -194,7 +194,7 @@
   <variable name="ParamControlColour14" value="0xFFFF3A00"/>
   <variable name="ParamControlType14" value="Button"/>
   <variable name="ParamControlMode14" value="Latch"/>
-  <variable name="ParamMidiChannel14" value="Global"/>
+  <variable name="ParamMidiChannel14" value="Default"/>
   <variable name="ControlPosX14" value="1"/>
   <variable name="ControlPosY14" value="1"/>
   <variable name="ControlWidth14" value="1"/>
@@ -207,7 +207,7 @@
   <variable name="ParamControlColour15" value="0xFFFF3A00"/>
   <variable name="ParamControlType15" value="Button"/>
   <variable name="ParamControlMode15" value="Latch"/>
-  <variable name="ParamMidiChannel15" value="Global"/>
+  <variable name="ParamMidiChannel15" value="Default"/>
   <variable name="ControlPosX15" value="1"/>
   <variable name="ControlPosY15" value="1"/>
   <variable name="ControlWidth15" value="1"/>
