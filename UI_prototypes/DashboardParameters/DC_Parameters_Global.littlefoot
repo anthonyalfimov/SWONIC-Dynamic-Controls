@@ -14,7 +14,7 @@
 
 
 /*
-<metadata description="Create up to 16 Buttons, Faders, Pads or Notes.&#13;&#13;SWONIC.com | v1.2.9-dev"
+<metadata description="Create up to 16 Buttons, Notes, Faders or XY Pads.&#13;&#13;SWONIC.com | v2.0.0"
           details="Turns your Lightpad into a flexible MIDI control surface. Select your desired amount of controls, their appearance and behaviour."
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
@@ -38,34 +38,33 @@
         <variable name="useOverlaps"  type="bool" value="false"
 
             displayName=    "Overlapping Controls [!]"
-            tooltip=        "Enable to allow controls partly or fully covered by others to send MIDI messages.&#13;&#13;[!] A high number of overlapping controls might freeze the app." />
+            tooltip=        "Enable to allow controls partly or fully covered by others to send MIDI messages.&#13;&#13;[!] A large number of overlapping controls might slow down or freeze the app." />
 
         <variable name="receiveMIDI" type="bool" value="false"
 
             displayName=    "Receive&#13;MIDI CC [!]"
-            tooltip=        "Enable to allow controls in Latch mode to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A high number of simultaneous incoming MIDI streams might freeze the app.&#13;&#13;[!] MIDI Notes and Pressure CC are not received." />
-
+            tooltip=        "Enable to allow controls in [Latch] mode to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A large number of simultaneous incoming MIDI streams might slow down or freeze the app.&#13;&#13;[!] Pressure CC and MIDI Notes are not received." />
 
 
         <variable name="brightness" type="int" min="0" max="10" value="10" group="graphics"
 
             displayName=    "Brightness"
-            tooltip=        "Set the brightness of the control colour.&#13;&#13;Range: [0-10]" />
+            tooltip=        "Set the brightness of the control colours.&#13;&#13;Range: [0-10]" />
 
         <variable name="contrast" type="int" min="0" max="10" value="5" group="graphics"
 
             displayName=    "Contrast"
-            tooltip=        "Set the contrast between active and inactive control colour.&#13;&#13;Range: [0-10]" />
+            tooltip=        "Set the contrast between active and inactive control colours.&#13;&#13;Range: [0-10]" />
 
         <variable name="shadingType" type="option" value="Light" options="Off;Light;Strong" group="graphics"
 
             displayName=    "Shading"
-            tooltip=        "Select the shading preset for controls." />
+            tooltip=        "Select the shading amount for the controls." />
 
         <variable name="individualBrightness" type="bool" value="true" group="graphics"
 
             displayName=    "Individual Brightness [!]"
-            tooltip=        "Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive. Setting control brightness too low can lead to black LEDs." />
+            tooltip=        "Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive.&#13;&#13;[!] Setting the control brightness too low can result in black LEDs." />
 
     </variables>
 </metadata>
