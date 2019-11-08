@@ -29,6 +29,11 @@
         <variable name="ControlColour"  type="colour" value="random"
 
             displayName=    "Colour"
+            tooltip=        "Set the colour of the control." />
+
+        <variable name="ParamControlType" type="option" options="Button;Fader;Pad;Note" value="Button"
+
+            displayName=    "Type"
             tooltip=        "Set the type of the control." />
 
         <variable name="ParamControlMode" type="option" options="Momentary;Latch" value="Momentary"
