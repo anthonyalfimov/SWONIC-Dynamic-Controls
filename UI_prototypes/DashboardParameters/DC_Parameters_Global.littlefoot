@@ -38,7 +38,7 @@
         <variable name="useOverlaps"  type="bool" value="false"
 
             displayName=    "Overlapping Controls [!]"
-            tooltip=        "Enable to allow controls partly or fully covered by others to send MIDI messages.&#13;&#13;[!] A large number of overlapping controls might slow down or freeze the app." />
+            tooltip=        "Enable to allow controls or their parts, covered by other controls, to send MIDI messages.&#13;&#13;[!] A large number of overlapping controls might slow down or freeze the app." />
 
         <variable name="receiveMIDI" type="bool" value="false"
 
