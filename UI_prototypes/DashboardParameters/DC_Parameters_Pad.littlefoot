@@ -54,12 +54,12 @@
         <variable name="ControlWidth" type="int" min="1" max="15" value="1"
 
             displayName=    "Width"
-            tooltip=        "Set the horizontal size of the control.&#13;&#13;&#13;Range: [1-15]"/>
+            tooltip=        "Set the horizontal size of the control.&#13;&#13;Range: [1-15]"/>
 
         <variable name="ControlHeight"  type="int" min="1" max="15" value="1"
 
             displayName=    "Height"
-            tooltip=        "Set the vertical size of the control.&#13;&#13;&#13;Range: [1-15]"/>
+            tooltip=        "Set the vertical size of the control.&#13;&#13;Range: [1-15]"/>
 
         <variable name="ParamControlCCA"  type="int" min="0" max="127" initStart="102"
 
@@ -74,7 +74,7 @@
         <variable name="SendPress"  type="bool" value="false"
 
             displayName=    "Send Pressure"
-            tooltip=        "Enable to send MIDI messages [Pressure CC] for pressure applied to the control." />
+            tooltip=        "Enable to send MIDI messages [Pressure CC] when pressure is applied to the control." />
 
         <variable name="ControlCCP"  type="int" min="0" max="127" initStart="102"
 
