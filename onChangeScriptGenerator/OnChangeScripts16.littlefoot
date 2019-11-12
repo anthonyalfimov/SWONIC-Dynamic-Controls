@@ -48,7 +48,7 @@
             ParamControlCCA0.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB0.displayName = "Y Axis CC";
             ParamControlCCB0.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB0.value = 118;
+            ParamControlCCB0.value = 102;
             MidiNote0.visible = false;
             if (amount.value > 0)
             {
@@ -103,7 +103,7 @@
             ParamControlCCA1.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB1.displayName = "Y Axis CC";
             ParamControlCCB1.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB1.value = 118;
+            ParamControlCCB1.value = 103;
             MidiNote1.visible = false;
             if (amount.value > 1)
             {
@@ -158,7 +158,7 @@
             ParamControlCCA2.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB2.displayName = "Y Axis CC";
             ParamControlCCB2.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB2.value = 118;
+            ParamControlCCB2.value = 104;
             MidiNote2.visible = false;
             if (amount.value > 2)
             {
@@ -213,7 +213,7 @@
             ParamControlCCA3.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB3.displayName = "Y Axis CC";
             ParamControlCCB3.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB3.value = 118;
+            ParamControlCCB3.value = 105;
             MidiNote3.visible = false;
             if (amount.value > 3)
             {
@@ -268,7 +268,7 @@
             ParamControlCCA4.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB4.displayName = "Y Axis CC";
             ParamControlCCB4.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB4.value = 118;
+            ParamControlCCB4.value = 106;
             MidiNote4.visible = false;
             if (amount.value > 4)
             {
@@ -323,7 +323,7 @@
             ParamControlCCA5.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB5.displayName = "Y Axis CC";
             ParamControlCCB5.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB5.value = 118;
+            ParamControlCCB5.value = 107;
             MidiNote5.visible = false;
             if (amount.value > 5)
             {
@@ -378,7 +378,7 @@
             ParamControlCCA6.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB6.displayName = "Y Axis CC";
             ParamControlCCB6.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB6.value = 118;
+            ParamControlCCB6.value = 108;
             MidiNote6.visible = false;
             if (amount.value > 6)
             {
@@ -433,7 +433,7 @@
             ParamControlCCA7.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB7.displayName = "Y Axis CC";
             ParamControlCCB7.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB7.value = 118;
+            ParamControlCCB7.value = 109;
             MidiNote7.visible = false;
             if (amount.value > 7)
             {
@@ -488,7 +488,7 @@
             ParamControlCCA8.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB8.displayName = "Y Axis CC";
             ParamControlCCB8.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB8.value = 118;
+            ParamControlCCB8.value = 110;
             MidiNote8.visible = false;
             if (amount.value > 8)
             {
@@ -543,7 +543,7 @@
             ParamControlCCA9.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB9.displayName = "Y Axis CC";
             ParamControlCCB9.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB9.value = 118;
+            ParamControlCCB9.value = 111;
             MidiNote9.visible = false;
             if (amount.value > 9)
             {
@@ -598,7 +598,7 @@
             ParamControlCCA10.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB10.displayName = "Y Axis CC";
             ParamControlCCB10.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB10.value = 118;
+            ParamControlCCB10.value = 112;
             MidiNote10.visible = false;
             if (amount.value > 10)
             {
@@ -653,7 +653,7 @@
             ParamControlCCA11.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB11.displayName = "Y Axis CC";
             ParamControlCCB11.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB11.value = 118;
+            ParamControlCCB11.value = 113;
             MidiNote11.visible = false;
             if (amount.value > 11)
             {
@@ -708,7 +708,7 @@
             ParamControlCCA12.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB12.displayName = "Y Axis CC";
             ParamControlCCB12.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB12.value = 118;
+            ParamControlCCB12.value = 114;
             MidiNote12.visible = false;
             if (amount.value > 12)
             {
@@ -763,7 +763,7 @@
             ParamControlCCA13.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB13.displayName = "Y Axis CC";
             ParamControlCCB13.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB13.value = 118;
+            ParamControlCCB13.value = 115;
             MidiNote13.visible = false;
             if (amount.value > 13)
             {
@@ -818,7 +818,7 @@
             ParamControlCCA14.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB14.displayName = "Y Axis CC";
             ParamControlCCB14.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB14.value = 118;
+            ParamControlCCB14.value = 116;
             MidiNote14.visible = false;
             if (amount.value > 14)
             {
@@ -873,7 +873,7 @@
             ParamControlCCA15.tooltip = "Select the MIDI message sent by the horizontal axis.\n\nRange: [0-127]";
             ParamControlCCB15.displayName = "Y Axis CC";
             ParamControlCCB15.tooltip = "Select the MIDI message sent by the vertical axis.\n\nRange: [0-127]";
-            ParamControlCCB15.value = 118;
+            ParamControlCCB15.value = 117;
             MidiNote15.visible = false;
             if (amount.value > 15)
             {

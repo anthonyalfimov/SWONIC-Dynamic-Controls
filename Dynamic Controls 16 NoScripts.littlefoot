@@ -68,7 +68,7 @@
                       initStart="60"
                       tooltip="TODO MIDI Note number" />
             <variable name="ParamControlCCA" displayName="Button CC" type="int"
-                      min="0" max="127" value="102"
+                      min="0" max="127" initStart="16"
                       tooltip="TODO" />
             <variable name="ParamControlCCB" displayName="On Value" type="int"
                       min="0" max="127" value="127"
@@ -77,7 +77,7 @@
                       value="false"
                       tooltip="TODO Activate to send pressure CC" />
             <variable name="ControlCCP" displayName="Pressure CC" type="int"
-                      min="0" max="127" value="20"
+                      min="0" max="127" initStart="48"
                       tooltip="TODO MIDI CC message for pressure" />
         </vector>
 

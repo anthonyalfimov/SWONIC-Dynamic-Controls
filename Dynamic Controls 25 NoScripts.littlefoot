@@ -52,9 +52,9 @@
                       initStart="60"
                       tooltip="TODO MIDI Note number" />
             <variable name="ParamControlCCA" displayName="Button CC" type="int"
-                      min="0" max="127" initStart="102"
+                      min="0" max="127" initStart="16"
                       tooltip="TODO" />
-                      
+
             <variable name="ControlPosX" displayName="X Position" type="int"
                       min="1" max="15" value="1"
                       tooltip="TODO Horizontal position of Control * [1 - 15]"/>

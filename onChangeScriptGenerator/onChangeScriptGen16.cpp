@@ -4,8 +4,8 @@
 
 // Parameter default values
 
-int getDefaultYAxisCC (int controlIndex) { return 118; }                // can depend on control index
-int getDefaultNote (int controlIndex)    { return 60 + controlIndex; }  // can depend on control index
+int getDefaultYAxisCC (int controlIndex) { return 102 + controlIndex; }     // can depend on control index
+int getDefaultNote (int controlIndex)    { return 60 + controlIndex; }      // can depend on control index
 const int defaultButtonOnValue = 127;
 const int defaultNoteVelocity = 127;
 
