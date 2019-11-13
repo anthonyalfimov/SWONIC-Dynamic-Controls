@@ -9,7 +9,6 @@
         if (ParamControlType0.value == 0)
         {
             ParamControlCCA0.displayName = "Button CC";
-            ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote0.visible = false;
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
@@ -24,7 +23,6 @@
         else if (ParamControlType0.value == 2)
         {
             ParamControlCCA0.displayName = "Fader CC";
-            ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote0.visible = false;
             if (amount.value > 0)
                 ParamControlCCA0.visible = true;
@@ -37,7 +35,6 @@
         if (ParamControlType1.value == 0)
         {
             ParamControlCCA1.displayName = "Button CC";
-            ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote1.visible = false;
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
@@ -52,7 +49,6 @@
         else if (ParamControlType1.value == 2)
         {
             ParamControlCCA1.displayName = "Fader CC";
-            ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote1.visible = false;
             if (amount.value > 1)
                 ParamControlCCA1.visible = true;
@@ -65,7 +61,6 @@
         if (ParamControlType2.value == 0)
         {
             ParamControlCCA2.displayName = "Button CC";
-            ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote2.visible = false;
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
@@ -80,7 +75,6 @@
         else if (ParamControlType2.value == 2)
         {
             ParamControlCCA2.displayName = "Fader CC";
-            ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote2.visible = false;
             if (amount.value > 2)
                 ParamControlCCA2.visible = true;
@@ -93,7 +87,6 @@
         if (ParamControlType3.value == 0)
         {
             ParamControlCCA3.displayName = "Button CC";
-            ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote3.visible = false;
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
@@ -108,7 +101,6 @@
         else if (ParamControlType3.value == 2)
         {
             ParamControlCCA3.displayName = "Fader CC";
-            ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote3.visible = false;
             if (amount.value > 3)
                 ParamControlCCA3.visible = true;
@@ -121,7 +113,6 @@
         if (ParamControlType4.value == 0)
         {
             ParamControlCCA4.displayName = "Button CC";
-            ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote4.visible = false;
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
@@ -136,7 +127,6 @@
         else if (ParamControlType4.value == 2)
         {
             ParamControlCCA4.displayName = "Fader CC";
-            ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote4.visible = false;
             if (amount.value > 4)
                 ParamControlCCA4.visible = true;
@@ -149,7 +139,6 @@
         if (ParamControlType5.value == 0)
         {
             ParamControlCCA5.displayName = "Button CC";
-            ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote5.visible = false;
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
@@ -164,7 +153,6 @@
         else if (ParamControlType5.value == 2)
         {
             ParamControlCCA5.displayName = "Fader CC";
-            ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote5.visible = false;
             if (amount.value > 5)
                 ParamControlCCA5.visible = true;
@@ -177,7 +165,6 @@
         if (ParamControlType6.value == 0)
         {
             ParamControlCCA6.displayName = "Button CC";
-            ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote6.visible = false;
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
@@ -192,7 +179,6 @@
         else if (ParamControlType6.value == 2)
         {
             ParamControlCCA6.displayName = "Fader CC";
-            ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote6.visible = false;
             if (amount.value > 6)
                 ParamControlCCA6.visible = true;
@@ -205,7 +191,6 @@
         if (ParamControlType7.value == 0)
         {
             ParamControlCCA7.displayName = "Button CC";
-            ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote7.visible = false;
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
@@ -220,7 +205,6 @@
         else if (ParamControlType7.value == 2)
         {
             ParamControlCCA7.displayName = "Fader CC";
-            ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote7.visible = false;
             if (amount.value > 7)
                 ParamControlCCA7.visible = true;
@@ -233,7 +217,6 @@
         if (ParamControlType8.value == 0)
         {
             ParamControlCCA8.displayName = "Button CC";
-            ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote8.visible = false;
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
@@ -248,7 +231,6 @@
         else if (ParamControlType8.value == 2)
         {
             ParamControlCCA8.displayName = "Fader CC";
-            ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote8.visible = false;
             if (amount.value > 8)
                 ParamControlCCA8.visible = true;
@@ -261,7 +243,6 @@
         if (ParamControlType9.value == 0)
         {
             ParamControlCCA9.displayName = "Button CC";
-            ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote9.visible = false;
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
@@ -276,7 +257,6 @@
         else if (ParamControlType9.value == 2)
         {
             ParamControlCCA9.displayName = "Fader CC";
-            ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote9.visible = false;
             if (amount.value > 9)
                 ParamControlCCA9.visible = true;
@@ -289,7 +269,6 @@
         if (ParamControlType10.value == 0)
         {
             ParamControlCCA10.displayName = "Button CC";
-            ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote10.visible = false;
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
@@ -304,7 +283,6 @@
         else if (ParamControlType10.value == 2)
         {
             ParamControlCCA10.displayName = "Fader CC";
-            ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote10.visible = false;
             if (amount.value > 10)
                 ParamControlCCA10.visible = true;
@@ -317,7 +295,6 @@
         if (ParamControlType11.value == 0)
         {
             ParamControlCCA11.displayName = "Button CC";
-            ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote11.visible = false;
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
@@ -332,7 +309,6 @@
         else if (ParamControlType11.value == 2)
         {
             ParamControlCCA11.displayName = "Fader CC";
-            ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote11.visible = false;
             if (amount.value > 11)
                 ParamControlCCA11.visible = true;
@@ -345,7 +321,6 @@
         if (ParamControlType12.value == 0)
         {
             ParamControlCCA12.displayName = "Button CC";
-            ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote12.visible = false;
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
@@ -360,7 +335,6 @@
         else if (ParamControlType12.value == 2)
         {
             ParamControlCCA12.displayName = "Fader CC";
-            ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote12.visible = false;
             if (amount.value > 12)
                 ParamControlCCA12.visible = true;
@@ -373,7 +347,6 @@
         if (ParamControlType13.value == 0)
         {
             ParamControlCCA13.displayName = "Button CC";
-            ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote13.visible = false;
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
@@ -388,7 +361,6 @@
         else if (ParamControlType13.value == 2)
         {
             ParamControlCCA13.displayName = "Fader CC";
-            ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote13.visible = false;
             if (amount.value > 13)
                 ParamControlCCA13.visible = true;
@@ -401,7 +373,6 @@
         if (ParamControlType14.value == 0)
         {
             ParamControlCCA14.displayName = "Button CC";
-            ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote14.visible = false;
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
@@ -416,7 +387,6 @@
         else if (ParamControlType14.value == 2)
         {
             ParamControlCCA14.displayName = "Fader CC";
-            ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote14.visible = false;
             if (amount.value > 14)
                 ParamControlCCA14.visible = true;
@@ -429,7 +399,6 @@
         if (ParamControlType15.value == 0)
         {
             ParamControlCCA15.displayName = "Button CC";
-            ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote15.visible = false;
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
@@ -444,7 +413,6 @@
         else if (ParamControlType15.value == 2)
         {
             ParamControlCCA15.displayName = "Fader CC";
-            ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote15.visible = false;
             if (amount.value > 15)
                 ParamControlCCA15.visible = true;
@@ -457,7 +425,6 @@
         if (ParamControlType16.value == 0)
         {
             ParamControlCCA16.displayName = "Button CC";
-            ParamControlCCA16.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote16.visible = false;
             if (amount.value > 16)
                 ParamControlCCA16.visible = true;
@@ -472,7 +439,6 @@
         else if (ParamControlType16.value == 2)
         {
             ParamControlCCA16.displayName = "Fader CC";
-            ParamControlCCA16.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote16.visible = false;
             if (amount.value > 16)
                 ParamControlCCA16.visible = true;
@@ -485,7 +451,6 @@
         if (ParamControlType17.value == 0)
         {
             ParamControlCCA17.displayName = "Button CC";
-            ParamControlCCA17.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote17.visible = false;
             if (amount.value > 17)
                 ParamControlCCA17.visible = true;
@@ -500,7 +465,6 @@
         else if (ParamControlType17.value == 2)
         {
             ParamControlCCA17.displayName = "Fader CC";
-            ParamControlCCA17.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote17.visible = false;
             if (amount.value > 17)
                 ParamControlCCA17.visible = true;
@@ -513,7 +477,6 @@
         if (ParamControlType18.value == 0)
         {
             ParamControlCCA18.displayName = "Button CC";
-            ParamControlCCA18.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote18.visible = false;
             if (amount.value > 18)
                 ParamControlCCA18.visible = true;
@@ -528,7 +491,6 @@
         else if (ParamControlType18.value == 2)
         {
             ParamControlCCA18.displayName = "Fader CC";
-            ParamControlCCA18.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote18.visible = false;
             if (amount.value > 18)
                 ParamControlCCA18.visible = true;
@@ -541,7 +503,6 @@
         if (ParamControlType19.value == 0)
         {
             ParamControlCCA19.displayName = "Button CC";
-            ParamControlCCA19.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote19.visible = false;
             if (amount.value > 19)
                 ParamControlCCA19.visible = true;
@@ -556,7 +517,6 @@
         else if (ParamControlType19.value == 2)
         {
             ParamControlCCA19.displayName = "Fader CC";
-            ParamControlCCA19.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote19.visible = false;
             if (amount.value > 19)
                 ParamControlCCA19.visible = true;
@@ -569,7 +529,6 @@
         if (ParamControlType20.value == 0)
         {
             ParamControlCCA20.displayName = "Button CC";
-            ParamControlCCA20.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote20.visible = false;
             if (amount.value > 20)
                 ParamControlCCA20.visible = true;
@@ -584,7 +543,6 @@
         else if (ParamControlType20.value == 2)
         {
             ParamControlCCA20.displayName = "Fader CC";
-            ParamControlCCA20.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote20.visible = false;
             if (amount.value > 20)
                 ParamControlCCA20.visible = true;
@@ -597,7 +555,6 @@
         if (ParamControlType21.value == 0)
         {
             ParamControlCCA21.displayName = "Button CC";
-            ParamControlCCA21.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote21.visible = false;
             if (amount.value > 21)
                 ParamControlCCA21.visible = true;
@@ -612,7 +569,6 @@
         else if (ParamControlType21.value == 2)
         {
             ParamControlCCA21.displayName = "Fader CC";
-            ParamControlCCA21.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote21.visible = false;
             if (amount.value > 21)
                 ParamControlCCA21.visible = true;
@@ -625,7 +581,6 @@
         if (ParamControlType22.value == 0)
         {
             ParamControlCCA22.displayName = "Button CC";
-            ParamControlCCA22.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote22.visible = false;
             if (amount.value > 22)
                 ParamControlCCA22.visible = true;
@@ -640,7 +595,6 @@
         else if (ParamControlType22.value == 2)
         {
             ParamControlCCA22.displayName = "Fader CC";
-            ParamControlCCA22.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote22.visible = false;
             if (amount.value > 22)
                 ParamControlCCA22.visible = true;
@@ -653,7 +607,6 @@
         if (ParamControlType23.value == 0)
         {
             ParamControlCCA23.displayName = "Button CC";
-            ParamControlCCA23.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote23.visible = false;
             if (amount.value > 23)
                 ParamControlCCA23.visible = true;
@@ -668,7 +621,6 @@
         else if (ParamControlType23.value == 2)
         {
             ParamControlCCA23.displayName = "Fader CC";
-            ParamControlCCA23.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote23.visible = false;
             if (amount.value > 23)
                 ParamControlCCA23.visible = true;
@@ -681,7 +633,6 @@
         if (ParamControlType24.value == 0)
         {
             ParamControlCCA24.displayName = "Button CC";
-            ParamControlCCA24.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote24.visible = false;
             if (amount.value > 24)
                 ParamControlCCA24.visible = true;
@@ -696,7 +647,6 @@
         else if (ParamControlType24.value == 2)
         {
             ParamControlCCA24.displayName = "Fader CC";
-            ParamControlCCA24.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             MidiNote24.visible = false;
             if (amount.value > 24)
                 ParamControlCCA24.visible = true;

@@ -55,7 +55,6 @@ int main()
             << "\tif (ParamControlType" << i << ".value == 0)\n"
             << "\t{\n"
             << "\t\tParamControlCCA" << i << ".displayName = \"Button CC\";\n"
-            << "\t\tParamControlCCA" << i << ".tooltip = \"Select the MIDI message sent by the control.\\n\\nRange: [0-127]\";\n"
 
             << "\t\tMidiNote" << i << ".visible = false;\n"
             << "\t\tif (amount.value > " << i << ")\n"
@@ -76,7 +75,6 @@ int main()
             << "\telse if (ParamControlType" << i << ".value == 2)\n"
             << "\t{\n"
             << "\t\tParamControlCCA" << i << ".displayName = \"Fader CC\";\n"
-            << "\t\tParamControlCCA" << i << ".tooltip = \"Select the MIDI message sent by the control.\\n\\nRange: [0-127]\";\n"
 
             << "\t\tMidiNote" << i << ".visible = false;\n"
             << "\t\tif (amount.value > " << i << ")\n"
