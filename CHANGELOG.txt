@@ -1,7 +1,14 @@
-Version 1.x.x
-    Optimised memory usage
-    - Combined three editions of the app (X, XY, XYZ) into a single one
-    Touch system overhaul
-    - Improved multitouch support
+Version 2.0.0 <date>
+    - Overhauled touch processing: improved multitouch support and performace
+    - Overhauled appearance: new look for XY pads, control shading, highlighting controls for touch and pressure indication
+    - Introduced dynamic Dashboard interface layout
+    - Added ability to individually assign MIDI channel for each control
+    - Added new control type: MIDI Note
+    - Added Momentary and Latch behaviours for all control types
+    - Added "On Value" parameter for Buttons
+    - Improved performance of external MIDI processing
+    - Added an option to allow controls (or their parts), covered by other controls, to send MIDI messages
+    - Switched to offering two app editions: Dynamic Controls (up to 16 buttons, notes, faders or XY pads with full feature set) and Dynamic Controls LE (up to 25 buttons, notes or faders with limited feature set)
 
-    .. to be continued ..
+Verson 1.1.0 <date>
+    - Initial release
