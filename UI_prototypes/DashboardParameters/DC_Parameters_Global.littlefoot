@@ -43,7 +43,7 @@
         <variable name="receiveMIDI" type="bool" value="false"
 
             displayName=    "Receive&#13;MIDI CC [!]"
-            tooltip=        "Enable to allow controls in [Latch] mode to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A large number of simultaneous incoming MIDI streams might slow down or freeze the app.&#13;&#13;[!] Pressure CC and MIDI Notes are not received." />
+            tooltip=        "Enable to allow controls with [Latch] behaviour to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A large number of simultaneous incoming MIDI streams might slow down or freeze the app.&#13;&#13;[!] Pressure CC and MIDI Notes are not received." />
 
 
         <variable name="brightness" type="int" min="0" max="10" value="10" group="graphics"
