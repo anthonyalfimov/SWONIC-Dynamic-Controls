@@ -59,7 +59,7 @@
         <variable name="shadingType" type="option" value="Light" options="Off;Light;Strong" group="graphics"
 
             displayName=    "Shading"
-            tooltip=        "Select the shading amount for the controls." />
+            tooltip=        "Select the shading strength for the controls." />
 
         <variable name="individualBrightness" type="bool" value="true" group="graphics"
 
