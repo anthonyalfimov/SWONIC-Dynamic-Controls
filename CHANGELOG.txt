@@ -1,4 +1,4 @@
-Version 2.0.0 <date>
+Version 2.0.0 [date Beta]
     - Overhauled touch processing: improved multitouch support and performace
     - Overhauled appearance: new look for XY pads, control shading, highlighting controls for touch and pressure indication
     - Introduced dynamic Dashboard interface layout
@@ -10,5 +10,8 @@ Version 2.0.0 <date>
     - Added an option to allow controls (or their parts), covered by other controls, to send MIDI messages
     - Switched to offering two app editions: Dynamic Controls (up to 16 buttons, notes, faders or XY pads with full feature set) and Dynamic Controls LE (up to 25 buttons, notes or faders with limited feature set)
 
-Verson 1.1.0 <date>
+Version 1.1.0 [2019-03-06]
+    - Minor fixes
+
+Version 1.0.0 [2019-03-05]
     - Initial release
