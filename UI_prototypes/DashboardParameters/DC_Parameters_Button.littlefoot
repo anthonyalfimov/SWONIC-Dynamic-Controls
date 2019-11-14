@@ -74,7 +74,7 @@
         <variable name="ParamControlCCB"  type="int" min="0" max="127" initStart="102"
 
             displayName=    "On Value"
-            tooltip=        "Set the value sent when the control is activated.&#13;When the control is deactivated, [0] is always transmitted.&#13;&#13;Range: [0-127]"/>
+            tooltip=        "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.&#13;&#13;Range: [0-127]"/>
 
         <variable name="SendPress"  type="bool" value="false"
 
