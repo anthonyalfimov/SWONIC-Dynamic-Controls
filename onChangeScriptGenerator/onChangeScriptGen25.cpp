@@ -6,6 +6,8 @@
 
 int getDefaultNote (int controlIndex)    { return 60 + controlIndex; }      // can depend on control index
 
+// Object lifetime based script decoration
+
 class OnChangeScript
 {
 public:
@@ -27,6 +29,58 @@ public:
 private:
     std::ofstream& mFile;
 };
+
+// Updater for the type-dependent parameters
+
+void updateControlType(std::ofstream& file, int ind)
+{
+//====== BUTTON ================================================================
+    file
+        << "\tif (ParamControlType" << ind << ".value == 0)\n"
+        << "\t{\n";
+
+    // Name
+    file
+        << "\t\tParamControlCCA" << ind << ".displayName = \"Button CC\";\n";
+
+    // Visibility
+    file
+        << "\t\tMidiNote"        << ind << ".visible = false;\n"
+        << "\t\tParamControlCCA" << ind << ".visible = (" << ind << " < amount.value);\n";
+
+    file
+        << "\t}\n";
+
+//====== NOTE ==================================================================
+    file
+        << "\telse if (ParamControlType" << ind << ".value == 1)\n"
+        << "\t{\n";
+
+    // Visibility
+    file
+        << "\t\tMidiNote"        << ind << ".visible = (" << ind << " < amount.value);\n"
+        << "\t\tParamControlCCA" << ind << ".visible = false;\n";
+
+    file
+        << "\t}\n";
+
+//====== FADER =================================================================
+    file
+        << "\telse if (ParamControlType" << ind << ".value == 2)\n"
+        << "\t{\n";
+
+    // Name
+    file
+        << "\t\tParamControlCCA" << ind << ".displayName = \"Fader CC\";\n";
+
+    // Visibility
+    file
+        << "\t\tMidiNote"        << ind << ".visible = false;\n"
+        << "\t\tParamControlCCA" << ind << ".visible = (" << ind << " < amount.value);\n";
+
+    file
+        << "\t}\n";
+}
 
 int main()
 {
@@ -50,36 +104,7 @@ int main()
         outFile << "\n";
         OnChangeScript script (outFile, "ParamControlType" + std::to_string (i));
 
-        outFile
-        //==== BUTTON ==========================================================
-            << "\tif (ParamControlType" << i << ".value == 0)\n"
-            << "\t{\n"
-            << "\t\tParamControlCCA" << i << ".displayName = \"Button CC\";\n"
-
-            << "\t\tMidiNote" << i << ".visible = false;\n"
-            << "\t\tif (amount.value > " << i << ")\n"
-            << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
-            << "\t}\n"
-
-        //==== NOTE ============================================================
-            << "\telse if (ParamControlType" << i << ".value == 1)\n"
-            << "\t{\n"
-            << "\t\tMidiNote" << i << ".value = " << getDefaultNote (i) << ";\n"
-
-            << "\t\tParamControlCCA" << i << ".visible = false;\n"
-            << "\t\tif (amount.value > " << i << ")\n"
-            << "\t\t\tMidiNote" << i << ".visible = true;\n"
-            << "\t}\n"
-
-        //==== FADER ===========================================================
-            << "\telse if (ParamControlType" << i << ".value == 2)\n"
-            << "\t{\n"
-            << "\t\tParamControlCCA" << i << ".displayName = \"Fader CC\";\n"
-
-            << "\t\tMidiNote" << i << ".visible = false;\n"
-            << "\t\tif (amount.value > " << i << ")\n"
-            << "\t\t\tParamControlCCA" << i << ".visible = true;\n"
-            << "\t}\n";
+        updateControlType(outFile, i);
     }
 
     // onChange="amount"
@@ -87,52 +112,22 @@ int main()
         outFile << "\n";
         OnChangeScript script (outFile, "amount");
 
-        for (int amount = 1; amount <= controlCount; ++amount)
+        for (int i = 0; i < controlCount; ++i)
         {
-            outFile << "\t";
+            outFile
+                << "\tParamControlType"   << i << ".visible = (" << i << " < amount.value);\n"
+                << "\tParamControlColour" << i << ".visible = (" << i << " < amount.value);\n"
+                << "\tParamControlMode"   << i << ".visible = (" << i << " < amount.value);\n";
 
-            if (amount > 1)
-                outFile << "else ";
+            outFile
+                << "\tControlPosX"        << i << ".visible = (" << i << " < amount.value);\n"
+                << "\tControlPosY"        << i << ".visible = (" << i << " < amount.value);\n"
+                << "\tControlWidth"       << i << ".visible = (" << i << " < amount.value);\n"
+                << "\tControlHeight"      << i << ".visible = (" << i << " < amount.value);\n";
 
-            outFile << "if (amount.value == " << amount << ")"
-                    << "\n\t{\n";
+            updateControlType(outFile, i);
 
-            for (int i = 0; i < controlCount; ++i)
-            {
-                bool isVisible {i < amount};
-                std::string state = isVisible ? "true" : "false";
-
-                outFile << "\t\tParamControlType"   << i << ".visible = " << state << ";\n";
-                outFile << "\t\tParamControlColour" << i << ".visible = " << state << ";\n";
-                outFile << "\t\tParamControlMode"   << i << ".visible = " << state << ";\n";
-
-                outFile << "\t\tControlPosX"        << i << ".visible = " << state << ";\n";
-                outFile << "\t\tControlPosY"        << i << ".visible = " << state << ";\n";
-                outFile << "\t\tControlWidth"       << i << ".visible = " << state << ";\n";
-                outFile << "\t\tControlHeight"      << i << ".visible = " << state << ";\n";
-
-                if (isVisible)
-                {
-                    // Show MIDI Note parameter only for Note-type controls
-                    outFile
-                        << "\t\tif (ParamControlType" << i << ".value == 1)\n"
-                        << "\t\t\tMidiNote" << i << ".visible = true;\n";
-
-                    // Show CC A parameter for all controls except Note-type
-                    outFile
-                        << "\t\telse\n"
-                        << "\t\t\tParamControlCCA" << i << ".visible = true;\n";
-                }
-                else
-                {
-                    outFile << "\t\tMidiNote"        << i << ".visible = false;\n";
-                    outFile << "\t\tParamControlCCA" << i << ".visible = false;\n";
-                }
-
-                outFile << "\n";
-            }
-
-            outFile << "\t}\n";
+            outFile << "\n";
         }
     }
 
