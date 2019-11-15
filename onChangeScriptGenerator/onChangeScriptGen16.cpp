@@ -55,7 +55,7 @@ void updateControlType(std::ofstream& file, int ind, bool areValuesUpdated)
         << "\t\tParamControlCCA" << ind << ".tooltip = \"Select the MIDI message sent by the control.\\n\\nRange: [0-127]\";\n"
 
         << "\t\tParamControlCCB" << ind << ".displayName = \"On Value\";\n"
-        << "\t\tParamControlCCB" << ind << ".tooltip = \"TODO.\\n\\nRange: [0-127]\";\n";
+        << "\t\tParamControlCCB" << ind << ".tooltip = \"Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\\n\\nRange: [0-127]\";\n";
 
     // Visibility
     file

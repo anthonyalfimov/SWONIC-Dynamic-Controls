@@ -69,7 +69,7 @@
         <variable name="MidiNote"  type="midiNote" initStart="60"
 
             displayName=    "Note"
-            tooltip=        "Select the MIDI note sent by the control.&#13;&#13;Range: [0-127]"/>
+            tooltip=        "Select the MIDI note sent by the control."/>
 
         <variable name="ParamControlCCB"  type="int" min="0" max="127" initStart="102"
 

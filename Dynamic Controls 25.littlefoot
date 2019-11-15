@@ -11,62 +11,62 @@
     <variables>
         <variable name="amount" displayName="Number of Controls" type="int"
                   min="1" max="25" value="1"
-                  tooltip="TODO Number of controls to display, 1-16" />
+                  tooltip="Select the number of controls to be displayed on the Lightpad surface.&#13;&#13;Range: [1-25]" />
         <variable name="globalMidiChannel" displayName="MIDI Channel" type="option"
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-                  tooltip="TODO Default MIDI channel for controls" />
+                  tooltip="Select the MIDI channel used to send MIDI messages." />
         <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
                   value="false"
-                  tooltip="TODO Enable to propagate touch to all overlapping controls" />
+                  tooltip="Enable to allow controls (or their parts), covered by other controls, to send MIDI messages.&#13;&#13;[!] A large number of overlapping controls might slow down or freeze the app." />
         <variable name="receiveMIDI" displayName="Receive&#13;MIDI CC [!]" type="bool"
                   value="false"
-                  tooltip="TODO Activate for controls in Latch mode to reflect external MIDI CCs" />
+                  tooltip="Enable to allow controls with [Latch] behaviour to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A large number of simultaneous incoming MIDI streams might slow down or freeze the app.&#13;&#13;[!] Pressure CC and MIDI Notes are not received." />
 
         <variable name="brightness" displayName="Brightness" type="int"
                   min="0" max="10" value="10" group="graphics"
-                  tooltip="TODO Global brightness" />
+                  tooltip="Set the brightness of the control colours.&#13;&#13;Range: [0-10]" />
         <variable name="contrast" displayName="Contrast" type="int"
                   min="0" max="10" value="5" group="graphics"
-                  tooltip="TODO Amount of contrast between active and inactive controls" />
+                  tooltip="Set the contrast between active and inactive control colours.&#13;&#13;Range: [0-10]" />
         <variable name="shadingType" displayName="Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
-                  tooltip="TODO" />
+                  tooltip="Select the shading strength for the controls." />
         <variable name="individualBrightness" displayName="Individual Brightness [!]" type="bool"
                   value="false" group="graphics"
-                  tooltip="TODO" />
+                  tooltip="Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive.&#13;&#13;[!] Setting the control brightness too low can result in black LEDs." />
 
         <vector group="control" count="25"
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
             <variable name="ParamControlColour" displayName="Colour" type="colour"
                       value="random"
-                      tooltip="TODO Colour of the control" />
+                      tooltip="Set the colour of the control." />
             <variable name="ParamControlType" displayName="Type" type="option"
                       options="Button;Note;Fader" value="Button"
-                      tooltip="TODO Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XY-Pad: Sends x CC and y CC, 0-127." />
+                      tooltip="Select the type of the control." />
             <variable name="ParamControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
-                      tooltip="TODO Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
+                      tooltip="Select whether the control value is reset [Momentary] or retained [Latch] when the control is released." />
 
             <variable name="MidiNote" displayName="Note" type="midiNote"
                       initStart="60"
-                      tooltip="TODO MIDI Note number" />
+                      tooltip="Select the MIDI note sent by the control." />
             <variable name="ParamControlCCA" displayName="Button CC" type="int"
                       min="0" max="127" initStart="16"
                       tooltip="Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]" />
 
             <variable name="ControlPosX" displayName="X Position" type="int"
                       min="1" max="15" value="1"
-                      tooltip="TODO Horizontal position of Control * [1 - 15]"/>
+                      tooltip="Set the horizontal position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]" />
             <variable name="ControlPosY" displayName="Y Position" type="int"
                       min="1" max="15" value="1"
-                      tooltip="TODO Vertical position of Control * [1 - 15]"/>
+                      tooltip="Set the vertical position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]" />
             <variable name="ControlWidth" displayName="Width" type="int"
                       min="1" max="15" value="1"
-                      tooltip="TODO Horizontal size of Control * [1 - 15]"/>
+                      tooltip="Set the horizontal size of the control.&#13;&#13;Range: [1-15]" />
             <variable name="ControlHeight" displayName="Height" type="int"
                       min="1" max="15" value="1"
-                      tooltip="TODO Vertical size of Control * [1 - 15]"/>
+                      tooltip="Set the vertical size of the control.&#13;&#13;Range: [1-15]" />
         </vector>
 
     </variables>

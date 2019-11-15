@@ -11,74 +11,74 @@
     <variables>
         <variable name="amount" displayName="Number of Controls" type="int"
                   min="1" max="16" value="1"
-                  tooltip="TODO Number of controls to display, 1-16" />
+                  tooltip="Select the number of controls to be displayed on the Lightpad surface.&#13;&#13;Range: [1-16]" />
         <variable name="defaultMidiChannel" displayName="Default MIDI Channel" type="option"
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-                  tooltip="TODO Default MIDI channel for controls" />
+                  tooltip="Select the default MIDI channel used to send MIDI messages." />
         <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
                   value="false"
-                  tooltip="TODO Enable to propagate touch to all overlapping controls" />
+                  tooltip="Enable to allow controls (or their parts), covered by other controls, to send MIDI messages.&#13;&#13;[!] A large number of overlapping controls might slow down or freeze the app." />
         <variable name="receiveMIDI" displayName="Receive&#13;MIDI CC [!]" type="bool"
                   value="false"
-                  tooltip="TODO Activate for controls in Latch mode to reflect external MIDI CCs" />
+                  tooltip="Enable to allow controls with [Latch] behaviour to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A large number of simultaneous incoming MIDI streams might slow down or freeze the app.&#13;&#13;[!] Pressure CC and MIDI Notes are not received." />
 
         <variable name="brightness" displayName="Brightness" type="int"
                   min="0" max="10" value="10" group="graphics"
-                  tooltip="TODO Global brightness" />
+                  tooltip="Set the brightness of the control colours.&#13;&#13;Range: [0-10]" />
         <variable name="contrast" displayName="Contrast" type="int"
                   min="0" max="10" value="5" group="graphics"
-                  tooltip="TODO Amount of contrast between active and inactive controls" />
+                  tooltip="Set the contrast between active and inactive control colours.&#13;&#13;Range: [0-10]" />
         <variable name="shadingType" displayName="Shading" type="option"
                   value="Light" options="Off;Light;Strong" group="graphics"
-                  tooltip="TODO" />
+                  tooltip="Select the shading strength for the controls." />
         <variable name="individualBrightness" displayName="Individual Brightness [!]" type="bool"
                   value="false" group="graphics"
-                  tooltip="TODO" />
+                  tooltip="Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive.&#13;&#13;[!] Setting the control brightness too low can result in black LEDs." />
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
 
             <variable name="ParamControlColour" displayName="Colour" type="colour"
                       value="random"
-                      tooltip="TODO Colour of the control" />
+                      tooltip="Set the colour of the control." />
             <variable name="ParamControlType" displayName="Type" type="option"
                       options="Button;Note;Fader;XY Pad" value="Button"
-                      tooltip="TODO Button: Sends x CC, 127.&#13;Fader: Sends x CC or y CC, 0-127.&#13;XY-Pad: Sends x CC and y CC, 0-127." />
+                      tooltip="Select the type of the control." />
             <variable name="ParamControlMode" displayName="Behaviour" type="option"
                       options="Momentary;Latch" value="Latch"
-                      tooltip="TODO Momentary: Reset value when control is released.&#13;Latch: Retain value when control is released." />
+                      tooltip="Select whether the control value is reset [Momentary] or retained [Latch] when the control is released." />
             <variable name="ParamMidiChannel" displayName="MIDI Channel" type="option"
                       value="Default" options="Default;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-                      tooltip="TODO MIDI channel for Control *" />
+                      tooltip="Select the MIDI channel used by the control." />
 
             <variable name="ControlPosX" displayName="X Position" type="int"
                       min="1" max="15" value="1"
-                      tooltip="TODO Horizontal position of Control * [1 - 15]"/>
+                      tooltip="Set the horizontal position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]" />
             <variable name="ControlPosY" displayName="Y Position" type="int"
                       min="1" max="15" value="1"
-                      tooltip="TODO Vertical position of Control * [1 - 15]"/>
+                      tooltip="Set the vertical position on the 15x15 LED matrix.&#13;&#13;Range: [1-15]" />
             <variable name="ControlWidth" displayName="Width" type="int"
                       min="1" max="15" value="1"
-                      tooltip="TODO Horizontal size of Control * [1 - 15]"/>
+                      tooltip="Set the horizontal size of the control.&#13;&#13;Range: [1-15]" />
             <variable name="ControlHeight" displayName="Height" type="int"
                       min="1" max="15" value="1"
-                      tooltip="TODO Vertical size of Control * [1 - 15]"/>
+                      tooltip="Set the vertical size of the control.&#13;&#13;Range: [1-15]" />
 
             <variable name="MidiNote" displayName="Note" type="midiNote"
                       initStart="60"
-                      tooltip="TODO MIDI Note number" />
+                      tooltip="Select the MIDI note sent by the control." />
             <variable name="ParamControlCCA" displayName="Button CC" type="int"
                       min="0" max="127" initStart="16"
-                      tooltip="TODO" />
+                      tooltip="Select the MIDI message sent by the control.&#13;&#13;Range: [0-127]" />
             <variable name="ParamControlCCB" displayName="On Value" type="int"
                       min="0" max="127" value="127"
-                      tooltip="TODO" />
+                      tooltip="Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.&#13;&#13;Range: [0-127]" />
             <variable name="SendPress" displayName="Send Pressure" type="bool"
                       value="false"
-                      tooltip="TODO Activate to send pressure CC" />
+                      tooltip="Enable to send MIDI messages [Pressure CC] when pressure is applied to the control." />
             <variable name="ControlCCP" displayName="Pressure CC" type="int"
                       min="0" max="127" initStart="48"
-                      tooltip="TODO MIDI CC message for pressure" />
+                      tooltip="Select the MIDI message for transmitting pressure.&#13;&#13;Range: [0-127]" />
         </vector>
 
     </variables>
@@ -97,7 +97,7 @@
             ParamControlCCA0.displayName = "Button CC";
             ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB0.displayName = "On Value";
-            ParamControlCCB0.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB0.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote0.visible = false;
             ParamControlCCA0.visible = (0 < amount.value);
             ParamControlCCB0.visible = (0 < amount.value);
@@ -142,7 +142,7 @@
             ParamControlCCA1.displayName = "Button CC";
             ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB1.displayName = "On Value";
-            ParamControlCCB1.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB1.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote1.visible = false;
             ParamControlCCA1.visible = (1 < amount.value);
             ParamControlCCB1.visible = (1 < amount.value);
@@ -187,7 +187,7 @@
             ParamControlCCA2.displayName = "Button CC";
             ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB2.displayName = "On Value";
-            ParamControlCCB2.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB2.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote2.visible = false;
             ParamControlCCA2.visible = (2 < amount.value);
             ParamControlCCB2.visible = (2 < amount.value);
@@ -232,7 +232,7 @@
             ParamControlCCA3.displayName = "Button CC";
             ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB3.displayName = "On Value";
-            ParamControlCCB3.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB3.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote3.visible = false;
             ParamControlCCA3.visible = (3 < amount.value);
             ParamControlCCB3.visible = (3 < amount.value);
@@ -277,7 +277,7 @@
             ParamControlCCA4.displayName = "Button CC";
             ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB4.displayName = "On Value";
-            ParamControlCCB4.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB4.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote4.visible = false;
             ParamControlCCA4.visible = (4 < amount.value);
             ParamControlCCB4.visible = (4 < amount.value);
@@ -322,7 +322,7 @@
             ParamControlCCA5.displayName = "Button CC";
             ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB5.displayName = "On Value";
-            ParamControlCCB5.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB5.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote5.visible = false;
             ParamControlCCA5.visible = (5 < amount.value);
             ParamControlCCB5.visible = (5 < amount.value);
@@ -367,7 +367,7 @@
             ParamControlCCA6.displayName = "Button CC";
             ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB6.displayName = "On Value";
-            ParamControlCCB6.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB6.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote6.visible = false;
             ParamControlCCA6.visible = (6 < amount.value);
             ParamControlCCB6.visible = (6 < amount.value);
@@ -412,7 +412,7 @@
             ParamControlCCA7.displayName = "Button CC";
             ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB7.displayName = "On Value";
-            ParamControlCCB7.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB7.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote7.visible = false;
             ParamControlCCA7.visible = (7 < amount.value);
             ParamControlCCB7.visible = (7 < amount.value);
@@ -457,7 +457,7 @@
             ParamControlCCA8.displayName = "Button CC";
             ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB8.displayName = "On Value";
-            ParamControlCCB8.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB8.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote8.visible = false;
             ParamControlCCA8.visible = (8 < amount.value);
             ParamControlCCB8.visible = (8 < amount.value);
@@ -502,7 +502,7 @@
             ParamControlCCA9.displayName = "Button CC";
             ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB9.displayName = "On Value";
-            ParamControlCCB9.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB9.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote9.visible = false;
             ParamControlCCA9.visible = (9 < amount.value);
             ParamControlCCB9.visible = (9 < amount.value);
@@ -547,7 +547,7 @@
             ParamControlCCA10.displayName = "Button CC";
             ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB10.displayName = "On Value";
-            ParamControlCCB10.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB10.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote10.visible = false;
             ParamControlCCA10.visible = (10 < amount.value);
             ParamControlCCB10.visible = (10 < amount.value);
@@ -592,7 +592,7 @@
             ParamControlCCA11.displayName = "Button CC";
             ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB11.displayName = "On Value";
-            ParamControlCCB11.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB11.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote11.visible = false;
             ParamControlCCA11.visible = (11 < amount.value);
             ParamControlCCB11.visible = (11 < amount.value);
@@ -637,7 +637,7 @@
             ParamControlCCA12.displayName = "Button CC";
             ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB12.displayName = "On Value";
-            ParamControlCCB12.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB12.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote12.visible = false;
             ParamControlCCA12.visible = (12 < amount.value);
             ParamControlCCB12.visible = (12 < amount.value);
@@ -682,7 +682,7 @@
             ParamControlCCA13.displayName = "Button CC";
             ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB13.displayName = "On Value";
-            ParamControlCCB13.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB13.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote13.visible = false;
             ParamControlCCA13.visible = (13 < amount.value);
             ParamControlCCB13.visible = (13 < amount.value);
@@ -727,7 +727,7 @@
             ParamControlCCA14.displayName = "Button CC";
             ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB14.displayName = "On Value";
-            ParamControlCCB14.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB14.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote14.visible = false;
             ParamControlCCA14.visible = (14 < amount.value);
             ParamControlCCB14.visible = (14 < amount.value);
@@ -772,7 +772,7 @@
             ParamControlCCA15.displayName = "Button CC";
             ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB15.displayName = "On Value";
-            ParamControlCCB15.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB15.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote15.visible = false;
             ParamControlCCA15.visible = (15 < amount.value);
             ParamControlCCB15.visible = (15 < amount.value);
@@ -826,7 +826,7 @@
             ParamControlCCA0.displayName = "Button CC";
             ParamControlCCA0.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB0.displayName = "On Value";
-            ParamControlCCB0.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB0.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote0.visible = false;
             ParamControlCCA0.visible = (0 < amount.value);
             ParamControlCCB0.visible = (0 < amount.value);
@@ -873,7 +873,7 @@
             ParamControlCCA1.displayName = "Button CC";
             ParamControlCCA1.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB1.displayName = "On Value";
-            ParamControlCCB1.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB1.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote1.visible = false;
             ParamControlCCA1.visible = (1 < amount.value);
             ParamControlCCB1.visible = (1 < amount.value);
@@ -920,7 +920,7 @@
             ParamControlCCA2.displayName = "Button CC";
             ParamControlCCA2.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB2.displayName = "On Value";
-            ParamControlCCB2.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB2.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote2.visible = false;
             ParamControlCCA2.visible = (2 < amount.value);
             ParamControlCCB2.visible = (2 < amount.value);
@@ -967,7 +967,7 @@
             ParamControlCCA3.displayName = "Button CC";
             ParamControlCCA3.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB3.displayName = "On Value";
-            ParamControlCCB3.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB3.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote3.visible = false;
             ParamControlCCA3.visible = (3 < amount.value);
             ParamControlCCB3.visible = (3 < amount.value);
@@ -1014,7 +1014,7 @@
             ParamControlCCA4.displayName = "Button CC";
             ParamControlCCA4.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB4.displayName = "On Value";
-            ParamControlCCB4.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB4.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote4.visible = false;
             ParamControlCCA4.visible = (4 < amount.value);
             ParamControlCCB4.visible = (4 < amount.value);
@@ -1061,7 +1061,7 @@
             ParamControlCCA5.displayName = "Button CC";
             ParamControlCCA5.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB5.displayName = "On Value";
-            ParamControlCCB5.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB5.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote5.visible = false;
             ParamControlCCA5.visible = (5 < amount.value);
             ParamControlCCB5.visible = (5 < amount.value);
@@ -1108,7 +1108,7 @@
             ParamControlCCA6.displayName = "Button CC";
             ParamControlCCA6.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB6.displayName = "On Value";
-            ParamControlCCB6.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB6.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote6.visible = false;
             ParamControlCCA6.visible = (6 < amount.value);
             ParamControlCCB6.visible = (6 < amount.value);
@@ -1155,7 +1155,7 @@
             ParamControlCCA7.displayName = "Button CC";
             ParamControlCCA7.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB7.displayName = "On Value";
-            ParamControlCCB7.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB7.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote7.visible = false;
             ParamControlCCA7.visible = (7 < amount.value);
             ParamControlCCB7.visible = (7 < amount.value);
@@ -1202,7 +1202,7 @@
             ParamControlCCA8.displayName = "Button CC";
             ParamControlCCA8.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB8.displayName = "On Value";
-            ParamControlCCB8.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB8.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote8.visible = false;
             ParamControlCCA8.visible = (8 < amount.value);
             ParamControlCCB8.visible = (8 < amount.value);
@@ -1249,7 +1249,7 @@
             ParamControlCCA9.displayName = "Button CC";
             ParamControlCCA9.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB9.displayName = "On Value";
-            ParamControlCCB9.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB9.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote9.visible = false;
             ParamControlCCA9.visible = (9 < amount.value);
             ParamControlCCB9.visible = (9 < amount.value);
@@ -1296,7 +1296,7 @@
             ParamControlCCA10.displayName = "Button CC";
             ParamControlCCA10.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB10.displayName = "On Value";
-            ParamControlCCB10.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB10.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote10.visible = false;
             ParamControlCCA10.visible = (10 < amount.value);
             ParamControlCCB10.visible = (10 < amount.value);
@@ -1343,7 +1343,7 @@
             ParamControlCCA11.displayName = "Button CC";
             ParamControlCCA11.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB11.displayName = "On Value";
-            ParamControlCCB11.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB11.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote11.visible = false;
             ParamControlCCA11.visible = (11 < amount.value);
             ParamControlCCB11.visible = (11 < amount.value);
@@ -1390,7 +1390,7 @@
             ParamControlCCA12.displayName = "Button CC";
             ParamControlCCA12.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB12.displayName = "On Value";
-            ParamControlCCB12.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB12.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote12.visible = false;
             ParamControlCCA12.visible = (12 < amount.value);
             ParamControlCCB12.visible = (12 < amount.value);
@@ -1437,7 +1437,7 @@
             ParamControlCCA13.displayName = "Button CC";
             ParamControlCCA13.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB13.displayName = "On Value";
-            ParamControlCCB13.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB13.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote13.visible = false;
             ParamControlCCA13.visible = (13 < amount.value);
             ParamControlCCB13.visible = (13 < amount.value);
@@ -1484,7 +1484,7 @@
             ParamControlCCA14.displayName = "Button CC";
             ParamControlCCA14.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB14.displayName = "On Value";
-            ParamControlCCB14.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB14.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote14.visible = false;
             ParamControlCCA14.visible = (14 < amount.value);
             ParamControlCCB14.visible = (14 < amount.value);
@@ -1531,7 +1531,7 @@
             ParamControlCCA15.displayName = "Button CC";
             ParamControlCCA15.tooltip = "Select the MIDI message sent by the control.\n\nRange: [0-127]";
             ParamControlCCB15.displayName = "On Value";
-            ParamControlCCB15.tooltip = "TODO.\n\nRange: [0-127]";
+            ParamControlCCB15.tooltip = "Set the value sent when the control is activated. When the control is deactivated, [0] is always transmitted.\n\nRange: [0-127]";
             MidiNote15.visible = false;
             ParamControlCCA15.visible = (15 < amount.value);
             ParamControlCCB15.visible = (15 < amount.value);
