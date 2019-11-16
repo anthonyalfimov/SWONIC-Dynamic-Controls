@@ -86,8 +86,7 @@ int main()
 {
     const int controlCount = 25;
 
-    std::string fileName {"OnChangeScripts" + std::to_string (controlCount)
-                          + ".littlefoot"};
+    std::string fileName {"OnChangeScriptsLE.littlefoot"};
     std::ofstream outFile;
     outFile.open (fileName);
 
