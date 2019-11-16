@@ -33,7 +33,7 @@
         <variable name="globalMidiChannel"  type="option"  value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
 
             displayName=    "Default MIDI Channel"
-            tooltip=        "Select the default MIDI channel used to send MIDI messages." />
+            tooltip=        "Select the default MIDI channel for sending MIDI messages." />
 
         <variable name="useOverlaps"  type="bool" value="false"
 

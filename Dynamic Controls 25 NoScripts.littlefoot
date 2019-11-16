@@ -14,7 +14,7 @@
                   tooltip="Select the number of controls to be displayed on the Lightpad surface.&#13;&#13;Range: [1-25]" />
         <variable name="globalMidiChannel" displayName="MIDI Channel" type="option"
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
-                  tooltip="Select the MIDI channel used to send MIDI messages." />
+                  tooltip="Select the MIDI channel for sending MIDI messages." />
         <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
                   value="false"
                   tooltip="Enable to allow controls (or their parts), covered by other controls, to send MIDI messages.&#13;&#13;[!] A large number of overlapping controls might slow down or freeze the app." />
