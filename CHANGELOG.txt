@@ -1,4 +1,4 @@
-Version 2.0.0 [date Beta]
+Version 2.0.0 Beta [2019-11-17]
     - Overhauled touch processing: improved multitouch support and performace
     - Overhauled appearance: new look for XY pads, control shading, highlighting controls for touch and pressure indication
     - Introduced dynamic Dashboard interface layout
