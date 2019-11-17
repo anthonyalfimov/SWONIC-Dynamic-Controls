@@ -26,7 +26,7 @@ Create up to 25 Buttons, Notes or Faders.
 
 3. Copy all the files contained in the .ZIP file to `Documents/ROLI/LittleFoot/` (same for Windows and MacOS; you may have to create the folders if they don't exist).
 
-4. Launch ROLI Dashboard and connect your Lightpad to the computer (USB connection is recommended). Select "Dynamic Controls" or "Dynamic Controls LE" to load it into your Lightpad Block. Press "Edit" button and select the "Blank" mode to start creating your own MIDI controller!
+4. Launch ROLI Dashboard and connect your Lightpad to the computer (USB connection is recommended). Select "Dynamic Controls" or "Dynamic Controls LE" to load it onto your Lightpad Block. Press the "Edit" button and select the "Blank" mode to start creating your own MIDI controller!
 
 ---
 
