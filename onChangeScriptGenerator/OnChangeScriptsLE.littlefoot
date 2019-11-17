@@ -1,0 +1,1185 @@
+    <script onChange="individualBrightness">
+    <![CDATA[
+        brightness.visible = ! individualBrightness.value;
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType0">
+    <![CDATA[
+        if (ParamControlType0.value == 0)
+        {
+            ParamControlCCA0.displayName = "Button CC";
+            MidiNote0.visible = false;
+            ParamControlCCA0.visible = (0 < amount.value);
+        }
+        else if (ParamControlType0.value == 1)
+        {
+            MidiNote0.visible = (0 < amount.value);
+            ParamControlCCA0.visible = false;
+        }
+        else if (ParamControlType0.value == 2)
+        {
+            ParamControlCCA0.displayName = "Fader CC";
+            MidiNote0.visible = false;
+            ParamControlCCA0.visible = (0 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType1">
+    <![CDATA[
+        if (ParamControlType1.value == 0)
+        {
+            ParamControlCCA1.displayName = "Button CC";
+            MidiNote1.visible = false;
+            ParamControlCCA1.visible = (1 < amount.value);
+        }
+        else if (ParamControlType1.value == 1)
+        {
+            MidiNote1.visible = (1 < amount.value);
+            ParamControlCCA1.visible = false;
+        }
+        else if (ParamControlType1.value == 2)
+        {
+            ParamControlCCA1.displayName = "Fader CC";
+            MidiNote1.visible = false;
+            ParamControlCCA1.visible = (1 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType2">
+    <![CDATA[
+        if (ParamControlType2.value == 0)
+        {
+            ParamControlCCA2.displayName = "Button CC";
+            MidiNote2.visible = false;
+            ParamControlCCA2.visible = (2 < amount.value);
+        }
+        else if (ParamControlType2.value == 1)
+        {
+            MidiNote2.visible = (2 < amount.value);
+            ParamControlCCA2.visible = false;
+        }
+        else if (ParamControlType2.value == 2)
+        {
+            ParamControlCCA2.displayName = "Fader CC";
+            MidiNote2.visible = false;
+            ParamControlCCA2.visible = (2 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType3">
+    <![CDATA[
+        if (ParamControlType3.value == 0)
+        {
+            ParamControlCCA3.displayName = "Button CC";
+            MidiNote3.visible = false;
+            ParamControlCCA3.visible = (3 < amount.value);
+        }
+        else if (ParamControlType3.value == 1)
+        {
+            MidiNote3.visible = (3 < amount.value);
+            ParamControlCCA3.visible = false;
+        }
+        else if (ParamControlType3.value == 2)
+        {
+            ParamControlCCA3.displayName = "Fader CC";
+            MidiNote3.visible = false;
+            ParamControlCCA3.visible = (3 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType4">
+    <![CDATA[
+        if (ParamControlType4.value == 0)
+        {
+            ParamControlCCA4.displayName = "Button CC";
+            MidiNote4.visible = false;
+            ParamControlCCA4.visible = (4 < amount.value);
+        }
+        else if (ParamControlType4.value == 1)
+        {
+            MidiNote4.visible = (4 < amount.value);
+            ParamControlCCA4.visible = false;
+        }
+        else if (ParamControlType4.value == 2)
+        {
+            ParamControlCCA4.displayName = "Fader CC";
+            MidiNote4.visible = false;
+            ParamControlCCA4.visible = (4 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType5">
+    <![CDATA[
+        if (ParamControlType5.value == 0)
+        {
+            ParamControlCCA5.displayName = "Button CC";
+            MidiNote5.visible = false;
+            ParamControlCCA5.visible = (5 < amount.value);
+        }
+        else if (ParamControlType5.value == 1)
+        {
+            MidiNote5.visible = (5 < amount.value);
+            ParamControlCCA5.visible = false;
+        }
+        else if (ParamControlType5.value == 2)
+        {
+            ParamControlCCA5.displayName = "Fader CC";
+            MidiNote5.visible = false;
+            ParamControlCCA5.visible = (5 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType6">
+    <![CDATA[
+        if (ParamControlType6.value == 0)
+        {
+            ParamControlCCA6.displayName = "Button CC";
+            MidiNote6.visible = false;
+            ParamControlCCA6.visible = (6 < amount.value);
+        }
+        else if (ParamControlType6.value == 1)
+        {
+            MidiNote6.visible = (6 < amount.value);
+            ParamControlCCA6.visible = false;
+        }
+        else if (ParamControlType6.value == 2)
+        {
+            ParamControlCCA6.displayName = "Fader CC";
+            MidiNote6.visible = false;
+            ParamControlCCA6.visible = (6 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType7">
+    <![CDATA[
+        if (ParamControlType7.value == 0)
+        {
+            ParamControlCCA7.displayName = "Button CC";
+            MidiNote7.visible = false;
+            ParamControlCCA7.visible = (7 < amount.value);
+        }
+        else if (ParamControlType7.value == 1)
+        {
+            MidiNote7.visible = (7 < amount.value);
+            ParamControlCCA7.visible = false;
+        }
+        else if (ParamControlType7.value == 2)
+        {
+            ParamControlCCA7.displayName = "Fader CC";
+            MidiNote7.visible = false;
+            ParamControlCCA7.visible = (7 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType8">
+    <![CDATA[
+        if (ParamControlType8.value == 0)
+        {
+            ParamControlCCA8.displayName = "Button CC";
+            MidiNote8.visible = false;
+            ParamControlCCA8.visible = (8 < amount.value);
+        }
+        else if (ParamControlType8.value == 1)
+        {
+            MidiNote8.visible = (8 < amount.value);
+            ParamControlCCA8.visible = false;
+        }
+        else if (ParamControlType8.value == 2)
+        {
+            ParamControlCCA8.displayName = "Fader CC";
+            MidiNote8.visible = false;
+            ParamControlCCA8.visible = (8 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType9">
+    <![CDATA[
+        if (ParamControlType9.value == 0)
+        {
+            ParamControlCCA9.displayName = "Button CC";
+            MidiNote9.visible = false;
+            ParamControlCCA9.visible = (9 < amount.value);
+        }
+        else if (ParamControlType9.value == 1)
+        {
+            MidiNote9.visible = (9 < amount.value);
+            ParamControlCCA9.visible = false;
+        }
+        else if (ParamControlType9.value == 2)
+        {
+            ParamControlCCA9.displayName = "Fader CC";
+            MidiNote9.visible = false;
+            ParamControlCCA9.visible = (9 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType10">
+    <![CDATA[
+        if (ParamControlType10.value == 0)
+        {
+            ParamControlCCA10.displayName = "Button CC";
+            MidiNote10.visible = false;
+            ParamControlCCA10.visible = (10 < amount.value);
+        }
+        else if (ParamControlType10.value == 1)
+        {
+            MidiNote10.visible = (10 < amount.value);
+            ParamControlCCA10.visible = false;
+        }
+        else if (ParamControlType10.value == 2)
+        {
+            ParamControlCCA10.displayName = "Fader CC";
+            MidiNote10.visible = false;
+            ParamControlCCA10.visible = (10 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType11">
+    <![CDATA[
+        if (ParamControlType11.value == 0)
+        {
+            ParamControlCCA11.displayName = "Button CC";
+            MidiNote11.visible = false;
+            ParamControlCCA11.visible = (11 < amount.value);
+        }
+        else if (ParamControlType11.value == 1)
+        {
+            MidiNote11.visible = (11 < amount.value);
+            ParamControlCCA11.visible = false;
+        }
+        else if (ParamControlType11.value == 2)
+        {
+            ParamControlCCA11.displayName = "Fader CC";
+            MidiNote11.visible = false;
+            ParamControlCCA11.visible = (11 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType12">
+    <![CDATA[
+        if (ParamControlType12.value == 0)
+        {
+            ParamControlCCA12.displayName = "Button CC";
+            MidiNote12.visible = false;
+            ParamControlCCA12.visible = (12 < amount.value);
+        }
+        else if (ParamControlType12.value == 1)
+        {
+            MidiNote12.visible = (12 < amount.value);
+            ParamControlCCA12.visible = false;
+        }
+        else if (ParamControlType12.value == 2)
+        {
+            ParamControlCCA12.displayName = "Fader CC";
+            MidiNote12.visible = false;
+            ParamControlCCA12.visible = (12 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType13">
+    <![CDATA[
+        if (ParamControlType13.value == 0)
+        {
+            ParamControlCCA13.displayName = "Button CC";
+            MidiNote13.visible = false;
+            ParamControlCCA13.visible = (13 < amount.value);
+        }
+        else if (ParamControlType13.value == 1)
+        {
+            MidiNote13.visible = (13 < amount.value);
+            ParamControlCCA13.visible = false;
+        }
+        else if (ParamControlType13.value == 2)
+        {
+            ParamControlCCA13.displayName = "Fader CC";
+            MidiNote13.visible = false;
+            ParamControlCCA13.visible = (13 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType14">
+    <![CDATA[
+        if (ParamControlType14.value == 0)
+        {
+            ParamControlCCA14.displayName = "Button CC";
+            MidiNote14.visible = false;
+            ParamControlCCA14.visible = (14 < amount.value);
+        }
+        else if (ParamControlType14.value == 1)
+        {
+            MidiNote14.visible = (14 < amount.value);
+            ParamControlCCA14.visible = false;
+        }
+        else if (ParamControlType14.value == 2)
+        {
+            ParamControlCCA14.displayName = "Fader CC";
+            MidiNote14.visible = false;
+            ParamControlCCA14.visible = (14 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType15">
+    <![CDATA[
+        if (ParamControlType15.value == 0)
+        {
+            ParamControlCCA15.displayName = "Button CC";
+            MidiNote15.visible = false;
+            ParamControlCCA15.visible = (15 < amount.value);
+        }
+        else if (ParamControlType15.value == 1)
+        {
+            MidiNote15.visible = (15 < amount.value);
+            ParamControlCCA15.visible = false;
+        }
+        else if (ParamControlType15.value == 2)
+        {
+            ParamControlCCA15.displayName = "Fader CC";
+            MidiNote15.visible = false;
+            ParamControlCCA15.visible = (15 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType16">
+    <![CDATA[
+        if (ParamControlType16.value == 0)
+        {
+            ParamControlCCA16.displayName = "Button CC";
+            MidiNote16.visible = false;
+            ParamControlCCA16.visible = (16 < amount.value);
+        }
+        else if (ParamControlType16.value == 1)
+        {
+            MidiNote16.visible = (16 < amount.value);
+            ParamControlCCA16.visible = false;
+        }
+        else if (ParamControlType16.value == 2)
+        {
+            ParamControlCCA16.displayName = "Fader CC";
+            MidiNote16.visible = false;
+            ParamControlCCA16.visible = (16 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType17">
+    <![CDATA[
+        if (ParamControlType17.value == 0)
+        {
+            ParamControlCCA17.displayName = "Button CC";
+            MidiNote17.visible = false;
+            ParamControlCCA17.visible = (17 < amount.value);
+        }
+        else if (ParamControlType17.value == 1)
+        {
+            MidiNote17.visible = (17 < amount.value);
+            ParamControlCCA17.visible = false;
+        }
+        else if (ParamControlType17.value == 2)
+        {
+            ParamControlCCA17.displayName = "Fader CC";
+            MidiNote17.visible = false;
+            ParamControlCCA17.visible = (17 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType18">
+    <![CDATA[
+        if (ParamControlType18.value == 0)
+        {
+            ParamControlCCA18.displayName = "Button CC";
+            MidiNote18.visible = false;
+            ParamControlCCA18.visible = (18 < amount.value);
+        }
+        else if (ParamControlType18.value == 1)
+        {
+            MidiNote18.visible = (18 < amount.value);
+            ParamControlCCA18.visible = false;
+        }
+        else if (ParamControlType18.value == 2)
+        {
+            ParamControlCCA18.displayName = "Fader CC";
+            MidiNote18.visible = false;
+            ParamControlCCA18.visible = (18 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType19">
+    <![CDATA[
+        if (ParamControlType19.value == 0)
+        {
+            ParamControlCCA19.displayName = "Button CC";
+            MidiNote19.visible = false;
+            ParamControlCCA19.visible = (19 < amount.value);
+        }
+        else if (ParamControlType19.value == 1)
+        {
+            MidiNote19.visible = (19 < amount.value);
+            ParamControlCCA19.visible = false;
+        }
+        else if (ParamControlType19.value == 2)
+        {
+            ParamControlCCA19.displayName = "Fader CC";
+            MidiNote19.visible = false;
+            ParamControlCCA19.visible = (19 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType20">
+    <![CDATA[
+        if (ParamControlType20.value == 0)
+        {
+            ParamControlCCA20.displayName = "Button CC";
+            MidiNote20.visible = false;
+            ParamControlCCA20.visible = (20 < amount.value);
+        }
+        else if (ParamControlType20.value == 1)
+        {
+            MidiNote20.visible = (20 < amount.value);
+            ParamControlCCA20.visible = false;
+        }
+        else if (ParamControlType20.value == 2)
+        {
+            ParamControlCCA20.displayName = "Fader CC";
+            MidiNote20.visible = false;
+            ParamControlCCA20.visible = (20 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType21">
+    <![CDATA[
+        if (ParamControlType21.value == 0)
+        {
+            ParamControlCCA21.displayName = "Button CC";
+            MidiNote21.visible = false;
+            ParamControlCCA21.visible = (21 < amount.value);
+        }
+        else if (ParamControlType21.value == 1)
+        {
+            MidiNote21.visible = (21 < amount.value);
+            ParamControlCCA21.visible = false;
+        }
+        else if (ParamControlType21.value == 2)
+        {
+            ParamControlCCA21.displayName = "Fader CC";
+            MidiNote21.visible = false;
+            ParamControlCCA21.visible = (21 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType22">
+    <![CDATA[
+        if (ParamControlType22.value == 0)
+        {
+            ParamControlCCA22.displayName = "Button CC";
+            MidiNote22.visible = false;
+            ParamControlCCA22.visible = (22 < amount.value);
+        }
+        else if (ParamControlType22.value == 1)
+        {
+            MidiNote22.visible = (22 < amount.value);
+            ParamControlCCA22.visible = false;
+        }
+        else if (ParamControlType22.value == 2)
+        {
+            ParamControlCCA22.displayName = "Fader CC";
+            MidiNote22.visible = false;
+            ParamControlCCA22.visible = (22 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType23">
+    <![CDATA[
+        if (ParamControlType23.value == 0)
+        {
+            ParamControlCCA23.displayName = "Button CC";
+            MidiNote23.visible = false;
+            ParamControlCCA23.visible = (23 < amount.value);
+        }
+        else if (ParamControlType23.value == 1)
+        {
+            MidiNote23.visible = (23 < amount.value);
+            ParamControlCCA23.visible = false;
+        }
+        else if (ParamControlType23.value == 2)
+        {
+            ParamControlCCA23.displayName = "Fader CC";
+            MidiNote23.visible = false;
+            ParamControlCCA23.visible = (23 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="ParamControlType24">
+    <![CDATA[
+        if (ParamControlType24.value == 0)
+        {
+            ParamControlCCA24.displayName = "Button CC";
+            MidiNote24.visible = false;
+            ParamControlCCA24.visible = (24 < amount.value);
+        }
+        else if (ParamControlType24.value == 1)
+        {
+            MidiNote24.visible = (24 < amount.value);
+            ParamControlCCA24.visible = false;
+        }
+        else if (ParamControlType24.value == 2)
+        {
+            ParamControlCCA24.displayName = "Fader CC";
+            MidiNote24.visible = false;
+            ParamControlCCA24.visible = (24 < amount.value);
+        }
+    ]]>
+    </script>
+
+    <script onChange="amount">
+    <![CDATA[
+        ParamControlType0.visible = (0 < amount.value);
+        ParamControlColour0.visible = (0 < amount.value);
+        ParamControlMode0.visible = (0 < amount.value);
+        ControlPosX0.visible = (0 < amount.value);
+        ControlPosY0.visible = (0 < amount.value);
+        ControlWidth0.visible = (0 < amount.value);
+        ControlHeight0.visible = (0 < amount.value);
+        if (ParamControlType0.value == 0)
+        {
+            ParamControlCCA0.displayName = "Button CC";
+            MidiNote0.visible = false;
+            ParamControlCCA0.visible = (0 < amount.value);
+        }
+        else if (ParamControlType0.value == 1)
+        {
+            MidiNote0.visible = (0 < amount.value);
+            ParamControlCCA0.visible = false;
+        }
+        else if (ParamControlType0.value == 2)
+        {
+            ParamControlCCA0.displayName = "Fader CC";
+            MidiNote0.visible = false;
+            ParamControlCCA0.visible = (0 < amount.value);
+        }
+
+        ParamControlType1.visible = (1 < amount.value);
+        ParamControlColour1.visible = (1 < amount.value);
+        ParamControlMode1.visible = (1 < amount.value);
+        ControlPosX1.visible = (1 < amount.value);
+        ControlPosY1.visible = (1 < amount.value);
+        ControlWidth1.visible = (1 < amount.value);
+        ControlHeight1.visible = (1 < amount.value);
+        if (ParamControlType1.value == 0)
+        {
+            ParamControlCCA1.displayName = "Button CC";
+            MidiNote1.visible = false;
+            ParamControlCCA1.visible = (1 < amount.value);
+        }
+        else if (ParamControlType1.value == 1)
+        {
+            MidiNote1.visible = (1 < amount.value);
+            ParamControlCCA1.visible = false;
+        }
+        else if (ParamControlType1.value == 2)
+        {
+            ParamControlCCA1.displayName = "Fader CC";
+            MidiNote1.visible = false;
+            ParamControlCCA1.visible = (1 < amount.value);
+        }
+
+        ParamControlType2.visible = (2 < amount.value);
+        ParamControlColour2.visible = (2 < amount.value);
+        ParamControlMode2.visible = (2 < amount.value);
+        ControlPosX2.visible = (2 < amount.value);
+        ControlPosY2.visible = (2 < amount.value);
+        ControlWidth2.visible = (2 < amount.value);
+        ControlHeight2.visible = (2 < amount.value);
+        if (ParamControlType2.value == 0)
+        {
+            ParamControlCCA2.displayName = "Button CC";
+            MidiNote2.visible = false;
+            ParamControlCCA2.visible = (2 < amount.value);
+        }
+        else if (ParamControlType2.value == 1)
+        {
+            MidiNote2.visible = (2 < amount.value);
+            ParamControlCCA2.visible = false;
+        }
+        else if (ParamControlType2.value == 2)
+        {
+            ParamControlCCA2.displayName = "Fader CC";
+            MidiNote2.visible = false;
+            ParamControlCCA2.visible = (2 < amount.value);
+        }
+
+        ParamControlType3.visible = (3 < amount.value);
+        ParamControlColour3.visible = (3 < amount.value);
+        ParamControlMode3.visible = (3 < amount.value);
+        ControlPosX3.visible = (3 < amount.value);
+        ControlPosY3.visible = (3 < amount.value);
+        ControlWidth3.visible = (3 < amount.value);
+        ControlHeight3.visible = (3 < amount.value);
+        if (ParamControlType3.value == 0)
+        {
+            ParamControlCCA3.displayName = "Button CC";
+            MidiNote3.visible = false;
+            ParamControlCCA3.visible = (3 < amount.value);
+        }
+        else if (ParamControlType3.value == 1)
+        {
+            MidiNote3.visible = (3 < amount.value);
+            ParamControlCCA3.visible = false;
+        }
+        else if (ParamControlType3.value == 2)
+        {
+            ParamControlCCA3.displayName = "Fader CC";
+            MidiNote3.visible = false;
+            ParamControlCCA3.visible = (3 < amount.value);
+        }
+
+        ParamControlType4.visible = (4 < amount.value);
+        ParamControlColour4.visible = (4 < amount.value);
+        ParamControlMode4.visible = (4 < amount.value);
+        ControlPosX4.visible = (4 < amount.value);
+        ControlPosY4.visible = (4 < amount.value);
+        ControlWidth4.visible = (4 < amount.value);
+        ControlHeight4.visible = (4 < amount.value);
+        if (ParamControlType4.value == 0)
+        {
+            ParamControlCCA4.displayName = "Button CC";
+            MidiNote4.visible = false;
+            ParamControlCCA4.visible = (4 < amount.value);
+        }
+        else if (ParamControlType4.value == 1)
+        {
+            MidiNote4.visible = (4 < amount.value);
+            ParamControlCCA4.visible = false;
+        }
+        else if (ParamControlType4.value == 2)
+        {
+            ParamControlCCA4.displayName = "Fader CC";
+            MidiNote4.visible = false;
+            ParamControlCCA4.visible = (4 < amount.value);
+        }
+
+        ParamControlType5.visible = (5 < amount.value);
+        ParamControlColour5.visible = (5 < amount.value);
+        ParamControlMode5.visible = (5 < amount.value);
+        ControlPosX5.visible = (5 < amount.value);
+        ControlPosY5.visible = (5 < amount.value);
+        ControlWidth5.visible = (5 < amount.value);
+        ControlHeight5.visible = (5 < amount.value);
+        if (ParamControlType5.value == 0)
+        {
+            ParamControlCCA5.displayName = "Button CC";
+            MidiNote5.visible = false;
+            ParamControlCCA5.visible = (5 < amount.value);
+        }
+        else if (ParamControlType5.value == 1)
+        {
+            MidiNote5.visible = (5 < amount.value);
+            ParamControlCCA5.visible = false;
+        }
+        else if (ParamControlType5.value == 2)
+        {
+            ParamControlCCA5.displayName = "Fader CC";
+            MidiNote5.visible = false;
+            ParamControlCCA5.visible = (5 < amount.value);
+        }
+
+        ParamControlType6.visible = (6 < amount.value);
+        ParamControlColour6.visible = (6 < amount.value);
+        ParamControlMode6.visible = (6 < amount.value);
+        ControlPosX6.visible = (6 < amount.value);
+        ControlPosY6.visible = (6 < amount.value);
+        ControlWidth6.visible = (6 < amount.value);
+        ControlHeight6.visible = (6 < amount.value);
+        if (ParamControlType6.value == 0)
+        {
+            ParamControlCCA6.displayName = "Button CC";
+            MidiNote6.visible = false;
+            ParamControlCCA6.visible = (6 < amount.value);
+        }
+        else if (ParamControlType6.value == 1)
+        {
+            MidiNote6.visible = (6 < amount.value);
+            ParamControlCCA6.visible = false;
+        }
+        else if (ParamControlType6.value == 2)
+        {
+            ParamControlCCA6.displayName = "Fader CC";
+            MidiNote6.visible = false;
+            ParamControlCCA6.visible = (6 < amount.value);
+        }
+
+        ParamControlType7.visible = (7 < amount.value);
+        ParamControlColour7.visible = (7 < amount.value);
+        ParamControlMode7.visible = (7 < amount.value);
+        ControlPosX7.visible = (7 < amount.value);
+        ControlPosY7.visible = (7 < amount.value);
+        ControlWidth7.visible = (7 < amount.value);
+        ControlHeight7.visible = (7 < amount.value);
+        if (ParamControlType7.value == 0)
+        {
+            ParamControlCCA7.displayName = "Button CC";
+            MidiNote7.visible = false;
+            ParamControlCCA7.visible = (7 < amount.value);
+        }
+        else if (ParamControlType7.value == 1)
+        {
+            MidiNote7.visible = (7 < amount.value);
+            ParamControlCCA7.visible = false;
+        }
+        else if (ParamControlType7.value == 2)
+        {
+            ParamControlCCA7.displayName = "Fader CC";
+            MidiNote7.visible = false;
+            ParamControlCCA7.visible = (7 < amount.value);
+        }
+
+        ParamControlType8.visible = (8 < amount.value);
+        ParamControlColour8.visible = (8 < amount.value);
+        ParamControlMode8.visible = (8 < amount.value);
+        ControlPosX8.visible = (8 < amount.value);
+        ControlPosY8.visible = (8 < amount.value);
+        ControlWidth8.visible = (8 < amount.value);
+        ControlHeight8.visible = (8 < amount.value);
+        if (ParamControlType8.value == 0)
+        {
+            ParamControlCCA8.displayName = "Button CC";
+            MidiNote8.visible = false;
+            ParamControlCCA8.visible = (8 < amount.value);
+        }
+        else if (ParamControlType8.value == 1)
+        {
+            MidiNote8.visible = (8 < amount.value);
+            ParamControlCCA8.visible = false;
+        }
+        else if (ParamControlType8.value == 2)
+        {
+            ParamControlCCA8.displayName = "Fader CC";
+            MidiNote8.visible = false;
+            ParamControlCCA8.visible = (8 < amount.value);
+        }
+
+        ParamControlType9.visible = (9 < amount.value);
+        ParamControlColour9.visible = (9 < amount.value);
+        ParamControlMode9.visible = (9 < amount.value);
+        ControlPosX9.visible = (9 < amount.value);
+        ControlPosY9.visible = (9 < amount.value);
+        ControlWidth9.visible = (9 < amount.value);
+        ControlHeight9.visible = (9 < amount.value);
+        if (ParamControlType9.value == 0)
+        {
+            ParamControlCCA9.displayName = "Button CC";
+            MidiNote9.visible = false;
+            ParamControlCCA9.visible = (9 < amount.value);
+        }
+        else if (ParamControlType9.value == 1)
+        {
+            MidiNote9.visible = (9 < amount.value);
+            ParamControlCCA9.visible = false;
+        }
+        else if (ParamControlType9.value == 2)
+        {
+            ParamControlCCA9.displayName = "Fader CC";
+            MidiNote9.visible = false;
+            ParamControlCCA9.visible = (9 < amount.value);
+        }
+
+        ParamControlType10.visible = (10 < amount.value);
+        ParamControlColour10.visible = (10 < amount.value);
+        ParamControlMode10.visible = (10 < amount.value);
+        ControlPosX10.visible = (10 < amount.value);
+        ControlPosY10.visible = (10 < amount.value);
+        ControlWidth10.visible = (10 < amount.value);
+        ControlHeight10.visible = (10 < amount.value);
+        if (ParamControlType10.value == 0)
+        {
+            ParamControlCCA10.displayName = "Button CC";
+            MidiNote10.visible = false;
+            ParamControlCCA10.visible = (10 < amount.value);
+        }
+        else if (ParamControlType10.value == 1)
+        {
+            MidiNote10.visible = (10 < amount.value);
+            ParamControlCCA10.visible = false;
+        }
+        else if (ParamControlType10.value == 2)
+        {
+            ParamControlCCA10.displayName = "Fader CC";
+            MidiNote10.visible = false;
+            ParamControlCCA10.visible = (10 < amount.value);
+        }
+
+        ParamControlType11.visible = (11 < amount.value);
+        ParamControlColour11.visible = (11 < amount.value);
+        ParamControlMode11.visible = (11 < amount.value);
+        ControlPosX11.visible = (11 < amount.value);
+        ControlPosY11.visible = (11 < amount.value);
+        ControlWidth11.visible = (11 < amount.value);
+        ControlHeight11.visible = (11 < amount.value);
+        if (ParamControlType11.value == 0)
+        {
+            ParamControlCCA11.displayName = "Button CC";
+            MidiNote11.visible = false;
+            ParamControlCCA11.visible = (11 < amount.value);
+        }
+        else if (ParamControlType11.value == 1)
+        {
+            MidiNote11.visible = (11 < amount.value);
+            ParamControlCCA11.visible = false;
+        }
+        else if (ParamControlType11.value == 2)
+        {
+            ParamControlCCA11.displayName = "Fader CC";
+            MidiNote11.visible = false;
+            ParamControlCCA11.visible = (11 < amount.value);
+        }
+
+        ParamControlType12.visible = (12 < amount.value);
+        ParamControlColour12.visible = (12 < amount.value);
+        ParamControlMode12.visible = (12 < amount.value);
+        ControlPosX12.visible = (12 < amount.value);
+        ControlPosY12.visible = (12 < amount.value);
+        ControlWidth12.visible = (12 < amount.value);
+        ControlHeight12.visible = (12 < amount.value);
+        if (ParamControlType12.value == 0)
+        {
+            ParamControlCCA12.displayName = "Button CC";
+            MidiNote12.visible = false;
+            ParamControlCCA12.visible = (12 < amount.value);
+        }
+        else if (ParamControlType12.value == 1)
+        {
+            MidiNote12.visible = (12 < amount.value);
+            ParamControlCCA12.visible = false;
+        }
+        else if (ParamControlType12.value == 2)
+        {
+            ParamControlCCA12.displayName = "Fader CC";
+            MidiNote12.visible = false;
+            ParamControlCCA12.visible = (12 < amount.value);
+        }
+
+        ParamControlType13.visible = (13 < amount.value);
+        ParamControlColour13.visible = (13 < amount.value);
+        ParamControlMode13.visible = (13 < amount.value);
+        ControlPosX13.visible = (13 < amount.value);
+        ControlPosY13.visible = (13 < amount.value);
+        ControlWidth13.visible = (13 < amount.value);
+        ControlHeight13.visible = (13 < amount.value);
+        if (ParamControlType13.value == 0)
+        {
+            ParamControlCCA13.displayName = "Button CC";
+            MidiNote13.visible = false;
+            ParamControlCCA13.visible = (13 < amount.value);
+        }
+        else if (ParamControlType13.value == 1)
+        {
+            MidiNote13.visible = (13 < amount.value);
+            ParamControlCCA13.visible = false;
+        }
+        else if (ParamControlType13.value == 2)
+        {
+            ParamControlCCA13.displayName = "Fader CC";
+            MidiNote13.visible = false;
+            ParamControlCCA13.visible = (13 < amount.value);
+        }
+
+        ParamControlType14.visible = (14 < amount.value);
+        ParamControlColour14.visible = (14 < amount.value);
+        ParamControlMode14.visible = (14 < amount.value);
+        ControlPosX14.visible = (14 < amount.value);
+        ControlPosY14.visible = (14 < amount.value);
+        ControlWidth14.visible = (14 < amount.value);
+        ControlHeight14.visible = (14 < amount.value);
+        if (ParamControlType14.value == 0)
+        {
+            ParamControlCCA14.displayName = "Button CC";
+            MidiNote14.visible = false;
+            ParamControlCCA14.visible = (14 < amount.value);
+        }
+        else if (ParamControlType14.value == 1)
+        {
+            MidiNote14.visible = (14 < amount.value);
+            ParamControlCCA14.visible = false;
+        }
+        else if (ParamControlType14.value == 2)
+        {
+            ParamControlCCA14.displayName = "Fader CC";
+            MidiNote14.visible = false;
+            ParamControlCCA14.visible = (14 < amount.value);
+        }
+
+        ParamControlType15.visible = (15 < amount.value);
+        ParamControlColour15.visible = (15 < amount.value);
+        ParamControlMode15.visible = (15 < amount.value);
+        ControlPosX15.visible = (15 < amount.value);
+        ControlPosY15.visible = (15 < amount.value);
+        ControlWidth15.visible = (15 < amount.value);
+        ControlHeight15.visible = (15 < amount.value);
+        if (ParamControlType15.value == 0)
+        {
+            ParamControlCCA15.displayName = "Button CC";
+            MidiNote15.visible = false;
+            ParamControlCCA15.visible = (15 < amount.value);
+        }
+        else if (ParamControlType15.value == 1)
+        {
+            MidiNote15.visible = (15 < amount.value);
+            ParamControlCCA15.visible = false;
+        }
+        else if (ParamControlType15.value == 2)
+        {
+            ParamControlCCA15.displayName = "Fader CC";
+            MidiNote15.visible = false;
+            ParamControlCCA15.visible = (15 < amount.value);
+        }
+
+        ParamControlType16.visible = (16 < amount.value);
+        ParamControlColour16.visible = (16 < amount.value);
+        ParamControlMode16.visible = (16 < amount.value);
+        ControlPosX16.visible = (16 < amount.value);
+        ControlPosY16.visible = (16 < amount.value);
+        ControlWidth16.visible = (16 < amount.value);
+        ControlHeight16.visible = (16 < amount.value);
+        if (ParamControlType16.value == 0)
+        {
+            ParamControlCCA16.displayName = "Button CC";
+            MidiNote16.visible = false;
+            ParamControlCCA16.visible = (16 < amount.value);
+        }
+        else if (ParamControlType16.value == 1)
+        {
+            MidiNote16.visible = (16 < amount.value);
+            ParamControlCCA16.visible = false;
+        }
+        else if (ParamControlType16.value == 2)
+        {
+            ParamControlCCA16.displayName = "Fader CC";
+            MidiNote16.visible = false;
+            ParamControlCCA16.visible = (16 < amount.value);
+        }
+
+        ParamControlType17.visible = (17 < amount.value);
+        ParamControlColour17.visible = (17 < amount.value);
+        ParamControlMode17.visible = (17 < amount.value);
+        ControlPosX17.visible = (17 < amount.value);
+        ControlPosY17.visible = (17 < amount.value);
+        ControlWidth17.visible = (17 < amount.value);
+        ControlHeight17.visible = (17 < amount.value);
+        if (ParamControlType17.value == 0)
+        {
+            ParamControlCCA17.displayName = "Button CC";
+            MidiNote17.visible = false;
+            ParamControlCCA17.visible = (17 < amount.value);
+        }
+        else if (ParamControlType17.value == 1)
+        {
+            MidiNote17.visible = (17 < amount.value);
+            ParamControlCCA17.visible = false;
+        }
+        else if (ParamControlType17.value == 2)
+        {
+            ParamControlCCA17.displayName = "Fader CC";
+            MidiNote17.visible = false;
+            ParamControlCCA17.visible = (17 < amount.value);
+        }
+
+        ParamControlType18.visible = (18 < amount.value);
+        ParamControlColour18.visible = (18 < amount.value);
+        ParamControlMode18.visible = (18 < amount.value);
+        ControlPosX18.visible = (18 < amount.value);
+        ControlPosY18.visible = (18 < amount.value);
+        ControlWidth18.visible = (18 < amount.value);
+        ControlHeight18.visible = (18 < amount.value);
+        if (ParamControlType18.value == 0)
+        {
+            ParamControlCCA18.displayName = "Button CC";
+            MidiNote18.visible = false;
+            ParamControlCCA18.visible = (18 < amount.value);
+        }
+        else if (ParamControlType18.value == 1)
+        {
+            MidiNote18.visible = (18 < amount.value);
+            ParamControlCCA18.visible = false;
+        }
+        else if (ParamControlType18.value == 2)
+        {
+            ParamControlCCA18.displayName = "Fader CC";
+            MidiNote18.visible = false;
+            ParamControlCCA18.visible = (18 < amount.value);
+        }
+
+        ParamControlType19.visible = (19 < amount.value);
+        ParamControlColour19.visible = (19 < amount.value);
+        ParamControlMode19.visible = (19 < amount.value);
+        ControlPosX19.visible = (19 < amount.value);
+        ControlPosY19.visible = (19 < amount.value);
+        ControlWidth19.visible = (19 < amount.value);
+        ControlHeight19.visible = (19 < amount.value);
+        if (ParamControlType19.value == 0)
+        {
+            ParamControlCCA19.displayName = "Button CC";
+            MidiNote19.visible = false;
+            ParamControlCCA19.visible = (19 < amount.value);
+        }
+        else if (ParamControlType19.value == 1)
+        {
+            MidiNote19.visible = (19 < amount.value);
+            ParamControlCCA19.visible = false;
+        }
+        else if (ParamControlType19.value == 2)
+        {
+            ParamControlCCA19.displayName = "Fader CC";
+            MidiNote19.visible = false;
+            ParamControlCCA19.visible = (19 < amount.value);
+        }
+
+        ParamControlType20.visible = (20 < amount.value);
+        ParamControlColour20.visible = (20 < amount.value);
+        ParamControlMode20.visible = (20 < amount.value);
+        ControlPosX20.visible = (20 < amount.value);
+        ControlPosY20.visible = (20 < amount.value);
+        ControlWidth20.visible = (20 < amount.value);
+        ControlHeight20.visible = (20 < amount.value);
+        if (ParamControlType20.value == 0)
+        {
+            ParamControlCCA20.displayName = "Button CC";
+            MidiNote20.visible = false;
+            ParamControlCCA20.visible = (20 < amount.value);
+        }
+        else if (ParamControlType20.value == 1)
+        {
+            MidiNote20.visible = (20 < amount.value);
+            ParamControlCCA20.visible = false;
+        }
+        else if (ParamControlType20.value == 2)
+        {
+            ParamControlCCA20.displayName = "Fader CC";
+            MidiNote20.visible = false;
+            ParamControlCCA20.visible = (20 < amount.value);
+        }
+
+        ParamControlType21.visible = (21 < amount.value);
+        ParamControlColour21.visible = (21 < amount.value);
+        ParamControlMode21.visible = (21 < amount.value);
+        ControlPosX21.visible = (21 < amount.value);
+        ControlPosY21.visible = (21 < amount.value);
+        ControlWidth21.visible = (21 < amount.value);
+        ControlHeight21.visible = (21 < amount.value);
+        if (ParamControlType21.value == 0)
+        {
+            ParamControlCCA21.displayName = "Button CC";
+            MidiNote21.visible = false;
+            ParamControlCCA21.visible = (21 < amount.value);
+        }
+        else if (ParamControlType21.value == 1)
+        {
+            MidiNote21.visible = (21 < amount.value);
+            ParamControlCCA21.visible = false;
+        }
+        else if (ParamControlType21.value == 2)
+        {
+            ParamControlCCA21.displayName = "Fader CC";
+            MidiNote21.visible = false;
+            ParamControlCCA21.visible = (21 < amount.value);
+        }
+
+        ParamControlType22.visible = (22 < amount.value);
+        ParamControlColour22.visible = (22 < amount.value);
+        ParamControlMode22.visible = (22 < amount.value);
+        ControlPosX22.visible = (22 < amount.value);
+        ControlPosY22.visible = (22 < amount.value);
+        ControlWidth22.visible = (22 < amount.value);
+        ControlHeight22.visible = (22 < amount.value);
+        if (ParamControlType22.value == 0)
+        {
+            ParamControlCCA22.displayName = "Button CC";
+            MidiNote22.visible = false;
+            ParamControlCCA22.visible = (22 < amount.value);
+        }
+        else if (ParamControlType22.value == 1)
+        {
+            MidiNote22.visible = (22 < amount.value);
+            ParamControlCCA22.visible = false;
+        }
+        else if (ParamControlType22.value == 2)
+        {
+            ParamControlCCA22.displayName = "Fader CC";
+            MidiNote22.visible = false;
+            ParamControlCCA22.visible = (22 < amount.value);
+        }
+
+        ParamControlType23.visible = (23 < amount.value);
+        ParamControlColour23.visible = (23 < amount.value);
+        ParamControlMode23.visible = (23 < amount.value);
+        ControlPosX23.visible = (23 < amount.value);
+        ControlPosY23.visible = (23 < amount.value);
+        ControlWidth23.visible = (23 < amount.value);
+        ControlHeight23.visible = (23 < amount.value);
+        if (ParamControlType23.value == 0)
+        {
+            ParamControlCCA23.displayName = "Button CC";
+            MidiNote23.visible = false;
+            ParamControlCCA23.visible = (23 < amount.value);
+        }
+        else if (ParamControlType23.value == 1)
+        {
+            MidiNote23.visible = (23 < amount.value);
+            ParamControlCCA23.visible = false;
+        }
+        else if (ParamControlType23.value == 2)
+        {
+            ParamControlCCA23.displayName = "Fader CC";
+            MidiNote23.visible = false;
+            ParamControlCCA23.visible = (23 < amount.value);
+        }
+
+        ParamControlType24.visible = (24 < amount.value);
+        ParamControlColour24.visible = (24 < amount.value);
+        ParamControlMode24.visible = (24 < amount.value);
+        ControlPosX24.visible = (24 < amount.value);
+        ControlPosY24.visible = (24 < amount.value);
+        ControlWidth24.visible = (24 < amount.value);
+        ControlHeight24.visible = (24 < amount.value);
+        if (ParamControlType24.value == 0)
+        {
+            ParamControlCCA24.displayName = "Button CC";
+            MidiNote24.visible = false;
+            ParamControlCCA24.visible = (24 < amount.value);
+        }
+        else if (ParamControlType24.value == 1)
+        {
+            MidiNote24.visible = (24 < amount.value);
+            ParamControlCCA24.visible = false;
+        }
+        else if (ParamControlType24.value == 2)
+        {
+            ParamControlCCA24.displayName = "Fader CC";
+            MidiNote24.visible = false;
+            ParamControlCCA24.visible = (24 < amount.value);
+        }
+
+    ]]>
+    </script>
