@@ -1,6 +1,9 @@
+Version 2.0.1 Beta [2019-12-28]
+    - Added installers for Mac and Win
+
 Version 2.0.0 Beta [2019-11-17]
     - Overhauled touch processing: improved multitouch support and performace
-    - Overhauled appearance: new look for XY pads, control shading, highlighting controls for touch and pressure indication
+    - Overhauled appearance: new look for XY pads, global brightness and contrast settings, control shading, highlighting controls for touch and pressure indication
     - Introduced dynamic Dashboard interface layout
     - Added ability to individually assign MIDI channel for each control
     - Added new control type: MIDI Note
