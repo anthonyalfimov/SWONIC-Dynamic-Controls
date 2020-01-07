@@ -1662,11 +1662,14 @@ void initialise()
         if (! individualBrightness)
         {
             float maxc = max(r, max(g, b));
-            maxc = (brightness + 0.5) / maxc;
 
-            r *= maxc;
-            g *= maxc;
-            b *= maxc;
+            if (maxc != 0.0)
+            {
+                maxc = (brightness + 0.5) / maxc;
+                r *= maxc;
+                g *= maxc;
+                b *= maxc;
+            }
         }
 
         setControlColour(i, makeARGB(0xFF, int(r), int(g), int(b)));
