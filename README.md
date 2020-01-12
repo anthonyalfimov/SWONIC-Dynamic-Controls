@@ -1,4 +1,4 @@
-# Dynamic Controls 2.0
+# Dynamic Controls 2
 
 App for ROLI Dashboard and ROLI Lightpad Block
 
