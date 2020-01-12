@@ -1663,7 +1663,7 @@ void initialise()
         {
             float maxc = max(r, max(g, b));
 
-            if (maxc != 0.0)
+            if (maxc > 0.0)
             {
                 maxc = (brightness + 0.5) / maxc;
                 r *= maxc;
