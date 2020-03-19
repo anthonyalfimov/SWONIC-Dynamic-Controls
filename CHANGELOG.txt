@@ -1,4 +1,4 @@
-    - Minor fixes
+    - Update app details and description
 
 Version 2.0.2 Beta [2020-01-12]
     - Fixed: Setting control colour to black disables this and all subsequent controls
