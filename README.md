@@ -1,10 +1,10 @@
 # Dynamic Controls 2
 
-App for ROLI Dashboard and ROLI Lightpad Block
+App for ROLI Dashboard and ROLI Lightpad Block.
 
 *Turns your Lightpad into a flexible MIDI control surface. Set the desired number of controls, their appearance and behaviour.*
 
-Developed by Anthony Alfimov and Andreas Swoboda
+Developed by Anthony Alfimov and Andreas Swoboda.
 
 ---
 
@@ -20,7 +20,7 @@ Create up to 25 Buttons, Notes or Faders with a limited feature set.
 
 ## Installation
 
-1. Make sure you have [ROLI Dashboard](https://roli.com/products/software/blocks-dashboard) installed.
+1. Make sure you have the latest version of [ROLI Dashboard](https://roli.com/products/software/blocks-dashboard) installed, and your Lightpad is updated to the latest firmware.
 
 2. Download the Dynamic Controls installer for your operating system from [swonic.com](https://swonic.com/dynamic-controls/) and run it.
 

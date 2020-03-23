@@ -1,6 +1,6 @@
 /*
-<metadata description="Create up to 25 Buttons, Notes or Faders.&#13;&#13;SWONIC.com | v2.0.2"
-          details="Turns your Lightpad into a flexible MIDI control surface. Set the desired number of controls, their appearance and behaviour."
+<metadata description="Create up to 25 Buttons, Notes or Faders."
+          details="Version: 2.0.3&#13;&#13;Light Edition: offers fewer features to allow more controls to be created.&#13;&#13;Turns your Lightpad into a flexible MIDI control surface. Set the desired number of controls, their appearance and behaviour.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
