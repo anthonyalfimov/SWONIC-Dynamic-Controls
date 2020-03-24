@@ -2,7 +2,7 @@
 
 App for ROLI Dashboard and ROLI Lightpad Block.
 
-*Turns your Lightpad into a flexible MIDI control surface. Set the desired number of controls, their appearance and behaviour.*
+*Turns your Lightpad into a highly customisable MIDI control surface. Design your own control layout using Buttons, Faders and XY Pads.*
 
 Developed by Anthony Alfimov and Andreas Swoboda.
 
