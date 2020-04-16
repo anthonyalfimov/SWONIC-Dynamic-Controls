@@ -20,7 +20,7 @@ Create up to 25 Buttons, Notes or Faders with a limited feature set.
 
 ## Installation
 
-1. Make sure you have the latest version of [ROLI Dashboard](https://roli.com/products/software/blocks-dashboard) installed, and your Lightpad is updated to the latest firmware.
+1. Make sure you have the latest version of [ROLI Dashboard](https://roli.com/products/software/blocks-dashboard) installed. Use ROLI Dashboard to update your Lightpad to the latest firmware.
 
 2. Download the Dynamic Controls installer for your operating system from [swonic.com](https://swonic.com/dynamic-controls/) and run it.
 
