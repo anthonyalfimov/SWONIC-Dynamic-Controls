@@ -15,7 +15,7 @@
         <variable name="defaultMidiChannel" displayName="Default MIDI Channel" type="option"
                   value="1" options="1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16"
                   tooltip="Select the default MIDI channel for sending MIDI messages." />
-        <variable name="useOverlaps" displayName="Overlapping Controls [!]" type="bool"
+        <variable name="useOverlaps" displayName="Control&#13;Layering [!]" type="bool"
                   value="false"
                   tooltip="Enable to allow controls (or their parts), covered by other controls, to send MIDI messages.&#13;&#13;[!] A large number of overlapping controls might slow down or freeze the app." />
         <variable name="receiveMIDI" displayName="Receive&#13;MIDI CC [!]" type="bool"
