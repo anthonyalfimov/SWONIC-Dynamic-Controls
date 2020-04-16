@@ -1,3 +1,5 @@
+Version 2.0.4 [2020-04-16]
+    - Renamed "Overlapping Controls" to "Control Layering"
     - Minor updates to app description
 
 Version 2.0.3 Beta [2020-03-23]
