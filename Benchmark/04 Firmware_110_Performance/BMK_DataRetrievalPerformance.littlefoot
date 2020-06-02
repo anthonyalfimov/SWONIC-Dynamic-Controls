@@ -20,6 +20,11 @@ int getHeapVar()
     return getHeapInt(0);
 }
 
+int getLocalConfigVar()
+{
+    return getLocalConfig(64);
+}
+
 void initialise()
 {
     getVar = 1;
@@ -45,7 +50,7 @@ void touchMove (int index, float x, float y, float z, float vz)
         //tmp = getMetaVar;               // test int metadata variable
         //tmp = getHeapVar();             // test heap
         //tmp = getMetaVector(1);         // test metadata vector
-        //tmp = getLocalConfig(64);       // test local config item
+        //tmp = getLocalConfigVar();      // test local config item
     }
 
     log (getTimeInCurrentFunctionCall());
