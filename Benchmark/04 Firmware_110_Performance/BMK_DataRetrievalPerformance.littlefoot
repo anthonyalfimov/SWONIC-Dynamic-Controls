@@ -1,0 +1,55 @@
+/*
+<metadata description="">
+    <variables>
+            <variable name="getMetaVar" displayName="Value" type="int" min="0" max="255" value="1" />
+
+        <vector count="5" wantsGetFunctions="true">
+            <variable name="MetaVector" type="int" min="0" max="255" value="1" visible="false"/>
+        </vector>
+    </variables>
+</metadata>
+*/
+
+#heapsize: 10
+
+const int getConst = 1;
+int getVar;
+
+int getHeapVar()
+{
+    return getHeapInt(0);
+}
+
+void initialise()
+{
+    getVar = 1;
+    setHeapInt (0, 1);
+
+    setLocalConfigActiveState(64, false, false);
+    setLocalConfig(64, 1);
+}
+
+void repaint()
+{
+    clearDisplay();
+}
+
+void touchMove (int index, float x, float y, float z, float vz)
+{
+    int tmp;
+
+    for (int i = 0; i < 1000; ++i)
+    {
+        tmp = getConst;                 // test int constant
+        //tmp = getVar;                   // test int variable
+        //tmp = getMetaVar;               // test int metadata variable
+        //tmp = getHeapVar();             // test heap
+        //tmp = getMetaVector(1);         // test metadata vector
+        //tmp = getLocalConfig(64);       // test local config item
+    }
+
+    log (getTimeInCurrentFunctionCall());
+}
+
+
+
