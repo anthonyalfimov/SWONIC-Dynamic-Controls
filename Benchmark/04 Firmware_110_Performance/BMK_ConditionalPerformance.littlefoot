@@ -1,0 +1,29 @@
+#heapsize: 1
+
+bool condition;
+
+void initialise()
+{
+    condition = true;
+}
+
+void repaint()
+{
+    clearDisplay();
+}
+
+void touchMove (int index, float x, float y, float z, float vz)
+{
+    for (int i = 0; i < 1000; ++i)
+    {
+        if (condition)
+        {}
+        else
+        {}
+    }
+
+    log (getTimeInCurrentFunctionCall());
+}
+
+
+
