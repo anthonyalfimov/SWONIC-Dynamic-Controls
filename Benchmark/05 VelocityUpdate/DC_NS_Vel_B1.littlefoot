@@ -1,6 +1,6 @@
 /*
 <metadata description="Create up to 16 Buttons, Notes, Faders or XY Pads."
-          details="Version: 2.1.0a&#13;&#13;Turns your Lightpad into a customisable MIDI control surface. Design your own control layout using Buttons, Faders and XY Pads.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
+          details="Version: 2.1.0a B1&#13;&#13;Turns your Lightpad into a customisable MIDI control surface. Design your own control layout using Buttons, Faders and XY Pads.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
@@ -21,6 +21,10 @@
         <variable name="receiveMIDI" displayName="Receive&#13;MIDI CC [!]" type="bool"
                   value="false"
                   tooltip="Enable to allow controls with [Latch] behaviour to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A large number of simultaneous incoming MIDI streams might slow down or freeze the app.&#13;&#13;[!] Pressure CC and MIDI Notes are not received." />
+
+        <variable name="fixedVelocity" displayName="Fixed Note Velocity" type="bool"
+                  value="true"
+                  tooltip="TODO: Enable to use fixed velocity values for Note controls. When performing a Slide-over manuever, velocity is set to 64, unless fixed velocity is enabled." />
 
         <variable name="brightness" displayName="Brightness" type="int"
                   min="0" max="10" value="10" group="graphics"
@@ -90,7 +94,7 @@
 
 //==============================================================================
 //
-//  DYNAMIC CONTROLS 2.1.0a
+//  DYNAMIC CONTROLS 2.1.0a B1
 //
 //      App for ROLI Dashboard and ROLI Lightpad Block
 //
@@ -270,17 +274,19 @@ int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
 //==============================================================================
 //  Touch Functions
 //==============================================================================
+const float slideOverVelocity = 64.0;
+
 //------------------------------------------------------------------------------
 //  Touch Event Handlers
 //------------------------------------------------------------------------------
 void touchStart(int index, float x, float y, float z, float vz)
 {
-    doTouch(index, x, y, z);
+    doTouch(index, x, y, z, vz);
 }
 
 void touchMove(int index, float x, float y, float z, float vz)
 {
-    doTouch(index, x, y, z);
+    doTouch(index, x, y, z, slideOverVelocity);
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -294,7 +300,7 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 //------------------------------------------------------------------------------
 //  Touch Processing Functions
 //------------------------------------------------------------------------------
-void doTouch(int touchIndex, float x, float y, float z)
+void doTouch(int touchIndex, float x, float y, float z, float vz)
 {
     // Coordinate conversion from (0.0, 2.0) to [0, 14]
     int intX = int(x * 0.5 * 15.0);
@@ -320,7 +326,7 @@ void doTouch(int touchIndex, float x, float y, float z)
             else if (controlType == C_NOTE)
             {
                 if (! touchField)           // if no other touches present
-                    doNote(i);
+                    doNote(i, vz);
             }
             else if (controlType == C_FADER)
             {
@@ -413,14 +419,14 @@ void doButton(int controlIndex)
     setControlValueA(controlIndex, value);
 }
 
-void doNote(int controlIndex)
+void doNote(int controlIndex, float playedVelocity)
 {
     // Use CC A value to track whether note is held
     //  0   - not held
     //  ! 0 - held
     if (getControlValueA(controlIndex) == 0)
     {
-        int velocity = getControlCCB(controlIndex);
+        int velocity = fixedVelocity ? getControlCCB(controlIndex) : clamp(1, 127, int(playedVelocity * 127.0));
         sendMIDI(0x90 | getMidiChannel(controlIndex), getMidiNote(controlIndex), velocity);
         setControlValueA(controlIndex, velocity);
     }
