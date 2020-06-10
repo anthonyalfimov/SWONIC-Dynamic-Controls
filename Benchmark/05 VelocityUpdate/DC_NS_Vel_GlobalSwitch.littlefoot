@@ -1,6 +1,6 @@
 /*
 <metadata description="Create up to 16 Buttons, Notes, Faders or XY Pads."
-          details="Version: 2.1.0a A1&#13;&#13;Turns your Lightpad into a customisable MIDI control surface. Design your own control layout using Buttons, Faders and XY Pads.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
+          details="Version: 2.1.0a GS&#13;&#13;Turns your Lightpad into a customisable MIDI control surface. Design your own control layout using Buttons, Faders and XY Pads.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
@@ -94,7 +94,7 @@
 
 //==============================================================================
 //
-//  DYNAMIC CONTROLS 2.1.0a A1
+//  DYNAMIC CONTROLS 2.1.0a GS
 //
 //      App for ROLI Dashboard and ROLI Lightpad Block
 //
@@ -165,6 +165,9 @@ const int C_XYPAD  = 3;
 // Behaviour types
 const int B_MOMENTARY = 0;
 const int B_LATCH = 1;
+
+// Touch event properties
+const float NO_PLAYED_VELOCITY = -1.0;
 
 //==============================================================================
 //  Heap Setters and Getters
@@ -284,7 +287,7 @@ void touchStart(int index, float x, float y, float z, float vz)
 
 void touchMove(int index, float x, float y, float z, float vz)
 {
-    doTouch(index, x, y, z, -1.0);
+    doTouch(index, x, y, z, NO_PLAYED_VELOCITY);
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -427,9 +430,9 @@ void doNote(int controlIndex, float playedVelocity)
         int velocity;
 
         if (fixedVelocity || (playedVelocity < 0.0))
-            velocity = getControlCCB(controlIndex);
+            velocity = getControlCCB(controlIndex);                     // use fixed velocity value
         else
-            velocity = clamp(1, 127, int(playedVelocity * 127.0));
+            velocity = clamp(1, 127, int(playedVelocity * 127.0));      // use velocity as played
 
         sendMIDI(0x90 | getMidiChannel(controlIndex), getMidiNote(controlIndex), velocity);
         setControlValueA(controlIndex, velocity);
