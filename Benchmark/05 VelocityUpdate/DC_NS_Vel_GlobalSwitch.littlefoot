@@ -5,6 +5,7 @@
 
     <groups>
         <group name="graphics" displayName="Graphics"/>
+        <group name="perf" displayName="Performance"/>
         <group name="control" displayName="Control *" count="16"/>
     </groups>
 
@@ -22,10 +23,6 @@
                   value="false"
                   tooltip="Enable to allow controls with [Latch] behaviour to respond to MIDI CC messages sent to the Block.&#13;&#13;[!] A large number of simultaneous incoming MIDI streams might slow down or freeze the app.&#13;&#13;[!] Pressure CC and MIDI Notes are not received." />
 
-        <variable name="fixedVelocity" displayName="Fixed Note Velocity" type="bool"
-                  value="true"
-                  tooltip="TODO: Enable to use fixed velocity values for Note controls. When performing a Slide-over manuever, fixed velocity is always used (should we rename it to Slide-Over Velocity when this option is disabled?)." />
-
         <variable name="brightness" displayName="Brightness" type="int"
                   min="0" max="10" value="10" group="graphics"
                   tooltip="Set the brightness of the control colours.&#13;&#13;Range: [0-10]" />
@@ -38,6 +35,16 @@
         <variable name="individualBrightness" displayName="Individual Brightness [!]" type="bool"
                   value="false" group="graphics"
                   tooltip="Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive.&#13;&#13;[!] Setting the control brightness too low can result in black LEDs." />
+
+        <variable name="pressureSensitivity" displayName="Pressure Sensitivity" type="float"
+                  min="0" max="100" value="100" group="perf"
+                  tooltip="TODO" />
+        <variable name="fixedVelocity" displayName="Fixed Note Velocity" type="bool"
+                  value="true" group="perf"
+                  tooltip="TODO: Enable to use fixed velocity values for Note controls. When performing a Slide-over manuever, fixed velocity is always used (should we rename it to Slide-Over Velocity when this option is disabled?)." />
+        <variable name="velocitySensitivity" displayName="Note Velocity Sensitivity" type="float"
+                  min="0" max="100" value="100" group="perf"
+                  tooltip="TODO" />
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -524,6 +531,12 @@ void initialise()
 
 //  Turn gamma correction on
     setLocalConfig(33, 1);
+
+//  Write pressure and velocity sensitivity settings
+    setLocalConfig(10, clamp(0, 127, int(velocitySensitivity * 1.27)));
+    setLocalConfig(13, clamp(0, 127, int(pressureSensitivity * 1.27)));
+
+    log(int(velocitySensitivity * 1.27));
 
 // Map graphics parameters to their actual ranges
     contrast = 110 + contrast * 11;                                     // [0, 10] -> [110, 220]
