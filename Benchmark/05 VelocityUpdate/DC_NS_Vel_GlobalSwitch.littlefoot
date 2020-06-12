@@ -37,14 +37,14 @@
                   tooltip="Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive.&#13;&#13;[!] Setting the control brightness too low can result in black LEDs." />
 
         <variable name="pressureSensitivity" displayName="Pressure Sensitivity" type="float"
-                  min="0" max="100" value="100" group="perf"
+                  min="0" max="1.0" value="1.0" group="perf"
+                  tooltip="TODO" />
+        <variable name="velocitySensitivity" displayName="Note Velocity Sensitivity" type="float"
+                  min="0" max="1.0" value="1.0" group="perf"
                   tooltip="TODO" />
         <variable name="fixedVelocity" displayName="Fixed Note Velocity" type="bool"
                   value="true" group="perf"
                   tooltip="TODO: Enable to use fixed velocity values for Note controls. When performing a Slide-over manuever, fixed velocity is always used (should we rename it to Slide-Over Velocity when this option is disabled?)." />
-        <variable name="velocitySensitivity" displayName="Note Velocity Sensitivity" type="float"
-                  min="0" max="100" value="100" group="perf"
-                  tooltip="TODO" />
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -533,8 +533,8 @@ void initialise()
     setLocalConfig(33, 1);
 
 //  Write pressure and velocity sensitivity settings
-    setLocalConfig(10, clamp(0, 127, int(velocitySensitivity * 1.27)));
-    setLocalConfig(13, clamp(0, 127, int(pressureSensitivity * 1.27)));
+    setLocalConfig(10, clamp(0, 127, int(velocitySensitivity * 127.0)));
+    setLocalConfig(13, clamp(0, 127, int(pressureSensitivity * 127.0)));
 
     log(int(velocitySensitivity * 1.27));
 

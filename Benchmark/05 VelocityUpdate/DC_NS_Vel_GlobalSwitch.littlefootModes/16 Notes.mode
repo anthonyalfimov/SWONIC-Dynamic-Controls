@@ -9,9 +9,9 @@
   <variable name="contrast" value="5"/>
   <variable name="shadingType" value="Light"/>
   <variable name="individualBrightness" value="false"/>
-  <variable name="pressureSensitivity" value="100.0"/>
+  <variable name="pressureSensitivity" value="1.0"/>
+  <variable name="velocitySensitivity" value="1.0"/>
   <variable name="fixedVelocity" value="false"/>
-  <variable name="velocitySensitivity" value="100.0"/>
   <variable name="ParamControlColour0" value="0xFF80FF00"/>
   <variable name="ParamControlType0" value="Note"/>
   <variable name="ParamControlMode0" value="Momentary"/>
