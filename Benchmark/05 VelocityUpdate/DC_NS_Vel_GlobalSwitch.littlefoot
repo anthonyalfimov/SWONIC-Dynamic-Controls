@@ -530,13 +530,14 @@ void initialise()
     useMPEDuplicateFilter(false);
 
 //  Turn gamma correction on
+    setLocalConfigActiveState(33, false, true);
     setLocalConfig(33, 1);
 
 //  Write pressure and velocity sensitivity settings
+    setLocalConfigActiveState(10, false, true);                         // velocity sensitivity
     setLocalConfig(10, clamp(0, 127, int(velocitySensitivity * 127.0)));
+    setLocalConfigActiveState(13, false, true);                         // pressure sensitivity
     setLocalConfig(13, clamp(0, 127, int(pressureSensitivity * 127.0)));
-
-    log(int(velocitySensitivity * 1.27));
 
 // Map graphics parameters to their actual ranges
     contrast = 110 + contrast * 11;                                     // [0, 10] -> [110, 220]
