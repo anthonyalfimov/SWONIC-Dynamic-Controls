@@ -374,7 +374,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
         touchField = touchField & ~touchFlag;                           // unregister touch from ctrl
         setControlTouchField(controlIndex, touchField);
 
-        if (!touchField)                                                // if no touches left registered, ...
+        if (! touchField)                                               // if no touches left registered, ...
         {
             if (getControlMode(controlIndex) == B_MOMENTARY)            // ...reset CCs for momentary controls
             {
@@ -624,9 +624,9 @@ void repaint()
         //  Draw Button
         //----------------------------------------------------------------------
             if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
-                drawButton(i, inactiveColour, inactiveShade);   // inactive Switch
+                drawButton(i, inactiveColour, inactiveShade);   // draw inactive Button (dimmed)
             else
-                drawButton(i, activeColour, activeShade);       // Button or active Switch
+                drawButton(i, activeColour, activeShade);       // draw active Button
         }
         else if (controlType == C_FADER)
         {
