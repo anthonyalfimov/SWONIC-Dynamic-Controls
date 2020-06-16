@@ -291,8 +291,8 @@ void touchStart(int index, float x, float y, float z, float vz)
 {
     for (int bm = 0; bm < 100; ++bm)
         doTouch(index, x, y, z, vz);
-        
-    
+
+
 }
 
 void touchMove(int index, float x, float y, float z, float vz)
@@ -533,13 +533,10 @@ void initialise()
     useMPEDuplicateFilter(false);
 
 //  Turn gamma correction on
-    setLocalConfigActiveState(33, false, true);
     setLocalConfig(33, 1);
 
 //  Write pressure and velocity sensitivity settings
-    setLocalConfigActiveState(10, false, true);                         // velocity sensitivity
     setLocalConfig(10, clamp(0, 127, int(velocitySensitivity * 127.0)));
-    setLocalConfigActiveState(13, false, true);                         // pressure sensitivity
     setLocalConfig(13, clamp(0, 127, int(pressureSensitivity * 127.0)));
 
 // Map graphics parameters to their actual ranges
