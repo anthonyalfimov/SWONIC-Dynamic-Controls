@@ -245,19 +245,15 @@ int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
 //------------------------------------------------------------------------------
 void touchStart(int index, float x, float y, float z, float vz)
 {
-    doTouch(index, x, y, z);
-}
-
-void touchMove(int index, float x, float y, float z, float vz)
-{
-//******************************************************************************
-//  BENCHMARK
-//******************************************************************************
-
     for (int bm = 0; bm < 100; ++bm)
         doTouch(index, x, y, z);
 
     log(getTimeInCurrentFunctionCall());
+}
+
+void touchMove(int index, float x, float y, float z, float vz)
+{
+    doTouch(index, x, y, z);
 }
 
 void touchEnd (int touchIndex, float x, float y, float z, float vz)
@@ -404,32 +400,25 @@ void doFader(int controlIndex, float x, float y)
 
 void handleMIDI(int byteStatus, int byteCC, int byteValue)
 {
-//******************************************************************************
-//  BENCHMARK
-//******************************************************************************
+    if (receiveMIDI)
+    {
+        byteStatus = byteStatus ^ 0xB0;     // flip MIDI CC template bits in status byte:
+                                            //   if status byte is a CC message,
+                                            //   the result is its MIDI channel
 
-    //for (int bm = 0; bm < 10; ++bm)
-        if (receiveMIDI)
+        for (int i = 0; i < amount; ++i)
         {
-            byteStatus = byteStatus ^ 0xB0;     // flip MIDI CC template bits in status byte:
-                                                //   if status byte is a CC message,
-                                                //   the result is its MIDI channel
+            if (globalMidiChannel == byteStatus)
+                if (getControlMode(i) == B_LATCH)
+                {
+                    int controlType = getControlType(i);
 
-            for (int i = 0; i < amount; ++i)
-            {
-                if (globalMidiChannel == byteStatus)
-                    if (getControlMode(i) == B_LATCH)
-                    {
-                        int controlType = getControlType(i);
-
-                        if (controlType != C_NOTE)
-                            if (getControlCCA(i) == byteCC)
-                                setControlValueA(i, byteValue);
-                    }
-            }
+                    if (controlType != C_NOTE)
+                        if (getControlCCA(i) == byteCC)
+                            setControlValueA(i, byteValue);
+                }
         }
-
-    //log(getTimeInCurrentFunctionCall());
+    }
 }
 
 //==============================================================================
@@ -529,73 +518,64 @@ void initialise()
 
 void repaint()
 {
-//******************************************************************************
-//  BENCHMARK
-//******************************************************************************
+    clearDisplay();
 
-    //for (int bm = 0; bm < 10; ++bm)
+    for (int i = 0; i < amount; ++i)
     {
-        clearDisplay();
+        int controlType = getControlType(i);
 
-        for (int i = 0; i < amount; ++i)
+        int activeColour = getControlColour(i);
+        int inactiveColour = blendARGB(activeColour, inactiveDim);
+
+        int minX = getControlMinX(i);
+        int minY = getControlMinY(i);
+        int sizeX = getControlSizeX(i);
+        int sizeY = getControlSizeY(i);
+
+        if (controlType == C_BUTTON || controlType == C_NOTE)
         {
-            int controlType = getControlType(i);
+        //----------------------------------------------------------------------
+        //  Draw Button
+        //----------------------------------------------------------------------
+            if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
+                drawButton(i, inactiveColour, inactiveShade);   // inactive Switch
+            else
+                drawButton(i, activeColour, activeShade);       // Button or active Switch
+        }
+        else if (controlType == C_FADER)
+        {
+        //----------------------------------------------------------------------
+        //  Draw Fader
+        //----------------------------------------------------------------------
+            int highlight = getControlTouchField(i) ? blendARGB(activeColour, controlHighlight) : activeColour;
+            int faderMinColour = blendARGB(inactiveColour, inactiveShade << 24);
 
-            int activeColour = getControlColour(i);
-            int inactiveColour = blendARGB(activeColour, inactiveDim);
-
-            int minX = getControlMinX(i);
-            int minY = getControlMinY(i);
-            int sizeX = getControlSizeX(i);
-            int sizeY = getControlSizeY(i);
-
-            if (controlType == C_BUTTON || controlType == C_NOTE)
+            if (isFaderVertical(i))
             {
-            //----------------------------------------------------------------------
-            //  Draw Button
-            //----------------------------------------------------------------------
-                if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
-                    drawButton(i, inactiveColour, inactiveShade);   // inactive Switch
-                else
-                    drawButton(i, activeColour, activeShade);       // Button or active Switch
+            //  Draw fader background
+                blendGradientRect(inactiveColour, inactiveColour, faderMinColour, faderMinColour,
+			                      minX,  minY, sizeX, sizeY);
+
+            //  Draw fader
+                int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeY, 0);
+
+                blendGradientRect(highlight, highlight, activeColour, activeColour,
+                                  minX, minY + pixelInvSize, sizeX, sizeY - pixelInvSize);
             }
-            else if (controlType == C_FADER)
+            else
             {
-            //----------------------------------------------------------------------
-            //  Draw Fader
-            //----------------------------------------------------------------------
-                int highlight = getControlTouchField(i) ? blendARGB(activeColour, controlHighlight) : activeColour;
-                int faderMinColour = blendARGB(inactiveColour, inactiveShade << 24);
+            //  Draw fader background
+                blendGradientRect(faderMinColour, inactiveColour, inactiveColour, faderMinColour,
+			                      minX,  minY, sizeX, sizeY);
 
-                if (isFaderVertical(i))
-                {
-                //  Draw fader background
-                    blendGradientRect(inactiveColour, inactiveColour, faderMinColour, faderMinColour,
-    			                      minX,  minY, sizeX, sizeY);
+            //  Draw fader
+                int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeX, 0);
 
-                //  Draw fader
-                    int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeY, 0);
-
-                    blendGradientRect(highlight, highlight, activeColour, activeColour,
-                                      minX, minY + pixelInvSize, sizeX, sizeY - pixelInvSize);
-                }
-                else
-                {
-                //  Draw fader background
-                    blendGradientRect(faderMinColour, inactiveColour, inactiveColour, faderMinColour,
-    			                      minX,  minY, sizeX, sizeY);
-
-                //  Draw fader
-                    int pixelInvSize = convertCCToPixels(getControlValueA(i), sizeX, 0);
-
-                    blendGradientRect(activeColour, highlight, highlight, activeColour,
-                                      minX, minY, sizeX - pixelInvSize, sizeY);
-                }
+                blendGradientRect(activeColour, highlight, highlight, activeColour,
+                                  minX, minY, sizeX - pixelInvSize, sizeY);
             }
         }
     }
-
-    //log(getTimeInCurrentFunctionCall());
 }
 
 //==============================================================================
