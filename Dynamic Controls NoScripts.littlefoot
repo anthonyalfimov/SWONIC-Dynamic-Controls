@@ -90,7 +90,7 @@
 
 //==============================================================================
 //
-//  DYNAMIC CONTROLS 2.0.0
+//  DYNAMIC CONTROLS 2.0.4
 //
 //      App for ROLI Dashboard and ROLI Lightpad Block
 //
@@ -99,7 +99,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2019 Andreas Swoboda, Anthony Alfimov
+//  Copyright (c) 2019-2020 Andreas Swoboda, Anthony Alfimov
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -283,7 +283,7 @@ void touchMove(int index, float x, float y, float z, float vz)
     doTouch(index, x, y, z);
 }
 
-void touchEnd (int touchIndex, float x, float y, float z, float vz)
+void touchEnd(int touchIndex, float x, float y, float z, float vz)
 {
     int touchFlag = 1 << touchIndex;        // bitflag for current touch
 
@@ -417,7 +417,7 @@ void doNote(int controlIndex)
 {
     // Use CC A value to track whether note is held
     //  0   - not held
-    //  127 - held
+    //  ! 0 - held
     if (getControlValueA(controlIndex) == 0)
     {
         int velocity = getControlCCB(controlIndex);
