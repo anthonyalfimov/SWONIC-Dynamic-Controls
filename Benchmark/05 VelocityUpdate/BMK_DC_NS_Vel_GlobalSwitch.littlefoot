@@ -289,7 +289,10 @@ int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
 //------------------------------------------------------------------------------
 void touchStart(int index, float x, float y, float z, float vz)
 {
-    doTouch(index, x, y, z, vz);
+    for (int bm = 0; bm < 100; ++bm)
+        doTouch(index, x, y, z, vz);
+        
+    
 }
 
 void touchMove(int index, float x, float y, float z, float vz)
