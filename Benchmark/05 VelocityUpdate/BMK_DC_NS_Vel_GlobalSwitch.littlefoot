@@ -292,7 +292,7 @@ void touchStart(int index, float x, float y, float z, float vz)
     for (int bm = 0; bm < 100; ++bm)
         doTouch(index, x, y, z, vz);
 
-
+    log(getTimeInCurrentFunctionCall());
 }
 
 void touchMove(int index, float x, float y, float z, float vz)
