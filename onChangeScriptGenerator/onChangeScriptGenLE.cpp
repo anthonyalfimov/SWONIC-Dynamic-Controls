@@ -97,6 +97,25 @@ int main()
         outFile << "\tbrightness.visible = ! individualBrightness.value;\n";
     }
 
+    // onChange="fixedVelocity"
+    {
+        outFile << "\n";
+        OnChangeScript script (outFile, "fixedVelocity");
+
+        outFile
+            << "\tvelocitySensitivity.visible = ! fixedVelocity.value;\n"
+            << "\tif (fixedVelocity.value)\n"
+            << "\t{\n"
+            << "\t\tvelocityValue.displayName = \"Note Velocity\";\n"
+            << "\t\tvelocityValue.tooltip = \"TODO: fixed velocity value tooltip\";\n"
+            << "\t}\n"
+            << "\telse\n"
+            << "\t{\n"
+            << "\t\tvelocityValue.displayName = \"Note [Slide] Velocity\";\n"
+            << "\t\tvelocityValue.tooltip = \"TODO: [slide] velocity tooltip\";\n"
+            << "\t}\n";
+    }
+
     // onChange="ParamControlType"
     for (int i = 0; i < controlCount; ++i)
     {

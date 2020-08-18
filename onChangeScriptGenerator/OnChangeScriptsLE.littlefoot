@@ -4,6 +4,22 @@
     ]]>
     </script>
 
+    <script onChange="fixedVelocity">
+    <![CDATA[
+        velocitySensitivity.visible = ! fixedVelocity.value;
+        if (fixedVelocity.value)
+        {
+            velocityValue.displayName = "Note Velocity";
+            velocityValue.tooltip = "TODO: fixed velocity value tooltip";
+        }
+        else
+        {
+            velocityValue.displayName = "Note [Slide] Velocity";
+            velocityValue.tooltip = "TODO: [slide] velocity tooltip";
+        }
+    ]]>
+    </script>
+
     <script onChange="ParamControlType0">
     <![CDATA[
         if (ParamControlType0.value == 0)
