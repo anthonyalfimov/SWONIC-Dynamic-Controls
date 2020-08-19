@@ -157,6 +157,14 @@ int main()
         outFile << "\tbrightness.visible = ! individualBrightness.value;\n";
     }
 
+    // onChange="fixedVelocity"
+    {
+        outFile << "\n";
+        OnChangeScript script (outFile, "fixedVelocity");
+
+        outFile << "\tvelocitySensitivity.visible = ! fixedVelocity.value;\n";
+    }
+
     // onChange="ParamControlType"
     for (int i = 0; i < controlCount; ++i)
     {
