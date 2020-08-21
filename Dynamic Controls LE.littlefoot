@@ -36,11 +36,11 @@
                   value="false" group="graphics"
                   tooltip="Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive.&#13;&#13;[!] Setting the control brightness too low can result in black LEDs." />
 
-        <variable name="velocitySensitivity" displayName="Note Velocity Sensitivity" type="float"
-                  min="0" max="1.0" value="1.0" group="sens"
-                  tooltip="TODO" />
         <variable name="fixedVelocity" displayName="Fixed Note Velocity" type="bool"
                   value="true" group="sens"
+                  tooltip="TODO" />
+        <variable name="velocitySensitivity" displayName="Note Velocity Sensitivity" type="float"
+                  min="0" max="1.0" value="1.0" group="sens"
                   tooltip="TODO" />
         <variable name="velocityValue" displayName="Note Velocity" type="int"
                   min="0" max="127" value="127" group="sens"
