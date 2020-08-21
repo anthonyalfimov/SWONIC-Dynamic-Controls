@@ -42,9 +42,9 @@
         <variable name="velocitySensitivity" displayName="Note Velocity Sensitivity" type="float"
                   min="0" max="1.0" value="1.0" group="sens"
                   tooltip="TODO" />
-        <variable name="velocityValue" displayName="Note Velocity" type="int"
+        <variable name="velocityValue" displayName="Note Velocity Value" type="int"
                   min="0" max="127" value="127" group="sens"
-                  tooltip="Set the velocity of the MIDI notes sent by the controls.&#13;&#13;Range: [0-127]" />
+                  tooltip="TODO: Set the velocity of the MIDI note sent when sliding or gliding to a Note control, and when striking a Note control if [Fixed Note Velocity] is enabled.&#13;&#13;Range: [0-127]" />
 
         <vector group="control" count="25"
                 wantsGetFunctions="true" wantsSetFunctions="false">
