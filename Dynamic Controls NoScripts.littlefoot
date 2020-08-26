@@ -328,22 +328,22 @@ void doTouch(int touchIndex, float x, float y, float z, float vz)
 
             if (controlType == C_BUTTON)
             {
-                if (! touchField)           // if no other touches present
+                if (! touchField)                   // if no other touch is present
                     doButton(i);
             }
             else if (controlType == C_NOTE)
             {
-                if (! touchField)           // if no other touches present
-                    doNote(i, vz);
+                if (! (touchField & touchFlag))     // if this touch is not present
+                    doNote(i, vz, ! touchField);
             }
             else if (controlType == C_FADER)
             {
-                if (isHighestTouch)         // if highest touch index
+                if (isHighestTouch)                 // if highest touch index
                     doFader(i, x, y);
             }
             else if (controlType == C_XYPAD)
             {
-                if (isHighestTouch)         // if highest touch index
+                if (isHighestTouch)                 // if highest touch index
                     doXYPad(i, x, y);
             }
 
@@ -427,13 +427,21 @@ void doButton(int controlIndex)
     setControlValueA(controlIndex, value);
 }
 
-void doNote(int controlIndex, float playedVelocity)
+void doNote(int controlIndex, float playedVelocity, bool isFirstTouch)
 {
-    // Use CC A value to track whether note is held
-    //  0   - not held
-    //  ! 0 - held
-    if (getControlValueA(controlIndex) == 0)
+    // Use CC A value to track whether note is on
+    bool isNoteOn = getControlValueA(controlIndex);
+
+    if (isNoteOn)
     {
+        // Send Note Off
+        sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 0);
+        setControlValueA(controlIndex, 0);
+    }
+
+    if (isNoteOn != isFirstTouch)           // logical xor with normalised bool values
+    {
+        // Send Note On
         int velocity;
 
         if (fixedVelocity || (playedVelocity < 0.0))
@@ -443,11 +451,6 @@ void doNote(int controlIndex, float playedVelocity)
 
         sendMIDI(0x90 | getMidiChannel(controlIndex), getMidiNote(controlIndex), velocity);
         setControlValueA(controlIndex, velocity);
-    }
-    else
-    {
-        sendMIDI(0x80 | getMidiChannel(controlIndex), getMidiNote(controlIndex), 0);
-        setControlValueA(controlIndex, 0);
     }
 }
 
