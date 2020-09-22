@@ -1,6 +1,6 @@
 /*
 <metadata description="Create up to 16 Buttons, Notes, Faders or XY Pads."
-          details="Version: 2.0.4&#13;&#13;Turns your Lightpad into a customisable MIDI control surface. Design your own control layout using Buttons, Faders and XY Pads.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
+          details="Version: 2.0.5&#13;&#13;Turns your Lightpad into a customisable MIDI control surface. Design your own control layout using Buttons, Faders and XY Pads.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
@@ -90,7 +90,7 @@
 
 //==============================================================================
 //
-//  DYNAMIC CONTROLS 2.0.0
+//  DYNAMIC CONTROLS 2.0.5
 //
 //      App for ROLI Dashboard and ROLI Lightpad Block
 //
@@ -99,7 +99,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2019 Andreas Swoboda, Anthony Alfimov
+//  Copyright (c) 2019-2020 Andreas Swoboda, Anthony Alfimov
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
