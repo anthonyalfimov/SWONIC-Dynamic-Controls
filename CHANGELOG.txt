@@ -1,3 +1,6 @@
+Version 2.0.5 [2020-10-03]
+    - Fixed: saving or loading a mode resets some parameters to their default values in Dashboard 4.3.1
+
 Version 2.0.4 [2020-04-16]
     - Renamed "Overlapping Controls" to "Control Layering"
     - Minor updates to app description

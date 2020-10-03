@@ -163,7 +163,7 @@ int main()
         outFile << "\n";
         OnChangeScript script (outFile, "ParamControlType" + std::to_string (i));
 
-        updateControlType(outFile, i, true);
+        updateControlType(outFile, i, false);
     }
 
     // onChange="amount"
