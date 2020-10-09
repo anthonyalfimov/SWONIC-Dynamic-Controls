@@ -1973,7 +1973,7 @@ void initialise()
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
 // Ensure that shading does not result in LEDs with brightness lower than a
-//   minimum, set to the inactice colour brightness at maximum global contrast
+//   minimum, set to the inactive colour brightness at maximum global contrast
 //   setting and minimum global brightness setting
     float minShadeMultiplier = 155.0 / brightness;
     minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
