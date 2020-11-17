@@ -1,3 +1,9 @@
+Version 2.1.0 Beta [2020-11-17]
+    - Added velocity sensitivity for Note controls, which can be disabled using the new "Fixed Note Velocity" global setting
+    - Changed Note control behaviour to retriggeting when activating already held Note controls
+    - Added global velocity sensitivity setting for Note controls
+    - Added global pressure sensitivity setting for all controls
+
 Version 2.0.5 [2020-10-03]
     - Fixed: saving or loading a mode resets some parameters to their default values in Dashboard 4.3.1
 
