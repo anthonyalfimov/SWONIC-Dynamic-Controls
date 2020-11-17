@@ -2,13 +2,16 @@
 
 <mode name="Default">
   <variable name="amount" value="13"/>
-  <variable name="globalMidiChannel" value="1"/>
+  <variable name="defaultMidiChannel" value="1"/>
   <variable name="useOverlaps" value="false"/>
   <variable name="receiveMIDI" value="false"/>
   <variable name="brightness" value="10"/>
   <variable name="contrast" value="5"/>
   <variable name="shadingType" value="Light"/>
   <variable name="individualBrightness" value="false"/>
+  <variable name="fixedVelocity" value="false"/>
+  <variable name="velocitySensitivity" value="1.0"/>
+  <variable name="pressureSensitivity" value="1.0"/>
   <variable name="ParamControlColour0" value="0xFFFF3A00"/>
   <variable name="ParamControlType0" value="Fader"/>
   <variable name="ParamControlMode0" value="Latch"/>

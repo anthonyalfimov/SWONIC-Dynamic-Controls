@@ -9,6 +9,9 @@
   <variable name="contrast" value="5"/>
   <variable name="shadingType" value="Light"/>
   <variable name="individualBrightness" value="false"/>
+  <variable name="fixedVelocity" value="false"/>
+  <variable name="velocitySensitivity" value="1.0"/>
+  <variable name="velocityValue" value="127"/>
   <variable name="ParamControlColour0" value="0xFFFF3A00"/>
   <variable name="ParamControlType0" value="Button"/>
   <variable name="ParamControlMode0" value="Latch"/>
