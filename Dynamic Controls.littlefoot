@@ -38,13 +38,13 @@
 
         <variable name="fixedVelocity" displayName="Fixed Note Velocity" type="bool"
                   value="true" group="sens"
-                  tooltip="TODO" />
+                  tooltip="Enable to ignore played velocity and send a fixed [Velocity Value] when striking a Note control." />
         <variable name="velocitySensitivity" displayName="Note Velocity Sensitivity" type="float"
                   min="0" max="1.0" value="1.0" group="sens"
-                  tooltip="TODO" />
+                  tooltip="Set the sensitivity for striking a Note control." />
         <variable name="pressureSensitivity" displayName="Pressure Sensitivity" type="float"
                   min="0" max="1.0" value="1.0" group="sens"
-                  tooltip="TODO" />
+                  tooltip="Set the sensitivity for pressure applied to the controls." />
 
         <vector group="control" count="16"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -121,7 +121,7 @@
         else if (ParamControlType0.value == 1)
         {
             ParamControlCCB0.displayName = "Velocity Value";
-            ParamControlCCB0.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB0.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote0.visible = (0 < amount.value);
             ParamControlCCA0.visible = false;
             ParamControlCCB0.visible = (0 < amount.value);
@@ -162,7 +162,7 @@
         else if (ParamControlType1.value == 1)
         {
             ParamControlCCB1.displayName = "Velocity Value";
-            ParamControlCCB1.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB1.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote1.visible = (1 < amount.value);
             ParamControlCCA1.visible = false;
             ParamControlCCB1.visible = (1 < amount.value);
@@ -203,7 +203,7 @@
         else if (ParamControlType2.value == 1)
         {
             ParamControlCCB2.displayName = "Velocity Value";
-            ParamControlCCB2.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB2.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote2.visible = (2 < amount.value);
             ParamControlCCA2.visible = false;
             ParamControlCCB2.visible = (2 < amount.value);
@@ -244,7 +244,7 @@
         else if (ParamControlType3.value == 1)
         {
             ParamControlCCB3.displayName = "Velocity Value";
-            ParamControlCCB3.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB3.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote3.visible = (3 < amount.value);
             ParamControlCCA3.visible = false;
             ParamControlCCB3.visible = (3 < amount.value);
@@ -285,7 +285,7 @@
         else if (ParamControlType4.value == 1)
         {
             ParamControlCCB4.displayName = "Velocity Value";
-            ParamControlCCB4.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB4.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote4.visible = (4 < amount.value);
             ParamControlCCA4.visible = false;
             ParamControlCCB4.visible = (4 < amount.value);
@@ -326,7 +326,7 @@
         else if (ParamControlType5.value == 1)
         {
             ParamControlCCB5.displayName = "Velocity Value";
-            ParamControlCCB5.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB5.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote5.visible = (5 < amount.value);
             ParamControlCCA5.visible = false;
             ParamControlCCB5.visible = (5 < amount.value);
@@ -367,7 +367,7 @@
         else if (ParamControlType6.value == 1)
         {
             ParamControlCCB6.displayName = "Velocity Value";
-            ParamControlCCB6.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB6.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote6.visible = (6 < amount.value);
             ParamControlCCA6.visible = false;
             ParamControlCCB6.visible = (6 < amount.value);
@@ -408,7 +408,7 @@
         else if (ParamControlType7.value == 1)
         {
             ParamControlCCB7.displayName = "Velocity Value";
-            ParamControlCCB7.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB7.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote7.visible = (7 < amount.value);
             ParamControlCCA7.visible = false;
             ParamControlCCB7.visible = (7 < amount.value);
@@ -449,7 +449,7 @@
         else if (ParamControlType8.value == 1)
         {
             ParamControlCCB8.displayName = "Velocity Value";
-            ParamControlCCB8.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB8.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote8.visible = (8 < amount.value);
             ParamControlCCA8.visible = false;
             ParamControlCCB8.visible = (8 < amount.value);
@@ -490,7 +490,7 @@
         else if (ParamControlType9.value == 1)
         {
             ParamControlCCB9.displayName = "Velocity Value";
-            ParamControlCCB9.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB9.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote9.visible = (9 < amount.value);
             ParamControlCCA9.visible = false;
             ParamControlCCB9.visible = (9 < amount.value);
@@ -531,7 +531,7 @@
         else if (ParamControlType10.value == 1)
         {
             ParamControlCCB10.displayName = "Velocity Value";
-            ParamControlCCB10.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB10.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote10.visible = (10 < amount.value);
             ParamControlCCA10.visible = false;
             ParamControlCCB10.visible = (10 < amount.value);
@@ -572,7 +572,7 @@
         else if (ParamControlType11.value == 1)
         {
             ParamControlCCB11.displayName = "Velocity Value";
-            ParamControlCCB11.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB11.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote11.visible = (11 < amount.value);
             ParamControlCCA11.visible = false;
             ParamControlCCB11.visible = (11 < amount.value);
@@ -613,7 +613,7 @@
         else if (ParamControlType12.value == 1)
         {
             ParamControlCCB12.displayName = "Velocity Value";
-            ParamControlCCB12.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB12.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote12.visible = (12 < amount.value);
             ParamControlCCA12.visible = false;
             ParamControlCCB12.visible = (12 < amount.value);
@@ -654,7 +654,7 @@
         else if (ParamControlType13.value == 1)
         {
             ParamControlCCB13.displayName = "Velocity Value";
-            ParamControlCCB13.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB13.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote13.visible = (13 < amount.value);
             ParamControlCCA13.visible = false;
             ParamControlCCB13.visible = (13 < amount.value);
@@ -695,7 +695,7 @@
         else if (ParamControlType14.value == 1)
         {
             ParamControlCCB14.displayName = "Velocity Value";
-            ParamControlCCB14.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB14.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote14.visible = (14 < amount.value);
             ParamControlCCA14.visible = false;
             ParamControlCCB14.visible = (14 < amount.value);
@@ -736,7 +736,7 @@
         else if (ParamControlType15.value == 1)
         {
             ParamControlCCB15.displayName = "Velocity Value";
-            ParamControlCCB15.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB15.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote15.visible = (15 < amount.value);
             ParamControlCCA15.visible = false;
             ParamControlCCB15.visible = (15 < amount.value);
@@ -787,7 +787,7 @@
         else if (ParamControlType0.value == 1)
         {
             ParamControlCCB0.displayName = "Velocity Value";
-            ParamControlCCB0.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB0.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote0.visible = (0 < amount.value);
             ParamControlCCA0.visible = false;
             ParamControlCCB0.visible = (0 < amount.value);
@@ -834,7 +834,7 @@
         else if (ParamControlType1.value == 1)
         {
             ParamControlCCB1.displayName = "Velocity Value";
-            ParamControlCCB1.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB1.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote1.visible = (1 < amount.value);
             ParamControlCCA1.visible = false;
             ParamControlCCB1.visible = (1 < amount.value);
@@ -881,7 +881,7 @@
         else if (ParamControlType2.value == 1)
         {
             ParamControlCCB2.displayName = "Velocity Value";
-            ParamControlCCB2.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB2.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote2.visible = (2 < amount.value);
             ParamControlCCA2.visible = false;
             ParamControlCCB2.visible = (2 < amount.value);
@@ -928,7 +928,7 @@
         else if (ParamControlType3.value == 1)
         {
             ParamControlCCB3.displayName = "Velocity Value";
-            ParamControlCCB3.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB3.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote3.visible = (3 < amount.value);
             ParamControlCCA3.visible = false;
             ParamControlCCB3.visible = (3 < amount.value);
@@ -975,7 +975,7 @@
         else if (ParamControlType4.value == 1)
         {
             ParamControlCCB4.displayName = "Velocity Value";
-            ParamControlCCB4.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB4.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote4.visible = (4 < amount.value);
             ParamControlCCA4.visible = false;
             ParamControlCCB4.visible = (4 < amount.value);
@@ -1022,7 +1022,7 @@
         else if (ParamControlType5.value == 1)
         {
             ParamControlCCB5.displayName = "Velocity Value";
-            ParamControlCCB5.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB5.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote5.visible = (5 < amount.value);
             ParamControlCCA5.visible = false;
             ParamControlCCB5.visible = (5 < amount.value);
@@ -1069,7 +1069,7 @@
         else if (ParamControlType6.value == 1)
         {
             ParamControlCCB6.displayName = "Velocity Value";
-            ParamControlCCB6.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB6.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote6.visible = (6 < amount.value);
             ParamControlCCA6.visible = false;
             ParamControlCCB6.visible = (6 < amount.value);
@@ -1116,7 +1116,7 @@
         else if (ParamControlType7.value == 1)
         {
             ParamControlCCB7.displayName = "Velocity Value";
-            ParamControlCCB7.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB7.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote7.visible = (7 < amount.value);
             ParamControlCCA7.visible = false;
             ParamControlCCB7.visible = (7 < amount.value);
@@ -1163,7 +1163,7 @@
         else if (ParamControlType8.value == 1)
         {
             ParamControlCCB8.displayName = "Velocity Value";
-            ParamControlCCB8.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB8.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote8.visible = (8 < amount.value);
             ParamControlCCA8.visible = false;
             ParamControlCCB8.visible = (8 < amount.value);
@@ -1210,7 +1210,7 @@
         else if (ParamControlType9.value == 1)
         {
             ParamControlCCB9.displayName = "Velocity Value";
-            ParamControlCCB9.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB9.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote9.visible = (9 < amount.value);
             ParamControlCCA9.visible = false;
             ParamControlCCB9.visible = (9 < amount.value);
@@ -1257,7 +1257,7 @@
         else if (ParamControlType10.value == 1)
         {
             ParamControlCCB10.displayName = "Velocity Value";
-            ParamControlCCB10.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB10.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote10.visible = (10 < amount.value);
             ParamControlCCA10.visible = false;
             ParamControlCCB10.visible = (10 < amount.value);
@@ -1304,7 +1304,7 @@
         else if (ParamControlType11.value == 1)
         {
             ParamControlCCB11.displayName = "Velocity Value";
-            ParamControlCCB11.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB11.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote11.visible = (11 < amount.value);
             ParamControlCCA11.visible = false;
             ParamControlCCB11.visible = (11 < amount.value);
@@ -1351,7 +1351,7 @@
         else if (ParamControlType12.value == 1)
         {
             ParamControlCCB12.displayName = "Velocity Value";
-            ParamControlCCB12.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB12.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote12.visible = (12 < amount.value);
             ParamControlCCA12.visible = false;
             ParamControlCCB12.visible = (12 < amount.value);
@@ -1398,7 +1398,7 @@
         else if (ParamControlType13.value == 1)
         {
             ParamControlCCB13.displayName = "Velocity Value";
-            ParamControlCCB13.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB13.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote13.visible = (13 < amount.value);
             ParamControlCCA13.visible = false;
             ParamControlCCB13.visible = (13 < amount.value);
@@ -1445,7 +1445,7 @@
         else if (ParamControlType14.value == 1)
         {
             ParamControlCCB14.displayName = "Velocity Value";
-            ParamControlCCB14.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB14.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote14.visible = (14 < amount.value);
             ParamControlCCA14.visible = false;
             ParamControlCCB14.visible = (14 < amount.value);
@@ -1492,7 +1492,7 @@
         else if (ParamControlType15.value == 1)
         {
             ParamControlCCB15.displayName = "Velocity Value";
-            ParamControlCCB15.tooltip = "TODO: Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
+            ParamControlCCB15.tooltip = "Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\n\nRange: [0-127]";
             MidiNote15.visible = (15 < amount.value);
             ParamControlCCA15.visible = false;
             ParamControlCCB15.visible = (15 < amount.value);
