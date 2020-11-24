@@ -81,8 +81,8 @@ void updateControlType(std::ofstream& file, int ind, bool areValuesUpdated)
 
     // Names and tooltips
     file
-        << "\t\tParamControlCCB" << ind << ".displayName = \"Velocity\";\n"
-        << "\t\tParamControlCCB" << ind << ".tooltip = \"Set the velocity of the MIDI note sent by the control.\\n\\nRange: [0-127]\";\n";
+        << "\t\tParamControlCCB" << ind << ".displayName = \"Velocity Value\";\n"
+        << "\t\tParamControlCCB" << ind << ".tooltip = \"Set the velocity of the MIDI note sent when sliding or gliding to the control, and when striking the control if [Fixed Note Velocity] is enabled.\\n\\nRange: [0-127]\";\n";
 
     // Visibility
     file
@@ -155,6 +155,14 @@ int main()
         OnChangeScript script (outFile, "individualBrightness");
 
         outFile << "\tbrightness.visible = ! individualBrightness.value;\n";
+    }
+
+    // onChange="fixedVelocity"
+    {
+        outFile << "\n";
+        OnChangeScript script (outFile, "fixedVelocity");
+
+        outFile << "\tvelocitySensitivity.visible = ! fixedVelocity.value;\n";
     }
 
     // onChange="ParamControlType"

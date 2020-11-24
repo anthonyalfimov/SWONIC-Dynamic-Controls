@@ -1,10 +1,11 @@
 /*
 <metadata description="Create up to 25 Buttons, Notes or Faders."
-          details="Version: 2.0.5&#13;&#13;Light Edition: offers fewer features to allow more controls to be created.&#13;&#13;Turns your Lightpad into a customisable MIDI control surface. Design your own control layout using Buttons and Faders.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
+          details="Version: 2.1.0&#13;&#13;Light Edition: offers fewer features to allow more controls to be created.&#13;&#13;Turns your Lightpad into a customisable MIDI control surface. Design your own control layout using Buttons and Faders.&#13;&#13;Need any help? Send us a message at dynamic.controls@swonic.com&#13;&#13;© Andreas Swoboda, Anthony Alfimov&#13;swonic.com/dynamic-controls"
           target="Lightpad" tags="MIDI;Controller" canEmbedModes="false">
 
     <groups>
         <group name="graphics" displayName="Graphics"/>
+        <group name="sens" displayName="Sensitivity"/>
         <group name="control" displayName="Control *" count="25"/>
     </groups>
 
@@ -34,6 +35,16 @@
         <variable name="individualBrightness" displayName="Individual Brightness [!]" type="bool"
                   value="false" group="graphics"
                   tooltip="Enable to use the individual colour pickers to set the brightness of each control.&#13;&#13;[!] A large difference in control brightness can make it difficult to identify whether the control is active or inactive.&#13;&#13;[!] Setting the control brightness too low can result in black LEDs." />
+
+        <variable name="fixedVelocity" displayName="Fixed Note Velocity" type="bool"
+                  value="true" group="sens"
+                  tooltip="Enable to ignore played velocity and send a fixed [Note Velocity Value] when striking a Note control." />
+        <variable name="velocitySensitivity" displayName="Note Velocity Sensitivity" type="float"
+                  min="0" max="1.0" value="1.0" group="sens"
+                  tooltip="Set the sensitivity for striking a Note control." />
+        <variable name="velocityValue" displayName="Note Velocity Value" type="int"
+                  min="0" max="127" value="127" group="sens"
+                  tooltip="Set the velocity of the MIDI note sent when sliding or gliding to a Note control, and when striking a Note control if [Fixed Note Velocity] is enabled.&#13;&#13;Range: [0-127]" />
 
         <vector group="control" count="25"
                 wantsGetFunctions="true" wantsSetFunctions="false">
@@ -78,7 +89,7 @@
 
 //==============================================================================
 //
-//  DYNAMIC CONTROLS 2.0.5
+//  DYNAMIC CONTROLS 2.1.0
 //
 //      App for ROLI Dashboard and ROLI Lightpad Block
 //
@@ -147,6 +158,9 @@ const int B_LATCH = 1;
 
 // Control highlight
 const int controlHighlight = 0x81FFFFFF;
+
+// Touch event properties
+const float NO_PLAYED_VELOCITY = -1.0;
 
 //==============================================================================
 //  Heap Setters and Getters
@@ -245,15 +259,15 @@ int convertCCToPixels(int valueCC, int pixelMin, int pixelMax)
 //------------------------------------------------------------------------------
 void touchStart(int index, float x, float y, float z, float vz)
 {
-    doTouch(index, x, y, z);
+    doTouch(index, x, y, z, vz);
 }
 
 void touchMove(int index, float x, float y, float z, float vz)
 {
-    doTouch(index, x, y, z);
+    doTouch(index, x, y, z, NO_PLAYED_VELOCITY);
 }
 
-void touchEnd (int touchIndex, float x, float y, float z, float vz)
+void touchEnd(int touchIndex, float x, float y, float z, float vz)
 {
     int touchFlag = 1 << touchIndex;        // bitflag for current touch
 
@@ -264,7 +278,7 @@ void touchEnd (int touchIndex, float x, float y, float z, float vz)
 //------------------------------------------------------------------------------
 //  Touch Processing Functions
 //------------------------------------------------------------------------------
-void doTouch(int touchIndex, float x, float y, float z)
+void doTouch(int touchIndex, float x, float y, float z, float vz)
 {
     // Coordinate conversion from (0.0, 2.0) to [0, 14]
     int intX = int(x * 0.5 * 15.0);
@@ -284,17 +298,17 @@ void doTouch(int touchIndex, float x, float y, float z)
 
             if (controlType == C_BUTTON)
             {
-                if (! touchField)           // if no other touches present
+                if (! touchField)                   // if no other touches present
                     doButton(i);
             }
             else if (controlType == C_NOTE)
             {
-                if (! touchField)           // if no other touches present
-                    doNote(i);
+                if (! (touchField & touchFlag))     // if this touch is not present
+                    doNote(i, vz, ! touchField);
             }
             else if (controlType == C_FADER)
             {
-                if (isHighestTouch)         // if highest touch index
+                if (isHighestTouch)                 // if highest touch index
                     doFader(i, x, y);
             }
 
@@ -329,7 +343,7 @@ void doTouchEnd(int controlIndex, int touchFlag)
         touchField = touchField & ~touchFlag;                           // unregister touch from ctrl
         setControlTouchField(controlIndex, touchField);
 
-        if (!touchField)                                                // if no touches left registered, ...
+        if (! touchField)                                               // if no touches left registered, ...
         {
             if (getControlMode(controlIndex) == B_MOMENTARY)            // ...reset CCs for momentary controls
             {
@@ -359,20 +373,30 @@ void doButton(int controlIndex)
     setControlValueA(controlIndex, value);
 }
 
-void doNote(int controlIndex)
+void doNote(int controlIndex, float playedVelocity, bool isFirstTouch)
 {
-    // Use CC A value to track whether note is held
-    //  0   - not held
-    //  127 - held
-    if (getControlValueA(controlIndex) == 0)
+    // Use CC A value to track whether note is on
+    bool isNoteOn = getControlValueA(controlIndex);
+
+    if (isNoteOn)
     {
-        sendMIDI(0x90 | globalMidiChannel, getMidiNote(controlIndex), 127);
-        setControlValueA(controlIndex, 127);
-    }
-    else
-    {
+        // Send Note Off
         sendMIDI(0x80 | globalMidiChannel, getMidiNote(controlIndex), 0);
         setControlValueA(controlIndex, 0);
+    }
+
+    if (isNoteOn != isFirstTouch)           // logical xor with normalised bool values
+    {
+        // Send Note On
+        int velocity;
+
+        if (fixedVelocity || (playedVelocity < 0.0))
+            velocity = velocityValue;                                   // use fixed velocity value
+        else
+            velocity = clamp(1, 127, int(playedVelocity * 127.0));      // use velocity as played
+
+        sendMIDI(0x90 | globalMidiChannel, getMidiNote(controlIndex), velocity);
+        setControlValueA(controlIndex, velocity);
     }
 }
 
@@ -437,6 +461,9 @@ void initialise()
 //  Turn gamma correction on
     setLocalConfig(33, 1);
 
+//  Write velocity sensitivity setting
+    setLocalConfig(10, clamp(0, 127, int(velocitySensitivity * 127.0)));
+
 // Map graphics parameters to their actual ranges
     contrast = 110 + contrast * 11;                                     // [0, 10] -> [110, 220]
     brightness = individualBrightness ? 255 : 155 + brightness * 10;    // [0, 10] -> [155, 255]
@@ -448,7 +475,7 @@ void initialise()
     inactiveShade = activeShade = shadingType * 46 * (4 - shadingType);
 
 // Ensure that shading does not result in LEDs with brightness lower than a
-//   minimum, set to the inactice colour brightness at maximum global contrast
+//   minimum, set to the inactive colour brightness at maximum global contrast
 //   setting and minimum global brightness setting
     float minShadeMultiplier = 155.0 / brightness;
     minShadeMultiplier *= (255.0 - 220.0) / (255.0 - contrast);
@@ -535,9 +562,9 @@ void repaint()
         //  Draw Button
         //----------------------------------------------------------------------
             if (getControlMode(i) == B_LATCH && getControlValueA(i) == 0)
-                drawButton(i, inactiveColour, inactiveShade);   // inactive Switch
+                drawButton(i, inactiveColour, inactiveShade);   // draw inactive Button (dimmed)
             else
-                drawButton(i, activeColour, activeShade);       // Button or active Switch
+                drawButton(i, activeColour, activeShade);       // draw active Button
         }
         else if (controlType == C_FADER)
         {

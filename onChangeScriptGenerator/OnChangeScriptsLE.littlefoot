@@ -4,6 +4,12 @@
     ]]>
     </script>
 
+    <script onChange="fixedVelocity">
+    <![CDATA[
+        velocitySensitivity.visible = ! fixedVelocity.value;
+    ]]>
+    </script>
+
     <script onChange="ParamControlType0">
     <![CDATA[
         if (ParamControlType0.value == 0)
