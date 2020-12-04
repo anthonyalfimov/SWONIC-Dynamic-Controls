@@ -24,7 +24,7 @@ Create up to 25 Buttons, Notes or Faders with a limited feature set.
 
 1. Make sure you have the latest version of [ROLI Dashboard](https://roli.com/products/software/blocks-dashboard) installed. Use ROLI Dashboard to update your Lightpad to the latest firmware.
 
-2. Download the Dynamic Controls installer for your operating system [here](https://github.com/anthonyalfimov/SWONIC-Dynamic-Controls/releases/tag/v2.0.5) and run it.
+2. Download the Dynamic Controls installer for your operating system from [swonic.com](https://swonic.com/dynamic-controls/) and run it.
 
 3. Launch ROLI Dashboard and connect your Lightpad to the computer (USB connection is recommended). Select "Dynamic Controls" or "Dynamic Controls LE" to load it onto your Lightpad Block. Press the "Edit" button and select the "Blank" mode to start creating your own MIDI controller!
 
