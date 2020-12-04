@@ -2,9 +2,11 @@
 
 [![Dynamic Controls Trailer](https://img.youtube.com/vi/NrpUNTRJZtc/0.jpg)](https://www.youtube.com/watch?v=NrpUNTRJZtc)
 
-App for ROLI Dashboard and ROLI Lightpad Block.
+[\[ Dynamic Controls video playlist \]](https://www.youtube.com/playlist?list=PLRKnW27U_mZ7UiaDy3D9VC4JJGvPTzfnP)
 
-Turns your Lightpad into a highly customisable MIDI control surface. Design your own control layout using Buttons, Faders and XY Pads.
+**Dynamic Controls** is a free app for ROLI Dashboard. It turns your ROLI Lightpad Block into a highly customisable MIDI control surface.
+
+Design your control layout using Buttons, Faders and XY Pads!
 
 *Developed by Anthony Alfimov and Andreas Swoboda.*
 
