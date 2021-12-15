@@ -1,6 +1,6 @@
 # Dynamic Controls 2
 
-[![Github Releases](https://img.shields.io//github/v/release/anthonyalfimov/SWONIC-Dynamic-Controls?display_name=tag&include_prereleases)](https://github.com/anthonyalfimov/SWONIC-Dynamic-Controls/releases)
+[![Github Releases](https://img.shields.io/github/v/release/anthonyalfimov/SWONIC-Dynamic-Controls?display_name=tag&include_prereleases)](https://github.com/anthonyalfimov/SWONIC-Dynamic-Controls/releases)
 [![Support Email](https://img.shields.io/badge/Support-Email-blue)](mailto:dynamic.controls@swonic.com)
 
 [![Dynamic Controls Trailer](docs/Banner.png)](https://www.youtube.com/watch?v=NrpUNTRJZtc)
