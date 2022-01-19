@@ -1,4 +1,4 @@
-Version 2.1.0 Beta [2020-11-17]
+Version 2.1.0 [2022-01-19]
     - Added velocity sensitivity for Note controls, which can be disabled using the new "Fixed Note Velocity" global setting
     - Changed Note control behaviour to retriggeting when activating already held Note controls
     - Added global velocity sensitivity setting for Note controls
