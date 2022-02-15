@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/github/license/anthonyalfimov/SWONIC-Dynamic-Controls)](https://github.com/anthonyalfimov/SWONIC-Dynamic-Controls/blob/master/LICENSE.txt)
 [![Support Email](https://img.shields.io/badge/support-email-blue)](mailto:dynamic.controls@swonic.com)
 
-[![Dynamic Controls Trailer](docs/Banner.png)](https://www.youtube.com/watch?v=NrpUNTRJZtc)
+[![Dynamic Controls Trailer](https://user-images.githubusercontent.com/43878921/154122179-fb15164b-a833-4647-b950-12d971f4809b.png "Dynamic Controls Trailer")](https://www.youtube.com/watch?v=NrpUNTRJZtc)
 
 **Dynamic Controls** is a free app for ROLI Dashboard. It turns your ROLI Lightpad Block into a highly customisable MIDI control surface.
 
